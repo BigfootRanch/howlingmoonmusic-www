@@ -990,6 +990,13 @@ tr:hover td{background:rgba(201,168,76,0.03)}
     return mk('span', {cls: 'badge ' + cls, text: (status || 'unknown').replace(/_/g, ' ')});
   }
 
+  function toast(msg) {
+    var el = mk('div', {text: msg, style:'position:fixed;bottom:2rem;right:2rem;background:var(--gold);color:var(--bg);padding:0.8rem 1.5rem;border-radius:6px;font-size:0.85rem;font-weight:600;z-index:9999;opacity:0;transition:opacity 0.3s'});
+    document.body.appendChild(el);
+    setTimeout(function() { el.style.opacity = '1'; }, 50);
+    setTimeout(function() { el.style.opacity = '0'; setTimeout(function() { el.remove(); }, 300); }, 3000);
+  }
+
   function mkSpinner() { return mk('span', {cls: 'spinner'}); }
 
   function mkLoading(msg) {
@@ -1666,6 +1673,8 @@ tr:hover td{background:rgba(201,168,76,0.03)}
         fileInput.value = '';
         loadUploadHistory();
         loadUploadQueue();
+        // Trigger AI processing of uploaded files
+        triggerUploadProcessing();
       }
     }
     next();
@@ -1773,6 +1782,19 @@ tr:hover td{background:rgba(201,168,76,0.03)}
         body.appendChild(tr);
       });
     });
+  }
+
+  function triggerUploadProcessing() {
+    fetch(SB + '/functions/v1/process-uploads', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + KEY},
+      body: '{}'
+    }).then(function(r) { return r.json(); }).then(function(data) {
+      if (data.processed > 0) {
+        loadUploadQueue();
+        toast(data.processed + ' file(s) processed by AI');
+      }
+    }).catch(function(e) { console.error('Upload processing error:', e); });
   }
 
   // =============================
