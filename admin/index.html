@@ -183,12 +183,22 @@ tr:hover td{background:rgba(201,168,76,0.03)}
 .upload-progress-fill{height:100%;background:var(--gold);width:0%;transition:width 0.3s}
 
 /* === SOCIAL MEDIA SPECIFIC === */
-.social-card{background:var(--card);border:1px solid var(--card-border);border-radius:8px;padding:1rem;transition:border-color 0.2s}
+.social-card{background:var(--card);border:1px solid var(--card-border);border-radius:8px;padding:1.2rem;transition:border-color 0.2s}
 .social-card:hover{border-color:var(--gold-dim)}
 .social-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.6rem}
 .social-platform{font-size:1.2rem}
-.social-caption{font-size:0.85rem;color:var(--cream);line-height:1.5;margin-bottom:0.6rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.social-caption{font-size:0.92rem;color:var(--cream);line-height:1.7;margin-bottom:0.6rem;white-space:pre-line;cursor:pointer}
+.social-caption.collapsed{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.social-caption-expand{font-size:0.72rem;color:var(--gold);cursor:pointer;margin-bottom:0.4rem;display:none}
+.social-caption.collapsed + .social-caption-expand{display:block}
+.social-hashtags{font-size:0.78rem;color:var(--gold);line-height:1.5;margin-bottom:0.5rem;opacity:0.8}
 .social-meta{display:flex;gap:0.75rem;font-size:0.72rem;color:var(--smoke)}
+.social-actions{display:flex;gap:0.5rem;margin-top:0.6rem;padding-top:0.6rem;border-top:1px solid var(--card-border);flex-wrap:wrap}
+.social-feedback{width:100%;margin-top:0.4rem}
+.social-feedback textarea{width:100%;background:var(--bg);border:1px solid var(--card-border);border-radius:6px;color:var(--cream);padding:0.5rem;font-size:0.8rem;resize:vertical;min-height:60px;font-family:inherit}
+.social-feedback textarea::placeholder{color:var(--smoke)}
+.social-attachments{display:flex;gap:0.4rem;flex-wrap:wrap;margin-top:0.3rem}
+.social-attachment-thumb{width:48px;height:48px;border-radius:4px;object-fit:cover;border:1px solid var(--card-border)}
 
 /* === AGENTS SPECIFIC === */
 .agent-card{background:var(--card);border:1px solid var(--card-border);border-radius:8px;padding:1.2rem}
@@ -723,6 +733,64 @@ tr:hover td{background:rgba(201,168,76,0.03)}
       <input type="url" id="postMedia" placeholder="https://...">
     </div>
     <button class="btn btn-primary" id="savePostBtn">Save Post</button>
+  </div>
+</div>
+
+<!-- EDIT POST MODAL -->
+<div class="modal-overlay" id="editPostModal">
+  <div class="modal" style="max-width:640px">
+    <div class="modal-title">Edit Post <button class="modal-close" data-modal="editPostModal">&times;</button></div>
+    <input type="hidden" id="editPostId">
+    <div class="form-group">
+      <label>Platform</label>
+      <select id="editPostPlatform">
+        <option value="instagram">Instagram</option>
+        <option value="tiktok">TikTok</option>
+        <option value="facebook">Facebook</option>
+        <option value="twitter">Twitter/X</option>
+        <option value="youtube">YouTube</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Caption</label>
+      <textarea id="editPostCaption" rows="8" placeholder="Post content..." style="font-size:0.92rem;line-height:1.7"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Hashtags (comma separated)</label>
+      <input type="text" id="editPostHashtags" placeholder="#TheDogmother, #HowlingMoonMusic...">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Scheduled Time</label>
+        <input type="datetime-local" id="editPostScheduled">
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select id="editPostStatus">
+          <option value="draft">Draft</option>
+          <option value="approved">Approved</option>
+          <option value="scheduled">Scheduled</option>
+          <option value="rejected">Rejected</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Feedback / Notes for Agent</label>
+      <textarea id="editPostFeedback" rows="3" placeholder="Direction for the AI agent — e.g. 'make it punchier' or 'use this photo angle'..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Attachments (image/video URLs)</label>
+      <div id="editPostAttachments" class="social-attachments" style="margin-bottom:0.5rem"></div>
+      <div style="display:flex;gap:0.5rem">
+        <input type="url" id="editPostNewMedia" placeholder="Paste image or video URL..." style="flex:1">
+        <button class="btn btn-sm btn-gold" id="editPostAddMedia">Add</button>
+      </div>
+      <input type="file" id="editPostFileUpload" accept="image/*,video/*" style="margin-top:0.4rem;font-size:0.8rem;color:var(--smoke)">
+    </div>
+    <div style="display:flex;gap:0.5rem">
+      <button class="btn btn-primary" id="updatePostBtn" style="flex:1">Save Changes</button>
+      <button class="btn btn-ghost" id="cancelEditPostBtn" style="color:var(--smoke)">Cancel</button>
+    </div>
   </div>
 </div>
 
@@ -1825,51 +1893,177 @@ tr:hover td{background:rgba(201,168,76,0.03)}
       var grid = mk('div', {cls:'cards'});
       data.forEach(function(p) {
         var card = mk('div', {cls:'social-card'});
+        // Header: platform + status badge
         var header = mk('div', {cls:'social-card-header'});
         header.appendChild(mk('span', {cls:'social-platform', text: pIcon(p.platform) + ' ' + (p.platform || '')}));
         header.appendChild(mkBadge(p.status));
         card.appendChild(header);
-        var captionEl = mk('div', {cls:'social-caption', text: p.caption || 'No content'});
+        // Caption — starts collapsed, click to expand
+        var captionEl = mk('div', {cls:'social-caption collapsed'});
+        captionEl.textContent = p.caption || 'No content';
+        captionEl.addEventListener('click', function() {
+          captionEl.classList.toggle('collapsed');
+          expandBtn.style.display = captionEl.classList.contains('collapsed') ? 'block' : 'none';
+        });
         card.appendChild(captionEl);
+        var expandBtn = mk('div', {cls:'social-caption-expand', text:'Click to read full post...'});
+        expandBtn.addEventListener('click', function() {
+          captionEl.classList.remove('collapsed');
+          expandBtn.style.display = 'none';
+        });
+        card.appendChild(expandBtn);
+        // Check if caption is long enough to need expansion
+        setTimeout(function() {
+          if (captionEl.scrollHeight <= captionEl.clientHeight + 2) {
+            captionEl.classList.remove('collapsed');
+            expandBtn.style.display = 'none';
+          }
+        }, 50);
+        // Hashtags
         if (p.hashtags && p.hashtags.length > 0) {
-          var tagLine = mk('div', {style:'font-size:0.72rem;color:var(--gold);margin-top:0.3rem;line-height:1.4'});
-          tagLine.textContent = p.hashtags.slice(0, 6).join(' ');
+          var tagLine = mk('div', {cls:'social-hashtags'});
+          tagLine.textContent = p.hashtags.join(' ');
           card.appendChild(tagLine);
         }
+        // Attachments preview
+        if (p.media_urls && p.media_urls.length > 0) {
+          var thumbs = mk('div', {cls:'social-attachments'});
+          p.media_urls.forEach(function(url) {
+            var img = mk('img', {cls:'social-attachment-thumb'});
+            img.src = url;
+            img.alt = 'attachment';
+            img.onerror = function() { this.style.display = 'none'; };
+            thumbs.appendChild(img);
+          });
+          card.appendChild(thumbs);
+        }
+        // Meta row
         var meta = mk('div', {cls:'social-meta'});
-        if (p.scheduled_for) meta.appendChild(mk('span', {text: '\uD83D\uDCC5 ' + fmtDate(p.scheduled_for)}));
+        if (p.post_type) meta.appendChild(mk('span', {text: p.post_type}));
+        if (p.scheduled_for) meta.appendChild(mk('span', {text: fmtDate(p.scheduled_for)}));
         if (p.generated_by) meta.appendChild(mk('span', {text: 'by ' + p.generated_by}));
         meta.appendChild(mk('span', {text: timeAgo(p.created_at)}));
         card.appendChild(meta);
-        // Action buttons for draft posts
-        if (p.status === 'draft') {
-          var actions = mk('div', {style:'display:flex;gap:0.5rem;margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--card-border)'});
+        // Action buttons — always visible
+        var actions = mk('div', {cls:'social-actions'});
+        // Edit button
+        var editBtn = mk('button', {cls:'btn btn-sm btn-gold', text:'Edit'});
+        editBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          openEditPost(p);
+        });
+        actions.appendChild(editBtn);
+        // Copy button
+        var copyBtn = mk('button', {cls:'btn btn-sm btn-ghost', text:'Copy'});
+        copyBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var text = (p.caption || '') + '\n\n' + (p.hashtags || []).join(' ');
+          navigator.clipboard.writeText(text).then(function() { toast('Copied to clipboard!'); });
+        });
+        actions.appendChild(copyBtn);
+        // Approve / Reject for drafts
+        if (p.status === 'draft' || p.status === 'rejected') {
           var approveBtn = mk('button', {cls:'btn btn-sm btn-gold', text:'Approve'});
           approveBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             patchData('social_media_queue', 'id=eq.' + p.id, {status: 'approved', approved_by: 'admin', updated_at: new Date().toISOString()}).then(function() { loadSocial(); toast('Post approved'); });
           });
+          actions.appendChild(approveBtn);
+        }
+        if (p.status === 'draft' || p.status === 'approved') {
           var rejectBtn = mk('button', {cls:'btn btn-sm btn-ghost', text:'Reject', style:'color:var(--red);border-color:var(--red)'});
           rejectBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             patchData('social_media_queue', 'id=eq.' + p.id, {status: 'rejected', updated_at: new Date().toISOString()}).then(function() { loadSocial(); toast('Post rejected'); });
           });
-          var copyBtn = mk('button', {cls:'btn btn-sm btn-ghost', text:'Copy'});
-          copyBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            var text = (p.caption || '') + '\n\n' + (p.hashtags || []).join(' ');
-            navigator.clipboard.writeText(text).then(function() { toast('Copied to clipboard!'); });
-          });
-          actions.appendChild(approveBtn);
-          actions.appendChild(copyBtn);
           actions.appendChild(rejectBtn);
-          card.appendChild(actions);
         }
+        card.appendChild(actions);
         grid.appendChild(card);
       });
       c.appendChild(grid);
     });
   }
+
+  // Edit Post Modal logic
+  var editPostMediaList = [];
+  function openEditPost(p) {
+    $('editPostId').value = p.id;
+    $('editPostPlatform').value = p.platform || 'instagram';
+    $('editPostCaption').value = p.caption || '';
+    $('editPostHashtags').value = (p.hashtags || []).join(', ');
+    $('editPostScheduled').value = p.scheduled_for ? p.scheduled_for.substring(0, 16) : '';
+    $('editPostStatus').value = p.status || 'draft';
+    $('editPostFeedback').value = '';
+    editPostMediaList = (p.media_urls || []).slice();
+    renderEditMediaThumbs();
+    openModal('editPostModal');
+    $('editPostCaption').focus();
+  }
+  function renderEditMediaThumbs() {
+    var c = $('editPostAttachments');
+    clearEl(c);
+    editPostMediaList.forEach(function(url, i) {
+      var wrap = mk('div', {style:'position:relative;display:inline-block'});
+      var img = mk('img', {cls:'social-attachment-thumb'});
+      img.src = url; img.alt = 'media';
+      img.onerror = function() { this.src = ''; this.alt = 'media'; this.style.background = 'var(--card-border)'; };
+      var del = mk('button', {text:'x', style:'position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;border:none;border-radius:50%;width:18px;height:18px;font-size:0.6rem;cursor:pointer;line-height:1'});
+      del.addEventListener('click', function() { editPostMediaList.splice(i, 1); renderEditMediaThumbs(); });
+      wrap.appendChild(img);
+      wrap.appendChild(del);
+      c.appendChild(wrap);
+    });
+  }
+  $('editPostAddMedia').addEventListener('click', function() {
+    var url = $('editPostNewMedia').value.trim();
+    if (url) { editPostMediaList.push(url); renderEditMediaThumbs(); $('editPostNewMedia').value = ''; }
+  });
+  $('editPostFileUpload').addEventListener('change', function() {
+    var file = this.files[0];
+    if (!file) return;
+    var bucket = file.type.startsWith('video') ? 'branding' : 'photos';
+    var path = 'social/' + Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+    fetch(SB + '/storage/v1/object/' + bucket + '/' + path, {
+      method: 'POST',
+      headers: {'Authorization': 'Bearer ' + KEY, 'Content-Type': file.type, 'x-upsert': 'true'},
+      body: file
+    }).then(function(r) {
+      if (r.ok) {
+        var publicUrl = SB + '/storage/v1/object/public/' + bucket + '/' + path;
+        editPostMediaList.push(publicUrl);
+        renderEditMediaThumbs();
+        toast('File uploaded!');
+      } else { toast('Upload failed: ' + r.status); }
+    });
+    this.value = '';
+  });
+  $('cancelEditPostBtn').addEventListener('click', function() { closeModal('editPostModal'); });
+  $('updatePostBtn').addEventListener('click', function() {
+    var id = $('editPostId').value;
+    if (!id) return;
+    var hashStr = $('editPostHashtags').value.trim();
+    var hashtags = hashStr ? hashStr.split(',').map(function(t) { return t.trim(); }).filter(Boolean) : [];
+    var feedback = $('editPostFeedback').value.trim();
+    var payload = {
+      platform: $('editPostPlatform').value,
+      caption: $('editPostCaption').value.trim(),
+      hashtags: hashtags,
+      media_urls: editPostMediaList,
+      scheduled_for: $('editPostScheduled').value || null,
+      status: $('editPostStatus').value,
+      updated_at: new Date().toISOString()
+    };
+    // Store feedback in engagement_data if provided
+    if (feedback) {
+      payload.engagement_data = JSON.stringify({admin_feedback: feedback, feedback_at: new Date().toISOString()});
+    }
+    patchData('social_media_queue', 'id=eq.' + id, payload).then(function() {
+      closeModal('editPostModal');
+      loadSocial();
+      toast('Post updated!');
+    }).catch(function(e) { alert('Failed to update: ' + e.message); });
+  });
 
   $('savePostBtn').addEventListener('click', function() {
     var content = $('postCaption').value.trim();
