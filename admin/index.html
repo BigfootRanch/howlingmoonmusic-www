@@ -275,16 +275,32 @@ tr:hover td{background:rgba(201,168,76,0.03)}
   .sidebar.open{transform:translateX(0)}
   .hamburger{display:block}
   .main{margin-left:0;padding:1rem;padding-top:3.5rem}
-  .chat-layout{grid-template-columns:1fr;height:auto}
-  .chat-threads{max-height:200px}
-  .chat-messages{min-height:300px}
+  .chat-layout{grid-template-columns:1fr;height:calc(100vh - 120px);height:calc(100dvh - 120px)}
+  .chat-threads{max-height:180px;border-right:none;border-bottom:1px solid var(--card-border)}
+  .chat-messages{min-height:0;flex:1}
+  .chat-msg{max-width:90%}
+  .chat-input-area{padding:0.6rem;position:sticky;bottom:0;background:var(--card)}
+  .chat-input-area textarea{font-size:16px}
+  .chat-input-area .btn{padding:0.6rem 1rem;min-height:44px}
+  .chat-attach-btn{min-height:44px;min-width:44px}
   .knowledge-list{grid-template-columns:1fr}
   .form-row{grid-template-columns:1fr}
   .cards{grid-template-columns:1fr}
+  .social-card{padding:1rem}
+  .social-caption{font-size:0.9rem;line-height:1.6}
+  .social-actions .btn{padding:0.5rem 0.8rem;min-height:44px}
+  .modal{padding:1rem;width:95vw;max-height:90vh;max-height:90dvh}
+  .nav-item{padding:0.9rem 1.2rem;font-size:0.9rem}
 }
 @media(max-width:600px){
-  .toolbar{flex-direction:column}
+  .toolbar{flex-direction:column;gap:0.5rem}
   .toolbar .search-input{max-width:100%}
+  .chat-threads{max-height:140px}
+  .chat-thread{padding:0.7rem 0.8rem}
+  .chat-thread-title{font-size:0.9rem}
+  .section-title{font-size:1rem}
+  .tab-bar{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap}
+  .tab-bar .tab{white-space:nowrap;flex-shrink:0;padding:0.5rem 0.8rem}
 }
 </style>
 </head>
