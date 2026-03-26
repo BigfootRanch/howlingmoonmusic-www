@@ -150,9 +150,9 @@ tr:hover td{background:rgba(201,168,76,0.03)}
 .chat-thread-title{font-size:0.85rem;color:var(--cream);font-weight:600;margin-bottom:0.2rem}
 .chat-thread-preview{font-size:0.72rem;color:var(--smoke);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .chat-thread-time{font-size:0.65rem;color:var(--smoke);margin-top:0.2rem}
-.chat-main{position:relative;display:flex;flex-direction:column;overflow:hidden;height:100%}
-.chat-messages-header{padding:0.8rem 1rem;border-bottom:1px solid var(--card-border);font-size:0.9rem;font-weight:600;color:var(--white);display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
-.chat-messages{flex:1;min-height:0;overflow-y:auto;padding:1rem;padding-bottom:1rem;display:flex;flex-direction:column;gap:0.8rem}
+.chat-main{display:grid;grid-template-rows:auto 1fr auto;overflow:hidden;height:100%}
+.chat-messages-header{padding:0.8rem 1rem;border-bottom:1px solid var(--card-border);font-size:0.9rem;font-weight:600;color:var(--white);display:flex;justify-content:space-between;align-items:center}
+.chat-messages{overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:0.8rem}
 .chat-empty{display:flex;align-items:center;justify-content:center;height:100%;color:var(--smoke);font-size:0.9rem}
 .chat-msg{max-width:75%;padding:0.7rem 1rem;border-radius:10px;font-size:0.85rem;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
 .chat-msg.admin{align-self:flex-end;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.25);color:var(--cream)}
@@ -314,7 +314,7 @@ tr:hover td{background:rgba(201,168,76,0.03)}
 #chatFileInput { display:none; }
 /* Claude thread distinction */
 .chat-thread.claude-thread{border-left:3px solid #ff2d7b;background:rgba(255,45,123,0.04)}
-.chat-thread.claude-thread .chat-thread-title::before{content:"\\1F916 ";font-size:0.8rem}
+.chat-thread.claude-thread .chat-thread-title::before{content:"\1F916 ";font-size:0.8rem}
 .chat-thread.claude-thread.active{background:rgba(255,45,123,0.12);border-left:3px solid #ff2d7b}
 </style>
 </head>
@@ -1517,43 +1517,47 @@ tr:hover td{background:rgba(201,168,76,0.03)}
     msgArea.appendChild(userBubble);
     msgArea.scrollTop = msgArea.scrollHeight;
 
-    // Insert user message into DB
+    // Insert user message into DB — unlock send immediately, AI responds in background
     postData('agent_chat_messages', {
       thread_id: threadId, sender_type: 'admin', sender_id: 'valentina', sender_name: 'Valentina', message_text: content, message_type: 'text', needs_response: true, metadata: {}
     }).then(function() {
       patchData('agent_chat_threads', 'id=eq.' + threadId, { updated_at: new Date().toISOString() });
-      // Get AI response
-      return getAiResponse(content, threadId);
-    }).then(function(aiReply) {
-      if (aiReply) {
-        // Show AI reply immediately in UI
-        var modelLabel = getAiResponse._lastModel || 'Sonnet';
-        var aiBubble = mk('div', {cls:'chat-msg agent'});
-        aiBubble.appendChild(mk('div', {cls:'chat-msg-sender', text: 'Claude (' + modelLabel + ')'}));
-        aiBubble.appendChild(mk('div', {text: aiReply}));
-        aiBubble.appendChild(mk('div', {cls:'chat-msg-time', text: 'just now'}));
-        msgArea.appendChild(aiBubble);
-        msgArea.scrollTop = msgArea.scrollHeight;
-        // Save AI response to DB
-        return postData('agent_chat_messages', {
-          thread_id: threadId, sender_type: 'agent', sender_id: 'claude-brain', sender_name: 'Claude', message_text: aiReply, message_type: 'text', needs_response: false, metadata: {}
-        }).then(function() {
-          patchData('agent_chat_threads', 'id=eq.' + threadId, { updated_at: new Date().toISOString() });
-        });
-      }
-    }).catch(function(e) {
-      console.error('Chat error:', e);
-      var errBubble = mk('div', {cls:'chat-msg system'});
-      errBubble.appendChild(mk('div', {cls:'chat-msg-sender', text: 'System'}));
-      errBubble.appendChild(mk('div', {text: 'Error: ' + e.message}));
-      msgArea.appendChild(errBubble);
-      msgArea.scrollTop = msgArea.scrollHeight;
-    }).finally(function() {
+      // Unlock button immediately after message saved
       chatSending = false;
-      chatCooldown = Date.now() + 3000; // 3s cooldown before allowing message reloads
       $('chatSendBtn').disabled = false;
       $('chatSendBtn').textContent = 'Send';
-      $('chatInput').focus();
+      // Get AI response in background
+      getAiResponse(content, threadId).then(function(aiReply) {
+        if (aiReply) {
+          var modelLabel = getAiResponse._lastModel || 'Sonnet';
+          var aiBubble = mk('div', {cls:'chat-msg agent'});
+          aiBubble.appendChild(mk('div', {cls:'chat-msg-sender', text: 'Claude (' + modelLabel + ')'}));
+          aiBubble.appendChild(mk('div', {text: aiReply}));
+          aiBubble.appendChild(mk('div', {cls:'chat-msg-time', text: 'just now'}));
+          msgArea.appendChild(aiBubble);
+          msgArea.scrollTop = msgArea.scrollHeight;
+          postData('agent_chat_messages', {
+            thread_id: threadId, sender_type: 'agent', sender_id: 'claude-brain', sender_name: 'Claude', message_text: aiReply, message_type: 'text', needs_response: false, metadata: {}
+          }).then(function() {
+            patchData('agent_chat_threads', 'id=eq.' + threadId, { updated_at: new Date().toISOString() });
+          });
+        }
+      }).catch(function(e) {
+        console.error('AI response error:', e);
+        var errBubble = mk('div', {cls:'chat-msg system'});
+        errBubble.appendChild(mk('div', {cls:'chat-msg-sender', text: 'System'}));
+        errBubble.appendChild(mk('div', {text: 'AI error: ' + e.message}));
+        msgArea.appendChild(errBubble);
+      });
+    }).catch(function(e) {
+      console.error('Chat send error:', e);
+      chatSending = false;
+      $('chatSendBtn').disabled = false;
+      $('chatSendBtn').textContent = 'Send';
+      var errBubble = mk('div', {cls:'chat-msg system'});
+      errBubble.appendChild(mk('div', {cls:'chat-msg-sender', text: 'System'}));
+      errBubble.appendChild(mk('div', {text: 'Send error: ' + e.message}));
+      msgArea.appendChild(errBubble);
     });
   }
 
