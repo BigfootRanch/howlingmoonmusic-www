@@ -984,10 +984,40 @@ tr:hover td{background:rgba(201,168,76,0.03)}
     </div>
     <div class="form-group"><label>Lyrics</label><textarea id="songLyrics" rows="8" placeholder="Paste or write lyrics here..."></textarea></div>
     <div class="form-group"><label>Notes</label><textarea id="songNotes" rows="3" placeholder="Production notes, ideas, mix status..."></textarea></div>
-    <div class="form-row">
-      <div class="form-group"><label>Audio File URL</label><input type="url" id="songAudioUrl" placeholder="https://... or upload via Upload Center"></div>
-      <div class="form-group"><label>Direct Download / Buy URL</label><input type="url" id="songDownloadUrl" placeholder="Buy/download link"></div>
+    <div class="form-group">
+      <label>Audio File</label>
+      <div style="display:flex;gap:0.5rem;align-items:center">
+        <input type="url" id="songAudioUrl" placeholder="Audio URL (or upload below)" style="flex:1">
+        <span id="songAudioStatus" style="font-size:0.75rem;color:var(--text-muted)"></span>
+      </div>
+      <div style="margin-top:0.4rem;display:flex;gap:0.5rem;align-items:center">
+        <label for="songAudioFile" class="btn btn-ghost" style="font-size:0.8rem;padding:0.3rem 0.7rem;cursor:pointer;margin:0">Upload Audio</label>
+        <input type="file" id="songAudioFile" accept=".mp3,.wav,.flac,.aiff,.m4a" style="display:none">
+        <span id="songAudioFileName" style="font-size:0.75rem;color:var(--text-muted)"></span>
+      </div>
     </div>
+    <div class="form-group">
+      <label>Artwork</label>
+      <div style="display:flex;gap:0.5rem;align-items:center">
+        <input type="url" id="songArtworkUrl" placeholder="Cover art URL (or upload below)" style="flex:1">
+        <img id="songArtworkPreview" src="" style="width:48px;height:48px;border-radius:6px;object-fit:cover;display:none;border:1px solid var(--border)">
+      </div>
+      <div style="margin-top:0.4rem;display:flex;gap:0.5rem;align-items:center">
+        <label for="songArtworkFile" class="btn btn-ghost" style="font-size:0.8rem;padding:0.3rem 0.7rem;cursor:pointer;margin:0">Upload Art</label>
+        <input type="file" id="songArtworkFile" accept=".jpg,.jpeg,.png,.webp" style="display:none">
+        <span id="songArtworkFileName" style="font-size:0.75rem;color:var(--text-muted)"></span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Lyrics File</label>
+      <div style="margin-top:0.2rem;display:flex;gap:0.5rem;align-items:center">
+        <label for="songLyricsFile" class="btn btn-ghost" style="font-size:0.8rem;padding:0.3rem 0.7rem;cursor:pointer;margin:0">Upload Lyrics Doc</label>
+        <input type="file" id="songLyricsFile" accept=".docx,.doc,.pdf,.txt,.rtf,.zip" style="display:none">
+        <span id="songLyricsFileName" style="font-size:0.75rem;color:var(--text-muted)"></span>
+        <a id="songLyricsLink" href="#" target="_blank" style="font-size:0.75rem;display:none">View file</a>
+      </div>
+    </div>
+    <div class="form-group"><label>Direct Download / Buy URL</label><input type="url" id="songDownloadUrl" placeholder="Buy/download link"></div>
     <div class="form-row">
       <div class="form-group"><label>Pipeline Stage</label>
         <select id="songStage">
@@ -2445,12 +2475,29 @@ tr:hover td{background:rgba(201,168,76,0.03)}
     $('songLyrics').value = song.lyrics || '';
     $('songNotes').value = song.notes || '';
     $('songAudioUrl').value = song.audio_url || '';
+    $('songArtworkUrl').value = song.artwork_url || '';
     $('songDownloadUrl').value = song.direct_download_url || '';
     $('songStage').value = song.pipeline_stage || 'still_writing';
     $('songDiscoveredBy').value = song.discovered_by || 'valentina';
     $('songBmiStatus').value = song.bmi_status || 'not_started';
     $('songBmiNumber').value = song.bmi_work_number || '';
     $('deleteSongPipelineBtn').style.display = song.id ? 'inline-flex' : 'none';
+    // Reset file inputs
+    $('songAudioFile').value = '';
+    $('songArtworkFile').value = '';
+    $('songLyricsFile').value = '';
+    $('songAudioFileName').textContent = '';
+    $('songArtworkFileName').textContent = '';
+    $('songLyricsFileName').textContent = '';
+    $('songAudioStatus').textContent = song.audio_url ? '(has audio)' : '';
+    // Artwork preview
+    var artPreview = $('songArtworkPreview');
+    if (song.artwork_url) { artPreview.src = song.artwork_url; artPreview.style.display = 'block'; }
+    else { artPreview.style.display = 'none'; }
+    // Lyrics file link
+    var lyricsLink = $('songLyricsLink');
+    if (song.lyrics_file_url) { lyricsLink.href = song.lyrics_file_url; lyricsLink.style.display = 'inline'; lyricsLink.textContent = 'View file'; }
+    else { lyricsLink.style.display = 'none'; }
     openModal('songDetailModal');
   }
 
@@ -2463,36 +2510,109 @@ tr:hover td{background:rgba(201,168,76,0.03)}
     if (!title) { alert('Please enter a song title.'); return; }
     var id = $('songDetailId').value;
     var newStage = $('songStage').value;
-    var payload = {
-      title: title, slug: title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''),
-      vocalist: $('songVocalist').value.trim()||null, album: $('songAlbum').value.trim()||null,
-      genre: $('songGenre').value.trim()||null, lyrics: $('songLyrics').value||null,
-      notes: $('songNotes').value.trim()||null, audio_url: $('songAudioUrl').value.trim()||null,
-      direct_download_url: $('songDownloadUrl').value.trim()||null, pipeline_stage: newStage,
-      discovered_by: $('songDiscoveredBy').value, bmi_status: $('songBmiStatus').value,
-      bmi_work_number: $('songBmiNumber').value.trim()||null, updated_at: new Date().toISOString()
-    };
-    var op;
-    if (id) {
-      var existing = allPipelineSongs.find(function(s){return s.id===id;});
-      var oldStage = existing ? existing.pipeline_stage : null;
-      if (newStage !== oldStage) {
-        payload.stage_changed_at = new Date().toISOString();
+    var slug = title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+    var saveBtn = $('saveSongPipelineBtn');
+    saveBtn.textContent = 'Saving...'; saveBtn.disabled = true;
+
+    // Upload any selected files first, then save
+    uploadSongFiles(slug).then(function(fileUrls) {
+      var payload = {
+        title: title, slug: slug,
+        vocalist: $('songVocalist').value.trim()||null, album: $('songAlbum').value.trim()||null,
+        genre: $('songGenre').value.trim()||null, lyrics: $('songLyrics').value||null,
+        notes: $('songNotes').value.trim()||null,
+        audio_url: fileUrls.audio_url || $('songAudioUrl').value.trim()||null,
+        artwork_url: fileUrls.artwork_url || $('songArtworkUrl').value.trim()||null,
+        lyrics_file_url: fileUrls.lyrics_file_url || null,
+        direct_download_url: $('songDownloadUrl').value.trim()||null, pipeline_stage: newStage,
+        discovered_by: $('songDiscoveredBy').value, bmi_status: $('songBmiStatus').value,
+        bmi_work_number: $('songBmiNumber').value.trim()||null, updated_at: new Date().toISOString()
+      };
+      var op;
+      if (id) {
+        var existing = allPipelineSongs.find(function(s){return s.id===id;});
+        var oldStage = existing ? existing.pipeline_stage : null;
+        if (newStage !== oldStage) {
+          payload.stage_changed_at = new Date().toISOString();
+          if (newStage === 'make_public') { payload.is_published = true; payload.published_at = new Date().toISOString(); }
+          if (oldStage === 'make_public' && newStage !== 'make_public') { payload.is_published = false; }
+        }
+        op = patchData('song_pipeline','id=eq.'+id,payload).then(function(){
+          if (newStage === 'make_public' && newStage !== oldStage) triggerMakePublicAutomation({id:id,title:title,bmi_status:payload.bmi_status});
+        });
+      } else {
+        payload.created_at = new Date().toISOString();
         if (newStage === 'make_public') { payload.is_published = true; payload.published_at = new Date().toISOString(); }
-        if (oldStage === 'make_public' && newStage !== 'make_public') { payload.is_published = false; }
+        op = postData('song_pipeline', payload).then(function(result){
+          if (newStage === 'make_public' && Array.isArray(result) && result.length > 0) triggerMakePublicAutomation({id:result[0].id,title:title,bmi_status:payload.bmi_status});
+        });
       }
-      op = patchData('song_pipeline','id=eq.'+id,payload).then(function(){
-        if (newStage === 'make_public' && newStage !== oldStage) triggerMakePublicAutomation({id:id,title:title,bmi_status:payload.bmi_status});
-      });
-    } else {
-      payload.created_at = new Date().toISOString();
-      if (newStage === 'make_public') { payload.is_published = true; payload.published_at = new Date().toISOString(); }
-      op = postData('song_pipeline', payload).then(function(result){
-        if (newStage === 'make_public' && Array.isArray(result) && result.length > 0) triggerMakePublicAutomation({id:result[0].id,title:title,bmi_status:payload.bmi_status});
-      });
-    }
-    op.then(function(){closeModal('songDetailModal');loadPipeline();}).catch(function(e){alert('Failed to save: '+e.message);});
+      return op;
+    }).then(function(){
+      saveBtn.textContent = 'Save'; saveBtn.disabled = false;
+      closeModal('songDetailModal'); loadPipeline();
+    }).catch(function(e){
+      saveBtn.textContent = 'Save'; saveBtn.disabled = false;
+      alert('Failed to save: '+e.message);
+    });
   });
+
+  // File selection handlers
+  $('songAudioFile').addEventListener('change', function() {
+    var f = this.files[0]; if (!f) return;
+    $('songAudioFileName').textContent = f.name + ' (' + (f.size/1048576).toFixed(1) + ' MB)';
+  });
+  $('songArtworkFile').addEventListener('change', function() {
+    var f = this.files[0]; if (!f) return;
+    $('songArtworkFileName').textContent = f.name;
+    var reader = new FileReader();
+    reader.onload = function(e) { $('songArtworkPreview').src = e.target.result; $('songArtworkPreview').style.display = 'block'; };
+    reader.readAsDataURL(f);
+  });
+  $('songLyricsFile').addEventListener('change', function() {
+    var f = this.files[0]; if (!f) return;
+    $('songLyricsFileName').textContent = f.name;
+  });
+
+  // Upload song files helper
+  function uploadSongFiles(songSlug) {
+    var promises = [];
+    var urls = {};
+    var audioFile = $('songAudioFile').files[0];
+    var artFile = $('songArtworkFile').files[0];
+    var lyricsFile = $('songLyricsFile').files[0];
+
+    if (audioFile) {
+      var ext = audioFile.name.split('.').pop().toLowerCase();
+      var path = 'songs/' + songSlug + '.' + ext;
+      $('songAudioStatus').textContent = 'Uploading audio...';
+      promises.push(uploadFile('audio', path, audioFile).then(function(r) {
+        urls.audio_url = SB + '/storage/v1/object/public/audio/' + path;
+        $('songAudioStatus').textContent = 'Uploaded!';
+      }));
+    }
+    if (artFile) {
+      var ext2 = artFile.name.split('.').pop().toLowerCase();
+      var path2 = 'songs/' + songSlug + '-cover.' + ext2;
+      $('songArtworkFileName').textContent = 'Uploading...';
+      promises.push(uploadFile('artwork', path2, artFile).then(function(r) {
+        urls.artwork_url = SB + '/storage/v1/object/public/artwork/' + path2;
+        $('songArtworkFileName').textContent = 'Uploaded!';
+      }));
+    }
+    if (lyricsFile) {
+      var ext3 = lyricsFile.name.split('.').pop().toLowerCase();
+      var path3 = 'songs/' + songSlug + '-lyrics.' + ext3;
+      $('songLyricsFileName').textContent = 'Uploading...';
+      promises.push(uploadFile('lyrics-upload', path3, lyricsFile).then(function(r) {
+        urls.lyrics_file_url = SB + '/storage/v1/object/lyrics-upload/' + path3;
+        $('songLyricsFileName').textContent = 'Uploaded!';
+      }));
+    }
+
+    if (promises.length === 0) return Promise.resolve(urls);
+    return Promise.all(promises).then(function() { return urls; });
+  }
 
   $('deleteSongPipelineBtn').addEventListener('click', function() {
     var id = $('songDetailId').value;
