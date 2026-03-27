@@ -451,6 +451,30 @@ p { color: var(--ts); max-width: 700px; font-size: 1.05rem; }
 .song-name { color: var(--tp); transition: color .3s; }
 .song-name:hover { color: var(--pink); }
 
+/* --- Video Badge --- */
+.video-badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  background: linear-gradient(135deg, var(--pink), var(--pink-d));
+  color: #fff; font-size: .6rem; font-weight: 700;
+  padding: 2px 7px; border-radius: 10px;
+  letter-spacing: .03em; text-transform: uppercase;
+  white-space: nowrap; flex-shrink: 0;
+  box-shadow: 0 1px 4px rgba(255,45,123,.3);
+  animation: badge-glow 3s ease-in-out infinite alternate;
+}
+.video-badge svg { width: 10px; height: 10px; fill: currentColor; }
+@keyframes badge-glow {
+  0% { box-shadow: 0 1px 4px rgba(255,45,123,.3); }
+  100% { box-shadow: 0 2px 8px rgba(255,45,123,.5); }
+}
+.shorts-badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-d));
+  color: #fff; font-size: .6rem; font-weight: 700;
+  padding: 2px 7px; border-radius: 10px;
+  letter-spacing: .03em; white-space: nowrap; flex-shrink: 0;
+}
+
 /* --- Mood Cards --- */
 .mood-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
 .mood-card {
