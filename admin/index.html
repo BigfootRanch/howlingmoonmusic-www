@@ -966,6 +966,14 @@ tr:hover td{background:rgba(201,168,76,0.03)}
   </div>
 </div>
 
+<!-- PERSON DOSSIER MODAL -->
+<div class="modal-overlay" id="personDossierModal">
+  <div class="modal" style="max-width:800px;max-height:85vh;overflow-y:auto">
+    <div class="modal-title"><span id="dossierTitle">Person Dossier</span> <button class="modal-close" data-modal="personDossierModal">&times;</button></div>
+    <div id="dossierBody" style="font-size:0.85rem;color:var(--cream);line-height:1.7"></div>
+  </div>
+</div>
+
 <!-- SONG PIPELINE DETAIL MODAL -->
 <div class="modal-overlay" id="songDetailModal">
   <div class="modal" style="max-width:700px">
@@ -2780,7 +2788,9 @@ tr:hover td{background:rgba(201,168,76,0.03)}
         var card = mk('div', {cls:'sec-person-card'});
         var info = mk('div', {cls:'sec-person-info'});
         var labelRow = mk('div', {cls:'sec-person-label'});
-        labelRow.appendChild(txt(p.label || 'Unknown'));
+        var nameLink = mk('a', {text: p.label || 'Unknown', style:'color:var(--gold);cursor:pointer;text-decoration:underline;font-weight:600'});
+        nameLink.addEventListener('click', function(e) { e.stopPropagation(); openPersonDossier(p); });
+        labelRow.appendChild(nameLink);
         labelRow.appendChild(txt(' '));
         var tType = (p.person_type || 'unknown').toLowerCase();
         var typeCls = (tType === 'stalker' || tType === 'blocked') ? 'badge-red' : tType === 'law_enforcement' ? 'badge-orange' : tType === 'industry' ? 'badge-gold' : tType === 'fan' ? 'badge-green' : tType === 'friend' ? 'badge-green' : 'badge-smoke';
@@ -2813,6 +2823,124 @@ tr:hover td{background:rgba(201,168,76,0.03)}
         c.appendChild(card);
       });
     });
+  }
+
+  function openPersonDossier(p) {
+    $('dossierTitle').textContent = (p.label || 'Unknown') + ' — Full Dossier';
+    var body = $('dossierBody');
+    clearEl(body);
+
+    var threatLvl = (p.threat_level || 'normal').toLowerCase();
+    var tColor = threatLvl === 'danger' ? '#ef4444' : threatLvl === 'alert' ? '#f97316' : threatLvl === 'watch' ? '#eab308' : '#22c55e';
+
+    function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+    function addSec(icon, title, text) {
+      var sec = document.createElement('div');
+      sec.style.cssText = 'margin-bottom:1rem';
+      var hdr = document.createElement('div');
+      hdr.style.cssText = 'font-weight:600;color:var(--gold);border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:0.3rem;margin-bottom:0.5rem';
+      hdr.textContent = icon + ' ' + title;
+      sec.appendChild(hdr);
+      var content = document.createElement('div');
+      content.style.cssText = 'white-space:pre-wrap;font-size:0.82rem;color:var(--cream)';
+      content.textContent = text;
+      sec.appendChild(content);
+      body.appendChild(sec);
+    }
+
+    // Header with threat level
+    var header = document.createElement('div');
+    header.style.cssText = 'display:flex;gap:1rem;align-items:center;margin-bottom:1rem;padding:0.75rem;border-radius:8px;background:rgba(255,255,255,0.05)';
+    var dot = document.createElement('span');
+    dot.style.cssText = 'font-size:1.3rem;font-weight:700;color:' + tColor;
+    dot.textContent = '⬤ ' + threatLvl.toUpperCase();
+    header.appendChild(dot);
+    var typeSpan = document.createElement('span');
+    typeSpan.style.cssText = 'font-size:0.85rem;color:var(--smoke)';
+    typeSpan.textContent = (p.person_type || 'unknown').replace(/_/g,' ').toUpperCase();
+    header.appendChild(typeSpan);
+    var locSpan = document.createElement('span');
+    locSpan.style.cssText = 'font-size:0.85rem;color:var(--smoke)';
+    locSpan.textContent = [p.city, p.region, p.country].filter(Boolean).join(', ');
+    header.appendChild(locSpan);
+    body.appendChild(header);
+
+    var loc = [p.city, p.region, p.country].filter(Boolean).join(', ');
+    if (loc) addSec('📍', 'Location', loc);
+
+    // Social Media as clickable links
+    var socials = p.known_social_accounts || [];
+    if (socials.length > 0) {
+      var sSec = document.createElement('div');
+      sSec.style.cssText = 'margin-bottom:1rem';
+      var sHdr = document.createElement('div');
+      sHdr.style.cssText = 'font-weight:600;color:var(--gold);border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:0.3rem;margin-bottom:0.5rem';
+      sHdr.textContent = '📱 Social Media';
+      sSec.appendChild(sHdr);
+      socials.forEach(function(s) {
+        var a = document.createElement('a');
+        a.href = s;
+        a.target = '_blank';
+        a.style.cssText = 'color:var(--gold);text-decoration:underline;display:block;margin:2px 0;font-size:0.82rem';
+        a.textContent = s;
+        sSec.appendChild(a);
+      });
+      body.appendChild(sSec);
+    }
+
+    var emails = p.known_emails || [];
+    var phones = p.known_phones || [];
+    if (emails.length > 0) addSec('📧', 'Emails', emails.join('\n'));
+    if (phones.length > 0) addSec('📞', 'Phones', phones.join('\n'));
+    var ips = p.known_ips || [];
+    if (ips.length > 0) addSec('🌐', 'Known IPs', ips.join('\n'));
+    addSec('👁️', 'Visitor Intel', 'Last seen: ' + (p.last_seen_at ? fmtDate(p.last_seen_at) : 'Never') + '\nTotal visits: ' + (p.total_visits || 0));
+    if (p.notes) addSec('📋', 'Intel Notes', p.notes);
+
+    // Fetch related intel reports from knowledge_library
+    var kSec = document.createElement('div');
+    kSec.style.cssText = 'margin-bottom:1rem';
+    var kHdr = document.createElement('div');
+    kHdr.style.cssText = 'font-weight:600;color:var(--gold);border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:0.3rem;margin-bottom:0.5rem';
+    kHdr.textContent = '🗂️ Intelligence Reports (loading...)';
+    kSec.appendChild(kHdr);
+    body.appendChild(kSec);
+
+    var nameWords = (p.label || '').split(/[\s,\/\-]+/).filter(function(w){return w.length>2 && w.toUpperCase()!=='STALKER' && w.toUpperCase()!=='WATCH' && w.toUpperCase()!=='DOB';});
+    q('knowledge_library', 'category=eq.security&order=created_at.desc&limit=30').then(function(entries) {
+      var matches = (entries||[]).filter(function(e) {
+        var t = ((e.title||'') + ' ' + (e.content||'')).toLowerCase();
+        return nameWords.some(function(w) { return w.length > 3 && t.indexOf(w.toLowerCase()) >= 0; });
+      });
+      kHdr.textContent = '🗂️ Intelligence Reports (' + matches.length + ')';
+      if (matches.length > 0) {
+        matches.forEach(function(m) {
+          var entry = document.createElement('div');
+          entry.style.cssText = 'margin:0.5rem 0;padding:0.5rem;border-radius:6px;background:rgba(255,255,255,0.03);border-left:3px solid var(--gold)';
+          var eTitle = document.createElement('div');
+          eTitle.style.cssText = 'font-weight:600;font-size:0.82rem;color:var(--cream)';
+          eTitle.textContent = m.title || '';
+          entry.appendChild(eTitle);
+          var eMeta = document.createElement('div');
+          eMeta.style.cssText = 'font-size:0.75rem;color:var(--smoke);margin:0.25rem 0';
+          eMeta.textContent = (m.created_at ? fmtDate(m.created_at) : '') + ' • ' + ((m.tags||[]).join(', '));
+          entry.appendChild(eMeta);
+          var eBody = document.createElement('div');
+          eBody.style.cssText = 'font-size:0.8rem;color:var(--cream);white-space:pre-wrap;max-height:200px;overflow-y:auto';
+          eBody.textContent = (m.content||'').substring(0,2000);
+          entry.appendChild(eBody);
+          kSec.appendChild(entry);
+        });
+      } else {
+        var noData = document.createElement('div');
+        noData.style.cssText = 'color:var(--smoke);font-size:0.82rem';
+        noData.textContent = 'No matching intel reports found. Run Shadow agent to collect data.';
+        kSec.appendChild(noData);
+      }
+    });
+
+    openModal('personDossierModal');
   }
 
   function resetPersonForm() {
