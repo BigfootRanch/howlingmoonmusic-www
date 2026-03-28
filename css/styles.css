@@ -872,11 +872,13 @@ p { color: var(--ts); max-width: 700px; font-size: 1.05rem; }
   max-width: 680px;
   font-size: 1.05rem;
   line-height: 2;
-  color: #fff;
+  color: #f8f5f0 !important;
   font-style: italic;
 }
 .story-text p {
   margin-bottom: 1.2rem;
+  color: #f8f5f0 !important;
+  opacity: 1 !important;
 }
 
 /* Lyrics Section */
