@@ -21,7 +21,6 @@
   <meta name="twitter:image" content="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png">
   <link rel="icon" href="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png">
   <link rel="stylesheet" href="../css/styles.css">
-  <link rel="stylesheet" href="../css/hm-fans.css">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"MusicRecording","name":"Lump of Coal","url":"https://howlingmoonmusic.com/songs/lump-of-coal.html","genre":"Holiday / Country / Tropical","byArtist":{"@type":"MusicGroup","name":"The Dogmother","alternateName":"Valentina Talor"},"image":"https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png","inAlbum":{"@type":"MusicAlbum","name":"DogMother Christmas 2025"},"isrcCode":"QT3FF2536583"}</script>
 </head>
 <body class="song-page-body">
@@ -57,6 +56,7 @@
   <div class="container">
     <a href="/music.html" class="back-link">&larr; All Music</a>
     <div class="song-hero-inner">
+      <div class="song-hero-art"><img src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/artwork/album-christmas-2025-cover.png" alt="Lump of Coal — Album Art" loading="lazy"></div>
       <div class="song-hero-text">
         <h1 class="song-title">Lump of Coal</h1>
         <p class="song-artist">Valentina &middot; Howling Moon Music</p>
@@ -66,6 +66,7 @@
         </div>
         <!-- Quick-jump navigation -->
         <div class="song-nav">
+          <a href="#video" class="song-nav__btn song-nav__btn--video">Watch</a>
           <a href="#stream" class="song-nav__btn">Stream It</a>
           <a href="#buy" class="song-nav__btn">Buy &amp; Download</a>
           <a href="#story" class="song-nav__btn">Behind the Song</a>
@@ -109,6 +110,24 @@
     </button>
   </div>
 
+  
+  <!-- Video Section -->
+  <section class="song-section" id="video">
+    <h2>Watch</h2>
+    <div class="yt-embed">
+      <iframe src="https://www.youtube.com/embed/9SzRCl7qZgk" title="Lump of Coal — The Dogmother" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+    <h3 style="margin-top:1.5rem;color:var(--ts);font-family:var(--font-d);">Shorts</h3>
+    <div class="yt-shorts-row">
+      <div class="yt-short">
+        <iframe src="https://www.youtube.com/embed/0VFAukvhg84" title="Short — Lump of Coal" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <div class="yt-short">
+        <iframe src="https://www.youtube.com/embed/vrkh4RyBc1o" title="Short — Lump of Coal" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
   <!-- Stream Section -->
   <section class="song-section" id="stream">
     <h2>Stream It</h2>
@@ -125,7 +144,7 @@
   <section class="song-section" id="buy">
     <h2>Buy &amp; Download</h2>
     <div class="buy-section">
-      <p style="color:rgba(255,255,255,.85);margin-bottom:0.5rem;">Own it forever. No subscription needed.</p>
+      <p style="color:rgba(255,255,255,.55);margin-bottom:0.5rem;">Own it forever. No subscription needed.</p>
       <div class="buy-grid">
         <a href="mailto:howlingmoonmusic@gmail.com?subject=Purchase:%20Lump%20of%20Coal" class="buy-btn">
           <span class="buy-label">Buy This Song</span>
@@ -191,16 +210,16 @@ No gifts, no grace — just a lump of coal.
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
+        <a href="name-above-all-names.html" class="more-song-card">
+          <h4>Name Above All Names</h4>
+          <p>Valentina</p>
+        </a>
+        <a href="slobbery-kiss.html" class="more-song-card">
+          <h4>Slobbery Kiss</h4>
+          <p>Valentina</p>
+        </a>
         <a href="smoky-mountain-snow.html" class="more-song-card">
           <h4>Smoky Mountain Snow</h4>
-          <p>Valentina</p>
-        </a>
-        <a href="christmas-on-the-beach.html" class="more-song-card">
-          <h4>Christmas on the Beach</h4>
-          <p>Valentina</p>
-        </a>
-        <a href="only-gift-i-need.html" class="more-song-card">
-          <h4>Only Gift I Need</h4>
           <p>Valentina</p>
         </a>
     </div>
@@ -228,7 +247,5 @@ document.getElementById('mobBtn').addEventListener('click',()=>{document.getElem
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
 </script>
-<script src="/js/hm-fans.js" defer></script>
-<script src="/js/hm-track.js" defer></script>
 </body>
 </html>
