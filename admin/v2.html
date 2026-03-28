@@ -1376,7 +1376,7 @@ tr:hover td{background:rgba(201,168,76,0.03)}
     q('knowledge_library', 'select=id').then(function(d) {
       $('statKnowledge').textContent = Array.isArray(d) ? d.length : 0;
     });
-    q('social_media_drafts', 'select=id').then(function(d) {
+    q('social_media_queue', 'select=id').then(function(d) {
       $('statSocial').textContent = Array.isArray(d) ? d.length : 0;
     });
     q('agent_chat_threads', 'select=id').then(function(d) {
@@ -1931,7 +1931,7 @@ tr:hover td{background:rgba(201,168,76,0.03)}
     if (platform) params += '&platform=eq.' + platform;
     if (status) params += '&status=eq.' + status;
 
-    q('social_media_drafts', params).then(function(data) {
+    q('social_media_queue', params).then(function(data) {
       var c = $('socialCards');
       clearEl(c);
       if (!Array.isArray(data) || data.length === 0) {
@@ -1940,17 +1940,38 @@ tr:hover td{background:rgba(201,168,76,0.03)}
       }
       var grid = mk('div', {cls:'cards'});
       data.forEach(function(p) {
-        var card = mk('div', {cls:'social-card'});
+        var card = mk('div', {cls:'social-card', style:'cursor:pointer'});
         var header = mk('div', {cls:'social-card-header'});
         header.appendChild(mk('span', {cls:'social-platform', text: pIcon(p.platform) + ' ' + (p.platform || '')}));
         header.appendChild(mkBadge(p.status));
         card.appendChild(header);
-        card.appendChild(mk('div', {cls:'social-caption', text: p.content || 'No content'}));
+        var caption = p.caption || 'No content';
+        var tags = (p.hashtags || []).join(' ');
+        card.appendChild(mk('div', {cls:'social-caption', text: caption}));
+        if (tags) card.appendChild(mk('div', {style:'font-size:0.72rem;color:var(--gold);margin-top:0.3rem;word-break:break-all', text: tags}));
         var meta = mk('div', {cls:'social-meta'});
-        if (p.scheduled_for) meta.appendChild(mk('span', {text: '\uD83D\uDCC5 ' + fmtDate(p.scheduled_for)}));
-        if (p.created_by) meta.appendChild(mk('span', {text: 'by ' + p.created_by}));
+        if (p.post_type) meta.appendChild(mk('span', {text: p.post_type}));
+        if (p.scheduled_for) meta.appendChild(mk('span', {text: fmtDate(p.scheduled_for)}));
+        if (p.generated_by) meta.appendChild(mk('span', {text: 'by ' + p.generated_by}));
         meta.appendChild(mk('span', {text: timeAgo(p.created_at)}));
         card.appendChild(meta);
+        // Approve/Reject buttons for draft posts
+        if (p.status === 'draft') {
+          var actions = mk('div', {style:'display:flex;gap:0.5rem;margin-top:0.75rem'});
+          var approveBtn = mk('button', {cls:'btn btn-sm', style:'background:var(--green);color:#fff;border:none;padding:0.4rem 1rem;border-radius:4px;cursor:pointer;font-size:0.72rem', text:'Approve'});
+          approveBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            patchData('social_media_queue', 'id=eq.' + p.id, {status:'approved', approved_by:'ceo'}).then(loadSocial);
+          });
+          var rejectBtn = mk('button', {cls:'btn btn-sm', style:'background:var(--red);color:#fff;border:none;padding:0.4rem 1rem;border-radius:4px;cursor:pointer;font-size:0.72rem', text:'Reject'});
+          rejectBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            patchData('social_media_queue', 'id=eq.' + p.id, {status:'rejected'}).then(loadSocial);
+          });
+          actions.appendChild(approveBtn);
+          actions.appendChild(rejectBtn);
+          card.appendChild(actions);
+        }
         grid.appendChild(card);
       });
       c.appendChild(grid);
@@ -1961,11 +1982,11 @@ tr:hover td{background:rgba(201,168,76,0.03)}
     var content = $('postCaption').value.trim();
     if (!content) { alert('Please enter content.'); return; }
     var mediaUrl = $('postMedia').value.trim();
-    postData('social_media_drafts', {
-      platform: $('postPlatform').value, content: content,
+    postData('social_media_queue', {
+      platform: $('postPlatform').value, caption: content,
       scheduled_for: $('postScheduled').value || null, status: $('postStatus').value,
       media_urls: mediaUrl ? [mediaUrl] : [],
-      created_by: 'admin'
+      generated_by: 'admin'
     }).then(function() { closeModal('newPostModal'); loadSocial(); })
       .catch(function(e) { alert('Failed to save post: ' + e.message); });
   });
