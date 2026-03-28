@@ -21,7 +21,6 @@
   <meta name="twitter:image" content="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png">
   <link rel="icon" href="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png">
   <link rel="stylesheet" href="../css/styles.css">
-  <link rel="stylesheet" href="../css/hm-fans.css">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"MusicRecording","name":"Kick Your Ass","url":"https://howlingmoonmusic.com/songs/kick-your-ass.html","genre":"Gen X Rage / Rock","byArtist":{"@type":"MusicGroup","name":"The Dogmother","alternateName":"Valentina Talor"},"image":"https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png","inAlbum":{"@type":"MusicAlbum","name":"GenX Rage & Red Lipstick"}}</script>
 </head>
 <body class="song-page-body">
@@ -66,6 +65,7 @@
         </div>
         <!-- Quick-jump navigation -->
         <div class="song-nav">
+          <a href="#video" class="song-nav__btn song-nav__btn--video">Watch</a>
           <a href="#stream" class="song-nav__btn">Stream It</a>
           <a href="#buy" class="song-nav__btn">Buy &amp; Download</a>
           <a href="#story" class="song-nav__btn">Behind the Song</a>
@@ -109,6 +109,18 @@
     </button>
   </div>
 
+  
+  <!-- Video Section -->
+  <section class="song-section" id="video">
+    <h2>Watch</h2>
+    <h3 style="margin-top:1.5rem;color:var(--ts);font-family:var(--font-d);">YouTube Shorts</h3>
+    <div class="yt-shorts-row">
+      <div class="yt-short">
+        <iframe src="https://www.youtube.com/embed/fvGXCcqBqy4" title="Short — Kick Your Ass" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
   <!-- Stream Section -->
   <section class="song-section" id="stream">
     <h2>Stream It</h2>
@@ -125,7 +137,7 @@
   <section class="song-section" id="buy">
     <h2>Buy &amp; Download</h2>
     <div class="buy-section">
-      <p style="color:rgba(255,255,255,.85);margin-bottom:0.5rem;">Own it forever. No subscription needed.</p>
+      <p style="color:rgba(255,255,255,.55);margin-bottom:0.5rem;">Own it forever. No subscription needed.</p>
       <div class="buy-grid">
         <a href="mailto:howlingmoonmusic@gmail.com?subject=Purchase:%20Kick%20Your%20Ass" class="buy-btn">
           <span class="buy-label">Buy This Song</span>
@@ -150,8 +162,7 @@
     <div class="pink-divider"></div>
     <div class="story-card">
       <div class="story-text">
-        <p><em>&ldquo;Country bar energy with a mean grin.&rdquo;</em></p>
-        <p>This is bar song swagger &mdash; rowdy, funny, tough, and built for attitude. It hits that loud, boots-on-the-floor, don&rsquo;t-push-me mood.</p>
+        <p>Story coming soon...</p>
       </div>
     </div>
   </section>
@@ -161,7 +172,7 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-<em style="color:rgba(255,255,255,.7)">Lyrics coming soon...</em>
+<em style="color:rgba(255,255,255,.35)">Lyrics coming soon...</em>
     </div>
   </section>
 
@@ -169,16 +180,16 @@
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="zero-rips-left.html" class="more-song-card">
-          <h4>Zero Rips Left</h4>
+        <a href="keep-pushing-me.html" class="more-song-card">
+          <h4>Keep Pushing Me</h4>
           <p>Valentina</p>
         </a>
         <a href="cant-cure-stupid.html" class="more-song-card">
           <h4>Can&#39;t Cure Stupid</h4>
           <p>Valentina</p>
         </a>
-        <a href="keep-pushing-me.html" class="more-song-card">
-          <h4>Keep Pushing Me</h4>
+        <a href="zero-rips-left.html" class="more-song-card">
+          <h4>Zero Rips Left</h4>
           <p>Valentina</p>
         </a>
     </div>
@@ -206,7 +217,5 @@ document.getElementById('mobBtn').addEventListener('click',()=>{document.getElem
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
 </script>
-<script src="/js/hm-fans.js" defer></script>
-<script src="/js/hm-track.js" defer></script>
 </body>
 </html>
