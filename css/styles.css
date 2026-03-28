@@ -475,6 +475,90 @@ p { color: var(--ts); max-width: 700px; font-size: 1.05rem; }
   letter-spacing: .03em; white-space: nowrap; flex-shrink: 0;
 }
 
+/* --- Listen Now Section --- */
+.listen-now-section { text-align: center; }
+.section-vibe { color: var(--tm); font-size: .85rem; font-style: italic; margin-bottom: 1.2rem; }
+.listen-now-btn {
+  display: inline-flex; align-items: center; gap: 1rem;
+  background: linear-gradient(135deg, var(--pink), var(--pink-d));
+  color: #fff; text-decoration: none; padding: 1.2rem 2.5rem;
+  border-radius: 60px; font-size: 1rem; transition: all .3s;
+  box-shadow: 0 4px 20px rgba(255,45,123,.3);
+}
+.listen-now-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,45,123,.4); }
+.listen-now-text { text-align: left; }
+.listen-now-text span { display: block; font-size: .75rem; opacity: .8; margin-top: .2rem; }
+.play-pulse {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: rgba(255,255,255,.2); position: relative;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.play-pulse::after { content: ''; border-left: 18px solid #fff; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 4px; }
+.play-pulse::before { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid rgba(255,255,255,.3); animation: pulse-ring 2s ease-out infinite; }
+@keyframes pulse-ring { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.4); opacity: 0; } }
+
+/* --- Song Nav Button Variants --- */
+.song-nav__btn--play { background: var(--pink) !important; color: #fff !important; }
+.song-nav__btn--buy { background: var(--gold) !important; color: var(--bg) !important; font-weight: 700; }
+.song-nav__btn--share { border-color: var(--pink) !important; color: var(--pink) !important; }
+
+/* --- Share Section --- */
+.share-section { text-align: center; }
+.share-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: .6rem; max-width: 600px; margin: 0 auto;
+}
+.share-card {
+  display: flex; align-items: center; justify-content: center;
+  padding: .7rem 1rem; border-radius: 8px; font-size: .78rem; font-weight: 600;
+  background: var(--card); border: 1px solid var(--card-b);
+  color: var(--ts); text-decoration: none; cursor: pointer;
+  transition: all .2s; text-align: center;
+}
+.share-card:hover { border-color: var(--pink); color: var(--pink); transform: translateY(-1px); }
+
+/* --- Buy Button Featured --- */
+.buy-btn--featured {
+  background: linear-gradient(135deg, var(--gold), var(--gold-d)) !important;
+  color: var(--bg) !important; border: none !important;
+}
+.buy-btn--featured .buy-label { color: var(--bg); }
+.buy-btn--featured .buy-sub { color: rgba(14,11,8,.6); }
+
+/* --- Campfire Comments --- */
+.campfire-section { text-align: center; }
+.campfire-glow {
+  background: linear-gradient(180deg, rgba(201,168,76,.05) 0%, rgba(255,45,123,.03) 100%);
+  border: 1px solid var(--card-b); border-radius: 12px; padding: 1.5rem; max-width: 640px; margin: 0 auto;
+}
+.campfire-empty { padding: 2rem; color: var(--tm); }
+.fire-emoji { font-size: 2rem; display: block; margin-bottom: .5rem; }
+.campfire-comment {
+  text-align: left; padding: 1rem; border-bottom: 1px solid rgba(201,168,76,.1);
+}
+.campfire-comment:last-child { border-bottom: none; }
+.campfire-author { color: var(--gold); font-size: .85rem; }
+.campfire-comment p { color: var(--ts); font-size: .9rem; margin: .3rem 0; line-height: 1.5; }
+.campfire-time { color: var(--tm); font-size: .7rem; }
+.campfire-pending { opacity: .6; }
+.campfire-form {
+  display: flex; flex-direction: column; gap: .6rem;
+  margin-top: 1.2rem; padding-top: 1.2rem; border-top: 1px solid rgba(201,168,76,.15);
+}
+.campfire-form input, .campfire-form textarea {
+  background: var(--bg); border: 1px solid var(--card-b); color: var(--ts);
+  padding: .7rem 1rem; border-radius: 6px; font-size: .85rem; font-family: inherit;
+  outline: none; transition: border-color .3s;
+}
+.campfire-form input:focus, .campfire-form textarea:focus { border-color: var(--gold); }
+.campfire-submit {
+  background: linear-gradient(135deg, var(--gold), var(--gold-d));
+  color: var(--bg); border: none; padding: .8rem 2rem; border-radius: 6px;
+  font-size: .8rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+  cursor: pointer; transition: all .3s; align-self: flex-start;
+}
+.campfire-submit:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(201,168,76,.3); }
+
 /* --- YouTube Embed on Song Pages --- */
 .yt-embed {
   position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 12px;
