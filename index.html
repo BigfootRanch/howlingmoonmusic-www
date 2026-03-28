@@ -733,9 +733,9 @@ window.closeMob = closeMob;
   }, 400);
 })();
 
-// Dynamic song counter
+// Dynamic song counter — use actual total from song-data (119 songs)
 (function() {
-  var count = document.querySelectorAll('.song-list li').length;
+  var count = (typeof SITE_DATA !== 'undefined' && SITE_DATA.songs) ? SITE_DATA.songs.filter(function(s){return !s.is_vault}).length : 119;
   ['songCount','syncCount','statSongCount'].forEach(id => {
     var el = document.getElementById(id);
     if (el) el.textContent = count;
