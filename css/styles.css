@@ -641,6 +641,12 @@ p { color: var(--ts); max-width: 700px; font-size: 1.05rem; }
   box-shadow: 0 0 30px rgba(255,45,123,.2), 0 12px 40px rgba(0,0,0,.5);
 }
 .song-hero-text { flex: 1; }
+.song-hero-art { flex-shrink: 0; }
+.song-hero-art img {
+  width: 180px; height: 180px; border-radius: 12px; object-fit: cover;
+  border: 2px solid rgba(255,45,123,.35);
+  box-shadow: 0 0 30px rgba(255,45,123,.2), 0 12px 40px rgba(0,0,0,.5);
+}
 
 /* Song Title with shimmer */
 @keyframes song-title-shimmer {
@@ -1034,6 +1040,7 @@ p { color: var(--ts); max-width: 700px; font-size: 1.05rem; }
 @media (max-width: 768px) {
   .song-hero-inner { flex-direction: column; align-items: center; text-align: center; }
   .song-hero-image { width: 140px; height: 140px; }
+  .song-hero-art img { width: 140px; height: 140px; }
   .song-tags { justify-content: center; }
   .song-details { justify-content: center; }
   .listen-options { grid-template-columns: 1fr; }
