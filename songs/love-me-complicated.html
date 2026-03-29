@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Love Me Complicated</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/Love%20me%20complicated%20(1).mp3"></audio>
+    </div>
   </section>
 
   
@@ -164,7 +167,102 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-<em style="color:rgba(255,255,255,.35)">Lyrics coming soon...</em>
+LOVE ME COMPLICATED<br>
+Written by Valentina Talor | The DogMother<br>
+Publisher: Howling Moon Music (BMI)<br>
+February 7, 2026<br>
+———<br>
+[INTRO — Whispered / Half-Spoken]<br>
+Love me… Love me…<br>
+———<br>
+[VERSE 1]<br>
+Love me when I’m young<br>
+Love me when I’m old<br>
+Love me when I’m fire<br>
+Love me when I’m cold<br>
+Love me when I’m steady<br>
+Love me when I sway<br>
+Love me when I know myself<br>
+Love me when I’m afraid<br>
+———<br>
+[PRE-CHORUS]<br>
+I laugh way too loud<br>
+I feel way too deep<br>
+Some days I’m too much<br>
+Some nights I don’t sleep<br>
+(Love me… love me…)<br>
+———<br>
+[CHORUS]<br>
+I’m a saint and a sinner<br>
+I’m a hell yes, hell no<br>
+I’m the one you’d die for<br>
+And the one you can’t control<br>
+Love me complicated<br>
+Don’t love me clean<br>
+If you only want the easy parts<br>
+You don’t want me<br>
+(Love me. Love me. Love me complicated.)<br>
+———<br>
+[POST-CHORUS HOOK]<br>
+Com–pli–cated<br>
+Yeah, com–pli–cated<br>
+———<br>
+[VERSE 2]<br>
+Love me when I’m strong<br>
+Love me when I’m frail<br>
+Love me when I’m flying<br>
+Love me when I fail<br>
+Love me when I’m brilliant<br>
+Love me when I’m numb<br>
+Love me like a warrior<br>
+Love me when I come undone<br>
+———<br>
+[PRE-CHORUS 2]<br>
+I don’t disappear<br>
+When it’s hard or loud<br>
+I don’t turn to silence<br>
+Just to calm things down<br>
+(Don’t leave when it’s hard…)<br>
+———<br>
+[CHORUS]<br>
+I’m a saint and a sinner<br>
+I’m a hell yes, hell no<br>
+I’m the truth you pray for<br>
+And the truth you can’t control<br>
+Love me complicated<br>
+Every bruise, every scar<br>
+If you need me easy<br>
+You don’t need my heart<br>
+(Love me. Love me. Love me complicated.)<br>
+———<br>
+[BRIDGE — Nuclear Honesty]<br>
+If you leave when I’m human<br>
+You never loved me<br>
+If you stay only smiling<br>
+You never saw me<br>
+Love ain’t silence<br>
+Love ain’t clean<br>
+Love is staying<br>
+When it gets mean<br>
+When the night is long<br>
+And I can’t go on<br>
+Will you carry me<br>
+Or be gone<br>
+(Stay… or go… just don’t pretend you don’t know…)<br>
+———<br>
+[FINAL CHORUS — Full Band, No Restraint]<br>
+I’m a saint and a sinner<br>
+I’m a storm and a home<br>
+I’m a fire you can stand by<br>
+Or I walk alone<br>
+Love me complicated<br>
+Not halfway, not small<br>
+If you can’t love all of me<br>
+Don’t love me at all<br>
+Love me. Love me. Love me complicated.<br>
+———<br>
+[OUTRO]<br>
+I’m not hard to love. I’m real.
     </div>
   </section>
 
@@ -191,17 +289,17 @@
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="almost-called.html" class="more-song-card">
-          <h4>Almost Called</h4>
-          <p>Valentina &middot; Country Ballad / Pop</p>
+        <a href="if-tears-could-call-heaven.html" class="more-song-card">
+          <h4>If Tears Could Call Heaven</h4>
+          <p>Valentina &middot; Country Ballad</p>
         </a>
-        <a href="shoreline-sugar.html" class="more-song-card">
-          <h4>Shoreline Sugar</h4>
-          <p>Valentina &middot; Trop Rock / Coastal</p>
+        <a href="dont-be-a-mr-magoo.html" class="more-song-card">
+          <h4>Don&#39;t Be a Mr. Magoo</h4>
+          <p>Valentina &middot; Hip-Hop / Club Banger</p>
         </a>
-        <a href="tangled.html" class="more-song-card">
-          <h4>Tangled</h4>
-          <p>Valentina &middot; R&amp;B / Country Pop</p>
+        <a href="looking-for-my-swagger.html" class="more-song-card">
+          <h4>Looking for My Swagger</h4>
+          <p>JT</p>
         </a>
     </div>
   </section>
@@ -227,6 +325,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

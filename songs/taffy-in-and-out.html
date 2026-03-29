@@ -164,7 +164,15 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-<em style="color:rgba(255,255,255,.35)">Lyrics coming soon...</em>
+[Verse 2]You gaslit my grief like it was a phaseDismissed my rage as a “hormone haze”You said “move on,” while I stitched my soulYou watched me break, then praised controlYou preached “family,” then fed the knifeCut me out like a stain from your lifeBut I bled in ink, not in vainAnd now my truth will stain your name<br>
+[Chorus]Let the exorcism begin — let it roar, let it burnAll the silence is taking its turnEvery insult masked as careEvery chair where I was never thereEvery birthday, call, or lieThat left me ghosted, asking whyThis is sacred, this is sinThis is my emotional exorcism<br>
+[Bridge]You thought I’d go quietlyBut silence was the worst of meYou thought I&#39;d play small againBut I came back with a poisoned penThis isn’t petty, this is painUnmasked, unleashed, unchainedNo filter, no fake, no spin —Let. It. All. Begin.<br>
+[Final Chorus]Let the exorcism begin — let the walls shake from truthI won&#39;t die inside to preserve your youthI’m not your scapegoat, punching bag, jokeI’m the reckoning in every noteNo more caging this wild withinThis is my rage, my cry, my winI broke the chains — peeled off your grinAnd I wrote my name in flame againLet the exorcism begin<br>
+Ready to 🔒 this? Or shall we go deeper into the fire?<br>
+Then we go where the truth is raw and trembling —into the pit they made, where you survived.<br>
+Let me take you there.<br>
+🖤 SONG #5: “The Corner”<br>
+They said you were too much, too angry, too loud —So you sat in the corner and bled in silence.
     </div>
   </section>
 
@@ -191,17 +199,17 @@
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="bigfoot-lives-here.html" class="more-song-card">
-          <h4>Bigfoot Lives Here</h4>
-          <p>Valentina &middot; Country Rock / Novelty</p>
-        </a>
-        <a href="drown-me-in-slobbery-kisses.html" class="more-song-card">
-          <h4>Drown Me in Slobbery Kisses</h4>
-          <p>Valentina &middot; Country Ballad</p>
+        <a href="i-aint-picking-up-your-shit-no-more.html" class="more-song-card">
+          <h4>I Ain&#39;t Picking Up Your Shit No More</h4>
+          <p>Valentina &middot; Southern Rock / Country Rock</p>
         </a>
         <a href="gaslight-and-glitter.html" class="more-song-card">
           <h4>Gaslight &amp; Glitter</h4>
           <p>Valentina &middot; Southern Rock / Country Rock</p>
+        </a>
+        <a href="bigfoot-lives-here.html" class="more-song-card">
+          <h4>Bigfoot Lives Here</h4>
+          <p>Valentina &middot; Country Rock / Novelty</p>
         </a>
     </div>
   </section>
@@ -227,6 +235,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

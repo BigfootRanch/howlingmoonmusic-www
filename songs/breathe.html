@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Breathe</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/Breathe.mp3"></audio>
+    </div>
   </section>
 
   
@@ -164,7 +167,64 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-<em style="color:rgba(255,255,255,.35)">Lyrics coming soon...</em>
+BREATHE<br>
+Written by Valentina Talor | The DogMother<br>
+Publisher: Howling Moon Music (BMI)<br>
+February 24, 2026<br>
+6/8 slow hypnotic frequency — Female raspy contralto vocal, dark and emotional<br>
+Wood flute — Minimal ambient healing<br>
+———<br>
+[MAIN LOOP]<br>
+Breathe in peace<br>
+Breathe in slow<br>
+Let it go<br>
+Let it go<br>
+Close your eyes<br>
+Let it be<br>
+Only breath<br>
+You and me<br>
+———<br>
+[LOOP VARIATION — Slightly Expanded]<br>
+Breathe in peace<br>
+Breathe in slow<br>
+Let the heavy feelings go<br>
+Close your eyes<br>
+Let it be<br>
+Only breath<br>
+You and me<br>
+Only breath<br>
+You and me<br>
+———<br>
+[HYPNOTIC LAYER SECTION — Repeat with Micro Changes]<br>
+Breathe in<br>
+Breathe out<br>
+Soft and low<br>
+No more doubt<br>
+Breathe in<br>
+Breathe slow<br>
+Let it go<br>
+Let it go<br>
+———<br>
+[BRIDGE — Barely Sung, Almost Spoken]<br>
+Nothing to fix<br>
+Nothing to know<br>
+Nothing to carry<br>
+Nowhere to go<br>
+Just this breath<br>
+Moving free<br>
+Only breath<br>
+You and me<br>
+———<br>
+[FINAL LOOP — Fade Structure]<br>
+Breathe in peace<br>
+Breathe in slow<br>
+Let it go<br>
+Let it go<br>
+Only breath<br>
+Only light<br>
+Everything<br>
+Is alright<br>
+(repeat softer each time)
     </div>
   </section>
 
@@ -191,17 +251,17 @@
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="me-and-my-dog.html" class="more-song-card">
-          <h4>Me and My Dog</h4>
-          <p>JT</p>
+        <a href="smoke-me.html" class="more-song-card">
+          <h4>Smoke Me</h4>
+          <p>Valentina</p>
         </a>
-        <a href="i-rise.html" class="more-song-card">
-          <h4>I Rise</h4>
-          <p>Valentina &middot; Country Rock / Orchestral Ballad</p>
+        <a href="down-under.html" class="more-song-card">
+          <h4>Down Under</h4>
+          <p>Valentina</p>
         </a>
-        <a href="daddys-eyes.html" class="more-song-card">
-          <h4>Daddy&#39;s Eyes</h4>
-          <p>Valentina &middot; Country Ballad</p>
+        <a href="god-is-good-to-me.html" class="more-song-card">
+          <h4>God Is Good To Me</h4>
+          <p>Valentina Talor &middot; Gospel Country</p>
         </a>
     </div>
   </section>
@@ -227,6 +287,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Christmas Puppy</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Puppy%20Christmas%20(1).mp3"></audio>
+    </div>
   </section>
 
   
@@ -180,26 +183,26 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-Christmas Puppy
-Valentina
-
-Puppy for Christmas, waiting under the tree,
-Santa bring me a puppy, tie a bow just for me.
-Stockings full of biscuits, jingles in the air,
-Best gift ever, Santa — love is everywhere.
-
-Forget the shiny gadgets, forget the diamond rings,
-Joy is in the barking when the little furball sings.
-Collars jingling brightly, tails that wag all day,
-Puppy kisses make it the merriest holiday.
-
-Snowflakes on the window, paw prints in the snow,
-Little tails are wagging, hearts are full of cheer,
-Puppy love&#39;s the magic gift that lasts the whole year.
-
-Puppy love, puppy cheer,
-Puppy magic every year.
-Wrap them up in love,
+Christmas Puppy<br>
+Valentina<br>
+<br>
+Puppy for Christmas, waiting under the tree,<br>
+Santa bring me a puppy, tie a bow just for me.<br>
+Stockings full of biscuits, jingles in the air,<br>
+Best gift ever, Santa — love is everywhere.<br>
+<br>
+Forget the shiny gadgets, forget the diamond rings,<br>
+Joy is in the barking when the little furball sings.<br>
+Collars jingling brightly, tails that wag all day,<br>
+Puppy kisses make it the merriest holiday.<br>
+<br>
+Snowflakes on the window, paw prints in the snow,<br>
+Little tails are wagging, hearts are full of cheer,<br>
+Puppy love&#39;s the magic gift that lasts the whole year.<br>
+<br>
+Puppy love, puppy cheer,<br>
+Puppy magic every year.<br>
+Wrap them up in love,<br>
 That&#39;s the gift that always grows.
     </div>
   </section>
@@ -227,13 +230,13 @@ That&#39;s the gift that always grows.
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="christmas-on-the-beach.html" class="more-song-card">
-          <h4>Christmas on the Beach</h4>
-          <p>Valentina &middot; Holiday / Trop Rock</p>
+        <a href="slobbery-kiss.html" class="more-song-card">
+          <h4>Slobbery Kiss</h4>
+          <p>Valentina &middot; Country / Novelty</p>
         </a>
-        <a href="luminarias.html" class="more-song-card">
-          <h4>Luminarias</h4>
-          <p>Valentina &middot; Holiday / Southwest</p>
+        <a href="lump-of-coal.html" class="more-song-card">
+          <h4>Lump of Coal</h4>
+          <p>Valentina &middot; Holiday / Country Rock</p>
         </a>
         <a href="name-above-all-names.html" class="more-song-card">
           <h4>Name Above All Names</h4>
@@ -263,6 +266,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

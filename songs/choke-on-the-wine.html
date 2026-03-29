@@ -177,44 +177,44 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-Choke On The Wine
-Valentina
-
-Don&#39;t mistake my silence for weakness — no.
-It&#39;s not my rage you should fear — it&#39;s my restraint.
-It&#39;s the silence that should haunt you, the quiet you mocked.
-Judgment&#39;s coming — and I&#39;m the one who knocks.
-
-You crowned yourself martyr — but the metal is tin.
-Your circus sells lies; my blessings cash in.
-I built in silence what you tried to burn.
-Blessings speak louder than alibis earned.
-
-My name is the ghost on your tongue you can&#39;t shake,
-My name is the ghost on your tongue you can&#39;t shake.
-
-The mirror cracks — your crooked grin.
-Reflections argue who let you in.
-The clock is drowning, the seconds spin.
-Time&#39;s a thief with your bottle of sin.
-
-Every drop screams my name.
-Every drip feeds the flame.
-
-Feast of judgment — I&#39;m the host.
-Take your seat, it&#39;s truth you toast.
-Heaven keeps the ledger, the scars, the names.
-Evidence sings when I don&#39;t — it testifies your shame.
-
-Choke on the wine, choke on the wine,
-You buried me deep, thought I&#39;d never return.
-I crawled from the grave, I walked through the burn.
-How long did you think I would swallow the lie?
-Now judgment has come — and you choke on the wine.
-
-Stains on the table — stains on your hands.
-History written in crimson bands.
-Choke on the wine, choke on the wine.
+Choke On The Wine<br>
+Valentina<br>
+<br>
+Don&#39;t mistake my silence for weakness — no.<br>
+It&#39;s not my rage you should fear — it&#39;s my restraint.<br>
+It&#39;s the silence that should haunt you, the quiet you mocked.<br>
+Judgment&#39;s coming — and I&#39;m the one who knocks.<br>
+<br>
+You crowned yourself martyr — but the metal is tin.<br>
+Your circus sells lies; my blessings cash in.<br>
+I built in silence what you tried to burn.<br>
+Blessings speak louder than alibis earned.<br>
+<br>
+My name is the ghost on your tongue you can&#39;t shake,<br>
+My name is the ghost on your tongue you can&#39;t shake.<br>
+<br>
+The mirror cracks — your crooked grin.<br>
+Reflections argue who let you in.<br>
+The clock is drowning, the seconds spin.<br>
+Time&#39;s a thief with your bottle of sin.<br>
+<br>
+Every drop screams my name.<br>
+Every drip feeds the flame.<br>
+<br>
+Feast of judgment — I&#39;m the host.<br>
+Take your seat, it&#39;s truth you toast.<br>
+Heaven keeps the ledger, the scars, the names.<br>
+Evidence sings when I don&#39;t — it testifies your shame.<br>
+<br>
+Choke on the wine, choke on the wine,<br>
+You buried me deep, thought I&#39;d never return.<br>
+I crawled from the grave, I walked through the burn.<br>
+How long did you think I would swallow the lie?<br>
+Now judgment has come — and you choke on the wine.<br>
+<br>
+Stains on the table — stains on your hands.<br>
+History written in crimson bands.<br>
+Choke on the wine, choke on the wine.<br>
 My life is the light that sings, revealing the truth of who you are.
     </div>
   </section>
@@ -242,17 +242,17 @@ My life is the light that sings, revealing the truth of who you are.
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="favorite-mistake.html" class="more-song-card">
-          <h4>Favorite Mistake</h4>
-          <p>Valentina &middot; Country Rock</p>
-        </a>
         <a href="dont-cry-at-my-funeral.html" class="more-song-card">
           <h4>Don&#39;t Cry At My Funeral</h4>
           <p>Valentina &middot; Country Ballad / Rock</p>
         </a>
-        <a href="still-obsessed.html" class="more-song-card">
-          <h4>Still Obsessed</h4>
-          <p>Valentina &middot; Country Rock / Indie</p>
+        <a href="still-the-asshole.html" class="more-song-card">
+          <h4>Still The Asshole</h4>
+          <p>Valentina &middot; Country Rock / Anthem</p>
+        </a>
+        <a href="good-to-me.html" class="more-song-card">
+          <h4>Good To Me</h4>
+          <p>Valentina &middot; Gospel / Country</p>
         </a>
     </div>
   </section>
@@ -278,6 +278,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

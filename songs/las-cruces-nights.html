@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Las Cruces Nights</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/NEW%20MEXICO%20SONGS/Las%20Cruces%20Nights.mp3"></audio>
+    </div>
   </section>
 
   
@@ -180,32 +183,32 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-Las Cruces Nights
-Valentina
-
-Las Cruces nights,
-Galaxy high,
-Land of enchantment,
-You and I.
-
-Chocolate eddies on your tongue, feel the world unwind,
-Heat waves shimmer, but your hand&#39;s in mine.
-Organ Mountains glow like fire in the haze,
-We got lost in forever, in that desert maze.
-
-Wrapped in a blanket, the coyotes sing,
-Every laugh was a promise, every touch a flame.
-Cold night air, but your body was warm,
-Two souls electric in a desert storm.
-
-Ojos de luna, corazon de sol,
-The desert keeps secrets it will never let go.
-Every star was a vow, every breath was a prayer,
-Las Cruces, mi amor, I&#39;ll always meet you there.
-
-In the land of enchantment where the desert breathes light,
-Heat in the daytime, cold stars at night.
-Hearts slow-dancing on a galaxy high,
+Las Cruces Nights<br>
+Valentina<br>
+<br>
+Las Cruces nights,<br>
+Galaxy high,<br>
+Land of enchantment,<br>
+You and I.<br>
+<br>
+Chocolate eddies on your tongue, feel the world unwind,<br>
+Heat waves shimmer, but your hand&#39;s in mine.<br>
+Organ Mountains glow like fire in the haze,<br>
+We got lost in forever, in that desert maze.<br>
+<br>
+Wrapped in a blanket, the coyotes sing,<br>
+Every laugh was a promise, every touch a flame.<br>
+Cold night air, but your body was warm,<br>
+Two souls electric in a desert storm.<br>
+<br>
+Ojos de luna, corazon de sol,<br>
+The desert keeps secrets it will never let go.<br>
+Every star was a vow, every breath was a prayer,<br>
+Las Cruces, mi amor, I&#39;ll always meet you there.<br>
+<br>
+In the land of enchantment where the desert breathes light,<br>
+Heat in the daytime, cold stars at night.<br>
+Hearts slow-dancing on a galaxy high,<br>
 We&#39;ll always have those Las Cruces nights.
     </div>
   </section>
@@ -233,17 +236,17 @@ We&#39;ll always have those Las Cruces nights.
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="enchanted-green-haze.html" class="more-song-card">
-          <h4>Enchanted Green Haze</h4>
-          <p>Valentina &middot; Trop Rock / Southwest</p>
+        <a href="port-lavaca-paradise.html" class="more-song-card">
+          <h4>Port Lavaca Paradise</h4>
+          <p>Valentina &middot; Trop Rock / Coastal Country</p>
         </a>
         <a href="fields-of-gold.html" class="more-song-card">
           <h4>Fields of Gold</h4>
           <p>Valentina &middot; Country Ballad</p>
         </a>
-        <a href="fireflies-and-fireworks.html" class="more-song-card">
-          <h4>Fireflies &amp; Fireworks</h4>
-          <p>Valentina &middot; Country Rock / Indie</p>
+        <a href="left-my-heart-in-santa-fe.html" class="more-song-card">
+          <h4>Left My Heart In Santa Fe</h4>
+          <p>Valentina &middot; Country / Southwest</p>
         </a>
     </div>
   </section>
@@ -269,6 +272,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

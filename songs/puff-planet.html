@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Puff Planet</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/MUSIC%20ALBUM%20RAINBOW%202025/PUFF%20%20planet%20(1).wav"></audio>
+    </div>
   </section>
 
   
@@ -174,49 +177,49 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-Puff Planet
-Valentina
-
-Puff Planet — where the sky stay hazy,
-Devil&#39;s lettuce got the desert all lazy.
-Should I get a job? Maybe… maybe…
-I&#39;ll just sit here gettin&#39; stoned, go crazy.
-
-Puff Planet — I&#39;m baked, I&#39;m fried,
-Puff Planet — Uber denied,
-Puff Planet — brain&#39;s outside,
-Puff Planet — take another ride.
-
-Green chile smoke? Nah, that&#39;s just haze,
-Santa Fe streets lookin&#39; spaced for days.
-The plug pulled up with a sack so fat,
-Baked chicken in my head, can&#39;t drive like that.
-Clouds roll deep on Stoner Road,
-Lit-up signs say &quot;high&quot; wherever you go.
-Sky high tourists, spaced out crew,
-Even Roswell aliens got the munchies too.
-
-Said I&#39;d call my boss… forgot his name,
-Forgot my password, forgot my game.
-Rolling papers thicker than the Bible verse,
-If Snoop hears this track, he might reimburse.
-Faded smoke rings, float like balloons,
-Carlsbad Caverns hotboxed by noon.
-Even the coyotes howlin&#39; lit tonight,
-Welcome to Puff Planet, we spaced all right.
-
-Las Cruces lunch, chile cheese fries,
-Taos tacos stacked a mile high.
-Albuquerque gummies, chocolate eddies more,
-Even Grandma&#39;s stoned, raiding the store.
-Santa Fe brownies, bless her soul,
-She&#39;s laughin&#39; at cartoons, losin&#39; control.
-From churros to sopapillas, life tastes divine,
-Grandma said, &quot;Pass that joint — it&#39;s mine!&quot;
-
-Ashtray preacher, Sunday choir,
-Pass that joint a little higher.
-Work? Responsibilities? What for?
+Puff Planet<br>
+Valentina<br>
+<br>
+Puff Planet — where the sky stay hazy,<br>
+Devil&#39;s lettuce got the desert all lazy.<br>
+Should I get a job? Maybe… maybe…<br>
+I&#39;ll just sit here gettin&#39; stoned, go crazy.<br>
+<br>
+Puff Planet — I&#39;m baked, I&#39;m fried,<br>
+Puff Planet — Uber denied,<br>
+Puff Planet — brain&#39;s outside,<br>
+Puff Planet — take another ride.<br>
+<br>
+Green chile smoke? Nah, that&#39;s just haze,<br>
+Santa Fe streets lookin&#39; spaced for days.<br>
+The plug pulled up with a sack so fat,<br>
+Baked chicken in my head, can&#39;t drive like that.<br>
+Clouds roll deep on Stoner Road,<br>
+Lit-up signs say &quot;high&quot; wherever you go.<br>
+Sky high tourists, spaced out crew,<br>
+Even Roswell aliens got the munchies too.<br>
+<br>
+Said I&#39;d call my boss… forgot his name,<br>
+Forgot my password, forgot my game.<br>
+Rolling papers thicker than the Bible verse,<br>
+If Snoop hears this track, he might reimburse.<br>
+Faded smoke rings, float like balloons,<br>
+Carlsbad Caverns hotboxed by noon.<br>
+Even the coyotes howlin&#39; lit tonight,<br>
+Welcome to Puff Planet, we spaced all right.<br>
+<br>
+Las Cruces lunch, chile cheese fries,<br>
+Taos tacos stacked a mile high.<br>
+Albuquerque gummies, chocolate eddies more,<br>
+Even Grandma&#39;s stoned, raiding the store.<br>
+Santa Fe brownies, bless her soul,<br>
+She&#39;s laughin&#39; at cartoons, losin&#39; control.<br>
+From churros to sopapillas, life tastes divine,<br>
+Grandma said, &quot;Pass that joint — it&#39;s mine!&quot;<br>
+<br>
+Ashtray preacher, Sunday choir,<br>
+Pass that joint a little higher.<br>
+Work? Responsibilities? What for?<br>
 I&#39;m puffin&#39; promotions at the corner store.
     </div>
   </section>
@@ -244,17 +247,17 @@ I&#39;m puffin&#39; promotions at the corner store.
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="lump-of-coal.html" class="more-song-card">
-          <h4>Lump of Coal</h4>
-          <p>Valentina &middot; Holiday / Country Rock</p>
+        <a href="lost-in-santa-fe.html" class="more-song-card">
+          <h4>Lost in Santa Fe</h4>
+          <p>Valentina &middot; Trop Rock / Country</p>
         </a>
-        <a href="christmas-puppy.html" class="more-song-card">
-          <h4>Christmas Puppy</h4>
-          <p>Valentina &middot; Holiday / Country</p>
+        <a href="port-lavaca-paradise.html" class="more-song-card">
+          <h4>Port Lavaca Paradise</h4>
+          <p>Valentina &middot; Trop Rock / Coastal Country</p>
         </a>
-        <a href="just-peachy.html" class="more-song-card">
-          <h4>Just Peachy</h4>
-          <p>Valentina &middot; Country Pop / Fun</p>
+        <a href="dont-settle.html" class="more-song-card">
+          <h4>Don&#39;t Settle</h4>
+          <p>Valentina</p>
         </a>
     </div>
   </section>
@@ -280,6 +283,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

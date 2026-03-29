@@ -164,7 +164,39 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-<em style="color:rgba(255,255,255,.35)">Lyrics coming soon...</em>
+SHORELINE SUGAR<br>
+Hook Open / Parasitic Motif (0–5 sec)<br>
+Shoreline sugar… Sunshine sweetness…Salt on skin…<br>
+Shoreline sugar… still on my lips…Summer sweetness starting again…<br>
+Chorus<br>
+You taste like watermelon sugarCool and red, running slowLike wet watermelon wineDripping down my spine just soShoreline sweetness, summer sinSalt and sugar on my skinI don’t wanna come insideLet the night stay humid, wild<br>
+Verse 1<br>
+Smiles in the shade, late afternoonHeat hangs heavy like a lazy moonSalt on your skin, silk sheets insideWindows open, tide outside<br>
+You cut the fruit on a paper plateJuice on your fingers, time runs lateEvery little moment feels brand newLike the ocean pulling me back to you<br>
+Hook Tag<br>
+Shoreline sugar… Sunshine sweetness…Salt on skin…<br>
+Shoreline sugar… still on my lips…Summer sweetness starting again…<br>
+You taste like watermelon sugarCool and red, running slowLike wet watermelon wineDripping down my spine just soShoreline sweetness, summer sinSalt and sugar on my skinI don’t wanna come insideLet the night stay humid, wild<br>
+Verse 2<br>
+Bare skin glowing, sunset goldEvery secret soft, untoldNo rush, no names, no need to speakJust your mouth and the heat<br>
+Slow like the waves when they roll back inSweet like the taste that it leaves againEverything hazy, everything rightLost in the warmth of a coastal night<br>
+Shoreline sugar… Sunshine sweetness…Salt on skin…<br>
+Shoreline sugar… still on my lips…Summer sweetness starting again…<br>
+You taste like watermelon sugarCool and red, running slowLike wet watermelon wineDripping down my spine just soShoreline sweetness, summer sinSalt and sugar on my skinI don’t wanna come insideLet the night stay humid, wild<br>
+Bridge (Morning Melt — Perfect Lane)<br>
+I melt in the morning lightWaking up in your arms feels rightStill taste that sweetness on my tongueLike the night ain’t done<br>
+Sun still rising, sheets still warmHolding on through the calm after the stormShoreline sugar, soft and trueEvery road still leads to you<br>
+Shoreline sugar… Sunshine sweetness…Salt on skin…<br>
+Shoreline sugar… still on my lips…Summer sweetness starting again…<br>
+Final Chorus (Repeat + Extended Tag)<br>
+You taste like watermelon sugarCool and red, running slowLike wet watermelon wineDripping down my spine just so<br>
+Shoreline sweetness, summer sinSalt and sugar on my skinI don’t wanna come insideLet the night stay humid, wild<br>
+Shoreline sugar… Sunshine sweetness…Salt on skin…<br>
+Shoreline sugar… still on my lips…Summer sweetness starting again…<br>
+Outro / Hook Fade (Most Important Memory Lock)<br>
+Shoreline sugar…Sunshine sweetness…Still on my lips…Still on my skin…<br>
+Shoreline sugar… Sunshine sweetness…Salt on skin…<br>
+Shoreline sugar… still on my lips…Summer sweetness starting again…
     </div>
   </section>
 
@@ -191,17 +223,17 @@
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="liar-preacher-man.html" class="more-song-card">
-          <h4>Liar, Preacher Man</h4>
+        <a href="zero-fucks.html" class="more-song-card">
+          <h4>Zero Fucks</h4>
           <p>Valentina</p>
         </a>
-        <a href="spurs.html" class="more-song-card">
-          <h4>Spurs</h4>
-          <p>JT &middot; Country</p>
+        <a href="paper-soldier.html" class="more-song-card">
+          <h4>Paper Soldier</h4>
+          <p>JT</p>
         </a>
-        <a href="drowning-in-my-tears.html" class="more-song-card">
-          <h4>Drowning In My Tears</h4>
-          <p>Valentina &middot; Country Ballad / R&amp;B Soul</p>
+        <a href="love-me-complicated.html" class="more-song-card">
+          <h4>Love Me Complicated</h4>
+          <p>Valentina</p>
         </a>
     </div>
   </section>
@@ -227,6 +259,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

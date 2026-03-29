@@ -164,32 +164,32 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-It&#39;s a Bigfoot Christmas
-Valentina
-
-Slobbery kiss under the mistletoe,
-Paw prints shining in the falling snow,
-Gentle giants in the firelight&#39;s glow,
-It&#39;s a Bigfoot Christmas — love&#39;s what we show.
-
-Ornaments fall from the Christmas tree,
-Tails wag wild in their holiday glee.
-Big paws flipping snow on their nose,
-By the fire&#39;s glow, the love only grows.
-
-Dog bones in stockings, toys under the tree,
-Saving turkey scraps for the dogs and me.
-I&#39;ll find you under the mistletoe.
-
-It&#39;s a Bigfoot night and the bonfire&#39;s bright,
-Dogs chase sparks through the winter night.
-From Leonberger pride to the barn cat&#39;s purr,
-Every gift is wrapped in Christmas fur.
-
-Tails thump louder than the Christmas band,
-Joy this big you can&#39;t hold in your hands.
-Every woof and howl is a carol we know,
-Love wrapped in fur, hearts all aglow.
+It&#39;s a Bigfoot Christmas<br>
+Valentina<br>
+<br>
+Slobbery kiss under the mistletoe,<br>
+Paw prints shining in the falling snow,<br>
+Gentle giants in the firelight&#39;s glow,<br>
+It&#39;s a Bigfoot Christmas — love&#39;s what we show.<br>
+<br>
+Ornaments fall from the Christmas tree,<br>
+Tails wag wild in their holiday glee.<br>
+Big paws flipping snow on their nose,<br>
+By the fire&#39;s glow, the love only grows.<br>
+<br>
+Dog bones in stockings, toys under the tree,<br>
+Saving turkey scraps for the dogs and me.<br>
+I&#39;ll find you under the mistletoe.<br>
+<br>
+It&#39;s a Bigfoot night and the bonfire&#39;s bright,<br>
+Dogs chase sparks through the winter night.<br>
+From Leonberger pride to the barn cat&#39;s purr,<br>
+Every gift is wrapped in Christmas fur.<br>
+<br>
+Tails thump louder than the Christmas band,<br>
+Joy this big you can&#39;t hold in your hands.<br>
+Every woof and howl is a carol we know,<br>
+Love wrapped in fur, hearts all aglow.<br>
 I&#39;ll find you under the mistletoe.
     </div>
   </section>
@@ -217,17 +217,17 @@ I&#39;ll find you under the mistletoe.
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
+        <a href="beast-mode-jt.html" class="more-song-card">
+          <h4>Beast Mode JT</h4>
+          <p>JT &middot; Hip-Hop / Rock</p>
+        </a>
         <a href="puppy-kisses.html" class="more-song-card">
           <h4>Puppy Kisses</h4>
           <p>Valentina &middot; Country / Novelty</p>
         </a>
-        <a href="invisible-woman.html" class="more-song-card">
-          <h4>Invisible Woman</h4>
-          <p>Valentina &middot; Country Ballad</p>
-        </a>
-        <a href="not-enough-bottles.html" class="more-song-card">
-          <h4>Not Enough Bottles</h4>
-          <p>Valentina &middot; Country / Drinking Song</p>
+        <a href="dont-start.html" class="more-song-card">
+          <h4>Don&#39;t Start</h4>
+          <p>Valentina &middot; Country Rock</p>
         </a>
     </div>
   </section>
@@ -253,6 +253,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

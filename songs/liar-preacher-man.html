@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Liar, Preacher Man</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/LIAR%2C%20PREACHER%20MAN%20(1).mp3"></audio>
+    </div>
   </section>
 
   
@@ -164,114 +167,114 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-Liar, Preacher Man
-The Dogmother
-February 14, 2026
-
-Saturday drunk Sunday saved
-Liar Preacher man
-
-Preacher man with a Bible raised
-Talking &#39;bout mercy and better days
-Saturday night you&#39;re drunk again
-Sunday morning saying &quot;Amen&quot;
-You&#39;d come home smelling like beer and skin
-Somebody else&#39;s perfume sinking in
-Town started whispering your name
-I told them all they were insane
-I was cooking, rocking babies to sleep
-While you were secrets I had to keep
-
-I held your image up so high
-While you were out there living lies
-
-You&#39;re nothing but a liar
-Liar preacher man
-
-Saturday drunk Sunday saved
-Preach that fire
-While you misbehave
-Preach on Sunday
-Lie all week
-You&#39;re nothing but a liar
-Liar preacher man
-God sees everything
-
-Elders called you in one night
-Said &quot;Son, clear your name, make this right&quot;
-You walked out that back church door
-Left me standing in the war
-Then you spun it like you always do
-Told the world I was untrue
-Said I strayed, said I sinned
-While I was home raising your kids
-Turned my own against my name
-Preacher man, you played the game
-
-You&#39;re nothing but a liar
-Liar preacher man
-
-I stayed quiet for too long
-Thought protecting you was strong
-
-Saturday drunk Sunday saved
-Preach that fire
-While you misbehave
-Preach on Sunday
-Lie all week
-You&#39;re nothing but a liar
-Liar preacher man
-God sees everything
-
-Preacher said he&#39;d give me a ride
-Said the Lord put him by my side
-Just me and preacher on that road
-Dust and darkness, windows closed
-Pulled off where the pines grow thin
-Said I was temptation sent
-Told me hush, don&#39;t say a word
-No one&#39;s gonna believe your hurt
-Said they&#39;d say I chased his hand
-Said I&#39;d be the scarlet brand
-I&#39;m the witness you forgot
-
-Stained glass shaking in the light
-Devil dressed in Sunday white
-
-You&#39;re nothing but a liar
-Liar preacher man
-
-Saturday drunk Sunday saved
-Preach that fire
-While you misbehave
-Preach on Sunday
-Lie all week
-You&#39;re nothing but a liar
-Liar preacher man
-God sees everything
-
-You tore our house all the way down
-Burned it up and blamed the ground
-Wore that cross like it made you clean
-But heaven knows what I have seen
-Truth don&#39;t bend and it don&#39;t forget
-You can&#39;t outrun what you haven&#39;t met
-You&#39;re nothing but a liar
-Liar preacher man
-
-Saturday drunk Sunday saved
-Preach that fire
-While you misbehave
-Preach on Sunday
-Lie all week
-You&#39;re nothing but a liar
-Liar preacher man
-
-Saturday drunk Sunday saved
-You&#39;re nothing but a liar
-Liar preacher man
-God sees everything
-
+Liar, Preacher Man<br>
+The Dogmother<br>
+February 14, 2026<br>
+<br>
+Saturday drunk Sunday saved<br>
+Liar Preacher man<br>
+<br>
+Preacher man with a Bible raised<br>
+Talking &#39;bout mercy and better days<br>
+Saturday night you&#39;re drunk again<br>
+Sunday morning saying &quot;Amen&quot;<br>
+You&#39;d come home smelling like beer and skin<br>
+Somebody else&#39;s perfume sinking in<br>
+Town started whispering your name<br>
+I told them all they were insane<br>
+I was cooking, rocking babies to sleep<br>
+While you were secrets I had to keep<br>
+<br>
+I held your image up so high<br>
+While you were out there living lies<br>
+<br>
+You&#39;re nothing but a liar<br>
+Liar preacher man<br>
+<br>
+Saturday drunk Sunday saved<br>
+Preach that fire<br>
+While you misbehave<br>
+Preach on Sunday<br>
+Lie all week<br>
+You&#39;re nothing but a liar<br>
+Liar preacher man<br>
+God sees everything<br>
+<br>
+Elders called you in one night<br>
+Said &quot;Son, clear your name, make this right&quot;<br>
+You walked out that back church door<br>
+Left me standing in the war<br>
+Then you spun it like you always do<br>
+Told the world I was untrue<br>
+Said I strayed, said I sinned<br>
+While I was home raising your kids<br>
+Turned my own against my name<br>
+Preacher man, you played the game<br>
+<br>
+You&#39;re nothing but a liar<br>
+Liar preacher man<br>
+<br>
+I stayed quiet for too long<br>
+Thought protecting you was strong<br>
+<br>
+Saturday drunk Sunday saved<br>
+Preach that fire<br>
+While you misbehave<br>
+Preach on Sunday<br>
+Lie all week<br>
+You&#39;re nothing but a liar<br>
+Liar preacher man<br>
+God sees everything<br>
+<br>
+Preacher said he&#39;d give me a ride<br>
+Said the Lord put him by my side<br>
+Just me and preacher on that road<br>
+Dust and darkness, windows closed<br>
+Pulled off where the pines grow thin<br>
+Said I was temptation sent<br>
+Told me hush, don&#39;t say a word<br>
+No one&#39;s gonna believe your hurt<br>
+Said they&#39;d say I chased his hand<br>
+Said I&#39;d be the scarlet brand<br>
+I&#39;m the witness you forgot<br>
+<br>
+Stained glass shaking in the light<br>
+Devil dressed in Sunday white<br>
+<br>
+You&#39;re nothing but a liar<br>
+Liar preacher man<br>
+<br>
+Saturday drunk Sunday saved<br>
+Preach that fire<br>
+While you misbehave<br>
+Preach on Sunday<br>
+Lie all week<br>
+You&#39;re nothing but a liar<br>
+Liar preacher man<br>
+God sees everything<br>
+<br>
+You tore our house all the way down<br>
+Burned it up and blamed the ground<br>
+Wore that cross like it made you clean<br>
+But heaven knows what I have seen<br>
+Truth don&#39;t bend and it don&#39;t forget<br>
+You can&#39;t outrun what you haven&#39;t met<br>
+You&#39;re nothing but a liar<br>
+Liar preacher man<br>
+<br>
+Saturday drunk Sunday saved<br>
+Preach that fire<br>
+While you misbehave<br>
+Preach on Sunday<br>
+Lie all week<br>
+You&#39;re nothing but a liar<br>
+Liar preacher man<br>
+<br>
+Saturday drunk Sunday saved<br>
+You&#39;re nothing but a liar<br>
+Liar preacher man<br>
+God sees everything<br>
+<br>
 God sees everything
     </div>
   </section>
@@ -299,17 +302,17 @@ God sees everything
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="cotton-candy.html" class="more-song-card">
-          <h4>Cotton Candy</h4>
+        <a href="when-you-wake.html" class="more-song-card">
+          <h4>When You Wake</h4>
           <p>Valentina</p>
         </a>
-        <a href="i-didnt-die.html" class="more-song-card">
-          <h4>I Didn&#39;t Die</h4>
-          <p>Valentina &middot; Country Rock / Gospel Rock</p>
+        <a href="held-you-first.html" class="more-song-card">
+          <h4>Held You First</h4>
+          <p>JT</p>
         </a>
-        <a href="almost-called.html" class="more-song-card">
-          <h4>Almost Called</h4>
-          <p>Valentina &middot; Country Ballad / Pop</p>
+        <a href="dont-be-a-mr-magoo.html" class="more-song-card">
+          <h4>Don&#39;t Be a Mr. Magoo</h4>
+          <p>Valentina &middot; Hip-Hop / Club Banger</p>
         </a>
     </div>
   </section>
@@ -335,6 +338,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

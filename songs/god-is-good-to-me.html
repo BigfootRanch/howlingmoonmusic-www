@@ -171,7 +171,14 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-<em style="color:rgba(255,255,255,.35)">Lyrics coming soon...</em>
+[Verse 2]They called me too sensitive, too damn deepWhile I cried myself to shallow sleepPretended I was okay for yearsJust so you&#39;d never taste my tearsBut every birthday you skipped, every lie you toldEtched itself into the cracks of my soulNow I carry your absence like a scarA roadmap of where you weren’t, by far<br>
+[Chorus]You never asked if I was okayYou just criticized the words I sayYou missed the moment I broke in halfWhile posting memes and fake-ass laughsYou don’t know the weight of my painYou never stood in the acid rainYou built the fire, watched me burnAnd still asked when I’d learn<br>
+[Bridge]You called it “drama,” I called it truthYou shamed the ashes, I named the proofNow I’m done dimming this sacred flameYou will never erase my nameYou’ll hear me cry, you’ll feel the heatOf every truth you tried to deleteI found my voice in that silent warAnd I’m not in your corner anymore<br>
+[Final Chorus]You never asked how I survivedYou just picked apart what stayed aliveBut I rose in pieces, sharp and trueAnd now the silence screams at youYou don’t get to call it graceWhen you never showed your faceI built my throne from all your shameAnd I remember — you never came<br>
+Want to 🔒 this one in the vault, too? Or go even deeper?<br>
+Yes — you&#39;re right. This one needs to hurt differently.More stillness. More isolation. Not just rage — abandonment.Let me take it there.<br>
+🖤 SONG: &quot;The Corner&quot; (Rewritten: Deeper Cut)<br>
+This is the ache of being emotionally orphaned while everyone plays pretend.Not anger. Not screaming. Just the quiet sob of being unseen.
     </div>
   </section>
 
@@ -198,13 +205,13 @@
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="rock-a-bye-baby.html" class="more-song-card">
-          <h4>Rock a Bye Baby</h4>
-          <p>Valentina Talor &middot; Country</p>
+        <a href="obsessed.html" class="more-song-card">
+          <h4>Obsessed</h4>
+          <p>Valentina Talor &middot; Outlaw Country</p>
         </a>
-        <a href="luminaries.html" class="more-song-card">
-          <h4>Luminaries</h4>
-          <p>Valentina Talor &middot; Southwest Country Soul</p>
+        <a href="tattoo.html" class="more-song-card">
+          <h4>Tattoo</h4>
+          <p>Valentina Talor &middot; Country Soul</p>
         </a>
         <a href="shit-pie.html" class="more-song-card">
           <h4>Shit Pie</h4>
@@ -234,6 +241,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Paper Soldier</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/Paper%20Soldier%20(1).mp3"></audio>
+    </div>
   </section>
 
   
@@ -164,7 +167,105 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-<em style="color:rgba(255,255,255,.35)">Lyrics coming soon...</em>
+PAPER SOLDIER<br>
+Performed by JT | Written by Valentina Talor<br>
+Artist: The DogMother | Publisher: Howling Moon Music (BMI)<br>
+February 19, 2026<br>
+———<br>
+[INTRO / CADENCE]<br>
+Left right left right left<br>
+Who we runnin’ from<br>
+Not a damn thing<br>
+Who we callin’ out<br>
+———<br>
+[HOOK / CHANT]<br>
+POG — paper soldier POG — POG — POG<br>
+POG — paper soldier POG — POG — POG<br>
+POG — paper soldier POG — POG — POG<br>
+That uniform don’t make you hard<br>
+Real soldier — we stand guard<br>
+POG — paper soldier POG — POG — POG<br>
+Out your depth<br>
+Real soldier fights till his final breath<br>
+Clean boots hide behind excuses, don’t deploy, don’t do the hard things<br>
+Real boots kick your door, kick your ass<br>
+POG — paper soldier POG — POG — POG<br>
+See that coward streak down your back<br>
+Fear in your eyes, just a POG — piece of sh**t<br>
+POG — POG — POG<br>
+———<br>
+[VERSE 1 — 9/11 Combat Drop]<br>
+Nine eleven, black sky, no light<br>
+Green light flash, we jump that night<br>
+C-130 packed tight steel<br>
+Young and ready and trained to kill<br>
+No hashtags, no camera roll<br>
+Just cold wind and a heavy load<br>
+You want that patch, earn that ground<br>
+Stripes come stitched through incoming rounds<br>
+———<br>
+[HOOK / CHANT]<br>
+POG — paper soldier POG — POG — POG<br>
+POG — paper soldier POG — POG — POG<br>
+That uniform don’t make you hard<br>
+Real soldier — we stand guard<br>
+POG — paper soldier POG — POG — POG<br>
+Out your depth<br>
+Real soldier fights till his final breath<br>
+Clean boots hide behind excuses, don’t deploy, don’t do the hard things<br>
+Real boots kick your door, kick your ass<br>
+POG — paper soldier POG — POG — POG<br>
+See that coward streak down your back<br>
+Fear in your eyes, just a POG — piece of sh**t<br>
+POG — POG — POG<br>
+———<br>
+[VERSE 2 — The Faker]<br>
+Dodged deployments with a family excuse<br>
+Used diapers like a bulletproof<br>
+Talk rank loud but your boots stay clean<br>
+Whole career safe behind a screen<br>
+Never heard that mortar crack<br>
+Never carried your brother back<br>
+TRADOC tough guy, internet tone<br>
+Combat boots but you stayed home<br>
+This for the ones who really know<br>
+You can’t fake weight you never towed<br>
+———<br>
+[HOOK / CHANT]<br>
+POG — paper soldier POG — POG — POG<br>
+Out your depth<br>
+Real soldier fights till his final breath<br>
+Clean boots hide behind excuses, don’t deploy, don’t do the hard things<br>
+Real boots kick your door, kick your ass<br>
+POG — paper soldier POG — POG — POG<br>
+See that coward streak down your back<br>
+Fear in your eyes, just a POG — piece of sh**t<br>
+POG — POG — POG<br>
+———<br>
+[VERSE 3 — The Weight]<br>
+Some came home but they ain’t the same<br>
+Some still fight in their own damn brain<br>
+Some names carved in stone and steel<br>
+You ain’t built for that<br>
+You ain’t lived that<br>
+You can’t wear weight you never feel<br>
+———<br>
+[FINAL HOOK / CHANT — Full Build]<br>
+POG — paper soldier POG — POG — POG<br>
+POG — paper soldier POG — POG — POG<br>
+That uniform don’t make you hard<br>
+Real soldier — we stand guard<br>
+POG — paper soldier POG — POG — POG<br>
+Out your depth<br>
+Real soldier fights till his final breath<br>
+Clean boots hide behind excuses, don’t deploy, don’t do the hard things<br>
+Real boots kick your door, kick your ass<br>
+POG — paper soldier POG — POG — POG<br>
+See that coward streak down your back<br>
+Fear in your eyes, just a POG — piece of sh**t<br>
+POG — POG — POG<br>
+POG — paper soldier POG — POG — POG<br>
+POG — paper soldier POG — POG — POG
     </div>
   </section>
 
@@ -191,17 +292,17 @@
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="zero-fucks.html" class="more-song-card">
-          <h4>Zero Fucks</h4>
+        <a href="cotton-candy.html" class="more-song-card">
+          <h4>Cotton Candy</h4>
           <p>Valentina</p>
         </a>
-        <a href="dont-be-a-mr-magoo.html" class="more-song-card">
-          <h4>Don&#39;t Be a Mr. Magoo</h4>
-          <p>Valentina &middot; Hip-Hop / Club Banger</p>
+        <a href="coastal-candy.html" class="more-song-card">
+          <h4>Coastal Candy</h4>
+          <p>Valentina &middot; Trop Rock / Coastal</p>
         </a>
-        <a href="almost-called.html" class="more-song-card">
-          <h4>Almost Called</h4>
-          <p>Valentina &middot; Country Ballad / Pop</p>
+        <a href="i-didnt-die.html" class="more-song-card">
+          <h4>I Didn&#39;t Die</h4>
+          <p>Valentina &middot; Country Rock / Gospel Rock</p>
         </a>
     </div>
   </section>
@@ -227,6 +328,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

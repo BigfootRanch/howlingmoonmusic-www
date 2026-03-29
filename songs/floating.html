@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Floating</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/Floating%20(2).mp3"></audio>
+    </div>
   </section>
 
   
@@ -164,7 +167,70 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-<em style="color:rgba(255,255,255,.35)">Lyrics coming soon...</em>
+FLOATING<br>
+Written by Valentina Talor | The DogMother<br>
+Publisher: Howling Moon Music (BMI)<br>
+February 25, 2026<br>
+6/8 slow hypnotic frequency — Female raspy contralto vocal, dark and emotional<br>
+Wood flute — Deep bass shimmer<br>
+———<br>
+[OPENING LOOP]<br>
+No fear here<br>
+No fear here<br>
+Only sky<br>
+Only air<br>
+No fear here<br>
+No fear here<br>
+Nothing falling<br>
+Anywhere<br>
+———<br>
+[WAVE 1]<br>
+Let it loosen<br>
+Let it fade<br>
+Like a shadow<br>
+In the shade<br>
+Nothing chasing<br>
+Nothing near<br>
+No more weight<br>
+No more fear<br>
+———<br>
+[HOOK REPEAT — More Open Tone]<br>
+No fear here<br>
+No fear here<br>
+Only light<br>
+Only clear<br>
+No fear here<br>
+No fear here<br>
+Floating wide<br>
+Disappear<br>
+———<br>
+[FLOATING EXPANSION]<br>
+Drift above<br>
+Drift below<br>
+There’s nowhere<br>
+You have to go<br>
+Soft horizon<br>
+Open sea<br>
+All is wide<br>
+All is free<br>
+———<br>
+[LIFT SECTION — Gentle Harmonic Rise]<br>
+Fear was only passing through<br>
+It was never really you<br>
+Let it thin<br>
+Let it clear<br>
+There is nothing<br>
+Holding here<br>
+———<br>
+[FINAL LOOP — Very Simple, Hypnotic]<br>
+No fear here<br>
+No fear here<br>
+Only sky<br>
+Only clear<br>
+No fear here<br>
+No fear here<br>
+Floating light<br>
+Disappear
     </div>
   </section>
 
@@ -191,17 +257,17 @@
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="never-let-go.html" class="more-song-card">
-          <h4>Never Let Go / Hand in Hand</h4>
-          <p>Valentina &middot; Country Ballad</p>
+        <a href="fireflies-and-fireworks.html" class="more-song-card">
+          <h4>Fireflies &amp; Fireworks</h4>
+          <p>Valentina &middot; Country Rock / Indie</p>
         </a>
-        <a href="enchanted-green-haze.html" class="more-song-card">
-          <h4>Enchanted Green Haze</h4>
-          <p>Valentina &middot; Trop Rock / Southwest</p>
+        <a href="tongue-and-groove.html" class="more-song-card">
+          <h4>Tongue &amp; Groove</h4>
+          <p>Valentina &middot; Country Rock / Country Pop</p>
         </a>
-        <a href="christmas-puppy.html" class="more-song-card">
-          <h4>Christmas Puppy</h4>
-          <p>Valentina &middot; Holiday / Country</p>
+        <a href="rodeo-cowboy.html" class="more-song-card">
+          <h4>Rodeo Cowboy</h4>
+          <p>Valentina &middot; Country Rock / Western</p>
         </a>
     </div>
   </section>
@@ -227,6 +293,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

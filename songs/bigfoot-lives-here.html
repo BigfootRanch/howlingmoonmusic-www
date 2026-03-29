@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Bigfoot Lives Here</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Bigfoot%20Lives%20Here%20_%20Bigfoot%20Leonberger%20Ranch%20Anthem.mp3"></audio>
+    </div>
   </section>
 
   
@@ -164,7 +167,8 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-<em style="color:rgba(255,255,255,.35)">Lyrics coming soon...</em>
+Bigfoot lives hereHe hauled ammo in war now hogs my lazy boy chairBigfoot lives hereFrom battlefield grit to fur in the airBigfoot lives here tail like a flagSits like a king in a Mustang ragFrom bombs to blankets grit to graceHe swats grenades for a five-placeHe&#39;s a flashburger lean on your cuddle pack proWears fluff like armor wherever he goesIf royalty barked and had no fearBigfoot lives hereYeah Bigfoot lives hereBigfoot Ranch that&#39;s the name you hearWhere legends are born and puppies appearRaised from the ashes bred for the braveWith hearts so strong they&#39;ll ride anywayYou&#39;re not just getting a pup you&#39;re holding a piece of historyFour stood tall when the world went darkNow their legacy lives in every barkThey lean they splash they nap and snoreBut make no mistake they were made for warHe blocks the door like a velvet wallThen struts through the kitchen like he owns it allSteals your couch your bed your snacksThen leans in close and never looks backHe&#39;s not just a dog he&#39;s a legend in your homeFrom Europe to Texas where the lion dogs roamSnorts through fireworks never flinchedCarries calm the world can’t pinchThey don’t just cuddle they commandThey don’t just play they understandWhen you welcome one in it’s more than chanceYou join the bloodline of giants<br>
+You don&#39;t just get a pup you hold a piece of historyYou don&#39;t just get a dog you welcome a legend into your homeYou don&#39;t just find a friend you join the bloodline of giantsLet the world spinLet the skeptics sneerThey&#39;ve never met the giantsBigfoot lives here
     </div>
   </section>
 
@@ -191,17 +195,17 @@
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="drown-me-in-slobbery-kisses.html" class="more-song-card">
-          <h4>Drown Me in Slobbery Kisses</h4>
-          <p>Valentina &middot; Country Ballad</p>
-        </a>
-        <a href="taffy-in-and-out.html" class="more-song-card">
-          <h4>Taffy (In &amp; Out)</h4>
-          <p>Valentina &middot; Hip-Hop / Club Rap</p>
+        <a href="mi-hogar.html" class="more-song-card">
+          <h4>Mi Hogar</h4>
+          <p>Valentina &middot; Country Rock w/ Latin</p>
         </a>
         <a href="gaslight-and-glitter.html" class="more-song-card">
           <h4>Gaslight &amp; Glitter</h4>
           <p>Valentina &middot; Southern Rock / Country Rock</p>
+        </a>
+        <a href="taffy-in-and-out.html" class="more-song-card">
+          <h4>Taffy (In &amp; Out)</h4>
+          <p>Valentina &middot; Hip-Hop / Club Rap</p>
         </a>
     </div>
   </section>
@@ -227,6 +231,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

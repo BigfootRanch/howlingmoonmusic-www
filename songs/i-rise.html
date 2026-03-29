@@ -180,7 +180,7 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-<em style="color:rgba(255,255,255,.35)">Lyrics coming soon...</em>
+I fought his demons in the darkClaws at my neckTeeth on my heartDragged by my hair across the floorWorld came crashingLeft me bleedingPromises turned to smokeAnd hope she finally brokeFace in the dirt blood in my hairScreamed at the sky until heaven went blackWhyShame wrapped tight a scarlet noosePreached from pulpitsWhile I lay tremblingBloodstained naked on the floorClawed back to lifeFrom ash and shameI rise I riseWith fire in my nameNobody asked if I was okayWhispered rumors turned awayToo messy to help too loud to praySat alone in the ash and decayFilled the pews and judged the sceneSaid too messy too stainedLike pain made me contagiousSurvival made me shamefulAs if trauma’s a sin you can wash awayFamily said she’s not quite rightBlocked me while I fought for lifeJudged the bruises I didn’t postTurned their backs when I needed them mostI was ashes I was rotI was everything your gospel forgotI was shame you refused to nameGhosted me in Jesus nameClawed back to lifeFrom ash and shameI rise I riseWith fire in my nameNobody asked if I was okayLabeled dismissed erasedNo food for my childNo light in the houseJust frostbit morningsAnd silence too loudHope beggedBledChoked on goodbyeShattered in my throatBuried in a screamNo graveNo nameIn silenceHope diedClawed back to lifeFrom ash and shameI rise I riseWith fire in my nameTwo ravens from aboveDusted me offSaid have brave faithClawed back to lifeFrom ash and shameI rise I riseWith fire in my nameBecause no one cameWhen hope diedClawed back to lifeFrom ash and shameI rise I riseWith fire in my nameClawed back to lifeFrom ash and shameI rise I riseWith fire in my nameClawed back to lifeFrom ash and shameI rise I riseWith fire in my name
     </div>
   </section>
 
@@ -207,9 +207,9 @@
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="this-is-shame.html" class="more-song-card">
-          <h4>This is Shame</h4>
-          <p>Valentina &middot; Country Ballad</p>
+        <a href="crackhead-queen.html" class="more-song-card">
+          <h4>Crackhead Queen</h4>
+          <p>Valentina &middot; Southern Rock / Mystic Rock</p>
         </a>
         <a href="undo-the-spell.html" class="more-song-card">
           <h4>Undo the Spell</h4>
@@ -243,6 +243,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

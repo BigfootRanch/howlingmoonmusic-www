@@ -195,13 +195,13 @@
           <h4>Juicy Peach on Fire</h4>
           <p>Valentina &middot; Southern Rock / Country Rock</p>
         </a>
-        <a href="taffy-in-and-out.html" class="more-song-card">
-          <h4>Taffy (In &amp; Out)</h4>
-          <p>Valentina &middot; Hip-Hop / Club Rap</p>
+        <a href="tongue-and-groove.html" class="more-song-card">
+          <h4>Tongue &amp; Groove</h4>
+          <p>Valentina &middot; Country Rock / Country Pop</p>
         </a>
-        <a href="drown-me-in-slobbery-kisses.html" class="more-song-card">
-          <h4>Drown Me in Slobbery Kisses</h4>
-          <p>Valentina &middot; Country Ballad</p>
+        <a href="gaslight-and-glitter.html" class="more-song-card">
+          <h4>Gaslight &amp; Glitter</h4>
+          <p>Valentina &middot; Southern Rock / Country Rock</p>
         </a>
     </div>
   </section>
@@ -227,6 +227,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

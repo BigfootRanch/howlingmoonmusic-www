@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Still The Asshole</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/still-the-asshole.mp3"></audio>
+    </div>
   </section>
 
   
@@ -180,31 +183,31 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-Still The Asshole
-Valentina
-
-Years later, you&#39;re still cryin&#39;,
-Wearin&#39; your crown but the world ain&#39;t buyin&#39;.
-Fake your scars for a hometown show,
-But I was there — and the truth still knows.
-
-You&#39;re still the asshole, after all this time,
-Wearin&#39; your crown, but the truth is mine.
-You&#39;re still the asshole, can&#39;t rewrite the night,
-I walked out free, and I walk in light.
-Still the asshole, still the asshole,
-Still the asshole, still the asshole.
-I walk in light, I walk in light,
-I walk in light, I walk in light.
-
-Flying monkeys cheer your name,
-But behind closed doors it&#39;s a different game.
-Stories twisted, day versus night,
-The one who walks free is the one in light.
-
-Fake victim crown, hold it high,
-But the crowd can see the lie.
-Truth don&#39;t bend, it don&#39;t fade —
+Still The Asshole<br>
+Valentina<br>
+<br>
+Years later, you&#39;re still cryin&#39;,<br>
+Wearin&#39; your crown but the world ain&#39;t buyin&#39;.<br>
+Fake your scars for a hometown show,<br>
+But I was there — and the truth still knows.<br>
+<br>
+You&#39;re still the asshole, after all this time,<br>
+Wearin&#39; your crown, but the truth is mine.<br>
+You&#39;re still the asshole, can&#39;t rewrite the night,<br>
+I walked out free, and I walk in light.<br>
+Still the asshole, still the asshole,<br>
+Still the asshole, still the asshole.<br>
+I walk in light, I walk in light,<br>
+I walk in light, I walk in light.<br>
+<br>
+Flying monkeys cheer your name,<br>
+But behind closed doors it&#39;s a different game.<br>
+Stories twisted, day versus night,<br>
+The one who walks free is the one in light.<br>
+<br>
+Fake victim crown, hold it high,<br>
+But the crowd can see the lie.<br>
+Truth don&#39;t bend, it don&#39;t fade —<br>
 Freedom&#39;s the fire I already made.
     </div>
   </section>
@@ -232,10 +235,6 @@ Freedom&#39;s the fire I already made.
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="villain.html" class="more-song-card">
-          <h4>Villain</h4>
-          <p>Valentina &middot; Country Rock / Indie</p>
-        </a>
         <a href="still-obsessed.html" class="more-song-card">
           <h4>Still Obsessed</h4>
           <p>Valentina &middot; Country Rock / Indie</p>
@@ -243,6 +242,10 @@ Freedom&#39;s the fire I already made.
         <a href="dont-cry-at-my-funeral.html" class="more-song-card">
           <h4>Don&#39;t Cry At My Funeral</h4>
           <p>Valentina &middot; Country Ballad / Rock</p>
+        </a>
+        <a href="choke-on-the-wine.html" class="more-song-card">
+          <h4>Choke On The Wine</h4>
+          <p>Valentina &middot; Country Rock / Dark</p>
         </a>
     </div>
   </section>
@@ -268,6 +271,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

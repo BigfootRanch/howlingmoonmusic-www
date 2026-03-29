@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Tattoo In Albuquerque</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/NEW%20MEXICO%20SONGS/Tattoo.mp3"></audio>
+    </div>
   </section>
 
   
@@ -177,22 +180,22 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-Tattoo In Albuquerque
-Valentina
-
-Dusty roads, sacred stone,
-Every scar says you&#39;re not alone.
-Blood and fire, sky so blue,
-Tattoo in Albuquerque — burning through.
-
-The needle burned the silence, fire cut my skin,
-The desert in the colors and the mirror grinned.
-Not just paint or shadow, not just flesh and bone,
-The desert carved its memory — it marked me as its own.
-
-Ancient ghosts were whisperin&#39;, shadows pulled me near,
-Desert winds kept tellin&#39; me, your missing truth is here.
-Every road that broke me, every star that pulled me through,
+Tattoo In Albuquerque<br>
+Valentina<br>
+<br>
+Dusty roads, sacred stone,<br>
+Every scar says you&#39;re not alone.<br>
+Blood and fire, sky so blue,<br>
+Tattoo in Albuquerque — burning through.<br>
+<br>
+The needle burned the silence, fire cut my skin,<br>
+The desert in the colors and the mirror grinned.<br>
+Not just paint or shadow, not just flesh and bone,<br>
+The desert carved its memory — it marked me as its own.<br>
+<br>
+Ancient ghosts were whisperin&#39;, shadows pulled me near,<br>
+Desert winds kept tellin&#39; me, your missing truth is here.<br>
+Every road that broke me, every star that pulled me through,<br>
 The desert runs inside me — my forever truth.
     </div>
   </section>
@@ -220,17 +223,17 @@ The desert runs inside me — my forever truth.
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="enchanted-green-haze.html" class="more-song-card">
-          <h4>Enchanted Green Haze</h4>
-          <p>Valentina &middot; Trop Rock / Southwest</p>
-        </a>
-        <a href="lightning-strikes.html" class="more-song-card">
-          <h4>Lightning Strikes</h4>
-          <p>Valentina &middot; Country Rock / Power Ballad</p>
+        <a href="fields-of-gold.html" class="more-song-card">
+          <h4>Fields of Gold</h4>
+          <p>Valentina &middot; Country Ballad</p>
         </a>
         <a href="rainbow.html" class="more-song-card">
           <h4>Rainbow</h4>
           <p>Valentina &middot; Country Rock / Indie</p>
+        </a>
+        <a href="enchanted-green-haze.html" class="more-song-card">
+          <h4>Enchanted Green Haze</h4>
+          <p>Valentina &middot; Trop Rock / Southwest</p>
         </a>
     </div>
   </section>
@@ -256,6 +259,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

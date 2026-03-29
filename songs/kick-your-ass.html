@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Kick Your Ass</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/Kick%20your%20ass%20(Remastered).wav"></audio>
+    </div>
   </section>
 
   
@@ -174,52 +177,52 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-Kick Your Ass
-Valentina
-
-I can&#39;t kick your ass — and you know why,
-You&#39;ll call 9-1-1 and start your crocodile cry.
-&quot;Officer, he touched me!&quot; — oh, give me a break,
-You gaslight, cancel, manipulate.
-
-Sick of your lies, sick of your shit,
-Tired of the mind games, can&#39;t handle it.
-Rules and &quot;boundaries,&quot; fake victim crown,
-One of these days I&#39;m gonna lay you down.
-
-And when that day comes, I&#39;ll smile at last,
-My mugshot grinnin&#39; — for whoopin&#39; your ass!
-
-Kick your ass! (HEY!)
-Boot in ass! (HEY!)
-Smile in the mugshot — yeah, it was worth that! (HEY!)
-Mama should&#39;ve spanked you where the Lord split ya! (HEY!)
-Kick your ass! (HEY!)
-Boot in ass! (HEY!)
-
-No therapist needed, no doctor&#39;s pass,
-Just old-school justice — a boot in the ass!
-
-Kick your ass! (HEY!)
-Boot in ass! (HEY!)
-Colonoscopies are free — I&#39;ll pull your head out fast! (HEY!)
-Kick your ass! (HEY!)
-Boot in ass! (HEY!)
-I&#39;ll take that phone, shove it down your throat so fast! (HEY!)
-
-We used to settle this with a handshake and dirt,
-Now everybody cries &quot;assault&quot; when they&#39;re hurt.
-Well, words don&#39;t work and you sure won&#39;t stop,
-So I&#39;ll give you a whoopin&#39; from the school of hard knocks!
-
-Kick your ass! (HEY!)
-Boot in ass! (HEY!)
-Smile in the mugshot — hell yeah, it was worth that! (Ha ha ha ha)
-Kick your ass! (HEY!)
-Boot in ass! (HEY!)
-Cry all you want — I won&#39;t spare the rod, jack! (HEY!)
-Kick your ass! (HEY!)
-Boot in ass! (HEY!)
+Kick Your Ass<br>
+Valentina<br>
+<br>
+I can&#39;t kick your ass — and you know why,<br>
+You&#39;ll call 9-1-1 and start your crocodile cry.<br>
+&quot;Officer, he touched me!&quot; — oh, give me a break,<br>
+You gaslight, cancel, manipulate.<br>
+<br>
+Sick of your lies, sick of your shit,<br>
+Tired of the mind games, can&#39;t handle it.<br>
+Rules and &quot;boundaries,&quot; fake victim crown,<br>
+One of these days I&#39;m gonna lay you down.<br>
+<br>
+And when that day comes, I&#39;ll smile at last,<br>
+My mugshot grinnin&#39; — for whoopin&#39; your ass!<br>
+<br>
+Kick your ass! (HEY!)<br>
+Boot in ass! (HEY!)<br>
+Smile in the mugshot — yeah, it was worth that! (HEY!)<br>
+Mama should&#39;ve spanked you where the Lord split ya! (HEY!)<br>
+Kick your ass! (HEY!)<br>
+Boot in ass! (HEY!)<br>
+<br>
+No therapist needed, no doctor&#39;s pass,<br>
+Just old-school justice — a boot in the ass!<br>
+<br>
+Kick your ass! (HEY!)<br>
+Boot in ass! (HEY!)<br>
+Colonoscopies are free — I&#39;ll pull your head out fast! (HEY!)<br>
+Kick your ass! (HEY!)<br>
+Boot in ass! (HEY!)<br>
+I&#39;ll take that phone, shove it down your throat so fast! (HEY!)<br>
+<br>
+We used to settle this with a handshake and dirt,<br>
+Now everybody cries &quot;assault&quot; when they&#39;re hurt.<br>
+Well, words don&#39;t work and you sure won&#39;t stop,<br>
+So I&#39;ll give you a whoopin&#39; from the school of hard knocks!<br>
+<br>
+Kick your ass! (HEY!)<br>
+Boot in ass! (HEY!)<br>
+Smile in the mugshot — hell yeah, it was worth that! (Ha ha ha ha)<br>
+Kick your ass! (HEY!)<br>
+Boot in ass! (HEY!)<br>
+Cry all you want — I won&#39;t spare the rod, jack! (HEY!)<br>
+Kick your ass! (HEY!)<br>
+Boot in ass! (HEY!)<br>
 Whole damn crowd screaming — KICK YOUR ASS!
     </div>
   </section>
@@ -247,6 +250,10 @@ Whole damn crowd screaming — KICK YOUR ASS!
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
+        <a href="cant-cure-stupid.html" class="more-song-card">
+          <h4>Can&#39;t Cure Stupid</h4>
+          <p>Valentina &middot; Southern Rock / Comedy</p>
+        </a>
         <a href="drown-in-the-bottle.html" class="more-song-card">
           <h4>Drown in the Bottle</h4>
           <p>JT &amp; Valentina</p>
@@ -254,10 +261,6 @@ Whole damn crowd screaming — KICK YOUR ASS!
         <a href="stage-4-liabetes.html" class="more-song-card">
           <h4>Stage 4 Liabetes</h4>
           <p>Valentina &middot; Southern Rock / Hip-Hop</p>
-        </a>
-        <a href="cant-cure-stupid.html" class="more-song-card">
-          <h4>Can&#39;t Cure Stupid</h4>
-          <p>Valentina &middot; Southern Rock / Comedy</p>
         </a>
     </div>
   </section>
@@ -283,6 +286,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

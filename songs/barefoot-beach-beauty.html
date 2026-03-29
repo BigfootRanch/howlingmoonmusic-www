@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Barefoot Beach Beauty</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BAREFOOT%20BEACH%20BEAUTY%20(2).mp3"></audio>
+    </div>
   </section>
 
   
@@ -164,7 +167,107 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-<em style="color:rgba(255,255,255,.35)">Lyrics coming soon...</em>
+BAREFOOT BEACH BEAUTY<br>
+Performed by JT | Written by Valentina Talor<br>
+Artist: The DogMother | Publisher: Howling Moon Music (BMI)<br>
+February 14, 2026<br>
+Upbeat coastal anthem — 6/8 time signature, rolling wave-like sway<br>
+Tempo ~94 BPM — Acoustic guitar<br>
+Duration: 4:02<br>
+———<br>
+[VERSE 1]<br>
+She was raised on Bible and barefoot days<br>
+White sand summers and Gulf Coast haze<br>
+Sunkissed blonde with that salt air smile<br>
+Beach blonde beauty by a country mile<br>
+Sundress swaying in the evening breeze<br>
+Lord have mercy she brings me to my knees<br>
+Sand soul<br>
+Shake it shake it sand soul<br>
+Shake it shake it let it roll<br>
+Shake it shake it beach blonde glow<br>
+Sand soul sand soul<br>
+———<br>
+[PRE-CHORUS]<br>
+Saltwater running through her mind<br>
+Sunshine sliding down her spine<br>
+Little bit wild, little bit free<br>
+That’s the girl that’s wrecking me<br>
+Shake it shake it sand soul<br>
+Shake it shake it let it roll<br>
+Shake it shake it beach blonde glow<br>
+Sand soul sand soul<br>
+———<br>
+[CHORUS]<br>
+She’s my barefoot beach beauty<br>
+Beach blonde bombshell moving to the beat<br>
+Sunset silhouette slow and sweet<br>
+Yeah the surf starts shaking when she walks by me<br>
+She’s got sand soul<br>
+Sand soul<br>
+Shake it shake it sand soul<br>
+Shake it shake it let it roll<br>
+Shake it shake it beach blonde glow<br>
+Sand soul sand soul<br>
+———<br>
+[VERSE 2]<br>
+Strawberry shortcake on the back porch swing<br>
+Sugar sweet trouble in everything<br>
+Boat dock dancing, bare feet, sand<br>
+Got the whole wide world in the palm of her hand<br>
+Sand soul<br>
+Shake it shake it sand soul<br>
+Shake it shake it let it roll<br>
+Shake it shake it beach blonde glow<br>
+Sand soul sand soul<br>
+———<br>
+[PRE-CHORUS]<br>
+Saltwater running through her mind<br>
+Sunshine sliding down her spine<br>
+Little bit wild, little bit free<br>
+That’s the girl that’s wrecking me<br>
+———<br>
+[CHORUS]<br>
+She’s my barefoot beach beauty<br>
+Beach blonde bombshell moving to the beat<br>
+Sunset silhouette slow and sweet<br>
+Yeah the surf starts shaking when she walks by me<br>
+She’s got sand soul<br>
+Sand soul<br>
+Shake it shake it sand soul<br>
+Shake it shake it let it roll<br>
+Shake it shake it beach blonde glow<br>
+Sand soul sand soul<br>
+———<br>
+[BRIDGE]<br>
+When she hits that floor, shake shake<br>
+Palm trees swaying in the moonlight<br>
+Shake shake<br>
+Surf and the speakers come alive<br>
+Shake that sand soul<br>
+Let it roll, let it roll<br>
+Shake that sand soul<br>
+Sand soul<br>
+———<br>
+[BREAKDOWN]<br>
+Shake it shake it sand soul<br>
+Shake it shake it let it roll<br>
+Shake it shake it beach blonde glow<br>
+Sand soul sand soul<br>
+———<br>
+[FINAL CHORUS]<br>
+She’s my barefoot beach beauty<br>
+Beach blonde bombshell moving to the beat<br>
+Sunset silhouette slow and sweet<br>
+Yeah the surf starts shaking when she walks by me<br>
+Sand soul<br>
+Sand soul<br>
+———<br>
+[OUTRO]<br>
+Shake it shake it sand soul<br>
+Shake it shake it let it roll<br>
+Shake it shake it beach blonde glow<br>
+Sand soul sand soul
     </div>
   </section>
 
@@ -191,17 +294,17 @@
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="me-and-my-dog.html" class="more-song-card">
-          <h4>Me and My Dog</h4>
-          <p>JT</p>
+        <a href="zero-fucks.html" class="more-song-card">
+          <h4>Zero Fucks</h4>
+          <p>Valentina</p>
         </a>
-        <a href="rodeo-cowboy.html" class="more-song-card">
-          <h4>Rodeo Cowboy</h4>
-          <p>Valentina &middot; Country Rock / Western</p>
+        <a href="love-me-complicated.html" class="more-song-card">
+          <h4>Love Me Complicated</h4>
+          <p>Valentina</p>
         </a>
-        <a href="woke-up-laughing.html" class="more-song-card">
-          <h4>Woke Up Laughing</h4>
-          <p>Valentina &middot; Coastal / Trop Rock</p>
+        <a href="one-night-with-the-devil.html" class="more-song-card">
+          <h4>One Night with the Devil</h4>
+          <p>Valentina &middot; Country Rock / Duet</p>
         </a>
     </div>
   </section>
@@ -227,6 +330,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

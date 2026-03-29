@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Rainbow</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/rainbow.mp3"></audio>
+    </div>
   </section>
 
   
@@ -164,32 +167,32 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-Rainbow
-Valentina
-
-Thunder rolling, skies so gray,
-Lightning chasing hope away.
-You&#39;re searching high, you&#39;re searching low,
-But I&#39;m the light you&#39;ll never know.
-
-I am the rainbow — when your sky turns black,
-I am the rainbow — you can&#39;t chase me back.
-I am the rainbow — at the end of your road,
-I am the rainbow — the story you were told.
-
-Storm clouds break, the shadows fall,
-Through the silence, hear my call.
-No gold to find, no pot to claim,
-I&#39;m the fire inside your rain.
-
-Don&#39;t look up, don&#39;t look down,
-I&#39;m the gold you never found.
-No illusion, no painted show,
-I am the rainbow.
-
-I am the rainbow — when your sky turns black,
-I am the rainbow — you can&#39;t chase me back.
-I am the rainbow — at the end of your road,
+Rainbow<br>
+Valentina<br>
+<br>
+Thunder rolling, skies so gray,<br>
+Lightning chasing hope away.<br>
+You&#39;re searching high, you&#39;re searching low,<br>
+But I&#39;m the light you&#39;ll never know.<br>
+<br>
+I am the rainbow — when your sky turns black,<br>
+I am the rainbow — you can&#39;t chase me back.<br>
+I am the rainbow — at the end of your road,<br>
+I am the rainbow — the story you were told.<br>
+<br>
+Storm clouds break, the shadows fall,<br>
+Through the silence, hear my call.<br>
+No gold to find, no pot to claim,<br>
+I&#39;m the fire inside your rain.<br>
+<br>
+Don&#39;t look up, don&#39;t look down,<br>
+I&#39;m the gold you never found.<br>
+No illusion, no painted show,<br>
+I am the rainbow.<br>
+<br>
+I am the rainbow — when your sky turns black,<br>
+I am the rainbow — you can&#39;t chase me back.<br>
+I am the rainbow — at the end of your road,<br>
 I am the rainbow — the truth you always know.
     </div>
   </section>
@@ -217,17 +220,17 @@ I am the rainbow — the truth you always know.
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
+        <a href="enchanted-green-haze.html" class="more-song-card">
+          <h4>Enchanted Green Haze</h4>
+          <p>Valentina &middot; Trop Rock / Southwest</p>
+        </a>
+        <a href="fields-of-gold.html" class="more-song-card">
+          <h4>Fields of Gold</h4>
+          <p>Valentina &middot; Country Ballad</p>
+        </a>
         <a href="fireflies-and-fireworks.html" class="more-song-card">
           <h4>Fireflies &amp; Fireworks</h4>
           <p>Valentina &middot; Country Rock / Indie</p>
-        </a>
-        <a href="lightning-strikes.html" class="more-song-card">
-          <h4>Lightning Strikes</h4>
-          <p>Valentina &middot; Country Rock / Power Ballad</p>
-        </a>
-        <a href="las-cruces-nights.html" class="more-song-card">
-          <h4>Las Cruces Nights</h4>
-          <p>Valentina &middot; Trop Rock / Southwest</p>
         </a>
     </div>
   </section>
@@ -253,6 +256,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

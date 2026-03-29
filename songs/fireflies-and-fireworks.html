@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Fireflies &amp; Fireworks</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/MUSIC%20ALBUM%20RAINBOW%202025/FIREFLYS%20%26%20FIREWORKS%20(1).wav"></audio>
+    </div>
   </section>
 
   
@@ -164,30 +167,30 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-Fireflies &amp; Fireworks
-Valentina
-
-Whispers on the porch swing, no one else was there,
-You traced the constellations, July in your stare.
-I memorized the silence, the way the night was turning,
-Holding on to nothing — but God, we were burning.
-
-But you can&#39;t hold the sky, can&#39;t bottle the flame,
-The brightest things vanish when you call them by name.
-
-Fireflies and fireworks, fading in the dark,
-Fireflies and fireworks, still burning in my heart.
-Summer nights, July skies, you and me — a spark,
-Fireflies and fireworks, love&#39;s eternal mark.
-
-Moonlight on your shoulders, smoke rising slow,
-We carved our names in shadows only we would know.
-The world could not contain us, we broke it with our yearning,
-Forever lived a moment — and still, we were burning.
-
-One night can outlive a thousand years,
-One spark can survive through the smoke and the tears.
-You can cage the body, but the memory&#39;s free,
+Fireflies &amp; Fireworks<br>
+Valentina<br>
+<br>
+Whispers on the porch swing, no one else was there,<br>
+You traced the constellations, July in your stare.<br>
+I memorized the silence, the way the night was turning,<br>
+Holding on to nothing — but God, we were burning.<br>
+<br>
+But you can&#39;t hold the sky, can&#39;t bottle the flame,<br>
+The brightest things vanish when you call them by name.<br>
+<br>
+Fireflies and fireworks, fading in the dark,<br>
+Fireflies and fireworks, still burning in my heart.<br>
+Summer nights, July skies, you and me — a spark,<br>
+Fireflies and fireworks, love&#39;s eternal mark.<br>
+<br>
+Moonlight on your shoulders, smoke rising slow,<br>
+We carved our names in shadows only we would know.<br>
+The world could not contain us, we broke it with our yearning,<br>
+Forever lived a moment — and still, we were burning.<br>
+<br>
+One night can outlive a thousand years,<br>
+One spark can survive through the smoke and the tears.<br>
+You can cage the body, but the memory&#39;s free,<br>
 Fireflies and fireworks — forever in me.
     </div>
   </section>
@@ -215,17 +218,17 @@ Fireflies and fireworks — forever in me.
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="rainbow.html" class="more-song-card">
-          <h4>Rainbow</h4>
-          <p>Valentina &middot; Country Rock / Indie</p>
+        <a href="lightning-strikes.html" class="more-song-card">
+          <h4>Lightning Strikes</h4>
+          <p>Valentina &middot; Country Rock / Power Ballad</p>
         </a>
-        <a href="port-lavaca-paradise.html" class="more-song-card">
-          <h4>Port Lavaca Paradise</h4>
-          <p>Valentina &middot; Trop Rock / Coastal Country</p>
+        <a href="left-my-heart-in-santa-fe.html" class="more-song-card">
+          <h4>Left My Heart In Santa Fe</h4>
+          <p>Valentina &middot; Country / Southwest</p>
         </a>
-        <a href="las-cruces-nights.html" class="more-song-card">
-          <h4>Las Cruces Nights</h4>
-          <p>Valentina &middot; Trop Rock / Southwest</p>
+        <a href="tattoo-in-albuquerque.html" class="more-song-card">
+          <h4>Tattoo In Albuquerque</h4>
+          <p>Valentina &middot; Country Rock / Southwest</p>
         </a>
     </div>
   </section>
@@ -251,6 +254,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

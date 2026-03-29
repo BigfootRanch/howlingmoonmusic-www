@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Fields of Gold</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/MUSIC%20ALBUM%20RAINBOW%202025/Fields%20of%20Gold%20%20.wav"></audio>
+    </div>
   </section>
 
   
@@ -164,37 +167,37 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-Fields of Gold
-Valentina
-
-Dust on the highway, storm fading fast,
-Seasons of sorrow, but they don&#39;t last.
-Chased greener pastures, chased rainbows untold,
-I found my treasure in fields of gold.
-
-Fields of gold, fields of gold,
-This is the story my heart has told.
-Fields of gold, fields of gold,
-I found my home, I found my home.
-
-Wildflowers blazing, horizon wide,
-Every hard mile now justified.
-The end of searching, the end of cold,
-I found forever in fields of gold.
-
-Fields of gold, fields of gold,
-Blessings and promise in every fold.
-Fields of gold, fields of gold,
-Love is the fortune I get to hold.
-
-No greener pastures, no brighter road,
-I was lost till your light showed.
-Every rainbow, every sign foretold,
-Led me here to fields of gold.
-
-Fields of gold, fields of gold,
-This is the story my soul has told.
-Fields of gold, fields of gold,
+Fields of Gold<br>
+Valentina<br>
+<br>
+Dust on the highway, storm fading fast,<br>
+Seasons of sorrow, but they don&#39;t last.<br>
+Chased greener pastures, chased rainbows untold,<br>
+I found my treasure in fields of gold.<br>
+<br>
+Fields of gold, fields of gold,<br>
+This is the story my heart has told.<br>
+Fields of gold, fields of gold,<br>
+I found my home, I found my home.<br>
+<br>
+Wildflowers blazing, horizon wide,<br>
+Every hard mile now justified.<br>
+The end of searching, the end of cold,<br>
+I found forever in fields of gold.<br>
+<br>
+Fields of gold, fields of gold,<br>
+Blessings and promise in every fold.<br>
+Fields of gold, fields of gold,<br>
+Love is the fortune I get to hold.<br>
+<br>
+No greener pastures, no brighter road,<br>
+I was lost till your light showed.<br>
+Every rainbow, every sign foretold,<br>
+Led me here to fields of gold.<br>
+<br>
+Fields of gold, fields of gold,<br>
+This is the story my soul has told.<br>
+Fields of gold, fields of gold,<br>
 I found my forever, I found my home.
     </div>
   </section>
@@ -222,17 +225,17 @@ I found my forever, I found my home.
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="left-my-heart-in-santa-fe.html" class="more-song-card">
-          <h4>Left My Heart In Santa Fe</h4>
-          <p>Valentina &middot; Country / Southwest</p>
-        </a>
-        <a href="las-cruces-nights.html" class="more-song-card">
-          <h4>Las Cruces Nights</h4>
+        <a href="enchanted-green-haze.html" class="more-song-card">
+          <h4>Enchanted Green Haze</h4>
           <p>Valentina &middot; Trop Rock / Southwest</p>
         </a>
-        <a href="lightning-strikes.html" class="more-song-card">
-          <h4>Lightning Strikes</h4>
-          <p>Valentina &middot; Country Rock / Power Ballad</p>
+        <a href="fireflies-and-fireworks.html" class="more-song-card">
+          <h4>Fireflies &amp; Fireworks</h4>
+          <p>Valentina &middot; Country Rock / Indie</p>
+        </a>
+        <a href="port-lavaca-paradise.html" class="more-song-card">
+          <h4>Port Lavaca Paradise</h4>
+          <p>Valentina &middot; Trop Rock / Coastal Country</p>
         </a>
     </div>
   </section>
@@ -258,6 +261,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

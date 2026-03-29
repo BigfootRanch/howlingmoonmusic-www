@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Sand in Toes</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/Sand%20in%20Toes%20(1).mp3"></audio>
+    </div>
   </section>
 
   
@@ -164,7 +167,106 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-<em style="color:rgba(255,255,255,.35)">Lyrics coming soon...</em>
+SAND IN TOES<br>
+Written by Valentina Talor | The DogMother<br>
+Publisher: Howling Moon Music (BMI)<br>
+February 15, 2026<br>
+Female Southern Country low contralto lead vocal<br>
+Duration: 4:40<br>
+———<br>
+[VERSE 1]<br>
+I grew up chasing butterflies and beaches<br>
+Bouncing on boats just past the reaches<br>
+Bleach-blonde pigtails, pink ribbon bows<br>
+Sun-kissed freckles and sand in my toes<br>
+(I’ve got sand in my toes)<br>
+(Sand in my toes)<br>
+(Sand in my toes)<br>
+Baiting my hook on that old wood pier<br>
+Shrimp in a bucket, Daddy right here<br>
+Brothers ran wild but I stayed close<br>
+Daddy’s girl with sand in my toes<br>
+(I’ve got sand in my toes)<br>
+(Sand in my toes)<br>
+(Sand in my toes)<br>
+———<br>
+[PRE-CHORUS]<br>
+He’d say, “Baby, when the storm rolls in<br>
+Just stand your ground and let it bend<br>
+Everything changes in a single tide<br>
+Just wait and see what it brings inside”<br>
+(I’ve got sand in my toes)<br>
+(Sand in my toes)<br>
+(Sand in my toes)<br>
+———<br>
+[CHORUS]<br>
+You can move the girl, you can move her around<br>
+Take her to the city, take her out of town<br>
+But the sea still sings and the shore still knows<br>
+You can’t shake the sand from my soul<br>
+No you can’t shake the sand from my toes<br>
+———<br>
+[POST-CHORUS]<br>
+I’ve got sand in my toes<br>
+Sand in my toes<br>
+Sand in my toes<br>
+———<br>
+[VERSE 2]<br>
+When thunder cracks and the sky turns gray<br>
+I see his smile as he watched the waves<br>
+Saying, “Be patient child, just wait and see<br>
+What the tide rolls in eventually”<br>
+I’ve lived in mountains, I’ve walked cold streets<br>
+Steel and skyline under my feet<br>
+But every time life runs me low<br>
+I hear his voice in the undertow<br>
+(I’ve got sand in my toes)<br>
+(Sand in my toes)<br>
+(Sand in my toes)<br>
+———<br>
+[PRE-CHORUS]<br>
+When storms roll in, don’t lose your ground<br>
+The tide always turns back around<br>
+———<br>
+[CHORUS]<br>
+You can move the girl, you can move her around<br>
+Take her to the city, take her out of town<br>
+But the sea still sings and the shore still knows<br>
+You can’t shake the sand from my soul<br>
+No you can’t shake the sand from my toes<br>
+———<br>
+[POST-CHORUS]<br>
+I’ve got sand in my toes<br>
+Sand in my toes<br>
+Sand in my toes<br>
+———<br>
+[BRIDGE]<br>
+He’s gone now but he ain’t far<br>
+I see him in every northern star<br>
+In every sunrise burning gold<br>
+In every wave that breaks and rolls<br>
+When my bare feet touch that shore<br>
+I hear his wisdom once more<br>
+(I’ve got sand in my toes)<br>
+(Sand in my toes)<br>
+(Sand in my toes)<br>
+———<br>
+[FINAL CHORUS]<br>
+You can move the girl, you can move her around<br>
+Take her to the city, take her out of town<br>
+But the sea still sings and the shore still knows<br>
+You can’t shake the sand from my soul<br>
+No you can’t shake the sand from my toes<br>
+———<br>
+[TAG]<br>
+I’ve got sand in my toes<br>
+Sand in my toes<br>
+Sand in my toes<br>
+———<br>
+[OUTRO]<br>
+Sand in my toes<br>
+Sand in my toes<br>
+Sand in my toes
     </div>
   </section>
 
@@ -191,16 +293,16 @@
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="one-night-with-the-devil.html" class="more-song-card">
-          <h4>One Night with the Devil</h4>
-          <p>Valentina &middot; Country Rock / Duet</p>
+        <a href="if-tears-could-call-heaven.html" class="more-song-card">
+          <h4>If Tears Could Call Heaven</h4>
+          <p>Valentina &middot; Country Ballad</p>
         </a>
-        <a href="dont-settle.html" class="more-song-card">
-          <h4>Don&#39;t Settle</h4>
-          <p>Valentina</p>
+        <a href="rodeo-cowboy.html" class="more-song-card">
+          <h4>Rodeo Cowboy</h4>
+          <p>Valentina &middot; Country Rock / Western</p>
         </a>
-        <a href="coastal-candy.html" class="more-song-card">
-          <h4>Coastal Candy</h4>
+        <a href="shoreline-sugar.html" class="more-song-card">
+          <h4>Shoreline Sugar</h4>
           <p>Valentina &middot; Trop Rock / Coastal</p>
         </a>
     </div>
@@ -227,6 +329,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

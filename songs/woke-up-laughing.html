@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Woke Up Laughing</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/Woke%20Up%20Laughing%20(1).mp3"></audio>
+    </div>
   </section>
 
   
@@ -164,37 +167,37 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-Woke Up Laughing
-Valentina
-
-Woke up laughing
-Woke up laughing
-Laughing gulls laughing — sunrise shining
-No worries today
-No worries today
-Let tomorrow wait — I&#39;m fine, I&#39;m fine
-Woke up laughing
-Woke up laughing
-
-Water like glass, sunrise gold
-World can wait — I&#39;m letting go
-Coffee in my hand, salt in the air
-Breeze on my face… I&#39;m whole again
-
-It&#39;s a wild world, that&#39;s true
-But it ain&#39;t gonna steal my view
-If trouble talks, let it talk
-I&#39;m learning laughter from the gulls
-
-Sun comes up — so I breathe again
-Grace rolls in — so I laugh again
-Sun on my skin, peace in my bones
-Right here by the bay… I&#39;m home
-
-Woke up laughing
-Laughing gulls laughing — sunrise shining
-No worries today
-Let tomorrow wait — I&#39;m whole, I&#39;m whole
+Woke Up Laughing<br>
+Valentina<br>
+<br>
+Woke up laughing<br>
+Woke up laughing<br>
+Laughing gulls laughing — sunrise shining<br>
+No worries today<br>
+No worries today<br>
+Let tomorrow wait — I&#39;m fine, I&#39;m fine<br>
+Woke up laughing<br>
+Woke up laughing<br>
+<br>
+Water like glass, sunrise gold<br>
+World can wait — I&#39;m letting go<br>
+Coffee in my hand, salt in the air<br>
+Breeze on my face… I&#39;m whole again<br>
+<br>
+It&#39;s a wild world, that&#39;s true<br>
+But it ain&#39;t gonna steal my view<br>
+If trouble talks, let it talk<br>
+I&#39;m learning laughter from the gulls<br>
+<br>
+Sun comes up — so I breathe again<br>
+Grace rolls in — so I laugh again<br>
+Sun on my skin, peace in my bones<br>
+Right here by the bay… I&#39;m home<br>
+<br>
+Woke up laughing<br>
+Laughing gulls laughing — sunrise shining<br>
+No worries today<br>
+Let tomorrow wait — I&#39;m whole, I&#39;m whole<br>
 Woke up laughing
     </div>
   </section>
@@ -222,17 +225,17 @@ Woke up laughing
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="pussy-juice.html" class="more-song-card">
-          <h4>Pussy Juice</h4>
-          <p>Valentina &middot; Hip-Hop / Club Banger</p>
+        <a href="spurs.html" class="more-song-card">
+          <h4>Spurs</h4>
+          <p>JT &middot; Country</p>
         </a>
-        <a href="coastal-candy.html" class="more-song-card">
-          <h4>Coastal Candy</h4>
-          <p>Valentina &middot; Trop Rock / Coastal</p>
+        <a href="held-you-first.html" class="more-song-card">
+          <h4>Held You First</h4>
+          <p>JT</p>
         </a>
-        <a href="smoke-me-slow.html" class="more-song-card">
-          <h4>Smoke Me Slow</h4>
-          <p>Valentina</p>
+        <a href="drowning-in-my-tears.html" class="more-song-card">
+          <h4>Drowning In My Tears</h4>
+          <p>Valentina &middot; Country Ballad / R&amp;B Soul</p>
         </a>
     </div>
   </section>
@@ -258,6 +261,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

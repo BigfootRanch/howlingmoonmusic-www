@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Enchanted Green Haze</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/NEW%20MEXICO%20SONGS/Enchanted%20Green%20Haze.mp3"></audio>
+    </div>
   </section>
 
   
@@ -171,30 +174,30 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-Enchanted Green Haze
-Valentina
-
-Enchanted haze over New Mexico skies,
-Green haze in your eyes.
-Enchanted haze, Las Cruces nights so high,
-Green haze tonight.
-
-Sunset burns on the Organ range,
-Colors shifting, everything feels strange.
-Whispers ride on the desert breeze,
-Your hand in mine makes the moment freeze.
-
-Breathe in slow — let the city fade away,
-Hold me close — hear the mountains say.
-
-From the bluffs the skyline starts to glow,
-City lights like diamonds scattered below.
-Mesmerized, drifting, lost in your gaze,
-Hearts caught up in the green night&#39;s haze.
-
-Time stands still, we&#39;re weightless, we fly,
-Wrapped in the glow of the desert sky.
-Lost in the moment, nothing remains,
+Enchanted Green Haze<br>
+Valentina<br>
+<br>
+Enchanted haze over New Mexico skies,<br>
+Green haze in your eyes.<br>
+Enchanted haze, Las Cruces nights so high,<br>
+Green haze tonight.<br>
+<br>
+Sunset burns on the Organ range,<br>
+Colors shifting, everything feels strange.<br>
+Whispers ride on the desert breeze,<br>
+Your hand in mine makes the moment freeze.<br>
+<br>
+Breathe in slow — let the city fade away,<br>
+Hold me close — hear the mountains say.<br>
+<br>
+From the bluffs the skyline starts to glow,<br>
+City lights like diamonds scattered below.<br>
+Mesmerized, drifting, lost in your gaze,<br>
+Hearts caught up in the green night&#39;s haze.<br>
+<br>
+Time stands still, we&#39;re weightless, we fly,<br>
+Wrapped in the glow of the desert sky.<br>
+Lost in the moment, nothing remains,<br>
 But love and the fire of this green haze.
     </div>
   </section>
@@ -222,17 +225,17 @@ But love and the fire of this green haze.
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="rainbow.html" class="more-song-card">
-          <h4>Rainbow</h4>
+        <a href="las-cruces-nights.html" class="more-song-card">
+          <h4>Las Cruces Nights</h4>
+          <p>Valentina &middot; Trop Rock / Southwest</p>
+        </a>
+        <a href="fields-of-gold.html" class="more-song-card">
+          <h4>Fields of Gold</h4>
+          <p>Valentina &middot; Country Ballad</p>
+        </a>
+        <a href="fireflies-and-fireworks.html" class="more-song-card">
+          <h4>Fireflies &amp; Fireworks</h4>
           <p>Valentina &middot; Country Rock / Indie</p>
-        </a>
-        <a href="port-lavaca-paradise.html" class="more-song-card">
-          <h4>Port Lavaca Paradise</h4>
-          <p>Valentina &middot; Trop Rock / Coastal Country</p>
-        </a>
-        <a href="lightning-strikes.html" class="more-song-card">
-          <h4>Lightning Strikes</h4>
-          <p>Valentina &middot; Country Rock / Power Ballad</p>
         </a>
     </div>
   </section>
@@ -258,6 +261,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

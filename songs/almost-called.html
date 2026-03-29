@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Almost Called</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/NEW%20MEXICO%20SONGS/Untitled%20folder/SAD%20SONGS%20GRIEF%20TEARS/Almost%20called%20(1).mp3"></audio>
+    </div>
   </section>
 
   
@@ -164,7 +167,90 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-<em style="color:rgba(255,255,255,.35)">Lyrics coming soon...</em>
+ALMOST CALLED<br>
+Written by Valentina Talor | The DogMother<br>
+Publisher: Howling Moon Music (BMI)<br>
+January 2, 2026<br>
+———<br>
+[HOOK]<br>
+Almost called you today<br>
+(Almost called)<br>
+Give love a chance<br>
+(Give love a chance)<br>
+———<br>
+[VERSE 1]<br>
+You said something, I said something back<br>
+Now we’re both seeing red just like that<br>
+Hit delete, hit block, hit erase<br>
+Mascara running down my face<br>
+Stood up tall, smile for the camera<br>
+Post “I’m fine” but my chest caves in<br>
+Every time<br>
+(Give love a chance)<br>
+(Give love a chance)<br>
+(Give love a chance)<br>
+———<br>
+[VERSE 2]<br>
+Almost called you today<br>
+Forgot we’re not talking<br>
+(Give love a chance)<br>
+Saw your picture, stopped mid-scroll<br>
+Almost hit the heart, lost control<br>
+(Give love a chance)<br>
+Had something funny you would’ve said<br>
+Heard your voice inside my head<br>
+(Give love a chance)<br>
+Almost told you something small<br>
+Good news, bad news, nothing at all<br>
+You are still my first call<br>
+(Give love a chance)<br>
+Screen in my hand, lights up my face<br>
+Your name comes up, then it fades<br>
+Standing there quiet like I forgot how<br>
+We don’t do that now<br>
+(Give love a chance)<br>
+(Give love a chance)<br>
+(Give love a chance)<br>
+———<br>
+[PRE-CHORUS]<br>
+Ego talks loud<br>
+But winning don’t matter<br>
+When love’s on the line — give love a chance<br>
+(Give love a chance)<br>
+(Give love a chance)<br>
+———<br>
+[CHORUS]<br>
+I choose you over being right<br>
+I choose love every time<br>
+(Give love a chance)<br>
+(Give love a chance)<br>
+Can’t turn back time<br>
+But I can turn around<br>
+Build a bridge back home<br>
+Where love is found<br>
+(Give love a chance)<br>
+(Give love a chance)<br>
+———<br>
+[CHORUS — REPEAT / LIFT]<br>
+I choose you, I choose love<br>
+Every time<br>
+(Give love a chance)<br>
+(Give love a chance)<br>
+Can’t turn back time<br>
+But I can turn around<br>
+Build a bridge back home<br>
+Where love is found<br>
+(Give love a chance)<br>
+(Give love a chance)<br>
+———<br>
+[OUTRO / RESOLUTION]<br>
+Almost called<br>
+Because it’s still you<br>
+I’m turning around<br>
+I choose you<br>
+(I choose you)<br>
+(Give love a chance)<br>
+(Give love a chance)
     </div>
   </section>
 
@@ -191,17 +277,17 @@
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="silence-is-your-fangs.html" class="more-song-card">
-          <h4>Silence Is Your Fangs</h4>
+        <a href="uncontainable.html" class="more-song-card">
+          <h4>Uncontainable</h4>
           <p>Valentina</p>
         </a>
-        <a href="love-me-complicated.html" class="more-song-card">
-          <h4>Love Me Complicated</h4>
+        <a href="liar-preacher-man.html" class="more-song-card">
+          <h4>Liar, Preacher Man</h4>
           <p>Valentina</p>
         </a>
-        <a href="dont-be-a-mr-magoo.html" class="more-song-card">
-          <h4>Don&#39;t Be a Mr. Magoo</h4>
-          <p>Valentina &middot; Hip-Hop / Club Banger</p>
+        <a href="you-cant.html" class="more-song-card">
+          <h4>You Can&#39;t</h4>
+          <p>Valentina</p>
         </a>
     </div>
   </section>
@@ -227,6 +313,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

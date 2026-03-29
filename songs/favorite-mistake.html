@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Favorite Mistake</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/MUSIC%20ALBUM%20VILLAIN%202025/Favorite%20Mistake%20.wav"></audio>
+    </div>
   </section>
 
   
@@ -164,37 +167,37 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-Favorite Mistake
-Valentina
-
-You never wrote me love songs, not a line.
-You never brought me flowers, not one time.
-I can&#39;t stand your voice when you call my name.
-I hate your face when you play that game.
-
-Too young, too proud, too blind to see,
-We built a fire, burned down the tree.
-
-You&#39;re my favorite mistake of mine,
-And I&#39;d do it all over, every time.
-The shame, the fights, the grace, the ache,
-The family remains — my favorite mistake.
-
-I think you&#39;re a bitch, I won&#39;t pretend.
-And you&#39;re still an asshole, till the bitter end.
-We broke each other, burned down love,
-But the roots still rise — and that&#39;s enough.
-
-Too old to blame, too tired to fight,
-The family we built is the proof of life.
-
-We hated, we loved, we broke, we bled.
-But the family stands when we&#39;re both dead.
-
-Favorite mistake — every time.
-Favorite mistake — still mine.
-Too old to blame, too proud to bend,
-We broke it, we built it, we&#39;d do it again.
+Favorite Mistake<br>
+Valentina<br>
+<br>
+You never wrote me love songs, not a line.<br>
+You never brought me flowers, not one time.<br>
+I can&#39;t stand your voice when you call my name.<br>
+I hate your face when you play that game.<br>
+<br>
+Too young, too proud, too blind to see,<br>
+We built a fire, burned down the tree.<br>
+<br>
+You&#39;re my favorite mistake of mine,<br>
+And I&#39;d do it all over, every time.<br>
+The shame, the fights, the grace, the ache,<br>
+The family remains — my favorite mistake.<br>
+<br>
+I think you&#39;re a bitch, I won&#39;t pretend.<br>
+And you&#39;re still an asshole, till the bitter end.<br>
+We broke each other, burned down love,<br>
+But the roots still rise — and that&#39;s enough.<br>
+<br>
+Too old to blame, too tired to fight,<br>
+The family we built is the proof of life.<br>
+<br>
+We hated, we loved, we broke, we bled.<br>
+But the family stands when we&#39;re both dead.<br>
+<br>
+Favorite mistake — every time.<br>
+Favorite mistake — still mine.<br>
+Too old to blame, too proud to bend,<br>
+We broke it, we built it, we&#39;d do it again.<br>
 You&#39;re my favorite mistake of mine.
     </div>
   </section>
@@ -222,17 +225,17 @@ You&#39;re my favorite mistake of mine.
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="still-the-asshole.html" class="more-song-card">
-          <h4>Still The Asshole</h4>
-          <p>Valentina &middot; Country Rock / Anthem</p>
+        <a href="choke-on-the-wine.html" class="more-song-card">
+          <h4>Choke On The Wine</h4>
+          <p>Valentina &middot; Country Rock / Dark</p>
         </a>
         <a href="villain.html" class="more-song-card">
           <h4>Villain</h4>
           <p>Valentina &middot; Country Rock / Indie</p>
         </a>
-        <a href="choke-on-the-wine.html" class="more-song-card">
-          <h4>Choke On The Wine</h4>
-          <p>Valentina &middot; Country Rock / Dark</p>
+        <a href="dont-cry-at-my-funeral.html" class="more-song-card">
+          <h4>Don&#39;t Cry At My Funeral</h4>
+          <p>Valentina &middot; Country Ballad / Rock</p>
         </a>
     </div>
   </section>
@@ -258,6 +261,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

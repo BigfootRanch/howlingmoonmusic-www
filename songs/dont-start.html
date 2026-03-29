@@ -191,17 +191,17 @@
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="its-a-bigfoot-christmas.html" class="more-song-card">
-          <h4>It&#39;s a Bigfoot Christmas</h4>
-          <p>Valentina</p>
+        <a href="silence.html" class="more-song-card">
+          <h4>Silence</h4>
+          <p>Valentina &middot; Country Ballad</p>
         </a>
-        <a href="down-under.html" class="more-song-card">
-          <h4>Down Under</h4>
-          <p>Valentina</p>
+        <a href="beast-mode-jt.html" class="more-song-card">
+          <h4>Beast Mode JT</h4>
+          <p>JT &middot; Hip-Hop / Rock</p>
         </a>
-        <a href="just-peachy.html" class="more-song-card">
-          <h4>Just Peachy</h4>
-          <p>Valentina &middot; Country Pop / Fun</p>
+        <a href="hazy-bubble.html" class="more-song-card">
+          <h4>Hazy Bubble</h4>
+          <p>Valentina</p>
         </a>
     </div>
   </section>
@@ -227,6 +227,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

@@ -180,29 +180,29 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-Lump of Coal
-Valentina
-
-Fa-la-la-la-la, you deserve a lump of coal.
-Fa-la-la-la-la, you deserve a lump of coal.
-Deck the halls with all your drama, bless your bitter soul.
-Silent night — only &#39;cause you ghosted me.
-Holy night — sweet hypocrisy.
-Fa-la-la-la-la, you deserve a lump of coal.
-
-Please pass the turkey, then pass the blame,
-You brag like a carol, it&#39;s always the same.
-Joy to the world… when you walk out the door.
-You&#39;ve been naughty all year — and Santa keeps score.
-
-Grandma didn&#39;t get run over by a reindeer, no —
-She hung the stockings, she carried the load.
-She hit the nog hard, rolled her eyes and prayed,
-Sweet baby Jesus, bless his heart.
-
-O come all ye fakers, faithful to none.
-The choir is tired, your solo is done.
-Santa&#39;s list is short, and your name&#39;s in bold.
+Lump of Coal<br>
+Valentina<br>
+<br>
+Fa-la-la-la-la, you deserve a lump of coal.<br>
+Fa-la-la-la-la, you deserve a lump of coal.<br>
+Deck the halls with all your drama, bless your bitter soul.<br>
+Silent night — only &#39;cause you ghosted me.<br>
+Holy night — sweet hypocrisy.<br>
+Fa-la-la-la-la, you deserve a lump of coal.<br>
+<br>
+Please pass the turkey, then pass the blame,<br>
+You brag like a carol, it&#39;s always the same.<br>
+Joy to the world… when you walk out the door.<br>
+You&#39;ve been naughty all year — and Santa keeps score.<br>
+<br>
+Grandma didn&#39;t get run over by a reindeer, no —<br>
+She hung the stockings, she carried the load.<br>
+She hit the nog hard, rolled her eyes and prayed,<br>
+Sweet baby Jesus, bless his heart.<br>
+<br>
+O come all ye fakers, faithful to none.<br>
+The choir is tired, your solo is done.<br>
+Santa&#39;s list is short, and your name&#39;s in bold.<br>
 No gifts, no grace — just a lump of coal.
     </div>
   </section>
@@ -230,17 +230,17 @@ No gifts, no grace — just a lump of coal.
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="christmas-puppy.html" class="more-song-card">
-          <h4>Christmas Puppy</h4>
-          <p>Valentina &middot; Holiday / Country</p>
-        </a>
-        <a href="only-gift-i-need.html" class="more-song-card">
-          <h4>Only Gift I Need</h4>
-          <p>Valentina &middot; Holiday / Ballad</p>
+        <a href="christmas-on-the-beach.html" class="more-song-card">
+          <h4>Christmas on the Beach</h4>
+          <p>Valentina &middot; Holiday / Trop Rock</p>
         </a>
         <a href="smoky-mountain-snow.html" class="more-song-card">
           <h4>Smoky Mountain Snow</h4>
           <p>Valentina &middot; Country Ballad</p>
+        </a>
+        <a href="christmas-puppy.html" class="more-song-card">
+          <h4>Christmas Puppy</h4>
+          <p>Valentina &middot; Holiday / Country</p>
         </a>
     </div>
   </section>
@@ -266,6 +266,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

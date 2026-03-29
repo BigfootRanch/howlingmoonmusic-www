@@ -87,13 +87,16 @@
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Ghost Wanted Dead or Alive</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/OUTLAW%20WESTERN%20ALBUM/Ghost%20Wanted%20Dead%20or%20Alive%20(1).mp3"></audio>
+    </div>
   </section>
 
   
@@ -208,61 +211,61 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-Ghost Wanted Dead or Alive
-The Dogmother
-February 1, 2026
-
-Scrolling my ghost, lost all hold,
-Spreadin&#39; smoke to fill that hole.
-Smeared me a monster outta spite,
-Said I&#39;m wanted, runnin&#39; through the night.
-
-Wanted ghost — dead or alive.
-
-Call the popo on speed-dial rage,
-&quot;Gotcha!&quot; they cheer — then I walk out the cage.
-Stories grow taller every time I breathe,
-Six feet under — in Mexico, please.
-
-Wanted ghost — dead or alive.
-
-Rumor I died — that&#39;s cute, keep talkin&#39;,
-Outlaw soul — ghost still walkin&#39;.
-Buried by lies — but truth keeps risin&#39;,
-Too damn blessed for apologizin&#39;.
-Rumor I died — ghost keeps ridin&#39;,
-ghost keeps ridin&#39;,
-Wanted ghost — dead or alive.
-
-They say I&#39;m hidin&#39; out under a bridge,
-Or somewhere deep in the pine-ridge.
-But freedom don&#39;t leave no forward address,
-Just dust, a ghost, and a holy mess.
-
-Wanted ghost — dead or alive.
-
-You chase my ghost like it owes you pain,
-But I broke your curse and cut your chain.
-You can&#39;t haunt what&#39;s still alive —
-I&#39;m the ghost that thrives.
-You think you&#39;re chasin&#39; me through time,
-But I&#39;m the ghost that owns your mind.
-
-Wanted ghost — dead or alive.
-
-Ashes to armor, dirt to gold,
-Every scar a story told.
-You can&#39;t curse what won&#39;t comply,
-I&#39;m the ghost they couldn&#39;t crucify.
-
-Wanted ghost — dead or alive.
-
-Rumor I died — that&#39;s cute, keep talkin&#39;,
-Outlaw soul — ghost still walkin&#39;.
-Buried by lies — but truth keeps risin&#39;,
-Too damn blessed for apologizin&#39;.
-Rumor I died — ghost keeps ridin&#39;,
-ghost keeps ridin&#39;,
+Ghost Wanted Dead or Alive<br>
+The Dogmother<br>
+February 1, 2026<br>
+<br>
+Scrolling my ghost, lost all hold,<br>
+Spreadin&#39; smoke to fill that hole.<br>
+Smeared me a monster outta spite,<br>
+Said I&#39;m wanted, runnin&#39; through the night.<br>
+<br>
+Wanted ghost — dead or alive.<br>
+<br>
+Call the popo on speed-dial rage,<br>
+&quot;Gotcha!&quot; they cheer — then I walk out the cage.<br>
+Stories grow taller every time I breathe,<br>
+Six feet under — in Mexico, please.<br>
+<br>
+Wanted ghost — dead or alive.<br>
+<br>
+Rumor I died — that&#39;s cute, keep talkin&#39;,<br>
+Outlaw soul — ghost still walkin&#39;.<br>
+Buried by lies — but truth keeps risin&#39;,<br>
+Too damn blessed for apologizin&#39;.<br>
+Rumor I died — ghost keeps ridin&#39;,<br>
+ghost keeps ridin&#39;,<br>
+Wanted ghost — dead or alive.<br>
+<br>
+They say I&#39;m hidin&#39; out under a bridge,<br>
+Or somewhere deep in the pine-ridge.<br>
+But freedom don&#39;t leave no forward address,<br>
+Just dust, a ghost, and a holy mess.<br>
+<br>
+Wanted ghost — dead or alive.<br>
+<br>
+You chase my ghost like it owes you pain,<br>
+But I broke your curse and cut your chain.<br>
+You can&#39;t haunt what&#39;s still alive —<br>
+I&#39;m the ghost that thrives.<br>
+You think you&#39;re chasin&#39; me through time,<br>
+But I&#39;m the ghost that owns your mind.<br>
+<br>
+Wanted ghost — dead or alive.<br>
+<br>
+Ashes to armor, dirt to gold,<br>
+Every scar a story told.<br>
+You can&#39;t curse what won&#39;t comply,<br>
+I&#39;m the ghost they couldn&#39;t crucify.<br>
+<br>
+Wanted ghost — dead or alive.<br>
+<br>
+Rumor I died — that&#39;s cute, keep talkin&#39;,<br>
+Outlaw soul — ghost still walkin&#39;.<br>
+Buried by lies — but truth keeps risin&#39;,<br>
+Too damn blessed for apologizin&#39;.<br>
+Rumor I died — ghost keeps ridin&#39;,<br>
+ghost keeps ridin&#39;,<br>
 Wanted ghost — dead or alive.
     </div>
   </section>
@@ -290,16 +293,16 @@ Wanted ghost — dead or alive.
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="hazy-bubble.html" class="more-song-card">
-          <h4>Hazy Bubble</h4>
+        <a href="twinkle.html" class="more-song-card">
+          <h4>Twinkle</h4>
           <p>Valentina</p>
         </a>
-        <a href="scarlet-letter.html" class="more-song-card">
-          <h4>Scarlet Letter</h4>
-          <p>Valentina &middot; Country Rock / Gospel</p>
+        <a href="fire-from-heaven.html" class="more-song-card">
+          <h4>Fire from Heaven</h4>
+          <p>Valentina &middot; Gospel Rock / Spiritual</p>
         </a>
-        <a href="endless-summer.html" class="more-song-card">
-          <h4>Endless Summer</h4>
+        <a href="coconut-kiss.html" class="more-song-card">
+          <h4>Coconut Kiss</h4>
           <p>Valentina &middot; Trop Rock / Coastal</p>
         </a>
     </div>
@@ -326,6 +329,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');

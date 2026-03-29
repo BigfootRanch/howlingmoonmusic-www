@@ -183,27 +183,27 @@
     <h2 class="lyrics-heading">Lyrics</h2>
     <div class="lyrics-divider"></div>
     <div class="lyrics-content">
-Christmas on the Beach
-Valentina
-
-Christmas on the beach and I&#39;m feeling alright,
-Santa&#39;s in flip-flops, what a jolly sight.
-Palm trees sparkling with tinsel and light,
-Seashell stars shining in the tropical night.
-
-No frosty windows, no icy roads,
-We&#39;re stringing up lights where the ocean breeze blows.
-Santa&#39;s riding jet skis, sleigh&#39;s on a boat,
-Heat waves rising while carolers float.
-
-Kids building sandmen with buckets and pails,
-Seashells for noses, sunglasses for eyes.
-Santa works his tan with reindeer shades,
-Beach balls bouncing while the ukulele plays.
-
-While the world shovels snow, I&#39;ve got sand at my feet,
-A seashell star glowing where the palm trees meet.
-Heat waves caroling with a steel drum beat,
+Christmas on the Beach<br>
+Valentina<br>
+<br>
+Christmas on the beach and I&#39;m feeling alright,<br>
+Santa&#39;s in flip-flops, what a jolly sight.<br>
+Palm trees sparkling with tinsel and light,<br>
+Seashell stars shining in the tropical night.<br>
+<br>
+No frosty windows, no icy roads,<br>
+We&#39;re stringing up lights where the ocean breeze blows.<br>
+Santa&#39;s riding jet skis, sleigh&#39;s on a boat,<br>
+Heat waves rising while carolers float.<br>
+<br>
+Kids building sandmen with buckets and pails,<br>
+Seashells for noses, sunglasses for eyes.<br>
+Santa works his tan with reindeer shades,<br>
+Beach balls bouncing while the ukulele plays.<br>
+<br>
+While the world shovels snow, I&#39;ve got sand at my feet,<br>
+A seashell star glowing where the palm trees meet.<br>
+Heat waves caroling with a steel drum beat,<br>
 Merry Christmas in the tropical heat.
     </div>
   </section>
@@ -231,6 +231,10 @@ Merry Christmas in the tropical heat.
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
+        <a href="slobbery-kiss.html" class="more-song-card">
+          <h4>Slobbery Kiss</h4>
+          <p>Valentina &middot; Country / Novelty</p>
+        </a>
         <a href="lump-of-coal.html" class="more-song-card">
           <h4>Lump of Coal</h4>
           <p>Valentina &middot; Holiday / Country Rock</p>
@@ -238,10 +242,6 @@ Merry Christmas in the tropical heat.
         <a href="name-above-all-names.html" class="more-song-card">
           <h4>Name Above All Names</h4>
           <p>Valentina &middot; Gospel / Worship</p>
-        </a>
-        <a href="only-gift-i-need.html" class="more-song-card">
-          <h4>Only Gift I Need</h4>
-          <p>Valentina &middot; Holiday / Ballad</p>
         </a>
     </div>
   </section>
@@ -267,6 +267,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
 
 // Copy Link button
 var clb=document.getElementById('copyLinkBtn');
