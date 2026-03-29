@@ -559,6 +559,22 @@ p { color: var(--ts); max-width: 700px; font-size: 1.05rem; }
 }
 .campfire-submit:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(201,168,76,.3); }
 
+/* --- Self-hosted Video Grid --- */
+.self-video-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem; margin-top: 1rem;
+}
+.self-video { border-radius: 10px; overflow: hidden; background: #000; }
+.self-video video {
+  width: 100%; max-height: 500px; object-fit: contain;
+  border-radius: 10px; background: #000;
+}
+.video-label { text-align: center; font-size: .72rem; color: var(--tm); padding: .4rem 0; }
+@media(max-width:600px) {
+  .self-video-grid { grid-template-columns: 1fr; }
+  .self-video video { max-height: 400px; }
+}
+
 /* --- YouTube Embed on Song Pages --- */
 .yt-embed {
   position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 12px;
