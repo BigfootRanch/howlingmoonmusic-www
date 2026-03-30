@@ -186,13 +186,73 @@ tr:hover td{background:rgba(201,168,76,0.03)}
 .upload-progress-bar{height:4px;background:var(--card-border);border-radius:2px;overflow:hidden}
 .upload-progress-fill{height:100%;background:var(--gold);width:0%;transition:width 0.3s}
 
-/* === SOCIAL MEDIA SPECIFIC === */
-.social-card{background:var(--card);border:1px solid var(--card-border);border-radius:8px;padding:1rem;transition:border-color 0.2s}
-.social-card:hover{border-color:var(--gold-dim)}
-.social-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.6rem}
-.social-platform{font-size:1.2rem}
-.social-caption{font-size:0.85rem;color:var(--cream);line-height:1.5;margin-bottom:0.6rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.social-meta{display:flex;gap:0.75rem;font-size:0.72rem;color:var(--smoke)}
+/* === SOCIAL MEDIA CONTENT APPROVAL === */
+.sm-stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.75rem;margin-bottom:1.2rem}
+.sm-stat{background:var(--card);border:1px solid var(--card-border);border-radius:8px;padding:1rem;text-align:center}
+.sm-stat-val{font-size:1.6rem;font-weight:700;color:var(--white)}
+.sm-stat-label{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--smoke);margin-top:0.2rem}
+.sm-filters{display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;margin-bottom:1.2rem}
+.sm-filter-btn{background:transparent;border:1px solid var(--card-border);color:var(--smoke);padding:0.4rem 0.9rem;border-radius:20px;font-size:0.72rem;cursor:pointer;transition:all 0.2s;font-weight:600}
+.sm-filter-btn:hover{border-color:var(--gold);color:var(--gold)}
+.sm-filter-btn.active{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+.sm-filter-divider{width:1px;height:20px;background:var(--card-border)}
+.sm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1rem}
+.sm-card{background:var(--card);border:1px solid var(--card-border);border-radius:10px;overflow:hidden;transition:all 0.25s}
+.sm-card:hover{border-color:rgba(255,45,123,0.4);box-shadow:0 4px 20px rgba(255,45,123,0.08)}
+.sm-card-platform{display:flex;align-items:center;gap:0.5rem;padding:0.8rem 1rem;border-bottom:1px solid var(--card-border)}
+.sm-card-platform .plat-icon{font-size:1.1rem}
+.sm-card-platform .plat-name{font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase}
+.plat-tiktok{color:#ff2d55}
+.plat-youtube{color:#ff0000}
+.plat-instagram{color:#c13584}
+.plat-facebook{color:#1877f2}
+.sm-card-media{position:relative;background:#000;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.sm-card-media img{width:100%;height:100%;object-fit:cover}
+.sm-card-media video{width:100%;height:100%;object-fit:cover}
+.sm-card-media .no-media{color:var(--smoke);font-size:0.8rem;display:flex;flex-direction:column;align-items:center;gap:0.4rem}
+.sm-card-media .no-media span{font-size:2rem}
+.sm-card-body{padding:1rem}
+.sm-card-title{font-weight:700;color:var(--white);font-size:0.95rem;margin-bottom:0.4rem}
+.sm-card-title input{background:transparent;border:none;border-bottom:1px dashed var(--card-border);color:var(--white);font-weight:700;font-size:0.95rem;padding:0.15rem 0;width:100%;outline:none}
+.sm-card-title input:focus{border-bottom-color:var(--pink)}
+.sm-card-caption{font-size:0.82rem;color:var(--cream);line-height:1.55;margin-bottom:0.6rem;white-space:pre-wrap;word-break:break-word}
+.sm-card-caption.collapsed{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.sm-card-caption textarea{width:100%;background:transparent;border:1px dashed var(--card-border);color:var(--cream);font-size:0.82rem;line-height:1.55;padding:0.4rem;border-radius:4px;resize:vertical;min-height:60px;outline:none;font-family:inherit}
+.sm-card-caption textarea:focus{border-color:var(--pink)}
+.sm-card-expand{font-size:0.7rem;color:var(--pink);cursor:pointer;margin-bottom:0.5rem;display:inline-block}
+.sm-card-expand:hover{text-decoration:underline}
+.sm-card-tags{display:flex;flex-wrap:wrap;gap:0.3rem;margin-bottom:0.6rem}
+.sm-tag{display:inline-block;padding:0.15rem 0.5rem;border-radius:12px;font-size:0.65rem;font-weight:600;background:rgba(255,45,123,0.12);color:var(--pink)}
+.sm-card-meta{display:flex;flex-wrap:wrap;gap:0.6rem;font-size:0.7rem;color:var(--smoke);margin-bottom:0.75rem;align-items:center}
+.sm-card-meta .meta-item{display:flex;align-items:center;gap:0.25rem}
+.sm-card-cta{font-size:0.78rem;color:var(--gold);font-style:italic;margin-bottom:0.6rem;padding:0.4rem 0.6rem;background:rgba(201,168,76,0.06);border-radius:4px;border-left:2px solid var(--gold)}
+.sm-card-actions{display:flex;gap:0.4rem;flex-wrap:wrap;padding-top:0.6rem;border-top:1px solid var(--card-border)}
+.sm-action{display:inline-flex;align-items:center;gap:0.3rem;padding:0.4rem 0.8rem;border-radius:6px;font-size:0.7rem;font-weight:600;cursor:pointer;border:none;transition:all 0.2s}
+.sm-action-approve{background:rgba(46,204,113,0.15);color:var(--green)}
+.sm-action-approve:hover{background:rgba(46,204,113,0.3)}
+.sm-action-reject{background:rgba(231,76,60,0.15);color:var(--red)}
+.sm-action-reject:hover{background:rgba(231,76,60,0.3)}
+.sm-action-edit{background:rgba(255,45,123,0.12);color:var(--pink)}
+.sm-action-edit:hover{background:rgba(255,45,123,0.25)}
+.sm-action-comment{background:rgba(201,168,76,0.12);color:var(--gold)}
+.sm-action-comment:hover{background:rgba(201,168,76,0.25)}
+.sm-action-schedule{background:rgba(160,152,136,0.12);color:var(--smoke)}
+.sm-action-schedule:hover{background:rgba(160,152,136,0.25)}
+.sm-card-notes{margin-top:0.6rem;padding:0.6rem;background:rgba(201,168,76,0.05);border-radius:6px;border:1px solid rgba(201,168,76,0.15)}
+.sm-card-notes label{font-size:0.65rem;color:var(--gold);margin-bottom:0.3rem}
+.sm-card-notes textarea{width:100%;min-height:50px;background:var(--bg);border:1px solid var(--card-border);color:var(--cream);font-size:0.78rem;padding:0.4rem;border-radius:4px;resize:vertical;outline:none;font-family:inherit}
+.sm-card-notes textarea:focus{border-color:var(--gold)}
+.sm-card-notes .note-actions{display:flex;gap:0.4rem;margin-top:0.4rem}
+.sm-card-schedule-input{margin-top:0.5rem;display:flex;gap:0.4rem;align-items:center}
+.sm-card-schedule-input input{max-width:220px;font-size:0.78rem;padding:0.35rem 0.5rem}
+.sm-badge-status{display:inline-flex;align-items:center;gap:0.3rem;margin-left:auto}
+.sm-badge-status .dot{width:6px;height:6px;border-radius:50%}
+.sm-badge-status.pending .dot{background:var(--orange)}
+.sm-badge-status.approved .dot{background:var(--green)}
+.sm-badge-status.rejected .dot{background:var(--red)}
+.sm-badge-status.posted .dot{background:var(--pink)}
+.sm-empty{text-align:center;padding:3rem;color:var(--smoke)}
+.sm-empty span{font-size:3rem;display:block;margin-bottom:1rem}
 
 /* === AGENTS SPECIFIC === */
 .agent-card{background:var(--card);border:1px solid var(--card-border);border-radius:8px;padding:1.2rem}
@@ -503,28 +563,37 @@ tr:hover td{background:rgba(201,168,76,0.03)}
 
     <!-- SOCIAL MEDIA -->
     <div class="page" id="page-social">
-      <div class="page-title">Social Media</div>
-      <div class="page-sub">Manage social media drafts and scheduling</div>
-      <div class="toolbar">
-        <select id="socialFilterPlatform">
-          <option value="">All Platforms</option>
-          <option value="instagram">Instagram</option>
-          <option value="tiktok">TikTok</option>
-          <option value="facebook">Facebook</option>
-          <option value="twitter">Twitter/X</option>
-          <option value="youtube">YouTube</option>
-        </select>
-        <select id="socialFilterStatus">
-          <option value="">All Statuses</option>
-          <option value="draft">Draft</option>
-          <option value="scheduled">Scheduled</option>
-          <option value="posted">Posted</option>
-          <option value="approved">Approved</option>
-        </select>
-        <button class="btn btn-primary" id="newPostBtn">+ New Post</button>
+      <div class="page-title">Social Media Content Approval</div>
+      <div class="page-sub">Review, approve, and schedule content for The DogMother's social channels</div>
+
+      <!-- Stats Banner -->
+      <div class="sm-stats" id="smStats">
+        <div class="sm-stat"><div class="sm-stat-val" id="smStatWeek">--</div><div class="sm-stat-label">Posts This Week</div></div>
+        <div class="sm-stat"><div class="sm-stat-val" id="smStatPending" style="color:var(--orange)">--</div><div class="sm-stat-label">Pending Approval</div></div>
+        <div class="sm-stat"><div class="sm-stat-val" id="smStatScheduled" style="color:var(--gold)">--</div><div class="sm-stat-label">Scheduled</div></div>
+        <div class="sm-stat"><div class="sm-stat-val" id="smStatPublished" style="color:var(--green)">--</div><div class="sm-stat-label">Published</div></div>
       </div>
-      <div class="cards" id="socialCards">
-        <div class="loading-center"><span class="spinner"></span> Loading...</div>
+
+      <!-- Filters -->
+      <div class="sm-filters" id="smFilters">
+        <button class="sm-filter-btn active" data-status="">All</button>
+        <button class="sm-filter-btn" data-status="pending">Pending</button>
+        <button class="sm-filter-btn" data-status="approved">Approved</button>
+        <button class="sm-filter-btn" data-status="rejected">Rejected</button>
+        <button class="sm-filter-btn" data-status="posted">Posted</button>
+        <div class="sm-filter-divider"></div>
+        <button class="sm-filter-btn active" data-platform="">All Platforms</button>
+        <button class="sm-filter-btn" data-platform="tiktok" style="--accent:#ff2d55">TikTok</button>
+        <button class="sm-filter-btn" data-platform="youtube" style="--accent:#ff0000">YouTube</button>
+        <button class="sm-filter-btn" data-platform="instagram" style="--accent:#c13584">Instagram</button>
+        <button class="sm-filter-btn" data-platform="facebook" style="--accent:#1877f2">Facebook</button>
+        <div class="sm-filter-divider"></div>
+        <button class="btn btn-primary" id="newPostBtn" style="margin-left:auto;background:var(--pink)">+ Create New Post</button>
+      </div>
+
+      <!-- Content Cards Grid -->
+      <div class="sm-grid" id="smGrid">
+        <div class="loading-center"><span class="spinner"></span> Loading content...</div>
       </div>
     </div>
 
@@ -784,40 +853,74 @@ tr:hover td{background:rgba(201,168,76,0.03)}
 
 <!-- NEW POST MODAL -->
 <div class="modal-overlay" id="newPostModal">
-  <div class="modal">
-    <div class="modal-title">New Social Media Post <button class="modal-close" data-modal="newPostModal">&times;</button></div>
-    <div class="form-group">
-      <label>Platform</label>
-      <select id="postPlatform">
-        <option value="instagram">Instagram</option>
-        <option value="tiktok">TikTok</option>
-        <option value="facebook">Facebook</option>
-        <option value="twitter">Twitter/X</option>
-        <option value="youtube">YouTube</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>Content</label>
-      <textarea id="postCaption" rows="4" placeholder="Write your post content..."></textarea>
-    </div>
+  <div class="modal" style="max-width:650px">
+    <div class="modal-title">Create New Content Package <button class="modal-close" data-modal="newPostModal">&times;</button></div>
     <div class="form-row">
       <div class="form-group">
-        <label>Scheduled Time</label>
-        <input type="datetime-local" id="postScheduled">
+        <label>Platform</label>
+        <select id="postPlatform">
+          <option value="tiktok">TikTok</option>
+          <option value="youtube">YouTube</option>
+          <option value="instagram">Instagram</option>
+          <option value="facebook">Facebook</option>
+        </select>
       </div>
       <div class="form-group">
-        <label>Status</label>
-        <select id="postStatus">
-          <option value="draft">Draft</option>
-          <option value="scheduled">Scheduled</option>
+        <label>Song</label>
+        <select id="postSong">
+          <option value="">-- No song --</option>
         </select>
       </div>
     </div>
     <div class="form-group">
-      <label>Media URL (optional)</label>
-      <input type="url" id="postMedia" placeholder="https://...">
+      <label>Title</label>
+      <input type="text" id="postTitle" placeholder="Post title (shown in feed)">
     </div>
-    <button class="btn btn-primary" id="savePostBtn">Save Post</button>
+    <div class="form-group">
+      <label>Caption / Description</label>
+      <textarea id="postCaption" rows="5" placeholder="Write the full caption..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Hashtags (comma separated)</label>
+      <input type="text" id="postHashtags" placeholder="#thedogmother, #howlingmoonmusic, #420">
+    </div>
+    <div class="form-group">
+      <label>Call to Action (CTA)</label>
+      <input type="text" id="postCta" placeholder="e.g. Link in bio for the full drop">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Media URL (video or photo)</label>
+        <input type="url" id="postMedia" placeholder="https://...">
+      </div>
+      <div class="form-group">
+        <label>Media Type</label>
+        <select id="postMediaType">
+          <option value="video">Video</option>
+          <option value="photo">Photo</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Schedule Date/Time</label>
+        <input type="datetime-local" id="postScheduled">
+      </div>
+      <div class="form-group">
+        <label>Post Type</label>
+        <select id="postType">
+          <option value="video">Video</option>
+          <option value="carousel">Carousel</option>
+          <option value="photo">Photo</option>
+          <option value="reel">Reel</option>
+          <option value="story">Story</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:flex;gap:0.6rem;margin-top:0.5rem">
+      <button class="btn btn-primary" id="savePostBtn" style="background:var(--pink)">Save as Pending</button>
+      <button class="btn btn-ghost" onclick="closeModal('newPostModal')">Cancel</button>
+    </div>
   </div>
 </div>
 
@@ -1166,7 +1269,7 @@ tr:hover td{background:rgba(201,168,76,0.03)}
       'unreleased':'badge-yellow','assigned':'badge-yellow','scheduled':'badge-yellow','draft':'badge-yellow',
       'pending':'badge-orange','queued':'badge-orange','needs_review':'badge-orange',
       'running':'badge-pink',
-      'error':'badge-red','failed':'badge-red','missing':'badge-red','cancelled':'badge-red',
+      'error':'badge-red','failed':'badge-red','missing':'badge-red','cancelled':'badge-red','rejected':'badge-red',
       'inactive':'badge-smoke',
       'critical':'badge-red','high':'badge-orange','medium':'badge-gold','low':'badge-smoke',
       'registered':'badge-green','logged':'badge-smoke',
@@ -1914,78 +2017,365 @@ tr:hover td{background:rgba(201,168,76,0.03)}
   }
 
   // =============================
-  // SOCIAL MEDIA (uses social_media_drafts)
+  // SOCIAL MEDIA CONTENT APPROVAL
   // =============================
-  $('socialFilterPlatform').addEventListener('change', loadSocial);
-  $('socialFilterStatus').addEventListener('change', loadSocial);
-  $('newPostBtn').addEventListener('click', function() {
-    openModal('newPostModal');
-    $('postCaption').value = ''; $('postScheduled').value = '';
-    $('postMedia').value = '';
+  var smStatusFilter = '';
+  var smPlatformFilter = '';
+  var smSongList = [];
+
+  // Load song list for dropdown
+  q('song_pipeline', 'select=id,title,slug&order=title.asc').then(function(songs) {
+    smSongList = Array.isArray(songs) ? songs : [];
+    var sel = $('postSong');
+    smSongList.forEach(function(s) {
+      var opt = document.createElement('option');
+      opt.value = s.slug || '';
+      opt.textContent = s.title;
+      sel.appendChild(opt);
+    });
   });
 
+  // Filter buttons (status)
+  document.querySelectorAll('#smFilters .sm-filter-btn[data-status]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#smFilters .sm-filter-btn[data-status]').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      smStatusFilter = btn.dataset.status;
+      loadSocial();
+    });
+  });
+
+  // Filter buttons (platform)
+  document.querySelectorAll('#smFilters .sm-filter-btn[data-platform]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#smFilters .sm-filter-btn[data-platform]').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      smPlatformFilter = btn.dataset.platform;
+      loadSocial();
+    });
+  });
+
+  // New Post button
+  $('newPostBtn').addEventListener('click', function() {
+    openModal('newPostModal');
+    $('postTitle').value = '';
+    $('postCaption').value = '';
+    $('postHashtags').value = '';
+    $('postCta').value = '';
+    $('postMedia').value = '';
+    $('postScheduled').value = '';
+    $('postSong').value = '';
+  });
+
+  function loadSocialStats() {
+    q('social_media_queue', 'select=id,status,created_at').then(function(data) {
+      if (!Array.isArray(data)) data = [];
+      var now = new Date();
+      var weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      var thisWeek = data.filter(function(d) { return new Date(d.created_at) >= weekAgo; }).length;
+      var pending = data.filter(function(d) { return d.status === 'pending' || d.status === 'draft'; }).length;
+      var scheduled = data.filter(function(d) { return d.status === 'approved' || d.status === 'scheduled'; }).length;
+      var published = data.filter(function(d) { return d.status === 'posted'; }).length;
+      $('smStatWeek').textContent = thisWeek;
+      $('smStatPending').textContent = pending;
+      $('smStatScheduled').textContent = scheduled;
+      $('smStatPublished').textContent = published;
+    });
+  }
+
+  function smPlatColor(p) {
+    var m = {tiktok:'#ff2d55',youtube:'#ff0000',instagram:'#c13584',facebook:'#1877f2'};
+    return m[(p||'').toLowerCase()] || 'var(--smoke)';
+  }
+  function smPlatClass(p) {
+    return 'plat-' + (p||'').toLowerCase();
+  }
+
+  function buildSmCard(p) {
+    var card = mk('div', {cls:'sm-card', 'data-id': p.id});
+
+    // Platform header
+    var platHead = mk('div', {cls:'sm-card-platform'});
+    platHead.appendChild(mk('span', {cls:'plat-icon', text: pIcon(p.platform)}));
+    platHead.appendChild(mk('span', {cls:'plat-name ' + smPlatClass(p.platform), text: (p.platform || 'unknown').toUpperCase()}));
+    var statusBadge = mk('div', {cls:'sm-badge-status ' + (p.status || 'pending')});
+    statusBadge.appendChild(mk('span', {cls:'dot'}));
+    statusBadge.appendChild(mk('span', {text: (p.status || 'pending').toUpperCase(), style:'font-size:0.6rem;font-weight:700;letter-spacing:0.1em'}));
+    platHead.appendChild(statusBadge);
+    card.appendChild(platHead);
+
+    // Media preview
+    var mediaWrap = mk('div', {cls:'sm-card-media'});
+    var mediaUrl = p.media_url || (p.media_urls && p.media_urls.length > 0 ? p.media_urls[0] : null);
+    if (mediaUrl) {
+      var mType = (p.media_type || '').toLowerCase();
+      if (mType === 'video' || /\.(mp4|mov|webm)$/i.test(mediaUrl)) {
+        var vid = mk('video', {src: mediaUrl, controls:'', preload:'metadata', style:'width:100%;height:100%;object-fit:cover'});
+        mediaWrap.appendChild(vid);
+      } else {
+        mediaWrap.appendChild(mk('img', {src: mediaUrl, alt: p.title || 'Post media', style:'width:100%;height:100%;object-fit:cover'}));
+      }
+    } else {
+      var noMedia = mk('div', {cls:'no-media'});
+      noMedia.appendChild(mk('span', {text: pIcon(p.platform)}));
+      noMedia.appendChild(mk('span', {text: 'No media attached'}));
+      mediaWrap.appendChild(noMedia);
+    }
+    card.appendChild(mediaWrap);
+
+    // Body
+    var body = mk('div', {cls:'sm-card-body'});
+
+    // Title (editable)
+    var titleWrap = mk('div', {cls:'sm-card-title', 'data-field':'title'});
+    titleWrap.textContent = p.title || p.caption?.substring(0, 50) || 'Untitled Post';
+    body.appendChild(titleWrap);
+
+    // Caption (expandable)
+    var captionText = p.caption || '';
+    var captionDiv = mk('div', {cls:'sm-card-caption collapsed', text: captionText});
+    body.appendChild(captionDiv);
+    if (captionText.length > 120) {
+      var expandBtn = mk('span', {cls:'sm-card-expand', text:'Show more'});
+      expandBtn.addEventListener('click', function() {
+        var isCollapsed = captionDiv.classList.contains('collapsed');
+        captionDiv.classList.toggle('collapsed');
+        expandBtn.textContent = isCollapsed ? 'Show less' : 'Show more';
+      });
+      body.appendChild(expandBtn);
+    }
+
+    // Hashtags as tags
+    var tags = p.hashtags || [];
+    if (tags.length > 0) {
+      var tagWrap = mk('div', {cls:'sm-card-tags'});
+      tags.forEach(function(t) {
+        tagWrap.appendChild(mk('span', {cls:'sm-tag', text: t}));
+      });
+      body.appendChild(tagWrap);
+    }
+
+    // CTA
+    if (p.cta) {
+      body.appendChild(mk('div', {cls:'sm-card-cta', text: p.cta}));
+    }
+
+    // Meta info
+    var meta = mk('div', {cls:'sm-card-meta'});
+    if (p.song_slug) {
+      var songName = p.song_slug.replace(/-/g, ' ').replace(/\b\w/g, function(l) { return l.toUpperCase(); });
+      meta.appendChild(mk('span', {cls:'meta-item', text: '\uD83C\uDFB5 ' + songName}));
+    }
+    if (p.scheduled_for || p.scheduled_at) {
+      meta.appendChild(mk('span', {cls:'meta-item', text: '\uD83D\uDCC5 ' + fmtDate(p.scheduled_for || p.scheduled_at)}));
+    }
+    if (p.post_type) {
+      meta.appendChild(mk('span', {cls:'meta-item', text: '\uD83C\uDFAC ' + p.post_type}));
+    }
+    meta.appendChild(mk('span', {cls:'meta-item', text: '\u23F0 ' + timeAgo(p.created_at)}));
+    if (p.generated_by) {
+      meta.appendChild(mk('span', {cls:'meta-item', text: '\uD83E\uDD16 ' + p.generated_by}));
+    }
+    body.appendChild(meta);
+
+    // CEO notes (if any)
+    if (p.ceo_notes) {
+      var notesBlock = mk('div', {style:'margin-top:0.5rem;padding:0.4rem 0.6rem;background:rgba(201,168,76,0.06);border-radius:4px;border-left:2px solid var(--gold);font-size:0.78rem;color:var(--smoke)'});
+      notesBlock.appendChild(mk('span', {style:'font-weight:700;color:var(--gold);font-size:0.65rem;letter-spacing:0.1em', text:'CEO NOTES: '}));
+      notesBlock.appendChild(mk('span', {text: p.ceo_notes}));
+      body.appendChild(notesBlock);
+    }
+
+    // Post URL (if posted)
+    if (p.post_url) {
+      var postLink = mk('a', {href: p.post_url, target:'_blank', style:'display:inline-flex;align-items:center;gap:0.3rem;margin-top:0.5rem;font-size:0.75rem;color:var(--pink);text-decoration:none'});
+      postLink.textContent = '\uD83D\uDD17 View Published Post';
+      body.appendChild(postLink);
+    }
+
+    // Action buttons
+    var actions = mk('div', {cls:'sm-card-actions'});
+    var postId = p.id;
+
+    if (p.status === 'pending' || p.status === 'draft') {
+      var approveBtn = mk('button', {cls:'sm-action sm-action-approve', text:'Approve'});
+      approveBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        patchData('social_media_queue', 'id=eq.' + postId, {status:'approved', approved_by:'ceo', updated_at: new Date().toISOString()}).then(function() { loadSocial(); });
+      });
+      actions.appendChild(approveBtn);
+
+      var rejectBtn = mk('button', {cls:'sm-action sm-action-reject', text:'Reject'});
+      rejectBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        patchData('social_media_queue', 'id=eq.' + postId, {status:'rejected', updated_at: new Date().toISOString()}).then(function() { loadSocial(); });
+      });
+      actions.appendChild(rejectBtn);
+    }
+
+    var editBtn = mk('button', {cls:'sm-action sm-action-edit', text:'Edit'});
+    editBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleSmEdit(card, p);
+    });
+    actions.appendChild(editBtn);
+
+    var commentBtn = mk('button', {cls:'sm-action sm-action-comment', text:'Comment'});
+    commentBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleSmComment(card, p);
+    });
+    actions.appendChild(commentBtn);
+
+    var schedBtn = mk('button', {cls:'sm-action sm-action-schedule', text:'Reschedule'});
+    schedBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleSmSchedule(card, p);
+    });
+    actions.appendChild(schedBtn);
+
+    body.appendChild(actions);
+    card.appendChild(body);
+    return card;
+  }
+
+  function toggleSmEdit(card, post) {
+    var existing = card.querySelector('.sm-edit-panel');
+    if (existing) { existing.remove(); return; }
+    var panel = mk('div', {cls:'sm-edit-panel', style:'padding:0.8rem 1rem;border-top:1px solid var(--card-border);background:rgba(255,45,123,0.03)'});
+    panel.appendChild(mk('label', {text:'Title', style:'font-size:0.65rem;color:var(--pink)'}));
+    var titleIn = mk('input', {type:'text', value: post.title || '', style:'margin-bottom:0.5rem;font-size:0.82rem'});
+    panel.appendChild(titleIn);
+    panel.appendChild(mk('label', {text:'Caption', style:'font-size:0.65rem;color:var(--pink)'}));
+    var captionIn = mk('textarea', {style:'min-height:80px;font-size:0.82rem;margin-bottom:0.5rem'});
+    captionIn.value = post.caption || '';
+    panel.appendChild(captionIn);
+    panel.appendChild(mk('label', {text:'Hashtags (comma separated)', style:'font-size:0.65rem;color:var(--pink)'}));
+    var hashIn = mk('input', {type:'text', value: (post.hashtags || []).join(', '), style:'margin-bottom:0.5rem;font-size:0.82rem'});
+    panel.appendChild(hashIn);
+    panel.appendChild(mk('label', {text:'CTA', style:'font-size:0.65rem;color:var(--pink)'}));
+    var ctaIn = mk('input', {type:'text', value: post.cta || '', style:'margin-bottom:0.5rem;font-size:0.82rem'});
+    panel.appendChild(ctaIn);
+    var saveRow = mk('div', {style:'display:flex;gap:0.4rem'});
+    var saveBtn = mk('button', {cls:'btn btn-sm', style:'background:var(--pink);color:#fff;border:none', text:'Save Changes'});
+    saveBtn.addEventListener('click', function() {
+      var newHashtags = hashIn.value.split(',').map(function(t) { return t.trim(); }).filter(function(t) { return t; });
+      patchData('social_media_queue', 'id=eq.' + post.id, {
+        title: titleIn.value.trim() || null,
+        caption: captionIn.value.trim(),
+        hashtags: newHashtags,
+        cta: ctaIn.value.trim() || null,
+        updated_at: new Date().toISOString()
+      }).then(function() { loadSocial(); });
+    });
+    var cancelBtn = mk('button', {cls:'btn btn-sm btn-ghost', text:'Cancel'});
+    cancelBtn.addEventListener('click', function() { panel.remove(); });
+    saveRow.appendChild(saveBtn);
+    saveRow.appendChild(cancelBtn);
+    panel.appendChild(saveRow);
+    card.appendChild(panel);
+  }
+
+  function toggleSmComment(card, post) {
+    var existing = card.querySelector('.sm-comment-panel');
+    if (existing) { existing.remove(); return; }
+    var panel = mk('div', {cls:'sm-comment-panel sm-card-notes'});
+    panel.appendChild(mk('label', {text:'CEO Notes / Feedback'}));
+    var noteIn = mk('textarea', {placeholder:'Leave feedback for Claude...'});
+    noteIn.value = post.ceo_notes || '';
+    panel.appendChild(noteIn);
+    var noteActions = mk('div', {cls:'note-actions'});
+    var saveNote = mk('button', {cls:'btn btn-sm', style:'background:var(--gold);color:var(--bg);border:none', text:'Save Note'});
+    saveNote.addEventListener('click', function() {
+      patchData('social_media_queue', 'id=eq.' + post.id, {
+        ceo_notes: noteIn.value.trim(),
+        updated_at: new Date().toISOString()
+      }).then(function() { loadSocial(); });
+    });
+    var cancelNote = mk('button', {cls:'btn btn-sm btn-ghost', text:'Cancel'});
+    cancelNote.addEventListener('click', function() { panel.remove(); });
+    noteActions.appendChild(saveNote);
+    noteActions.appendChild(cancelNote);
+    panel.appendChild(noteActions);
+    card.querySelector('.sm-card-body').appendChild(panel);
+  }
+
+  function toggleSmSchedule(card, post) {
+    var existing = card.querySelector('.sm-schedule-panel');
+    if (existing) { existing.remove(); return; }
+    var panel = mk('div', {cls:'sm-schedule-panel sm-card-schedule-input'});
+    var dtInput = mk('input', {type:'datetime-local', style:'max-width:220px;font-size:0.78rem;padding:0.35rem 0.5rem'});
+    if (post.scheduled_for || post.scheduled_at) {
+      var d = new Date(post.scheduled_for || post.scheduled_at);
+      dtInput.value = d.toISOString().slice(0, 16);
+    }
+    panel.appendChild(dtInput);
+    var saveSchedule = mk('button', {cls:'btn btn-sm', style:'background:var(--smoke);color:var(--bg);border:none', text:'Set'});
+    saveSchedule.addEventListener('click', function() {
+      var val = dtInput.value;
+      if (!val) { alert('Please select a date/time.'); return; }
+      patchData('social_media_queue', 'id=eq.' + post.id, {
+        scheduled_for: new Date(val).toISOString(),
+        scheduled_at: new Date(val).toISOString(),
+        updated_at: new Date().toISOString()
+      }).then(function() { loadSocial(); });
+    });
+    panel.appendChild(saveSchedule);
+    var cancelSched = mk('button', {cls:'btn btn-sm btn-ghost', text:'X'});
+    cancelSched.addEventListener('click', function() { panel.remove(); });
+    panel.appendChild(cancelSched);
+    card.querySelector('.sm-card-body').appendChild(panel);
+  }
+
   function loadSocial() {
-    var platform = $('socialFilterPlatform').value;
-    var status = $('socialFilterStatus').value;
-    var params = 'order=created_at.desc&limit=50';
-    if (platform) params += '&platform=eq.' + platform;
-    if (status) params += '&status=eq.' + status;
+    loadSocialStats();
+    var params = 'order=created_at.desc&limit=100';
+    if (smStatusFilter) {
+      if (smStatusFilter === 'pending') {
+        params += '&status=in.(pending,draft)';
+      } else {
+        params += '&status=eq.' + smStatusFilter;
+      }
+    }
+    if (smPlatformFilter) params += '&platform=eq.' + smPlatformFilter;
 
     q('social_media_queue', params).then(function(data) {
-      var c = $('socialCards');
-      clearEl(c);
+      var grid = $('smGrid');
+      clearEl(grid);
       if (!Array.isArray(data) || data.length === 0) {
-        c.appendChild(mk('div', {style:'padding:2rem;color:var(--smoke);text-align:center', text:'No social media posts found. Create one!'}));
+        var empty = mk('div', {cls:'sm-empty'});
+        empty.appendChild(mk('span', {text: '\uD83C\uDFB5'}));
+        empty.appendChild(mk('div', {text:'No posts found', style:'font-size:1rem;color:var(--cream);margin-bottom:0.3rem'}));
+        empty.appendChild(mk('div', {text:'Create one with the button above, or adjust your filters.'}));
+        grid.appendChild(empty);
         return;
       }
-      var grid = mk('div', {cls:'cards'});
       data.forEach(function(p) {
-        var card = mk('div', {cls:'social-card', style:'cursor:pointer'});
-        var header = mk('div', {cls:'social-card-header'});
-        header.appendChild(mk('span', {cls:'social-platform', text: pIcon(p.platform) + ' ' + (p.platform || '')}));
-        header.appendChild(mkBadge(p.status));
-        card.appendChild(header);
-        var caption = p.caption || 'No content';
-        var tags = (p.hashtags || []).join(' ');
-        card.appendChild(mk('div', {cls:'social-caption', text: caption}));
-        if (tags) card.appendChild(mk('div', {style:'font-size:0.72rem;color:var(--gold);margin-top:0.3rem;word-break:break-all', text: tags}));
-        var meta = mk('div', {cls:'social-meta'});
-        if (p.post_type) meta.appendChild(mk('span', {text: p.post_type}));
-        if (p.scheduled_for) meta.appendChild(mk('span', {text: fmtDate(p.scheduled_for)}));
-        if (p.generated_by) meta.appendChild(mk('span', {text: 'by ' + p.generated_by}));
-        meta.appendChild(mk('span', {text: timeAgo(p.created_at)}));
-        card.appendChild(meta);
-        // Approve/Reject buttons for draft posts
-        if (p.status === 'draft') {
-          var actions = mk('div', {style:'display:flex;gap:0.5rem;margin-top:0.75rem'});
-          var approveBtn = mk('button', {cls:'btn btn-sm', style:'background:var(--green);color:#fff;border:none;padding:0.4rem 1rem;border-radius:4px;cursor:pointer;font-size:0.72rem', text:'Approve'});
-          approveBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            patchData('social_media_queue', 'id=eq.' + p.id, {status:'approved', approved_by:'ceo'}).then(loadSocial);
-          });
-          var rejectBtn = mk('button', {cls:'btn btn-sm', style:'background:var(--red);color:#fff;border:none;padding:0.4rem 1rem;border-radius:4px;cursor:pointer;font-size:0.72rem', text:'Reject'});
-          rejectBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            patchData('social_media_queue', 'id=eq.' + p.id, {status:'rejected'}).then(loadSocial);
-          });
-          actions.appendChild(approveBtn);
-          actions.appendChild(rejectBtn);
-          card.appendChild(actions);
-        }
-        grid.appendChild(card);
+        grid.appendChild(buildSmCard(p));
       });
-      c.appendChild(grid);
     });
   }
 
   $('savePostBtn').addEventListener('click', function() {
-    var content = $('postCaption').value.trim();
-    if (!content) { alert('Please enter content.'); return; }
+    var caption = $('postCaption').value.trim();
+    if (!caption) { alert('Please enter a caption.'); return; }
+    var hashtagRaw = $('postHashtags').value.trim();
+    var hashtags = hashtagRaw ? hashtagRaw.split(',').map(function(t) { return t.trim(); }).filter(function(t) { return t; }) : [];
     var mediaUrl = $('postMedia').value.trim();
     postData('social_media_queue', {
-      platform: $('postPlatform').value, caption: content,
-      scheduled_for: $('postScheduled').value || null, status: $('postStatus').value,
+      platform: $('postPlatform').value,
+      title: $('postTitle').value.trim() || null,
+      caption: caption,
+      hashtags: hashtags,
+      cta: $('postCta').value.trim() || null,
+      media_url: mediaUrl || null,
       media_urls: mediaUrl ? [mediaUrl] : [],
+      media_type: $('postMediaType').value,
+      post_type: $('postType').value,
+      song_slug: $('postSong').value || null,
+      scheduled_for: $('postScheduled').value ? new Date($('postScheduled').value).toISOString() : null,
+      scheduled_at: $('postScheduled').value ? new Date($('postScheduled').value).toISOString() : null,
+      status: 'pending',
       generated_by: 'admin'
     }).then(function() { closeModal('newPostModal'); loadSocial(); })
       .catch(function(e) { alert('Failed to save post: ' + e.message); });
@@ -3415,6 +3805,9 @@ tr:hover td{background:rgba(201,168,76,0.03)}
   setInterval(function() {
     if ($('page-chat').classList.contains('active') && !chatSending) loadChat(true);
   }, 15000);
+  setInterval(function() {
+    if ($('page-social').classList.contains('active')) loadSocial();
+  }, 30000);
 
 })();
 </script>
