@@ -886,18 +886,18 @@ p { color: var(--ts); max-width: 700px; font-size: 1.05rem; }
 #story .pink-divider {
   width: 80px;
   height: 2px;
-  background: linear-gradient(to right, #d4a84a, #b8922f, transparent);
+  background: linear-gradient(to right, #ff2d7b, #d4175f, transparent);
   margin-bottom: 2rem;
 }
 .story-card {
   position: relative;
-  background: linear-gradient(135deg, rgba(184,146,47,.06) 0%, rgba(255,255,255,.02) 40%, rgba(184,146,47,.04) 100%);
-  border: 1px solid rgba(184,146,47,.15);
-  border-left: 3px solid #d4a84a;
+  background: linear-gradient(135deg, rgba(255,45,123,.06) 0%, rgba(255,255,255,.02) 40%, rgba(255,45,123,.04) 100%);
+  border: 1px solid rgba(255,45,123,.15);
+  border-left: 3px solid #ff2d7b;
   border-radius: 2px 12px 12px 2px;
   padding: 2.5rem 3rem 2.5rem 3.5rem;
   max-width: 760px;
-  box-shadow: 0 4px 30px rgba(0,0,0,.2), inset 0 1px 0 rgba(184,146,47,.08);
+  box-shadow: 0 4px 30px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,45,123,.08);
 }
 .story-card::before {
   content: '\201C';
@@ -907,7 +907,7 @@ p { color: var(--ts); max-width: 700px; font-size: 1.05rem; }
   font-family: var(--font-d);
   font-size: 5rem;
   line-height: 1;
-  color: rgba(212,168,74,.25);
+  color: rgba(255,45,123,.25);
   pointer-events: none;
 }
 .story-card::after {
@@ -920,9 +920,9 @@ p { color: var(--ts); max-width: 700px; font-size: 1.05rem; }
   font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #d4a84a;
-  background: rgba(184,146,47,.08);
-  border: 1px solid rgba(184,146,47,.2);
+  color: #ff2d7b;
+  background: rgba(255,45,123,.08);
+  border: 1px solid rgba(255,45,123,.2);
   border-radius: 3px;
   padding: 0.25rem 0.65rem;
 }
