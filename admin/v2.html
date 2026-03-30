@@ -381,7 +381,7 @@ tr:hover td{background:rgba(201,168,76,0.03)}
 <body>
 
 <!-- LOGIN OVERLAY -->
-<div class="login-overlay" id="loginOverlay">
+<div class="login-overlay hidden" id="loginOverlay">
   <div class="login-moon"></div>
   <div class="login-title">Howling Moon Music</div>
   <div class="login-sub">Admin Control Panel</div>
@@ -406,7 +406,7 @@ tr:hover td{background:rgba(201,168,76,0.03)}
 </div>
 
 <!-- APP -->
-<div class="app" id="app" style="display:none">
+<div class="app" id="app" style="display:flex">
 
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
@@ -494,7 +494,7 @@ tr:hover td{background:rgba(201,168,76,0.03)}
           </div>
           <div class="chat-input-area" id="chatInputArea">
             <button class="chat-attach-btn" id="chatAttachBtn" title="Attach file">&#x1F4CE;</button>
-            <input type="file" id="chatFileInput" style="display:none">
+            <input type="file" id="chatFileInput" style="display:flex">
             <textarea id="chatInput" placeholder="Type your message to Claude..." rows="2"></textarea>
             <select id="chatModelSelect" title="Claude model">
               <option value="sonnet">Sonnet</option>
@@ -546,8 +546,8 @@ tr:hover td{background:rgba(201,168,76,0.03)}
         <div class="drop-zone-icon">&#x1F4C1;</div>
         <div class="drop-zone-text">Drag and drop files here or click to browse</div>
         <div class="drop-zone-sub">Accepts: .mp3, .wav, .flac, .docx, .doc, .pdf, .txt, .rtf, .zip, .jpg, .png, .webp, .mp4, .mov</div>
-        <input type="file" id="fileInput" multiple accept=".mp3,.wav,.flac,.aiff,.docx,.doc,.pdf,.txt,.rtf,.zip,.jpg,.jpeg,.png,.webp,.svg,.mp4,.mov,.webm" style="display:none">
-        <div class="upload-progress" id="uploadProgress" style="display:none">
+        <input type="file" id="fileInput" multiple accept=".mp3,.wav,.flac,.aiff,.docx,.doc,.pdf,.txt,.rtf,.zip,.jpg,.jpeg,.png,.webp,.svg,.mp4,.mov,.webm" style="display:flex">
+        <div class="upload-progress" id="uploadProgress" style="display:flex">
           <div style="font-size:0.8rem;color:var(--gold);margin-bottom:0.4rem" id="uploadFileName"></div>
           <div class="upload-progress-bar"><div class="upload-progress-fill" id="uploadFill"></div></div>
         </div>
@@ -1103,7 +1103,7 @@ tr:hover td{background:rgba(201,168,76,0.03)}
       </div>
       <div style="margin-top:0.4rem;display:flex;gap:0.5rem;align-items:center">
         <label for="songAudioFile" class="btn btn-ghost" style="font-size:0.8rem;padding:0.3rem 0.7rem;cursor:pointer;margin:0">Upload Audio</label>
-        <input type="file" id="songAudioFile" accept=".mp3,.wav,.flac,.aiff,.m4a" style="display:none">
+        <input type="file" id="songAudioFile" accept=".mp3,.wav,.flac,.aiff,.m4a" style="display:flex">
         <span id="songAudioFileName" style="font-size:0.75rem;color:var(--text-muted)"></span>
       </div>
     </div>
@@ -1115,7 +1115,7 @@ tr:hover td{background:rgba(201,168,76,0.03)}
       </div>
       <div style="margin-top:0.4rem;display:flex;gap:0.5rem;align-items:center">
         <label for="songArtworkFile" class="btn btn-ghost" style="font-size:0.8rem;padding:0.3rem 0.7rem;cursor:pointer;margin:0">Upload Art</label>
-        <input type="file" id="songArtworkFile" accept=".jpg,.jpeg,.png,.webp" style="display:none">
+        <input type="file" id="songArtworkFile" accept=".jpg,.jpeg,.png,.webp" style="display:flex">
         <span id="songArtworkFileName" style="font-size:0.75rem;color:var(--text-muted)"></span>
       </div>
     </div>
@@ -1123,7 +1123,7 @@ tr:hover td{background:rgba(201,168,76,0.03)}
       <label>Lyrics File</label>
       <div style="margin-top:0.2rem;display:flex;gap:0.5rem;align-items:center">
         <label for="songLyricsFile" class="btn btn-ghost" style="font-size:0.8rem;padding:0.3rem 0.7rem;cursor:pointer;margin:0">Upload Lyrics Doc</label>
-        <input type="file" id="songLyricsFile" accept=".docx,.doc,.pdf,.txt,.rtf,.zip" style="display:none">
+        <input type="file" id="songLyricsFile" accept=".docx,.doc,.pdf,.txt,.rtf,.zip" style="display:flex">
         <span id="songLyricsFileName" style="font-size:0.75rem;color:var(--text-muted)"></span>
         <a id="songLyricsLink" href="#" target="_blank" style="font-size:0.75rem;display:none">View file</a>
       </div>
@@ -1371,7 +1371,7 @@ tr:hover td{background:rgba(201,168,76,0.03)}
     }).then(function(r){ return r.json(); }).then(function(data){
       if (data.ok) {
         sessionStorage.setItem('hm_auth', data.token);
-        $('loginOverlay').classList.add('hidden');
+        document.getElementById("loginOverlay").classList.add("hidden");
         $('app').style.display = 'flex';
         if (data.new_device) {
           $('loginDevice').textContent = 'New device registered and approved.';
@@ -1398,7 +1398,7 @@ tr:hover td{background:rgba(201,168,76,0.03)}
   // Check for existing session — require re-auth if session expired
   var existingAuth = sessionStorage.getItem('hm_auth');
   if (existingAuth && existingAuth.length > 10) {
-    $('loginOverlay').classList.add('hidden');
+    document.getElementById("loginOverlay").classList.add("hidden");
     $('app').style.display = 'flex';
     setTimeout(initApp, 50);
   }
