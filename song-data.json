@@ -179,7 +179,7 @@
       "audio_status": "yes_mp3",
       "isrc": null,
       "bmi_work_number": null,
-      "is_public": true
+      "is_public": false
     },
     {
       "id": "892c82ec-37ac-478a-8164-362c3de501a0",
@@ -473,7 +473,7 @@
       "audio_status": "yes_mp3",
       "isrc": null,
       "bmi_work_number": null,
-      "is_public": true
+      "is_public": false
     },
     {
       "id": "53a4e755-3f53-4e1b-9b88-5b260754ade4",
@@ -2006,7 +2006,7 @@
       "audio_status": "yes_mp3",
       "isrc": null,
       "bmi_work_number": null,
-      "is_public": true
+      "is_public": false
     },
     {
       "id": "1c005d9d-2558-4881-bd62-7bc03f190525",
@@ -2050,7 +2050,7 @@
       "audio_status": "yes_mp3",
       "isrc": null,
       "bmi_work_number": null,
-      "is_public": true
+      "is_public": false
     },
     {
       "id": "fecddd92-02d2-4402-85ec-dd33257622c9",
@@ -2460,7 +2460,7 @@
       "audio_status": "yes_mp3",
       "isrc": null,
       "bmi_work_number": null,
-      "is_public": true
+      "is_public": false
     },
     {
       "id": "b27dbf71-b6bc-408f-bfbd-a7c04b913a44",
@@ -2482,7 +2482,7 @@
       "audio_status": "yes_mp3",
       "isrc": null,
       "bmi_work_number": null,
-      "is_public": true
+      "is_public": false
     },
     {
       "id": "4d221786-ab7a-40ae-81e8-12212c2b03c3",
@@ -2527,7 +2527,7 @@
     },
     {
       "id": "4738ebb2-b3cb-4eae-87ca-f093a6d6d121",
-      "title": "Shit Pie",
+      "title": "Keep Pushing Me / Shit Pie",
       "slug": "shit-pie",
       "genre": "Southwest Country Soul",
       "vocalist": "Valentina Talor",
@@ -2559,7 +2559,8 @@
       "sync_tags": [],
       "description": "Different from Tattoo in Albuquerque. Same ink, different story. Every tattoo is a chapter. This one's the whole book.",
       "seo_description": "Tattoo by The Dogmother (Valentina Talor). Original country soul from New Mexico.",
-      "isrc": null
+      "isrc": null,
+      "is_public": false
     },
     {
       "id": "f1dd49e4-6c6c-478a-b084-2a1017f65abe",
@@ -2586,7 +2587,7 @@
       "slug": "god-is-good-to-me",
       "genre": "Gospel Country",
       "vocalist": "Valentina Talor",
-      "album_id": null,
+      "album_id": "6e8169f5-0d43-45a6-a4a9-166bfeb23b4e",
       "track_number": null,
       "duration_seconds": null,
       "tempo_bpm": null,
@@ -2604,7 +2605,7 @@
       "slug": "luminaries",
       "genre": "Southwest Country Soul",
       "vocalist": "Valentina Talor",
-      "album_id": null,
+      "album_id": "428468b7-51bb-477c-bf2e-72863337153c",
       "track_number": null,
       "duration_seconds": null,
       "tempo_bpm": null,
