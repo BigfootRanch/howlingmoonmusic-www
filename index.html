@@ -716,32 +716,63 @@
 </div>
 
 <!-- Fan Connect -->
-<section class="section" id="connect" style="padding: 4rem 0;">
+<!-- Around the Fire — Fan Community -->
+<section class="section" id="around-the-fire" style="padding:4rem 0;background:linear-gradient(180deg,#1a1410 0%,#0d0b0f 100%);">
   <div class="container text-center">
-    <h2 class="sec-title reveal">Connect With The Dogmother</h2>
-    <p class="sec-sub reveal">Got something to say? Want to collaborate? Just want to say hey?</p>
-    <div style="max-width: 500px; margin: 2rem auto; background: var(--bg2); border: 1px solid var(--border-g); border-radius: 12px; padding: 2rem;">
-      <p style="color: var(--ts); margin-bottom: 1.5rem;">Drop a line. Fan mail, booking inquiries, sync licensing, love letters, hate mail &mdash; it all lands in the same inbox.</p>
-      <a href="mailto:howlingmoonmusic@gmail.com" style="display: inline-block; background: linear-gradient(135deg, var(--pink-d), var(--pink)); color: #fff; padding: .8rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1rem; letter-spacing: 1px; transition: transform .3s, box-shadow .3s; box-shadow: 0 4px 20px rgba(255,45,123,.3);" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Email Us</a>
-      <p style="color: var(--tm); font-size: .8rem; margin-top: 1rem;">howlingmoonmusic@gmail.com</p>
-      <div style="display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.5rem; flex-wrap: wrap;">
-        <a href="https://open.spotify.com/artist/2oYIuTSjJZy1c4uOmscAJy" target="_blank" rel="noopener" style="color: var(--tm); text-decoration: none; font-size: .85rem; transition: color .3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--tm)'">Spotify</a>
-        <a href="https://music.apple.com/us/artist/the-dogmother/1825492000" target="_blank" rel="noopener" style="color: var(--tm); text-decoration: none; font-size: .85rem; transition: color .3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--tm)'">Apple Music</a>
-        <a href="https://www.tiktok.com/@thedogmothermusic" target="_blank" rel="noopener" style="color: var(--tm); text-decoration: none; font-size: .85rem; transition: color .3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--tm)'">TikTok</a>
-        <a href="https://www.youtube.com/@TheDogMotherMusic" target="_blank" rel="noopener" style="color: var(--tm); text-decoration: none; font-size: .85rem; transition: color .3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--tm)'">YouTube</a>
+    <h2 class="sec-title reveal" style="color:#faf6f0;">&#x1F525; Around the Fire</h2>
+    <p class="sec-sub reveal" style="color:rgba(255,255,255,.7);max-width:600px;margin:0 auto 1.5rem;">This isn&rsquo;t a mailing list. It&rsquo;s a campfire. Pull up a chair, stay a while. You&rsquo;ll hear about new music before anyone else, get behind-the-scenes stories, exclusive drops, and the kind of real talk you won&rsquo;t find on social media.</p>
+
+    <div style="max-width:460px;margin:0 auto;">
+      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(212,168,67,.2);border-radius:16px;padding:2rem;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:2.5rem;filter:drop-shadow(0 0 20px rgba(255,100,0,.4));">&#x1F525;</div>
+        <h3 style="color:#d4a843;font-size:1.2rem;margin-top:1.5rem;margin-bottom:.3rem;">Join the Inner Circle</h3>
+        <p style="color:rgba(255,255,255,.5);font-size:.8rem;margin-bottom:1.2rem;">New music drops &bull; Behind the song stories &bull; Exclusive releases &bull; Real talk</p>
+        <form id="homeSignup" style="display:flex;flex-direction:column;gap:.6rem;" onsubmit="return submitHomeSignup(event)">
+          <input type="text" id="homeName" placeholder="Your name" style="padding:.7rem 1rem;border-radius:8px;border:1px solid rgba(212,168,67,.15);background:rgba(255,255,255,.04);color:#faf6f0;font-size:.9rem;">
+          <input type="email" id="homeEmail" placeholder="Your email" required style="padding:.7rem 1rem;border-radius:8px;border:1px solid rgba(212,168,67,.15);background:rgba(255,255,255,.04);color:#faf6f0;font-size:.9rem;">
+          <button type="submit" style="padding:.75rem;border-radius:8px;border:none;background:linear-gradient(135deg,#ff2d7b,#d4175f);color:#fff;font-weight:600;font-size:.95rem;cursor:pointer;letter-spacing:.02em;box-shadow:0 4px 20px rgba(255,45,123,.3);">&#x1F48B; Pull Up a Chair</button>
+        </form>
+        <div id="homeMsg" style="display:none;color:#d4a843;margin-top:.8rem;font-size:.9rem;"></div>
+        <p style="color:rgba(255,255,255,.25);font-size:.7rem;margin-top:.8rem;">No spam. No algorithms. Just music and fire.</p>
       </div>
+    </div>
+
+    <div style="margin-top:2.5rem;">
+      <p style="color:rgba(255,255,255,.4);font-size:.85rem;margin-bottom:.8rem;">Find me everywhere</p>
+      <div style="display:flex;justify-content:center;gap:1.2rem;flex-wrap:wrap;">
+        <a href="https://www.tiktok.com/@thedogmothermusic" target="_blank" rel="noopener" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:.85rem;">TikTok</a>
+        <a href="https://www.youtube.com/@TheDogMotherMusic" target="_blank" rel="noopener" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:.85rem;">YouTube</a>
+        <a href="https://www.instagram.com/thedogmother/" target="_blank" rel="noopener" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:.85rem;">Instagram</a>
+        <a href="mailto:howlingmoonmusic@gmail.com" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:.85rem;">Email</a>
+      </div>
+    </div>
+
+    <div style="margin-top:2rem;">
+      <p style="font-size:1.05rem;font-style:italic;color:rgba(255,255,255,.35);">If something here hits you&hellip; send it to someone who needs it.</p>
     </div>
   </div>
 </section>
-
-<!-- Viral Trigger -->
-<section class="section" style="padding: 3rem 0;">
-  <div class="container text-center">
-    <p style="font-size: 1.1rem; font-style: italic; color: var(--tm);">
-      If something here hits you&hellip; send it to someone who needs it.
-    </p>
-  </div>
-</section>
+<script>
+function submitHomeSignup(e){
+  e.preventDefault();
+  var name=document.getElementById("homeName").value.trim();
+  var email=document.getElementById("homeEmail").value.trim();
+  if(!email)return false;
+  fetch("https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/fan_subscribers",{
+    method:"POST",
+    headers:{"apikey":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78","Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78","Content-Type":"application/json","Prefer":"return=minimal"},
+    body:JSON.stringify({email:email,name:name,source:"homepage",tags:["inner-circle"]})
+  }).then(function(){
+    document.getElementById("homeMsg").style.display="block";
+    document.getElementById("homeMsg").textContent="Welcome to the fire, "+name+" \uD83D\uDD25\uD83D\uDC8B";
+    document.getElementById("homeSignup").style.display="none";
+  }).catch(function(){
+    document.getElementById("homeMsg").style.display="block";
+    document.getElementById("homeMsg").textContent="You're already around the fire \u2764\uFE0F";
+  });
+  return false;
+}
+</script>
 
 <!-- Footer -->
 <footer class="footer">
