@@ -85,6 +85,34 @@
   </div>
 </section>
 
+<!-- Sticky Social Action Bar -->
+<div class="song-action-bar" id="songActionBar">
+  <button class="sab-btn sab-lips" onclick="reactSong('lips')" title="Love it">
+    <span class="sab-icon">💋</span>
+    <span class="sab-count" id="lips-count">0</span>
+  </button>
+  <button class="sab-btn sab-fire" onclick="reactSong('fire')" title="Fire">
+    <span class="sab-icon">🔥</span>
+    <span class="sab-count" id="fire-count">0</span>
+  </button>
+  <button class="sab-btn sab-comment" onclick="document.getElementById('campfire').scrollIntoView({behavior:'smooth'})" title="Leave Your Mark">
+    <span class="sab-icon">💬</span>
+    <span class="sab-label">Leave Your Mark</span>
+  </button>
+  <button class="sab-btn sab-join" onclick="document.getElementById('campfire').scrollIntoView({behavior:'smooth'})" title="Join the Fire">
+    <span class="sab-icon">🔥</span>
+    <span class="sab-label">Join the Fire</span>
+  </button>
+  <button class="sab-btn sab-share" onclick="if(navigator.share)navigator.share({title:'Spurs by The DogMother',url:location.href});else{navigator.clipboard.writeText(location.href);this.querySelector('.sab-label').textContent='Copied!'}" title="Share">
+    <span class="sab-icon">⬆️</span>
+    <span class="sab-label">Share</span>
+  </button>
+  <a href="#buy" class="sab-btn sab-buy">
+    <span class="sab-icon">💋</span>
+    <span class="sab-label">Support</span>
+  </a>
+</div>
+
 <div class="container">
 
   <!-- LISTEN NOW -->
@@ -253,17 +281,17 @@ Me and my dog<br>
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="if-tears-could-call-heaven.html" class="more-song-card">
-          <h4>If Tears Could Call Heaven</h4>
-          <p>Valentina &middot; Country Ballad</p>
+        <a href="scarlet-letter.html" class="more-song-card">
+          <h4>I Didn&#39;t Die / Scarlet Letter</h4>
+          <p>Valentina &middot; Country Rock / Gospel</p>
         </a>
-        <a href="uncontainable.html" class="more-song-card">
-          <h4>Uncontainable</h4>
+        <a href="beast-mode-jt.html" class="more-song-card">
+          <h4>Beast Mode JT</h4>
+          <p>JT &middot; Hip-Hop / Rock</p>
+        </a>
+        <a href="snowflake.html" class="more-song-card">
+          <h4>Snowflake</h4>
           <p>Valentina</p>
-        </a>
-        <a href="drowning-in-my-tears.html" class="more-song-card">
-          <h4>Drowning In My Tears</h4>
-          <p>Valentina &middot; Country Ballad / R&amp;B Soul</p>
         </a>
     </div>
   </section>
@@ -347,6 +375,40 @@ function submitComment(e){
   });
   return false;
 }
+
+// Song Reactions — 💋 and 🔥
+var songSlug = location.pathname.split('/').pop().replace('.html','');
+var SB_URL = 'https://pxcxtnabyydhbfbholvh.supabase.co';
+var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78';
+
+function reactSong(type) {
+  var btn = document.querySelector('.sab-' + type);
+  if (btn.classList.contains('active')) return;
+  btn.classList.add('active');
+  var countEl = document.getElementById(type + '-count');
+  countEl.textContent = parseInt(countEl.textContent || '0') + 1;
+  // Save to localStorage to prevent double-react
+  localStorage.setItem('react-' + songSlug + '-' + type, '1');
+  // Save to Supabase
+  fetch(SB_URL + '/rest/v1/song_reactions', {
+    method: 'POST',
+    headers: {'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal'},
+    body: JSON.stringify({song_slug: songSlug, reaction_type: type})
+  }).catch(function(){});
+}
+
+// Load existing reactions on page load
+(function(){
+  // Check localStorage for user's previous reactions
+  if (localStorage.getItem('react-' + songSlug + '-lips')) {
+    var btn = document.querySelector('.sab-lips');
+    if (btn) btn.classList.add('active');
+  }
+  if (localStorage.getItem('react-' + songSlug + '-fire')) {
+    var btn = document.querySelector('.sab-fire');
+    if (btn) btn.classList.add('active');
+  }
+})();
 </script>
 </body>
 </html>

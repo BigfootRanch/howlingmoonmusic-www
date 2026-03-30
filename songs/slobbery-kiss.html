@@ -81,6 +81,34 @@
   </div>
 </section>
 
+<!-- Sticky Social Action Bar -->
+<div class="song-action-bar" id="songActionBar">
+  <button class="sab-btn sab-lips" onclick="reactSong('lips')" title="Love it">
+    <span class="sab-icon">💋</span>
+    <span class="sab-count" id="lips-count">0</span>
+  </button>
+  <button class="sab-btn sab-fire" onclick="reactSong('fire')" title="Fire">
+    <span class="sab-icon">🔥</span>
+    <span class="sab-count" id="fire-count">0</span>
+  </button>
+  <button class="sab-btn sab-comment" onclick="document.getElementById('campfire').scrollIntoView({behavior:'smooth'})" title="Leave Your Mark">
+    <span class="sab-icon">💬</span>
+    <span class="sab-label">Leave Your Mark</span>
+  </button>
+  <button class="sab-btn sab-join" onclick="document.getElementById('campfire').scrollIntoView({behavior:'smooth'})" title="Join the Fire">
+    <span class="sab-icon">🔥</span>
+    <span class="sab-label">Join the Fire</span>
+  </button>
+  <button class="sab-btn sab-share" onclick="if(navigator.share)navigator.share({title:'Slobbery Kiss by The DogMother',url:location.href});else{navigator.clipboard.writeText(location.href);this.querySelector('.sab-label').textContent='Copied!'}" title="Share">
+    <span class="sab-icon">⬆️</span>
+    <span class="sab-label">Share</span>
+  </button>
+  <a href="#buy" class="sab-btn sab-buy">
+    <span class="sab-icon">💋</span>
+    <span class="sab-label">Support</span>
+  </a>
+</div>
+
 <div class="container">
 
   <!-- LISTEN NOW -->
@@ -194,17 +222,17 @@
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="lump-of-coal.html" class="more-song-card">
-          <h4>Lump of Coal</h4>
-          <p>Valentina &middot; Holiday / Country Rock</p>
+        <a href="christmas-on-the-beach.html" class="more-song-card">
+          <h4>Christmas on the Beach</h4>
+          <p>Valentina &middot; Holiday / Trop Rock</p>
         </a>
-        <a href="only-gift-i-need.html" class="more-song-card">
-          <h4>Only Gift I Need</h4>
-          <p>Valentina &middot; Holiday / Ballad</p>
+        <a href="christmas-puppy.html" class="more-song-card">
+          <h4>Christmas Puppy</h4>
+          <p>Valentina &middot; Holiday / Country</p>
         </a>
-        <a href="luminaries.html" class="more-song-card">
-          <h4>Luminaries</h4>
-          <p>Valentina Talor &middot; Southwest Country Soul</p>
+        <a href="smoky-mountain-snow.html" class="more-song-card">
+          <h4>Smoky Mountain Snow</h4>
+          <p>Valentina &middot; Country Ballad</p>
         </a>
     </div>
   </section>
@@ -288,6 +316,40 @@ function submitComment(e){
   });
   return false;
 }
+
+// Song Reactions — 💋 and 🔥
+var songSlug = location.pathname.split('/').pop().replace('.html','');
+var SB_URL = 'https://pxcxtnabyydhbfbholvh.supabase.co';
+var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78';
+
+function reactSong(type) {
+  var btn = document.querySelector('.sab-' + type);
+  if (btn.classList.contains('active')) return;
+  btn.classList.add('active');
+  var countEl = document.getElementById(type + '-count');
+  countEl.textContent = parseInt(countEl.textContent || '0') + 1;
+  // Save to localStorage to prevent double-react
+  localStorage.setItem('react-' + songSlug + '-' + type, '1');
+  // Save to Supabase
+  fetch(SB_URL + '/rest/v1/song_reactions', {
+    method: 'POST',
+    headers: {'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal'},
+    body: JSON.stringify({song_slug: songSlug, reaction_type: type})
+  }).catch(function(){});
+}
+
+// Load existing reactions on page load
+(function(){
+  // Check localStorage for user's previous reactions
+  if (localStorage.getItem('react-' + songSlug + '-lips')) {
+    var btn = document.querySelector('.sab-lips');
+    if (btn) btn.classList.add('active');
+  }
+  if (localStorage.getItem('react-' + songSlug + '-fire')) {
+    var btn = document.querySelector('.sab-fire');
+    if (btn) btn.classList.add('active');
+  }
+})();
 </script>
 </body>
 </html>

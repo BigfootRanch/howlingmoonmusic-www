@@ -1258,3 +1258,56 @@ p { color: var(--ts); max-width: 700px; font-size: 1.05rem; }
   color: rgba(255,255,255,.6);
 }
 .song-page-body h3[style*="color:var(--ts)"] { color: #faf6f0 !important; }
+
+/* === Sticky Social Action Bar — Song Pages === */
+.song-action-bar {
+  position: sticky;
+  top: 56px;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .6rem 1rem;
+  background: rgba(13,11,15,.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,45,123,.15);
+  box-shadow: 0 2px 20px rgba(0,0,0,.3);
+  flex-wrap: wrap;
+}
+.sab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  padding: .4rem .7rem;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 20px;
+  background: rgba(255,255,255,.04);
+  color: rgba(255,255,255,.7);
+  font-size: .8rem;
+  cursor: pointer;
+  transition: all .2s;
+  text-decoration: none;
+  font-family: inherit;
+}
+.sab-btn:hover {
+  background: rgba(255,45,123,.12);
+  border-color: rgba(255,45,123,.3);
+  color: #fff;
+  transform: scale(1.05);
+}
+.sab-btn:active { transform: scale(.95); }
+.sab-icon { font-size: 1.1rem; }
+.sab-count { font-size: .75rem; font-weight: 600; }
+.sab-label { font-size: .75rem; font-weight: 500; }
+.sab-lips:hover, .sab-lips.active { background: rgba(255,45,123,.2); border-color: #ff2d7b; }
+.sab-fire:hover, .sab-fire.active { background: rgba(255,100,0,.2); border-color: #ff6400; }
+.sab-buy { background: linear-gradient(135deg, rgba(255,45,123,.15), rgba(255,45,123,.08)); border-color: rgba(255,45,123,.3); color: #ff2d7b; font-weight: 600; }
+.sab-buy:hover { background: linear-gradient(135deg, #ff2d7b, #d4175f); color: #fff; }
+@media (max-width: 600px) {
+  .song-action-bar { gap: .3rem; padding: .4rem .5rem; }
+  .sab-btn { padding: .3rem .5rem; font-size: .7rem; }
+  .sab-label { display: none; }
+  .sab-icon { font-size: 1rem; }
+}
