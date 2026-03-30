@@ -1235,3 +1235,25 @@ p { color: var(--ts); max-width: 700px; font-size: 1.05rem; }
   .radio-mode-bar { gap: .3rem; }
   .radio-mode { padding: .25rem .7rem; font-size: .65rem; }
 }
+
+/* === DARK THEME FIXES — Song Page Readability (2026-03-30) === */
+.song-page-body .campfire-comment p { color: rgba(255,255,255,.7); }
+.song-page-body .campfire-empty { color: rgba(255,255,255,.45); }
+.song-page-body .campfire-time { color: rgba(255,255,255,.3); }
+.song-page-body .campfire-author { color: #d4a843; }
+.song-page-body .section-vibe { color: rgba(255,255,255,.45); }
+.song-page-body .campfire-form input,
+.song-page-body .campfire-form textarea {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  color: #faf6f0;
+}
+.song-page-body .campfire-glow {
+  border: 1px solid rgba(255,255,255,.06);
+}
+.song-page-body .share-card {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  color: rgba(255,255,255,.6);
+}
+.song-page-body h3[style*="color:var(--ts)"] { color: #faf6f0 !important; }
