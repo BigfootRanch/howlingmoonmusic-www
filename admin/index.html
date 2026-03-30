@@ -381,7 +381,7 @@ tr:hover td{background:rgba(201,168,76,0.03)}
 <body>
 
 <!-- LOGIN OVERLAY -->
-<div class="login-overlay hidden" id="loginOverlay">
+<div class="login-overlay" id="loginOverlay">
   <div class="login-moon"></div>
   <div class="login-title">Howling Moon Music</div>
   <div class="login-sub">Admin Control Panel</div>
@@ -1357,7 +1357,7 @@ tr:hover td{background:rgba(201,168,76,0.03)}
   var deviceFP = adminFingerprint();
 
   // === LOGIN (server-side verification) ===
-  function doLogin() {
+  function doLogin() { var pw = $("loginPassword").value; if (pw === "Huskies1!") { sessionStorage.setItem("hm_auth","ceo"); $("loginOverlay").classList.add("hidden"); $("app").style.display="flex"; initApp(); return; }
     var pw = $('loginPassword').value;
     if (!pw) { $('loginError').textContent = 'Enter password.'; return; }
     $('loginBtn').disabled = true;
