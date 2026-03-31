@@ -402,6 +402,7 @@
   <div class="container">
     <div class="stats">
       <div class="stat reveal"><div class="stat__num">3M+</div><div class="stat__label">Views Across All Platforms</div></div>
+      <div class="stat reveal"><div class="stat__num" id="totalReactions" style="font-size:1.8rem;">125,600+</div><div class="stat__label" id="totalReactionsLabel">Fans Worldwide</div></div>
     </div>
   </div>
 </section>
@@ -1165,6 +1166,44 @@ document.querySelectorAll('.radio-mode').forEach(btn => {
 });
 
 /* ============================================
+   QUICK REACT — Lips + Fire reactions
+   ============================================ */
+var HM_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78';
+var HM_API_URL = 'https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/song_reactions';
+
+function quickReact(slug, type) {
+  var btn = event.target.closest('.sa-react');
+  if (!btn || btn.classList.contains('active')) return;
+  btn.classList.add('active');
+  var key = 'react-' + slug + '-' + type;
+  if (localStorage.getItem(key)) return;
+  localStorage.setItem(key, '1');
+  fetch(HM_API_URL, {
+    method: 'POST',
+    headers: {
+      'apikey': HM_ANON_KEY,
+      'Authorization': 'Bearer ' + HM_ANON_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify({song_slug: slug, reaction_type: type})
+  });
+}
+
+// Fetch total reactions and display
+(function loadTotalReactions() {
+  fetch(HM_API_URL + '?select=id', {
+    headers: {'apikey': HM_ANON_KEY}
+  }).then(function(r) { return r.json(); }).then(function(data) {
+    var total = 125600 + (data.length || 0);
+    var el = document.getElementById('totalReactions');
+    if (el) el.textContent = total.toLocaleString() + '+';
+    var lbl = document.getElementById('totalReactionsLabel');
+    if (lbl) lbl.innerHTML = '\uD83D\uDC8B\uD83D\uDD25 From Fans Worldwide';
+  }).catch(function(){});
+})();
+
+/* ============================================
    SONG ACTION BUTTONS (catalog songs)
    ============================================ */
 function addSongActionButtons() {
@@ -1173,14 +1212,20 @@ function addSongActionButtons() {
     if (!link || li.querySelector('.song-actions')) return;
 
     const href = link.getAttribute('href') || '';
-    const slug = href.replace('songs/', '').replace('.html', '');
+    const slug = href.replace('songs/', '').replace('.html', '').replace(/#.*/, '');
     const title = link.textContent;
     const song = allSongs.find(s => s.slug === slug);
 
     const actions = document.createElement('div');
     actions.className = 'song-actions';
-    actions.innerHTML = '<button class="sa-btn sa-play" title="Play in Radio">&#9654;</button>'
-      + '<a href="mailto:howlingmoonmusic@gmail.com?subject=Buy%20' + encodeURIComponent(title) + '&body=I%20want%20to%20purchase%20' + encodeURIComponent(title) + '%20by%20The%20Dogmother" class="sa-btn sa-buy" title="Buy / Download">$</a>'
+
+    // Reaction buttons first, then existing action buttons
+    var reactHtml = '<button class="sa-react' + (localStorage.getItem('react-' + slug + '-lips') ? ' active' : '') + '" onclick="quickReact(\'' + slug + '\',\'lips\')" title="Love it">\uD83D\uDC8B</button>'
+      + '<button class="sa-react' + (localStorage.getItem('react-' + slug + '-fire') ? ' active' : '') + '" onclick="quickReact(\'' + slug + '\',\'fire\')" title="Fire">\uD83D\uDD25</button>';
+
+    actions.innerHTML = reactHtml
+      + '<button class="sa-btn sa-play" title="Play in Radio">&#9654;</button>'
+      + '<a href="songs/' + slug + '.html#buy" class="sa-act" title="Buy">$</a>'
       + '<a href="https://open.spotify.com/artist/2oYIuTSjJZy1c4uOmscAJy" target="_blank" rel="noopener" class="sa-btn sa-stream" title="Stream on Spotify">&#9835;</a>';
 
     if (song && song.audio_path) {
