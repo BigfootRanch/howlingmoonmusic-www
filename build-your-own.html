@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build Your Own Bundle — The Dogmother | Howling Moon Music</title>
+  <meta name="description" content="Pick your favorite songs and build your own custom bundle. 3 songs for $4.99, 5 for $6.99, or 10 for $9.99. Southwest Country Soul by The Dogmother.">
+  <meta name="keywords" content="custom music bundle, pick your songs, The Dogmother, Valentina Talor, Howling Moon Music, country music download, build your own album">
+  <meta name="author" content="Valentina Talor">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://howlingmoonmusic.com/build-your-own.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://howlingmoonmusic.com/build-your-own.html">
+  <meta property="og:title" content="Build Your Own Bundle — The Dogmother">
+  <meta property="og:description" content="Pick your favorite songs. Build your own bundle. 3 for $4.99, 5 for $6.99, or 10 for $9.99.">
+  <meta property="og:image" content="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png">
+  <meta property="og:site_name" content="Howling Moon Music">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Build Your Own Bundle — The Dogmother">
+  <meta name="twitter:description" content="Pick your favorite songs. Build your own bundle. Southwest Country Soul.">
+  <meta name="twitter:image" content="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png">
+  <link rel="icon" href="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --bg: #0d0b0f;
+      --bg2: #161318;
+      --bg3: #1e1a22;
+      --text: #faf6f0;
+      --text-s: #b0a99e;
+      --text-m: #8a7e70;
+      --gold: #d4ae48;
+      --gold-d: #b8922f;
+      --pink: #ff2d7b;
+      --pink-l: #ff5a9e;
+      --pink-glow: rgba(255,45,123,.15);
+      --border: rgba(212,174,72,.15);
+      --font-d: 'Playfair Display', Georgia, serif;
+      --font-b: 'Inter', -apple-system, sans-serif;
+      --max-w: 1200px;
+      --nav-h: 68px;
+    }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--font-b);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: var(--gold); text-decoration: none; transition: color .3s; }
+    a:hover { color: var(--pink); }
+    img { max-width: 100%; display: block; }
+    h1,h2,h3,h4 { font-family: var(--font-d); font-weight: 500; line-height: 1.2; }
+
+    /* Nav */
+    .nav {
+      position: fixed; top: 0; width: 100%; z-index: 100; height: var(--nav-h);
+      display: flex; align-items: center;
+      background: rgba(13,11,15,.92);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(212,174,72,.08);
+      transition: all .3s;
+    }
+    .nav__inner {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; max-width: var(--max-w); margin: 0 auto; padding: 0 2rem;
+    }
+    .nav__logo { display: flex; align-items: center; gap: .6rem; }
+    .nav__logo img { height: 42px; }
+    .nav__logo span { font-family: var(--font-d); font-size: 1.2rem; color: var(--text); letter-spacing: .04em; }
+    .nav__links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+    .nav__links a {
+      color: var(--text-s); font-size: .8rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; transition: color .3s;
+    }
+    .nav__links a:hover, .nav__links a.active { color: var(--pink); }
+    .nav__toggle { display: none; background: none; border: none; cursor: pointer; padding: .5rem; }
+    .nav__toggle span { display: block; width: 24px; height: 2px; background: var(--text); margin: 5px 0; transition: .3s; }
+
+    .mob-nav {
+      display: none; position: fixed; inset: 0; background: rgba(13,11,15,.98); z-index: 99;
+      flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+    }
+    .mob-nav.open { display: flex; }
+    .mob-nav a { font-family: var(--font-d); font-size: 1.5rem; color: var(--text); }
+    .mob-nav .close-btn { background: none; border: 1px solid var(--pink); color: var(--pink); padding: .5rem 2rem; border-radius: 6px; font-size: .9rem; cursor: pointer; margin-top: 1rem; }
+
+    /* Hero */
+    .hero-section {
+      padding: calc(var(--nav-h) + 4rem) 2rem 3rem;
+      text-align: center;
+      background: radial-gradient(ellipse at 50% 0%, rgba(255,45,123,.08) 0%, transparent 60%);
+    }
+    .hero-section h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--text);
+      margin-bottom: .5rem;
+    }
+    .hero-section .tagline {
+      font-family: var(--font-d);
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--pink-l);
+      margin-bottom: .5rem;
+    }
+    .hero-section .sub {
+      font-size: 1rem;
+      color: var(--text-s);
+      max-width: 550px;
+      margin: 0 auto;
+    }
+
+    /* Tier Cards */
+    .tiers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 960px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+    }
+    .tier-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      position: relative;
+      transition: all .35s;
+    }
+    .tier-card:hover {
+      border-color: var(--pink);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(255,45,123,.15);
+    }
+    .tier-card.popular {
+      border-color: var(--pink);
+      background: linear-gradient(180deg, rgba(255,45,123,.06) 0%, var(--bg2) 100%);
+    }
+    .tier-card.popular::before {
+      content: 'MOST POPULAR';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--pink);
+      color: #fff;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      padding: .25rem .75rem;
+      border-radius: 20px;
+    }
+    .tier-count {
+      font-family: var(--font-d);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: .25rem;
+    }
+    .tier-label {
+      font-size: .85rem;
+      color: var(--text-s);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 1.25rem;
+    }
+    .tier-price {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: .25rem;
+    }
+    .tier-per {
+      font-size: .8rem;
+      color: var(--text-m);
+      margin-bottom: 1.5rem;
+    }
+    .tier-btn {
+      display: inline-block;
+      width: 100%;
+      padding: .75rem 1.5rem;
+      background: linear-gradient(135deg, var(--pink) 0%, var(--pink-l) 100%);
+      color: #fff;
+      font-size: .9rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all .3s;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .tier-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255,45,123,.4);
+      color: #fff;
+    }
+
+    /* Song Preview Grid */
+    .catalog-section {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 3rem 2rem 4rem;
+    }
+    .catalog-section h2 {
+      text-align: center;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: var(--text);
+      margin-bottom: .5rem;
+    }
+    .catalog-sub {
+      text-align: center;
+      color: var(--text-s);
+      font-size: .9rem;
+      margin-bottom: 2rem;
+    }
+    .song-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .song-preview {
+      background: var(--bg2);
+      border: 1px solid rgba(255,255,255,.04);
+      border-radius: 10px;
+      padding: .75rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      transition: all .25s;
+    }
+    .song-preview:hover {
+      border-color: var(--border);
+      background: var(--bg3);
+    }
+    .song-preview .song-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,45,123,.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .song-preview .song-icon svg { width: 16px; height: 16px; }
+    .song-preview .song-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .song-preview .song-name {
+      font-size: .85rem;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Around the Fire */
+    .fire-section {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .fire-section h2 {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: var(--gold);
+      margin-bottom: .5rem;
+    }
+    .fire-section p {
+      color: var(--text-s);
+      font-size: .95rem;
+      max-width: 500px;
+      margin: 0 auto 1.5rem;
+    }
+    .fire-form {
+      display: flex;
+      gap: .5rem;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+    .fire-form input {
+      flex: 1;
+      padding: .7rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: .9rem;
+      font-family: var(--font-b);
+    }
+    .fire-form input::placeholder { color: var(--text-m); }
+    .fire-form button {
+      padding: .7rem 1.5rem;
+      background: var(--pink);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .25s;
+      white-space: nowrap;
+    }
+    .fire-form button:hover { background: var(--pink-l); }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: .75rem;
+      color: var(--text-m);
+    }
+
+    @media (max-width: 768px) {
+      .nav__links { display: none; }
+      .nav__toggle { display: block; }
+      .tiers { grid-template-columns: 1fr; max-width: 400px; }
+      .song-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+      .fire-form { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="/" class="nav__logo">
+      <img src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png" alt="Howling Moon Music">
+      <span>The Dogmother</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="/">Home</a></li>
+      <li><a href="music.html">Music</a></li>
+      <li><a href="outlaw-love.html">Outlaw Love</a></li>
+      <li><a href="how-to-listen.html">How to Listen</a></li>
+    </ul>
+    <button class="nav__toggle" id="mobBtn" aria-label="Menu" onclick="document.getElementById('mobNav').classList.add('open')">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mob-nav" id="mobNav">
+  <a href="/" onclick="closeMob()">Home</a>
+  <a href="music.html" onclick="closeMob()">Music</a>
+  <a href="outlaw-love.html" onclick="closeMob()">Outlaw Love</a>
+  <a href="how-to-listen.html" onclick="closeMob()">How to Listen</a>
+  <button class="close-btn" onclick="closeMob()">Close</button>
+</div>
+
+<!-- Hero -->
+<section class="hero-section">
+  <h1>Build Your Own Bundle &#x1F48B;</h1>
+  <p class="tagline">Your music. Your rules.</p>
+  <p class="sub">Pick your favorite songs from the entire catalog and bundle them at a discount. More songs, bigger savings.</p>
+</section>
+
+<!-- Tier Cards -->
+<div class="tiers">
+  <div class="tier-card">
+    <div class="tier-count">3</div>
+    <div class="tier-label">Songs</div>
+    <div class="tier-price">$4.99</div>
+    <div class="tier-per">$1.66 per song</div>
+    <a href="https://buy.stripe.com/eVqaEZehY3V76Nk7BEd7q0a" class="tier-btn">Pick 3 Songs</a>
+  </div>
+  <div class="tier-card popular">
+    <div class="tier-count">5</div>
+    <div class="tier-label">Songs</div>
+    <div class="tier-price">$6.99</div>
+    <div class="tier-per">$1.40 per song</div>
+    <a href="https://buy.stripe.com/6oU4gB4HofDP1t03lod7q0b" class="tier-btn">Pick 5 Songs</a>
+  </div>
+  <div class="tier-card">
+    <div class="tier-count">10</div>
+    <div class="tier-label">Songs</div>
+    <div class="tier-price">$9.99</div>
+    <div class="tier-per">$1.00 per song</div>
+    <a href="https://buy.stripe.com/3cI8wRb5Mbnz8VscVYd7q0c" class="tier-btn">Pick 10 Songs</a>
+  </div>
+</div>
+
+<!-- Song Preview Catalog -->
+<section class="catalog-section">
+  <h2>Preview the Catalog</h2>
+  <p class="catalog-sub">79 songs available &mdash; country, outlaw, trop rock, desert soul, love, heartbreak, and more</p>
+  <div class="song-grid" id="songGrid"></div>
+</section>
+
+<!-- Around the Fire -->
+<section class="fire-section">
+  <h2>Around the Fire &#x1F525;</h2>
+  <p>Join the inner circle. New music, behind-the-scenes stories, and exclusive drops straight to your inbox.</p>
+  <form class="fire-form" onsubmit="return false;">
+    <input type="email" placeholder="your@email.com" id="fireEmail">
+    <button onclick="alert('Welcome to the fire! (Email signup coming soon)')">Join</button>
+  </form>
+</section>
+
+<div class="footer">
+  Howling Moon Music &copy; 2026 &middot; All rights reserved &middot; <a href="/">howlingmoonmusic.com</a>
+</div>
+
+<script>
+function closeMob(){ document.getElementById('mobNav').classList.remove('open'); }
+
+// Song catalog for preview
+const songs = [
+  "Almost Called","Barefoot Beach Beauty","Bigfoot Lives Here","Booty Boom Boom","Breathe",
+  "Choke On The Wine","Christmas on the Beach","Christmas Puppy","Coconut Kiss","Coffee Constellation",
+  "Cotton Candy","Crack the Sky","Crackhead Queen","Daddy's Eyes","Don't Be a Mr. Magoo",
+  "Don't Cry At My Funeral","Don't Settle","Don't Start","Down Under","Drown in the Bottle",
+  "Drown Me in Slobbery Kisses","Drowning In My Tears","Enchanted Green Haze","Endless Summer",
+  "Favorite Mistake","Fields of Gold","Fire from Heaven","Fireflies & Fireworks","Floating",
+  "Gaslight & Glitter","Ghost Wanted Dead or Alive","God Is Good To Me","Good To Me","Goodnight Baby",
+  "Hazy Bubble","Held You First","I Ain't Picking Up Your Shit No More","I Didn't Die",
+  "I Rise","If Tears Could Call Heaven","Invisible Woman","Juicy Peach on Fire","Just Peachy",
+  "Keep Pushing Me","Kick Your Ass","Las Cruces Nights","Left My Heart In Santa Fe",
+  "Liar, Preacher Man","Lightning Strikes","Looking for My Swagger","Lost in Santa Fe",
+  "Love Me Complicated","Mangroves & Moonlight","Mi Hogar","Never Let Go / Hand in Hand",
+  "Not Enough Bottles","Obsessed","One Night with the Devil","Only Gift I Need","Paper Soldier",
+  "Port Lavaca Paradise","Puff Planet","Puppy Kisses","Pussy Juice","Rainbow","Ride or Die",
+  "Rock a Bye Baby","Rodeo Cowboy","Sand in Toes","Silence Is Your Fangs","Sleep","Slobbery Kiss",
+  "Smoke Me","Spurs","Stage 4 Liabetes","Still The Asshole","Tangled","Tattoo In Albuquerque",
+  "Tear Drops in My Coffee","This is Shame","Tongue & Groove","Twinkle Twinkle Little Bitch (JT)",
+  "Uncontainable","Villain","When You Wake","Woke Up Laughing","World Melts Away","Zero Rips Left"
+];
+
+const grid = document.getElementById('songGrid');
+songs.forEach(title => {
+  grid.innerHTML += `<div class="song-preview">
+    <div class="song-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#ff2d7b" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+    <div class="song-info"><div class="song-name">${title}</div></div>
+  </div>`;
+});
+</script>
+</body>
+</html>
