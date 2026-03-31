@@ -573,7 +573,11 @@ async function sbInsert(table, data) {
 }
 
 async function sbUpdate(table, id, data) {
-  return (await fetch(SB_URL+'/rest/v1/'+table+'?id=eq.'+id,{method:'PATCH',headers:{...sbHeaders,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify(data)})).json();
+  const r=await fetch(SB_URL+'/rest/v1/'+table+'?id=eq.'+id,{method:'PATCH',headers:{...sbHeaders,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify(data)});
+  if(!r.ok){const e=await r.json();throw new Error(e.message||'Update failed')}
+  const result=await r.json();
+  if(Array.isArray(result)&&result.length===0) throw new Error('Update blocked by RLS policy -- check permissions');
+  return result;
 }
 
 async function sbDelete(table, id) {
