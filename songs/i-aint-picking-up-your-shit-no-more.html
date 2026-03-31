@@ -83,7 +83,7 @@
 
 <!-- Sticky Social Action Bar -->
 <div class="song-action-bar" id="songActionBar">
-  <button class="sab-btn sab-lips" onclick="reactSong('lips')" title="Love it">
+  <button class="sab-btn sab-lips" onclick="(function(){var s=location.pathname.split('/').pop().replace('.html','');var b=this;if(b.classList.contains('active'))return;b.classList.add('active');var c=document.getElementById('lips-count');if(c)c.textContent=parseInt(c.textContent||'0')+1;localStorage.setItem('react-'+s+'-lips','1');fetch('https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/song_reactions',{method:'POST',headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({song_slug:s,reaction_type:'lips'})}).catch(function(){})}).call(this)" title="Love it">
     <span class="sab-icon">💋</span>
     <span class="sab-count" id="lips-count">0</span>
   </button>
@@ -319,17 +319,17 @@ Blocked it
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="bigfoot-lives-here.html" class="more-song-card">
-          <h4>Bigfoot Lives Here</h4>
-          <p>Valentina &middot; Country Rock / Novelty</p>
-        </a>
         <a href="juicy-peach-on-fire.html" class="more-song-card">
           <h4>Juicy Peach on Fire</h4>
           <p>Valentina &middot; Southern Rock / Country Rock</p>
         </a>
-        <a href="taffy-in-and-out.html" class="more-song-card">
-          <h4>Taffy (In &amp; Out)</h4>
-          <p>Valentina &middot; Hip-Hop / Club Rap</p>
+        <a href="gaslight-and-glitter.html" class="more-song-card">
+          <h4>Gaslight &amp; Glitter</h4>
+          <p>Valentina &middot; Southern Rock / Country Rock</p>
+        </a>
+        <a href="bigfoot-lives-here.html" class="more-song-card">
+          <h4>Bigfoot Lives Here</h4>
+          <p>Valentina &middot; Country Rock / Novelty</p>
         </a>
     </div>
   </section>

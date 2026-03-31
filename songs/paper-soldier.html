@@ -83,7 +83,7 @@
 
 <!-- Sticky Social Action Bar -->
 <div class="song-action-bar" id="songActionBar">
-  <button class="sab-btn sab-lips" onclick="reactSong('lips')" title="Love it">
+  <button class="sab-btn sab-lips" onclick="(function(){var s=location.pathname.split('/').pop().replace('.html','');var b=this;if(b.classList.contains('active'))return;b.classList.add('active');var c=document.getElementById('lips-count');if(c)c.textContent=parseInt(c.textContent||'0')+1;localStorage.setItem('react-'+s+'-lips','1');fetch('https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/song_reactions',{method:'POST',headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({song_slug:s,reaction_type:'lips'})}).catch(function(){})}).call(this)" title="Love it">
     <span class="sab-icon">💋</span>
     <span class="sab-count" id="lips-count">0</span>
   </button>
@@ -307,17 +307,17 @@ POG — paper soldier POG — POG — POG
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="not-enough-bottles.html" class="more-song-card">
-          <h4>Not Enough Bottles</h4>
-          <p>Valentina &middot; Country / Drinking Song</p>
+        <a href="coffee-constellation.html" class="more-song-card">
+          <h4>Coffee Constellation</h4>
+          <p>Valentina &middot; Coastal / Indie</p>
         </a>
-        <a href="coastal-candy.html" class="more-song-card">
-          <h4>Coastal Candy</h4>
-          <p>Valentina &middot; Trop Rock / Coastal</p>
+        <a href="fire-from-heaven.html" class="more-song-card">
+          <h4>Fire from Heaven</h4>
+          <p>Valentina &middot; Gospel Rock / Spiritual</p>
         </a>
-        <a href="smoke-me-slow.html" class="more-song-card">
-          <h4>Smoke Me Slow</h4>
-          <p>Valentina</p>
+        <a href="i-didnt-die.html" class="more-song-card">
+          <h4>I Didn&#39;t Die</h4>
+          <p>Valentina &middot; Country Rock / Gospel Rock</p>
         </a>
     </div>
   </section>

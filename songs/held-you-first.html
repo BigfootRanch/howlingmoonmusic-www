@@ -83,7 +83,7 @@
 
 <!-- Sticky Social Action Bar -->
 <div class="song-action-bar" id="songActionBar">
-  <button class="sab-btn sab-lips" onclick="reactSong('lips')" title="Love it">
+  <button class="sab-btn sab-lips" onclick="(function(){var s=location.pathname.split('/').pop().replace('.html','');var b=this;if(b.classList.contains('active'))return;b.classList.add('active');var c=document.getElementById('lips-count');if(c)c.textContent=parseInt(c.textContent||'0')+1;localStorage.setItem('react-'+s+'-lips','1');fetch('https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/song_reactions',{method:'POST',headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({song_slug:s,reaction_type:'lips'})}).catch(function(){})}).call(this)" title="Love it">
     <span class="sab-icon">💋</span>
     <span class="sab-count" id="lips-count">0</span>
   </button>
@@ -291,17 +291,17 @@ I held you first…
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
+        <a href="booty-boom-boom.html" class="more-song-card">
+          <h4>Booty Boom Boom</h4>
+          <p>Valentina &middot; Hip-Hop / Club</p>
+        </a>
         <a href="almost-called.html" class="more-song-card">
           <h4>Almost Called</h4>
           <p>Valentina &middot; Country Ballad / Pop</p>
         </a>
-        <a href="endless-summer.html" class="more-song-card">
-          <h4>Endless Summer</h4>
-          <p>Valentina &middot; Trop Rock / Coastal</p>
-        </a>
-        <a href="drowning-in-my-tears.html" class="more-song-card">
-          <h4>Drowning In My Tears</h4>
-          <p>Valentina &middot; Country Ballad / R&amp;B Soul</p>
+        <a href="when-you-wake.html" class="more-song-card">
+          <h4>When You Wake</h4>
+          <p>Valentina</p>
         </a>
     </div>
   </section>
