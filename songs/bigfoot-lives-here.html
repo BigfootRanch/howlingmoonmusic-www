@@ -83,11 +83,11 @@
 
 <!-- Sticky Social Action Bar -->
 <div class="song-action-bar" id="songActionBar">
-  <button class="sab-btn sab-lips" data-react="lips" title="Love it">
+  <button class="sab-btn sab-lips" onclick="this.classList.add('active');var s=location.pathname.split('/').pop().replace('.html','');var c=document.getElementById('lips-count');if(c)c.textContent=parseInt(c.textContent||'0')+1;localStorage.setItem('react-'+s+'-lips','1');fetch('https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/song_reactions',{method:'POST',headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({song_slug:s,reaction_type:'lips'})})" title="Love it">
     <span class="sab-icon">💋</span>
     <span class="sab-count" id="lips-count">0</span>
   </button>
-  <button class="sab-btn sab-fire" data-react="fire" title="Fire">
+  <button class="sab-btn sab-fire" onclick="this.classList.add('active');var s=location.pathname.split('/').pop().replace('.html','');var c=document.getElementById('fire-count');if(c)c.textContent=parseInt(c.textContent||'0')+1;localStorage.setItem('react-'+s+'-fire','1');fetch('https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/song_reactions',{method:'POST',headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({song_slug:s,reaction_type:'fire'})})" title="Fire">
     <span class="sab-icon">🔥</span>
     <span class="sab-count" id="fire-count">0</span>
   </button>
@@ -261,16 +261,16 @@ Bigfoot lives here
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="mi-hogar.html" class="more-song-card">
-          <h4>Mi Hogar</h4>
-          <p>Valentina &middot; Country Rock w/ Latin</p>
-        </a>
         <a href="drown-me-in-slobbery-kisses.html" class="more-song-card">
           <h4>Drown Me in Slobbery Kisses</h4>
           <p>Valentina &middot; Country Ballad</p>
         </a>
-        <a href="juicy-peach-on-fire.html" class="more-song-card">
-          <h4>Juicy Peach on Fire</h4>
+        <a href="tongue-and-groove.html" class="more-song-card">
+          <h4>Tongue &amp; Groove</h4>
+          <p>Valentina &middot; Country Rock / Country Pop</p>
+        </a>
+        <a href="gaslight-and-glitter.html" class="more-song-card">
+          <h4>Gaslight &amp; Glitter</h4>
           <p>Valentina &middot; Southern Rock / Country Rock</p>
         </a>
     </div>
@@ -383,6 +383,6 @@ if (localStorage.getItem('react-' + songSlug + '-fire')) {
 </script>
 <script src="/js/play-tracker.js" defer></script>
 
-<script>document.addEventListener('DOMContentLoaded',function(){var slug=location.pathname.split('/').pop().replace('.html','');var SB='https://pxcxtnabyydhbfbholvh.supabase.co';var KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78';document.querySelectorAll('[data-react]').forEach(function(btn){var type=btn.getAttribute('data-react');if(localStorage.getItem('react-'+slug+'-'+type))btn.classList.add('active');btn.addEventListener('click',function(){if(this.classList.contains('active'))return;this.classList.add('active');var c=document.getElementById(type+'-count');if(c)c.textContent=parseInt(c.textContent||'0')+1;localStorage.setItem('react-'+slug+'-'+type,'1');fetch(SB+'/rest/v1/song_reactions',{method:'POST',headers:{'apikey':KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({song_slug:slug,reaction_type:type})}).catch(function(){})})})});</script>
+
 </body>
 </html>
