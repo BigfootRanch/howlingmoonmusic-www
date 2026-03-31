@@ -319,13 +319,13 @@ Blocked it
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="gaslight-and-glitter.html" class="more-song-card">
-          <h4>Gaslight &amp; Glitter</h4>
-          <p>Valentina &middot; Southern Rock / Country Rock</p>
-        </a>
         <a href="bigfoot-lives-here.html" class="more-song-card">
           <h4>Bigfoot Lives Here</h4>
           <p>Valentina &middot; Country Rock / Novelty</p>
+        </a>
+        <a href="juicy-peach-on-fire.html" class="more-song-card">
+          <h4>Juicy Peach on Fire</h4>
+          <p>Valentina &middot; Southern Rock / Country Rock</p>
         </a>
         <a href="taffy-in-and-out.html" class="more-song-card">
           <h4>Taffy (In &amp; Out)</h4>
@@ -414,8 +414,31 @@ function submitComment(e){
   return false;
 }
 
+// Song Reactions — inline to avoid external script blocking
+function reactSong(type) {
+  var btn = document.querySelector('.sab-' + type);
+  if (!btn || btn.classList.contains('active')) return;
+  btn.classList.add('active');
+  var countEl = document.getElementById(type + '-count');
+  if (countEl) countEl.textContent = parseInt(countEl.textContent || '0') + 1;
+  localStorage.setItem('react-' + songSlug + '-' + type, '1');
+  fetch(SB_URL + '/rest/v1/song_reactions', {
+    method: 'POST',
+    headers: {'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal'},
+    body: JSON.stringify({song_slug: songSlug, reaction_type: type})
+  }).catch(function(){});
+}
+var songSlug = location.pathname.split('/').pop().replace('.html','');
+if (localStorage.getItem('react-' + songSlug + '-lips')) {
+  var b = document.querySelector('.sab-lips');
+  if (b) b.classList.add('active');
+}
+if (localStorage.getItem('react-' + songSlug + '-fire')) {
+  var b = document.querySelector('.sab-fire');
+  if (b) b.classList.add('active');
+}
+
 </script>
-<script src="/js/song-reactions.js"></script>
 <script src="/js/play-tracker.js" defer></script>
 </body>
 </html>

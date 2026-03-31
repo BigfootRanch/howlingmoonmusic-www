@@ -312,13 +312,13 @@ I’d never hang up.
           <h4>Seven</h4>
           <p>Valentina</p>
         </a>
-        <a href="invisible-woman.html" class="more-song-card">
-          <h4>Invisible Woman</h4>
-          <p>Valentina &middot; Country Ballad</p>
-        </a>
-        <a href="dont-settle.html" class="more-song-card">
-          <h4>Don&#39;t Settle</h4>
+        <a href="twinkle.html" class="more-song-card">
+          <h4>Twinkle Twinkle Little Bitch (JT)</h4>
           <p>Valentina</p>
+        </a>
+        <a href="coffee-constellation.html" class="more-song-card">
+          <h4>Coffee Constellation</h4>
+          <p>Valentina &middot; Coastal / Indie</p>
         </a>
     </div>
   </section>
@@ -403,8 +403,31 @@ function submitComment(e){
   return false;
 }
 
+// Song Reactions — inline to avoid external script blocking
+function reactSong(type) {
+  var btn = document.querySelector('.sab-' + type);
+  if (!btn || btn.classList.contains('active')) return;
+  btn.classList.add('active');
+  var countEl = document.getElementById(type + '-count');
+  if (countEl) countEl.textContent = parseInt(countEl.textContent || '0') + 1;
+  localStorage.setItem('react-' + songSlug + '-' + type, '1');
+  fetch(SB_URL + '/rest/v1/song_reactions', {
+    method: 'POST',
+    headers: {'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal'},
+    body: JSON.stringify({song_slug: songSlug, reaction_type: type})
+  }).catch(function(){});
+}
+var songSlug = location.pathname.split('/').pop().replace('.html','');
+if (localStorage.getItem('react-' + songSlug + '-lips')) {
+  var b = document.querySelector('.sab-lips');
+  if (b) b.classList.add('active');
+}
+if (localStorage.getItem('react-' + songSlug + '-fire')) {
+  var b = document.querySelector('.sab-fire');
+  if (b) b.classList.add('active');
+}
+
 </script>
-<script src="/js/song-reactions.js"></script>
 <script src="/js/play-tracker.js" defer></script>
 </body>
 </html>

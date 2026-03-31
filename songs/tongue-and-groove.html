@@ -283,17 +283,17 @@ Make me growl, grind, whimper, repeat!
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="juicy-peach-on-fire.html" class="more-song-card">
-          <h4>Juicy Peach on Fire</h4>
-          <p>Valentina &middot; Southern Rock / Country Rock</p>
+        <a href="bigfoot-lives-here.html" class="more-song-card">
+          <h4>Bigfoot Lives Here</h4>
+          <p>Valentina &middot; Country Rock / Novelty</p>
         </a>
-        <a href="i-aint-picking-up-your-shit-no-more.html" class="more-song-card">
-          <h4>I Ain&#39;t Picking Up Your Shit No More</h4>
-          <p>Valentina &middot; Southern Rock / Country Rock</p>
+        <a href="mi-hogar.html" class="more-song-card">
+          <h4>Mi Hogar</h4>
+          <p>Valentina &middot; Country Rock w/ Latin</p>
         </a>
-        <a href="gaslight-and-glitter.html" class="more-song-card">
-          <h4>Gaslight &amp; Glitter</h4>
-          <p>Valentina &middot; Southern Rock / Country Rock</p>
+        <a href="drown-me-in-slobbery-kisses.html" class="more-song-card">
+          <h4>Drown Me in Slobbery Kisses</h4>
+          <p>Valentina &middot; Country Ballad</p>
         </a>
     </div>
   </section>
@@ -378,8 +378,31 @@ function submitComment(e){
   return false;
 }
 
+// Song Reactions — inline to avoid external script blocking
+function reactSong(type) {
+  var btn = document.querySelector('.sab-' + type);
+  if (!btn || btn.classList.contains('active')) return;
+  btn.classList.add('active');
+  var countEl = document.getElementById(type + '-count');
+  if (countEl) countEl.textContent = parseInt(countEl.textContent || '0') + 1;
+  localStorage.setItem('react-' + songSlug + '-' + type, '1');
+  fetch(SB_URL + '/rest/v1/song_reactions', {
+    method: 'POST',
+    headers: {'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal'},
+    body: JSON.stringify({song_slug: songSlug, reaction_type: type})
+  }).catch(function(){});
+}
+var songSlug = location.pathname.split('/').pop().replace('.html','');
+if (localStorage.getItem('react-' + songSlug + '-lips')) {
+  var b = document.querySelector('.sab-lips');
+  if (b) b.classList.add('active');
+}
+if (localStorage.getItem('react-' + songSlug + '-fire')) {
+  var b = document.querySelector('.sab-fire');
+  if (b) b.classList.add('active');
+}
+
 </script>
-<script src="/js/song-reactions.js"></script>
 <script src="/js/play-tracker.js" defer></script>
 </body>
 </html>

@@ -328,16 +328,16 @@ Say it again — Uncontainable<br>
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="scarlet-letter.html" class="more-song-card">
-          <h4>I Didn&#39;t Die / Scarlet Letter</h4>
-          <p>Valentina &middot; Country Rock / Gospel</p>
+        <a href="coastal-candy.html" class="more-song-card">
+          <h4>Coastal Candy</h4>
+          <p>Valentina &middot; Trop Rock / Coastal</p>
         </a>
-        <a href="crack-the-sky.html" class="more-song-card">
-          <h4>Crack the Sky</h4>
-          <p>Valentina &middot; Rock / Power Ballad</p>
+        <a href="booty-boom-boom.html" class="more-song-card">
+          <h4>Booty Boom Boom</h4>
+          <p>Valentina &middot; Hip-Hop / Club</p>
         </a>
-        <a href="sand-in-toes.html" class="more-song-card">
-          <h4>Sand in Toes</h4>
+        <a href="smoke-me.html" class="more-song-card">
+          <h4>Smoke Me</h4>
           <p>Valentina</p>
         </a>
     </div>
@@ -423,8 +423,31 @@ function submitComment(e){
   return false;
 }
 
+// Song Reactions — inline to avoid external script blocking
+function reactSong(type) {
+  var btn = document.querySelector('.sab-' + type);
+  if (!btn || btn.classList.contains('active')) return;
+  btn.classList.add('active');
+  var countEl = document.getElementById(type + '-count');
+  if (countEl) countEl.textContent = parseInt(countEl.textContent || '0') + 1;
+  localStorage.setItem('react-' + songSlug + '-' + type, '1');
+  fetch(SB_URL + '/rest/v1/song_reactions', {
+    method: 'POST',
+    headers: {'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal'},
+    body: JSON.stringify({song_slug: songSlug, reaction_type: type})
+  }).catch(function(){});
+}
+var songSlug = location.pathname.split('/').pop().replace('.html','');
+if (localStorage.getItem('react-' + songSlug + '-lips')) {
+  var b = document.querySelector('.sab-lips');
+  if (b) b.classList.add('active');
+}
+if (localStorage.getItem('react-' + songSlug + '-fire')) {
+  var b = document.querySelector('.sab-fire');
+  if (b) b.classList.add('active');
+}
+
 </script>
-<script src="/js/song-reactions.js"></script>
 <script src="/js/play-tracker.js" defer></script>
 </body>
 </html>
