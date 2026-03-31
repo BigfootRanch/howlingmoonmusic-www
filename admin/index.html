@@ -373,7 +373,7 @@ tr:hover td{background:rgba(255,45,123,0.02)}
         <div class="page-sub">Song plays, reactions, fans, and traffic overview</div>
       </div>
       <div class="stats-grid">
-        <div class="stat-card pink"><div class="stat-icon">&#x25B6;</div><div class="stat-label">Total Song Plays</div><div class="stat-value" id="statPlays">--</div></div>
+        <div class="stat-card pink"><div class="stat-icon">&#x25B6;</div><div class="stat-label">Song Page Views</div><div class="stat-value" id="statPlays">--</div></div>
         <div class="stat-card gold"><div class="stat-icon">&#x2764;</div><div class="stat-label">Total Reactions</div><div class="stat-value" id="statReactions">--</div></div>
         <div class="stat-card green"><div class="stat-icon">&#x1F465;</div><div class="stat-label">Fan Subscribers</div><div class="stat-value" id="statFans">--</div></div>
         <div class="stat-card blue"><div class="stat-icon">&#x1F30D;</div><div class="stat-label">Site Visitors</div><div class="stat-value" id="statVisitors">--</div></div>
@@ -430,14 +430,14 @@ tr:hover td{background:rgba(255,45,123,0.02)}
       </div>
       <div class="stats-grid">
         <div class="stat-card pink"><div class="stat-icon">&#x2764;</div><div class="stat-label">Total Fans</div><div class="stat-value" id="fanTotal">--</div></div>
-        <div class="stat-card green"><div class="stat-icon">&#x1F381;</div><div class="stat-label">Bundle Buyers</div><div class="stat-value" id="fanBundles">--</div></div>
+        <div class="stat-card green"><div class="stat-icon">&#x2705;</div><div class="stat-label">Verified</div><div class="stat-value" id="fanBundles">--</div></div>
         <div class="stat-card gold"><div class="stat-icon">&#x2B50;</div><div class="stat-label">Active</div><div class="stat-value" id="fanActive">--</div></div>
       </div>
       <div class="toolbar">
         <input type="search" id="fanSearch" placeholder="Search fans..." oninput="filterFans()">
         <button class="btn btn-gold btn-sm" onclick="exportFansCSV()">Export CSV</button>
       </div>
-      <div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Source</th><th>Bundle</th><th>Active</th><th>Subscribed</th></tr></thead>
+      <div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Location</th><th>Verified</th><th>Status</th><th>Joined</th></tr></thead>
       <tbody id="fansBody"><tr><td colspan="6"><div class="loading-msg"><span class="spinner"></span> Loading fans...</div></td></tr></tbody></table></div>
     </div>
 
@@ -561,12 +561,15 @@ async function sbFetch(table, opts={}) {
   const h = {...sbHeaders};
   if(opts.count) { h['Prefer']='count=exact'; h['Range']='0-0'; }
   const r = await fetch(url,{headers:h});
+  if(!r.ok) { console.warn('sbFetch error:',table,r.status); return opts.count?0:[]; }
   if(opts.count) { const c=r.headers.get('content-range'); return c?parseInt(c.split('/')[1])||0:0; }
   return r.json();
 }
 
 async function sbInsert(table, data) {
-  return (await fetch(SB_URL+'/rest/v1/'+table,{method:'POST',headers:{...sbHeaders,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify(data)})).json();
+  const r=await fetch(SB_URL+'/rest/v1/'+table,{method:'POST',headers:{...sbHeaders,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify(data)});
+  if(!r.ok){const e=await r.json();throw new Error(e.message||'Insert failed')}
+  return r.json();
 }
 
 async function sbUpdate(table, id, data) {
@@ -580,8 +583,11 @@ async function sbDelete(table, id) {
 async function sbCount(table, filter='') {
   let url=SB_URL+'/rest/v1/'+table+'?select=id';
   if(filter) url+='&'+filter;
-  const r=await fetch(url,{headers:{...sbHeaders,'Prefer':'count=exact','Range':'0-0'}});
-  const c=r.headers.get('content-range'); return c?parseInt(c.split('/')[1])||0:0;
+  try{
+    const r=await fetch(url,{headers:{...sbHeaders,'Prefer':'count=exact','Range':'0-0'}});
+    if(!r.ok) return 0;
+    const c=r.headers.get('content-range'); return c?parseInt(c.split('/')[1])||0:0;
+  }catch(e){return 0}
 }
 
 // === AUTH ===
@@ -687,11 +693,24 @@ function getFiltered(){
     if(socialFilter.status&&p.status!==socialFilter.status)return false;
     if(socialFilter.platform&&p.platform!==socialFilter.platform)return false;
     if(socialFilter.search){
-      const t=((p.caption||'')+' '+(p.content||'')+' '+(p.hashtags||'')).toLowerCase();
+      const ht=getHashtags(p);
+      const t=((p.caption||'')+' '+(p.title||'')+' '+ht).toLowerCase();
       if(!t.includes(socialFilter.search))return false;
     }
     return true;
   });
+}
+
+// Helper to extract engagement stats from engagement_data jsonb
+function getEngagement(p){
+  const ed=p.engagement_data||{};
+  return {views:ed.views||0,likes:ed.likes||0,comments:ed.comments||0};
+}
+// Helper to get hashtags as string (may be array in DB)
+function getHashtags(p){
+  if(!p.hashtags) return '';
+  if(Array.isArray(p.hashtags)) return p.hashtags.join(' ');
+  return p.hashtags;
 }
 
 function renderSocialTable(){
@@ -716,18 +735,20 @@ function renderSocialTable(){
     const td1=document.createElement('td'); td1.insertAdjacentHTML('afterbegin',platIcon(p.platform));
     // Content
     const td2=document.createElement('td'); td2.style.maxWidth='280px';
-    const d2a=document.createElement('div'); d2a.style.cssText='font-weight:600;color:var(--white);margin-bottom:0.15rem'; d2a.textContent=truncate(p.caption||p.content,60);
+    const d2a=document.createElement('div'); d2a.style.cssText='font-weight:600;color:var(--white);margin-bottom:0.15rem'; d2a.textContent=truncate(p.caption||p.title,60);
     td2.append(d2a);
-    if(p.hashtags){const d2b=document.createElement('div');d2b.style.cssText='font-size:0.68rem;color:var(--pink)';d2b.textContent=truncate(p.hashtags,50);td2.append(d2b);}
+    const ht=getHashtags(p);
+    if(ht){const d2b=document.createElement('div');d2b.style.cssText='font-size:0.68rem;color:var(--pink)';d2b.textContent=truncate(ht,50);td2.append(d2b);}
     // Status
     const td3=document.createElement('td'); td3.insertAdjacentHTML('afterbegin',statusBadge(p.status));
     // Scheduled
     const td4=document.createElement('td'); td4.style.cssText='font-size:0.75rem;color:var(--smoke)'; td4.textContent=p.scheduled_for?fmtTime(p.scheduled_for):'--';
-    // Stats
+    // Stats (from engagement_data jsonb)
     const td5=document.createElement('td'); td5.style.fontSize='0.75rem';
+    const eng=getEngagement(p);
     let statsText='';
-    if(p.views) statsText+=(p.views).toLocaleString()+' views ';
-    if(p.likes) statsText+=(p.likes)+' likes';
+    if(eng.views) statsText+=(eng.views).toLocaleString()+' views ';
+    if(eng.likes) statsText+=(eng.likes)+' likes';
     td5.textContent=statsText||'';
     // Actions
     const td6=document.createElement('td');
@@ -739,8 +760,8 @@ function renderSocialTable(){
       bRej.addEventListener('click',ev=>{ev.stopPropagation();rejectPost(p.id)});
       actDiv.append(bApp,bRej);
     }
-    if(p.status==='posted'&&p.posted_url){
-      const a=document.createElement('a'); a.className='btn btn-gold btn-sm'; a.href=p.posted_url; a.target='_blank'; a.textContent='View';
+    if(p.status==='posted'&&p.post_url){
+      const a=document.createElement('a'); a.className='btn btn-gold btn-sm'; a.href=p.post_url; a.target='_blank'; a.textContent='View';
       a.addEventListener('click',ev=>ev.stopPropagation());
       actDiv.append(a);
     }
@@ -811,24 +832,25 @@ function openCreatePostModal(){
 async function createPost(){
   const cap=document.getElementById('newPostCaption').value;
   if(!cap){showToast('Caption is required','error');return}
+  const hashVal=document.getElementById('newPostHashtags').value;
+  const hashArr=hashVal?hashVal.split(/\s+/).filter(Boolean):[];
   const data={
     platform:document.getElementById('newPostPlatform').value,
     caption:cap,
-    hashtags:document.getElementById('newPostHashtags').value||null,
-    video_path:document.getElementById('newPostVideoPath').value||null,
-    video_url:document.getElementById('newPostVideoUrl').value||null,
-    thumbnail_url:document.getElementById('newPostThumbUrl').value||null,
+    hashtags:hashArr.length?hashArr:null,
+    media_url:document.getElementById('newPostVideoPath').value||document.getElementById('newPostVideoUrl').value||null,
     scheduled_for:document.getElementById('newPostSchedule').value||null,
-    campaign_id:document.getElementById('newPostCampaign').value||null,
-    notes:document.getElementById('newPostNotes').value||null,
-    status:'draft'
+    ceo_notes:document.getElementById('newPostNotes').value||null,
+    status:'draft',
+    post_type:'video',
+    generated_by:'admin'
   };
   try{await sbInsert('social_media_queue',data);closeModal('createPostModal');showToast('Post created','success');loadSocialPosts();}
   catch(e){showToast('Error: '+e.message,'error');}
 }
 
 async function approvePost(id){
-  try{await sbUpdate('social_media_queue',id,{status:'approved',approved_by:'CEO',approved_at:new Date().toISOString()});showToast('Post approved','success');loadSocialPosts();}
+  try{await sbUpdate('social_media_queue',id,{status:'approved',approved_by:'CEO',updated_at:new Date().toISOString()});showToast('Post approved','success');loadSocialPosts();}
   catch(e){showToast('Error: '+e.message,'error');}
 }
 async function rejectPost(id){
@@ -850,20 +872,20 @@ function viewPost(id){
   // Caption
   const fg1=document.createElement('div'); fg1.className='form-group';
   const lb1=document.createElement('label'); lb1.textContent='Caption';
-  const ta1=document.createElement('textarea'); ta1.id='editCaption'; ta1.rows=4; ta1.value=p.caption||p.content||'';
+  const ta1=document.createElement('textarea'); ta1.id='editCaption'; ta1.rows=4; ta1.value=p.caption||p.title||'';
   fg1.append(lb1,ta1); box.append(fg1);
 
   // Hashtags
   const fg2=document.createElement('div'); fg2.className='form-group';
   const lb2=document.createElement('label'); lb2.textContent='Hashtags';
-  const in2=document.createElement('input'); in2.type='text'; in2.id='editHashtags'; in2.value=p.hashtags||'';
+  const in2=document.createElement('input'); in2.type='text'; in2.id='editHashtags'; in2.value=getHashtags(p);
   fg2.append(lb2,in2); box.append(fg2);
 
-  // Video path + schedule
+  // Media URL + schedule
   const fr=document.createElement('div'); fr.className='form-row';
   const fg3=document.createElement('div'); fg3.className='form-group';
-  const lb3=document.createElement('label'); lb3.textContent='Video Path';
-  const in3=document.createElement('input'); in3.type='text'; in3.id='editVideoPath'; in3.value=p.video_path||'';
+  const lb3=document.createElement('label'); lb3.textContent='Media URL';
+  const in3=document.createElement('input'); in3.type='text'; in3.id='editMediaUrl'; in3.value=p.media_url||'';
   fg3.append(lb3,in3);
   const fg4=document.createElement('div'); fg4.className='form-group';
   const lb4=document.createElement('label'); lb4.textContent='Schedule';
@@ -873,18 +895,19 @@ function viewPost(id){
   fr.append(fg3,fg4); box.append(fr);
 
   // Posted URL
-  if(p.posted_url){
+  if(p.post_url){
     const fg5=document.createElement('div'); fg5.className='form-group';
     const lb5=document.createElement('label'); lb5.textContent='Posted URL';
-    const a=document.createElement('a'); a.href=p.posted_url; a.target='_blank'; a.textContent=p.posted_url;
+    const a=document.createElement('a'); a.href=p.post_url; a.target='_blank'; a.textContent=p.post_url;
     a.style.cssText='color:var(--pink);font-size:0.82rem';
     fg5.append(lb5,a); box.append(fg5);
   }
 
-  // Engagement stats
-  if(p.views||p.likes||p.comments){
+  // Engagement stats (from engagement_data jsonb)
+  const eng=getEngagement(p);
+  if(eng.views||eng.likes||eng.comments){
     const sd=document.createElement('div'); sd.style.cssText='display:flex;gap:1.5rem;margin:0.8rem 0;padding:0.8rem;background:var(--bg);border-radius:var(--radius)';
-    [{v:p.views||0,l:'views',c:'var(--white)'},{v:p.likes||0,l:'likes',c:'var(--pink)'},{v:p.comments||0,l:'comments',c:'var(--gold)'}].forEach(x=>{
+    [{v:eng.views||0,l:'views',c:'var(--white)'},{v:eng.likes||0,l:'likes',c:'var(--pink)'},{v:eng.comments||0,l:'comments',c:'var(--gold)'}].forEach(x=>{
       const d=document.createElement('div');
       const sv=document.createElement('span'); sv.style.cssText='font-weight:700;color:'+x.c; sv.textContent=x.v.toLocaleString();
       const sl=document.createElement('span'); sl.style.cssText='font-size:0.7rem;color:var(--smoke);margin-left:0.25rem'; sl.textContent=x.l;
@@ -893,10 +916,10 @@ function viewPost(id){
     box.append(sd);
   }
 
-  // Notes
+  // Notes (ceo_notes in DB)
   const fg6=document.createElement('div'); fg6.className='form-group';
   const lb6=document.createElement('label'); lb6.textContent='Notes';
-  const ta6=document.createElement('textarea'); ta6.id='editNotes'; ta6.rows=2; ta6.value=p.notes||'';
+  const ta6=document.createElement('textarea'); ta6.id='editNotes'; ta6.rows=2; ta6.value=p.ceo_notes||'';
   fg6.append(lb6,ta6); box.append(fg6);
 
   // Footer
@@ -915,7 +938,9 @@ function viewPost(id){
 }
 
 async function savePost(id){
-  const data={caption:document.getElementById('editCaption').value,hashtags:document.getElementById('editHashtags').value,video_path:document.getElementById('editVideoPath').value||null,scheduled_for:document.getElementById('editSchedule').value||null,notes:document.getElementById('editNotes').value||null,updated_at:new Date().toISOString()};
+  const hashVal=document.getElementById('editHashtags').value;
+  const hashArr=hashVal?hashVal.split(/\s+/).filter(Boolean):[];
+  const data={caption:document.getElementById('editCaption').value,hashtags:hashArr.length?hashArr:null,media_url:document.getElementById('editMediaUrl').value||null,scheduled_for:document.getElementById('editSchedule').value||null,ceo_notes:document.getElementById('editNotes').value||null,updated_at:new Date().toISOString()};
   try{await sbUpdate('social_media_queue',id,data);closeModal('editPostModal');showToast('Post updated','success');loadSocialPosts();}catch(e){showToast('Error: '+e.message,'error');}
 }
 async function deletePost(id){
@@ -926,7 +951,10 @@ async function deletePost(id){
 // ============ TAB 2: ANALYTICS ============
 async function loadAnalytics(){
   try{
-    const [pc,rc,fc,vc]=await Promise.all([sbCount('song_plays'),sbCount('song_reactions'),sbCount('fan_subscribers'),sbCount('visitor_log')]);
+    const [rc,fc,vc]=await Promise.all([sbCount('song_reactions'),sbCount('fan_profiles'),sbCount('visitor_log')]);
+    // song_plays table doesn't exist — use visitor_log page views of /songs/ as proxy
+    const songVisits=await sbFetch('visitor_log',{select:'id',filters:['page_url=like.*%2Fsongs%2F*']});
+    const pc=Array.isArray(songVisits)?songVisits.length:0;
     document.getElementById('statPlays').textContent=pc.toLocaleString();
     document.getElementById('statReactions').textContent=rc.toLocaleString();
     document.getElementById('statFans').textContent=fc.toLocaleString();
@@ -938,10 +966,31 @@ async function loadAnalytics(){
 async function loadTopSongs(){
   const tb=document.getElementById('topSongsBody');
   try{
-    const plays=await sbFetch('song_plays',{select:'song_slug,song_title,completed'});
-    if(!Array.isArray(plays)||!plays.length){setEmpty(tb,4,'No plays recorded yet');return}
+    // Use song_reactions grouped by song_slug as play proxy
+    const reactions=await sbFetch('song_reactions',{select:'song_slug,reaction_type'});
+    if(!Array.isArray(reactions)||!reactions.length){
+      // Fall back to visitor_log for song pages
+      const visits=await sbFetch('visitor_log',{select:'page_url',filters:['page_url=like.*%2Fsongs%2F*']});
+      if(!Array.isArray(visits)||!visits.length){setEmpty(tb,4,'No plays recorded yet');return}
+      const m={};
+      visits.forEach(v=>{
+        const match=(v.page_url||'').match(/\/songs\/([^/.?#]+)/);
+        if(match){const s=match[1];if(!m[s])m[s]={title:s.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase()),plays:0,comp:0};m[s].plays++}
+      });
+      const sorted=Object.values(m).sort((a,b)=>b.plays-a.plays).slice(0,10);
+      tb.replaceChildren();
+      sorted.forEach((s,i)=>{
+        const tr=document.createElement('tr');
+        const t1=document.createElement('td'); t1.style.cssText='color:var(--pink);font-weight:700'; t1.textContent=i+1;
+        const t2=document.createElement('td'); t2.style.fontWeight='600'; t2.textContent=s.title;
+        const t3=document.createElement('td'); t3.textContent=s.plays;
+        const t4=document.createElement('td'); t4.textContent=s.comp;
+        tr.append(t1,t2,t3,t4); tb.append(tr);
+      });
+      return;
+    }
     const m={};
-    plays.forEach(p=>{const s=p.song_slug||'?';if(!m[s])m[s]={title:p.song_title||s,plays:0,comp:0};m[s].plays++;if(p.completed)m[s].comp++});
+    reactions.forEach(p=>{const s=p.song_slug||'?';if(!m[s])m[s]={title:s.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase()),plays:0,comp:0};m[s].plays++;if(p.reaction_type==='love')m[s].comp++});
     const sorted=Object.values(m).sort((a,b)=>b.plays-a.plays).slice(0,10);
     tb.replaceChildren();
     sorted.forEach((s,i)=>{
@@ -958,15 +1007,15 @@ async function loadTopSongs(){
 async function loadRecentFans(){
   const tb=document.getElementById('recentFansBody');
   try{
-    const r=await sbFetch('fan_subscribers',{order:'subscribed_at.desc',limit:'10'});
+    const r=await sbFetch('fan_profiles',{order:'created_at.desc',limit:'10'});
     if(!Array.isArray(r)||!r.length){setEmpty(tb,4,'No fans yet');return}
     tb.replaceChildren();
     r.forEach(f=>{
       const tr=document.createElement('tr');
-      const t1=document.createElement('td'); t1.textContent=f.name||'--';
-      const t2=document.createElement('td'); t2.style.fontSize='0.75rem'; t2.textContent=f.email;
-      const t3=document.createElement('td'); t3.insertAdjacentHTML('afterbegin','<span class="badge badge-smoke">'+esc(f.source||'--')+'</span>');
-      const t4=document.createElement('td'); t4.style.cssText='font-size:0.72rem;color:var(--smoke)'; t4.textContent=fmtDate(f.subscribed_at);
+      const t1=document.createElement('td'); t1.textContent=f.display_name||'--';
+      const t2=document.createElement('td'); t2.style.fontSize='0.75rem'; t2.textContent=f.email||'--';
+      const t3=document.createElement('td'); t3.insertAdjacentHTML('afterbegin','<span class="badge badge-smoke">'+esc(f.location||'Site')+'</span>');
+      const t4=document.createElement('td'); t4.style.cssText='font-size:0.72rem;color:var(--smoke)'; t4.textContent=fmtDate(f.created_at);
       tr.append(t1,t2,t3,t4); tb.append(tr);
     });
   }catch(e){setEmpty(tb,4,'No fans yet')}
@@ -1010,7 +1059,8 @@ function setEmpty(tb,cols,msg){
 async function loadCatalog(){
   try{const r=await fetch('/song-data.json');if(r.ok){const d=await r.json();songData=d.songs||[]}}
   catch(e){try{const r2=await fetch(SITE+'/song-data.json');if(r2.ok){const d2=await r2.json();songData=d2.songs||[]}}catch(e2){}}
-  try{const reg=await sbFetch('catalog_registry');if(Array.isArray(reg))reg.forEach(r=>{catReg[r.song_slug]=r})}catch(e){}
+  // Use songs table for ISRC/BMI registry data
+  try{const reg=await sbFetch('songs',{select:'id,slug,title,isrc,bmi_work_number'});if(Array.isArray(reg))reg.forEach(r=>{catReg[r.slug]={id:r.id,song_slug:r.slug,song_title:r.title,isrc:r.isrc,bmi_work_number:r.bmi_work_number}})}catch(e){}
   renderCatalog();
 }
 
@@ -1063,61 +1113,59 @@ function renderCatalog(){
 
 async function updateCatField(slug,field,value){
   try{
-    if(catReg[slug]){const d={};d[field]=value;await sbUpdate('catalog_registry',catReg[slug].id,d);catReg[slug][field]=value;}
-    else{const song=songData.find(s=>s.slug===slug);const d={song_slug:slug,song_title:song?.title||slug};d[field]=value;const r=await sbInsert('catalog_registry',d);if(Array.isArray(r)&&r[0])catReg[slug]=r[0];}
+    if(catReg[slug]){const d={};d[field]=value;await sbUpdate('songs',catReg[slug].id,d);catReg[slug][field]=value;}
+    else{showToast('Song not found in database','error');return;}
     showToast(field+' updated','success');
   }catch(e){showToast('Error: '+e.message,'error')}
 }
 
 async function syncCatalogToSupabase(){
-  showToast('Syncing catalog...','info');
-  let n=0;
-  for(const s of songData){
-    if(!catReg[s.slug]){
-      try{const r=await sbInsert('catalog_registry',{song_slug:s.slug,song_title:s.title,isrc:s.isrc||null,bmi_work_number:s.bmi_work_number||null});if(Array.isArray(r)&&r[0]){catReg[s.slug]=r[0];n++}}catch(e){}
-    }
-  }
-  showToast('Synced '+n+' songs','success');
+  showToast('Syncing catalog from songs table...','info');
+  try{
+    const reg=await sbFetch('songs',{select:'id,slug,title,isrc,bmi_work_number'});
+    if(Array.isArray(reg)){reg.forEach(r=>{catReg[r.slug]={id:r.id,song_slug:r.slug,song_title:r.title,isrc:r.isrc,bmi_work_number:r.bmi_work_number}});renderCatalog();}
+    showToast('Synced '+Object.keys(catReg).length+' songs','success');
+  }catch(e){showToast('Error: '+e.message,'error')}
 }
 
 // ============ TAB 4: FANS ============
 async function loadFans(){
   try{
-    fans=await sbFetch('fan_subscribers',{order:'subscribed_at.desc'});
+    fans=await sbFetch('fan_profiles',{order:'created_at.desc'});
     if(!Array.isArray(fans)) fans=[];
   }catch(e){fans=[]}
   document.getElementById('fanTotal').textContent=fans.length;
-  document.getElementById('fanBundles').textContent=fans.filter(f=>f.purchased_bundle).length;
-  document.getElementById('fanActive').textContent=fans.filter(f=>f.is_active!==false).length;
+  document.getElementById('fanBundles').textContent=fans.filter(f=>f.is_verified).length;
+  document.getElementById('fanActive').textContent=fans.filter(f=>!f.is_blocked).length;
   renderFans();
 }
 function filterFans(){renderFans()}
 function renderFans(){
   const search=(document.getElementById('fanSearch')?.value||'').toLowerCase();
   let f=fans;
-  if(search) f=f.filter(x=>((x.name||'')+' '+x.email+' '+(x.source||'')).toLowerCase().includes(search));
+  if(search) f=f.filter(x=>((x.display_name||'')+' '+(x.email||'')+' '+(x.location||'')).toLowerCase().includes(search));
   const tb=document.getElementById('fansBody');
   if(!f.length){setEmpty(tb,6,'No fans yet');return}
   tb.replaceChildren();
   f.forEach(fn=>{
     const tr=document.createElement('tr');
-    const t1=document.createElement('td'); t1.style.fontWeight='600'; t1.textContent=fn.name||'--';
-    const t2=document.createElement('td'); t2.style.fontSize='0.78rem'; t2.textContent=fn.email;
-    const t3=document.createElement('td'); t3.insertAdjacentHTML('afterbegin','<span class="badge badge-smoke">'+esc(fn.source||'--')+'</span>');
+    const t1=document.createElement('td'); t1.style.fontWeight='600'; t1.textContent=fn.display_name||'--';
+    const t2=document.createElement('td'); t2.style.fontSize='0.78rem'; t2.textContent=fn.email||'--';
+    const t3=document.createElement('td'); t3.insertAdjacentHTML('afterbegin','<span class="badge badge-smoke">'+esc(fn.location||'Site')+'</span>');
     const t4=document.createElement('td');
-    if(fn.purchased_bundle) t4.insertAdjacentHTML('afterbegin','<span class="badge badge-gold">'+esc(fn.purchased_bundle)+'</span>');
+    if(fn.is_verified) t4.insertAdjacentHTML('afterbegin','<span class="badge badge-gold">Verified</span>');
     else{t4.style.color='var(--smoke)';t4.textContent='--'}
     const t5=document.createElement('td');
-    t5.insertAdjacentHTML('afterbegin',fn.is_active!==false?'<span class="badge badge-green">Active</span>':'<span class="badge badge-red">Inactive</span>');
-    const t6=document.createElement('td'); t6.style.cssText='font-size:0.72rem;color:var(--smoke)'; t6.textContent=fmtDate(fn.subscribed_at);
+    t5.insertAdjacentHTML('afterbegin',!fn.is_blocked?'<span class="badge badge-green">Active</span>':'<span class="badge badge-red">Blocked</span>');
+    const t6=document.createElement('td'); t6.style.cssText='font-size:0.72rem;color:var(--smoke)'; t6.textContent=fmtDate(fn.created_at);
     tr.append(t1,t2,t3,t4,t5,t6); tb.append(tr);
   });
 }
 
 function exportFansCSV(){
   if(!fans.length){showToast('No fans to export','info');return}
-  let csv='Name,Email,Source,Bundle,Active,Subscribed\n';
-  fans.forEach(f=>{csv+='"'+(f.name||'').replace(/"/g,'""')+'","'+f.email+'","'+(f.source||'')+'","'+(f.purchased_bundle||'')+'","'+(f.is_active!==false?'Yes':'No')+'","'+(f.subscribed_at?new Date(f.subscribed_at).toISOString().split('T')[0]:'')+'"\n'});
+  let csv='Name,Email,Location,Verified,Active,Joined\n';
+  fans.forEach(f=>{csv+='"'+(f.display_name||'').replace(/"/g,'""')+'","'+(f.email||'')+'","'+(f.location||'')+'","'+(f.is_verified?'Yes':'No')+'","'+(!f.is_blocked?'Yes':'No')+'","'+(f.created_at?new Date(f.created_at).toISOString().split('T')[0]:'')+'"\n'});
   const b=new Blob([csv],{type:'text/csv'}), u=URL.createObjectURL(b);
   const a=document.createElement('a'); a.href=u; a.download='howling-moon-fans-'+new Date().toISOString().split('T')[0]+'.csv'; a.click();
   URL.revokeObjectURL(u); showToast('CSV downloaded','success');
@@ -1176,7 +1224,8 @@ async function loadSecurity(){
         const t4=document.createElement('td'); t4.style.cssText='font-size:0.75rem;color:var(--smoke)'; t4.textContent=[p.city,p.region,p.country].filter(Boolean).join(', ')||'--';
         const t5=document.createElement('td'); t5.style.cssText='font-size:0.72rem;color:var(--smoke)'; t5.textContent=fmtDate(p.last_seen_at);
         const t6=document.createElement('td'); t6.textContent=p.total_visits||0;
-        const t7=document.createElement('td'); t7.insertAdjacentHTML('afterbegin',p.is_active?'<span class="badge badge-red">Active</span>':'<span class="badge badge-smoke">Inactive</span>');
+        const isActive=p.threat_level==='danger'||p.threat_level==='alert';
+        const t7=document.createElement('td'); t7.insertAdjacentHTML('afterbegin',isActive?'<span class="badge badge-red">Active</span>':'<span class="badge badge-smoke">Inactive</span>');
         tr.append(t1,t2,t3,t4,t5,t6,t7); ptb.append(tr);
       });
     }
@@ -1311,7 +1360,8 @@ function exportSalesCSV(){
 
 // === CAMPAIGNS ===
 async function loadCampaigns(){
-  try{campaigns=await sbFetch('campaigns',{order:'created_at.desc'});if(!Array.isArray(campaigns))campaigns=[]}catch(e){campaigns=[]}
+  // campaigns table not yet created — use empty array
+  campaigns=[];
 }
 </script>
 </body>
