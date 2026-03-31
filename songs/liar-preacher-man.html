@@ -83,11 +83,11 @@
 
 <!-- Sticky Social Action Bar -->
 <div class="song-action-bar" id="songActionBar">
-  <button class="sab-btn sab-lips" onclick="(function(){var s=location.pathname.split('/').pop().replace('.html','');var b=this;if(b.classList.contains('active'))return;b.classList.add('active');var c=document.getElementById('lips-count');if(c)c.textContent=parseInt(c.textContent||'0')+1;localStorage.setItem('react-'+s+'-lips','1');fetch('https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/song_reactions',{method:'POST',headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({song_slug:s,reaction_type:'lips'})}).catch(function(){})}).call(this)" title="Love it">
+  <button class="sab-btn sab-lips" data-react="lips" title="Love it">
     <span class="sab-icon">💋</span>
     <span class="sab-count" id="lips-count">0</span>
   </button>
-  <button class="sab-btn sab-fire" onclick="reactSong('fire')" title="Fire">
+  <button class="sab-btn sab-fire" data-react="fire" title="Fire">
     <span class="sab-icon">🔥</span>
     <span class="sab-count" id="fire-count">0</span>
   </button>
@@ -335,16 +335,16 @@ God sees everything
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="cotton-candy.html" class="more-song-card">
-          <h4>Cotton Candy</h4>
-          <p>Valentina</p>
+        <a href="barefoot-beach-beauty.html" class="more-song-card">
+          <h4>Barefoot Beach Beauty</h4>
+          <p>JT</p>
         </a>
-        <a href="coffee-constellation.html" class="more-song-card">
-          <h4>Coffee Constellation</h4>
-          <p>Valentina &middot; Coastal / Indie</p>
+        <a href="scarlet-letter.html" class="more-song-card">
+          <h4>I Didn&#39;t Die / Scarlet Letter</h4>
+          <p>Valentina &middot; Country Rock / Gospel</p>
         </a>
-        <a href="held-you-first.html" class="more-song-card">
-          <h4>Held You First</h4>
+        <a href="looking-for-my-swagger.html" class="more-song-card">
+          <h4>Looking for My Swagger</h4>
           <p>JT</p>
         </a>
     </div>
@@ -456,5 +456,7 @@ if (localStorage.getItem('react-' + songSlug + '-fire')) {
 
 </script>
 <script src="/js/play-tracker.js" defer></script>
+
+<script>document.addEventListener('DOMContentLoaded',function(){var slug=location.pathname.split('/').pop().replace('.html','');var SB='https://pxcxtnabyydhbfbholvh.supabase.co';var KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78';document.querySelectorAll('[data-react]').forEach(function(btn){var type=btn.getAttribute('data-react');if(localStorage.getItem('react-'+slug+'-'+type))btn.classList.add('active');btn.addEventListener('click',function(){if(this.classList.contains('active'))return;this.classList.add('active');var c=document.getElementById(type+'-count');if(c)c.textContent=parseInt(c.textContent||'0')+1;localStorage.setItem('react-'+slug+'-'+type,'1');fetch(SB+'/rest/v1/song_reactions',{method:'POST',headers:{'apikey':KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({song_slug:slug,reaction_type:type})}).catch(function(){})})})});</script>
 </body>
 </html>
