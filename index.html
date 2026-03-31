@@ -42,7 +42,9 @@
     ]
   }
   </script>
-<script src="/js/buy-music.js"></script>
+<script>
+function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9nEqf','beach-vibes':'price_1TGmpFPY5LxVsiI51TqL0oZi','road-trip':'price_1TGmpQPY5LxVsiI5r6g6g3LP','healing':'price_1TGmpaPY5LxVsiI59hdVPCop','sleep-relax':'price_1TGmplPY5LxVsiI5dAOUr9Vb','420-pack':'price_1TGmpwPY5LxVsiI5IeDnPLo2','villain-album':'price_1TGmq6PY5LxVsiI5OkJsGT1i','rainbow-album':'price_1TGmqHPY5LxVsiI5NcMGfh3R','genx-album':'price_1TGmqSPY5LxVsiI5wbv7MFDp','christmas-album':'price_1TGmqdPY5LxVsiI5OdWO5dsi'};var priceId=prices[slug];if(!priceId){alert('Bundle not found: '+slug);return;}var s=document.createElement('script');s.src='https://js.stripe.com/v3/';s.onload=function(){Stripe('pk_live_51TGmT8PY5LxVsiI5diLmOi0Fq1x7yh2buFo2UZbhvD6mVv0LqOnpG7LJ8dxMaZyorCPav1YCWM1oKz5QlF4Uzp5X003y4isVcf').redirectToCheckout({lineItems:[{price:priceId,quantity:1}],mode:'payment',successUrl:'https://howlingmoonmusic.com/downloads/'+slug+'.html',cancelUrl:'https://howlingmoonmusic.com/music.html'}).then(function(r){if(r.error)alert(r.error.message);});};document.head.appendChild(s);}
+</script>
 </head>
 <body>
 
