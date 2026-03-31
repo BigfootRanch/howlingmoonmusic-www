@@ -192,7 +192,10 @@
     <div class="pink-divider"></div>
     <div class="story-card">
       <div class="story-text">
-        <p>The Christmas song about the best kind of kiss — the sloppy, wet, 170-pound Leonberger kind. When a dog loves you, they don&#39;t hold back. Neither does this song.</p>
+        <p>I wrote this song the year I lost my dog. Not a pet — my soul. The one who nudged me awake every morning at 6 with slobbery licks. The one who sprawled across my bedroom floor like he owned the whole house — because he did.</p>
+      <p>You were never just a dog. You were my therapist, my bodyguard, my reason to get out of bed on the days I didn&#39;t want to. You stole my socks and guarded my door and looked at me like I was the entire world.</p>
+      <p>Tell me good dogs go to heaven. Tell me there&#39;s steak in every dream and tennis balls that fly forever. Because I need to believe you&#39;re somewhere running free — and that one day I&#39;ll feel that slobbery kiss on my face again.</p>
+      <p>If you&#39;ve ever lost a dog that was more than a dog — this song is yours. And you already know exactly what I mean.</p>
       </div>
     </div>
   </section>
@@ -421,17 +424,17 @@ Now give me that big damn bone
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="gaslight-and-glitter.html" class="more-song-card">
-          <h4>Gaslight &amp; Glitter</h4>
+        <a href="i-aint-picking-up-your-shit-no-more.html" class="more-song-card">
+          <h4>I Ain&#39;t Picking Up Your Shit No More</h4>
           <p>Valentina &middot; Southern Rock / Country Rock</p>
         </a>
         <a href="taffy-in-and-out.html" class="more-song-card">
           <h4>Taffy (In &amp; Out)</h4>
           <p>Valentina &middot; Hip-Hop / Club Rap</p>
         </a>
-        <a href="juicy-peach-on-fire.html" class="more-song-card">
-          <h4>Juicy Peach on Fire</h4>
-          <p>Valentina &middot; Southern Rock / Country Rock</p>
+        <a href="tongue-and-groove.html" class="more-song-card">
+          <h4>Tongue &amp; Groove</h4>
+          <p>Valentina &middot; Country Rock / Country Pop</p>
         </a>
     </div>
   </section>
@@ -516,40 +519,8 @@ function submitComment(e){
   return false;
 }
 
-// Song Reactions — 💋 and 🔥
-var songSlug = location.pathname.split('/').pop().replace('.html','');
-var SB_URL = 'https://pxcxtnabyydhbfbholvh.supabase.co';
-var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78';
-
-function reactSong(type) {
-  var btn = document.querySelector('.sab-' + type);
-  if (btn.classList.contains('active')) return;
-  btn.classList.add('active');
-  var countEl = document.getElementById(type + '-count');
-  countEl.textContent = parseInt(countEl.textContent || '0') + 1;
-  // Save to localStorage to prevent double-react
-  localStorage.setItem('react-' + songSlug + '-' + type, '1');
-  // Save to Supabase
-  fetch(SB_URL + '/rest/v1/song_reactions', {
-    method: 'POST',
-    headers: {'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal'},
-    body: JSON.stringify({song_slug: songSlug, reaction_type: type})
-  }).catch(function(){});
-}
-
-// Load existing reactions on page load
-(function(){
-  // Check localStorage for user's previous reactions
-  if (localStorage.getItem('react-' + songSlug + '-lips')) {
-    var btn = document.querySelector('.sab-lips');
-    if (btn) btn.classList.add('active');
-  }
-  if (localStorage.getItem('react-' + songSlug + '-fire')) {
-    var btn = document.querySelector('.sab-fire');
-    if (btn) btn.classList.add('active');
-  }
-})();
 </script>
+<script src="/js/song-reactions.js"></script>
 <script src="/js/play-tracker.js" defer></script>
 </body>
 </html>

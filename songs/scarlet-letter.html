@@ -273,17 +273,17 @@ You built the fire — I didn&#39;t die
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="dont-settle.html" class="more-song-card">
-          <h4>Don&#39;t Settle</h4>
+        <a href="down-under.html" class="more-song-card">
+          <h4>Down Under</h4>
           <p>Valentina</p>
         </a>
-        <a href="love-me-complicated.html" class="more-song-card">
-          <h4>Love Me Complicated</h4>
-          <p>Valentina</p>
+        <a href="endless-summer.html" class="more-song-card">
+          <h4>Endless Summer</h4>
+          <p>Valentina &middot; Trop Rock / Coastal</p>
         </a>
-        <a href="paper-soldier.html" class="more-song-card">
-          <h4>Paper Soldier</h4>
-          <p>JT</p>
+        <a href="twinkle.html" class="more-song-card">
+          <h4>Twinkle Twinkle Little Bitch (JT)</h4>
+          <p>Valentina</p>
         </a>
     </div>
   </section>
@@ -368,40 +368,8 @@ function submitComment(e){
   return false;
 }
 
-// Song Reactions — 💋 and 🔥
-var songSlug = location.pathname.split('/').pop().replace('.html','');
-var SB_URL = 'https://pxcxtnabyydhbfbholvh.supabase.co';
-var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78';
-
-function reactSong(type) {
-  var btn = document.querySelector('.sab-' + type);
-  if (btn.classList.contains('active')) return;
-  btn.classList.add('active');
-  var countEl = document.getElementById(type + '-count');
-  countEl.textContent = parseInt(countEl.textContent || '0') + 1;
-  // Save to localStorage to prevent double-react
-  localStorage.setItem('react-' + songSlug + '-' + type, '1');
-  // Save to Supabase
-  fetch(SB_URL + '/rest/v1/song_reactions', {
-    method: 'POST',
-    headers: {'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal'},
-    body: JSON.stringify({song_slug: songSlug, reaction_type: type})
-  }).catch(function(){});
-}
-
-// Load existing reactions on page load
-(function(){
-  // Check localStorage for user's previous reactions
-  if (localStorage.getItem('react-' + songSlug + '-lips')) {
-    var btn = document.querySelector('.sab-lips');
-    if (btn) btn.classList.add('active');
-  }
-  if (localStorage.getItem('react-' + songSlug + '-fire')) {
-    var btn = document.querySelector('.sab-fire');
-    if (btn) btn.classList.add('active');
-  }
-})();
 </script>
+<script src="/js/song-reactions.js"></script>
 <script src="/js/play-tracker.js" defer></script>
 </body>
 </html>

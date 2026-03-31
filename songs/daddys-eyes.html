@@ -201,7 +201,10 @@
     <div class="pink-divider"></div>
     <div class="story-card">
       <div class="story-text">
-        <p>JT on vocals. A father&#39;s love for his child — the kind that doesn&#39;t need words because it&#39;s already in every look, every sacrifice, every sleepless night. You can see the whole world in your daddy&#39;s eyes — and he can see his whole world in yours.</p>
+        <p>JT wrote this one — and he could barely get through recording it.</p>
+      <p>This song is about a father who had his child ripped away from him through parental alienation. Not because he was dangerous. Not because he didn&#39;t love her. Because someone decided to weaponize a child against the man who used to mow the yard with her strapped to his back like a butterfly.</p>
+      <p>She filed the papers. Blocked the calls. Burned the photos. Told the child daddy was gone. But blood doesn&#39;t lie. And somewhere out there, that little girl still has her daddy&#39;s eyes — the one thing they couldn&#39;t erase.</p>
+      <p>If you&#39;ve ever had your child taken from you by the system, by lies, by someone who turned love into a weapon — this song is yours. You&#39;re not forgotten. And neither is your child.</p>
       </div>
     </div>
   </section>
@@ -294,17 +297,17 @@ You have your daddy&#39;s eyes
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="undo-the-spell.html" class="more-song-card">
-          <h4>Undo the Spell</h4>
-          <p>Valentina &middot; Country Rock / Mystic Folk Rock</p>
+        <a href="crackhead-queen.html" class="more-song-card">
+          <h4>Crackhead Queen</h4>
+          <p>Valentina &middot; Southern Rock / Mystic Rock</p>
         </a>
         <a href="i-rise.html" class="more-song-card">
           <h4>I Rise</h4>
           <p>Valentina &middot; Country Rock / Orchestral Ballad</p>
         </a>
-        <a href="crackhead-queen.html" class="more-song-card">
-          <h4>Crackhead Queen</h4>
-          <p>Valentina &middot; Southern Rock / Mystic Rock</p>
+        <a href="undo-the-spell.html" class="more-song-card">
+          <h4>Undo the Spell</h4>
+          <p>Valentina &middot; Country Rock / Mystic Folk Rock</p>
         </a>
     </div>
   </section>
@@ -389,40 +392,8 @@ function submitComment(e){
   return false;
 }
 
-// Song Reactions — 💋 and 🔥
-var songSlug = location.pathname.split('/').pop().replace('.html','');
-var SB_URL = 'https://pxcxtnabyydhbfbholvh.supabase.co';
-var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78';
-
-function reactSong(type) {
-  var btn = document.querySelector('.sab-' + type);
-  if (btn.classList.contains('active')) return;
-  btn.classList.add('active');
-  var countEl = document.getElementById(type + '-count');
-  countEl.textContent = parseInt(countEl.textContent || '0') + 1;
-  // Save to localStorage to prevent double-react
-  localStorage.setItem('react-' + songSlug + '-' + type, '1');
-  // Save to Supabase
-  fetch(SB_URL + '/rest/v1/song_reactions', {
-    method: 'POST',
-    headers: {'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal'},
-    body: JSON.stringify({song_slug: songSlug, reaction_type: type})
-  }).catch(function(){});
-}
-
-// Load existing reactions on page load
-(function(){
-  // Check localStorage for user's previous reactions
-  if (localStorage.getItem('react-' + songSlug + '-lips')) {
-    var btn = document.querySelector('.sab-lips');
-    if (btn) btn.classList.add('active');
-  }
-  if (localStorage.getItem('react-' + songSlug + '-fire')) {
-    var btn = document.querySelector('.sab-fire');
-    if (btn) btn.classList.add('active');
-  }
-})();
 </script>
+<script src="/js/song-reactions.js"></script>
 <script src="/js/play-tracker.js" defer></script>
 </body>
 </html>
