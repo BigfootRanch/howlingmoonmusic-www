@@ -83,9 +83,9 @@
 
 <!-- Sticky Social Action Bar -->
 <div class="song-action-bar" id="songActionBar">
-  <button class="sab-btn sab-lips" onclick="this.classList.add('active');var s=location.pathname.split('/').pop().replace('.html','');var c=document.getElementById('lips-count');if(c)c.textContent=parseInt(c.textContent||'0')+1;localStorage.setItem('react-'+s+'-lips','1');fetch('https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/song_reactions',{method:'POST',headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({song_slug:s,reaction_type:'lips'})})" title="Love it">
+  <button class="sab-btn sab-lips" onclick="this.classList.add('active');var s=location.pathname.split('/').pop().replace('.html','');var c=document.getElementById('heart-count');if(c)c.textContent=parseInt(c.textContent||'0')+1;localStorage.setItem('react-'+s+'-heart','1');fetch('https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/song_reactions',{method:'POST',headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({song_slug:s,reaction_type:'heart'})})" title="Love it">
     <span class="sab-icon">💋</span>
-    <span class="sab-count" id="lips-count">0</span>
+    <span class="sab-count" id="heart-count">0</span>
   </button>
   <button class="sab-btn sab-fire" onclick="this.classList.add('active');var s=location.pathname.split('/').pop().replace('.html','');var c=document.getElementById('fire-count');if(c)c.textContent=parseInt(c.textContent||'0')+1;localStorage.setItem('react-'+s+'-fire','1');fetch('https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/song_reactions',{method:'POST',headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({song_slug:s,reaction_type:'fire'})})" title="Fire">
     <span class="sab-icon">🔥</span>
@@ -309,17 +309,17 @@ Puppy puppy puppy kisses all the time
   <section class="song-section" id="more">
     <h2>More Songs Like This</h2>
     <div class="more-songs-grid">
-        <a href="endless-summer.html" class="more-song-card">
-          <h4>Endless Summer</h4>
-          <p>Valentina &middot; Trop Rock / Coastal</p>
+        <a href="crack-the-sky.html" class="more-song-card">
+          <h4>Crack the Sky</h4>
+          <p>Valentina &middot; Rock / Power Ballad</p>
         </a>
-        <a href="love-me-complicated.html" class="more-song-card">
-          <h4>Love Me Complicated</h4>
+        <a href="twinkle.html" class="more-song-card">
+          <h4>Twinkle Twinkle Little Bitch (JT)</h4>
           <p>Valentina</p>
         </a>
-        <a href="shove-it.html" class="more-song-card">
-          <h4>Shove It</h4>
-          <p>Valentina &middot; Southern Rock</p>
+        <a href="its-a-bigfoot-christmas.html" class="more-song-card">
+          <h4>It&#39;s a Bigfoot Christmas</h4>
+          <p>Valentina</p>
         </a>
     </div>
   </section>
@@ -419,8 +419,8 @@ function reactSong(type) {
   }).catch(function(){});
 }
 var songSlug = location.pathname.split('/').pop().replace('.html','');
-if (localStorage.getItem('react-' + songSlug + '-lips')) {
-  var b = document.querySelector('.sab-lips');
+if (localStorage.getItem('react-' + songSlug + '-heart')) {
+  var b = document.querySelector('.sab-heart');
   if (b) b.classList.add('active');
 }
 if (localStorage.getItem('react-' + songSlug + '-fire')) {
