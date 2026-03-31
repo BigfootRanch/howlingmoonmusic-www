@@ -197,7 +197,39 @@
 
         <div class="dl-row">
           <span class="dl-title">Puff Planet</span>
-          <a href="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/MUSIC%20ALBUM%20RAINBOW%202025/PUFF%20%20planet%20(1).wav" download class="dl-btn" title="Download Puff Planet">
+          <div style="max-width:460px;margin:2rem auto;padding:1.5rem;border:1px solid rgba(255,45,123,.2);border-radius:12px;background:rgba(255,45,123,.04);text-align:center;">
+  <h3 style="color:#ff2d7b;font-size:1.1rem;margin-bottom:.3rem;">You just supported an independent artist. That means everything.</h3>
+  <p style="color:rgba(255,255,255,.6);font-size:.85rem;margin-bottom:1rem;">Want to know when new music drops? Exclusive releases, behind-the-scenes stories, and songs you won't find anywhere else.</p>
+  <form id="dlSignup" style="display:flex;flex-direction:column;gap:.5rem;" onsubmit="return dlSubmit(event)">
+    <input type="text" id="dlName" placeholder="Your name" style="padding:.6rem;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#faf6f0;font-size:.9rem;">
+    <input type="email" id="dlEmail" placeholder="Your email" required style="padding:.6rem;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#faf6f0;font-size:.9rem;">
+    <button type="submit" style="padding:.6rem;border-radius:6px;border:none;background:linear-gradient(135deg,#ff2d7b,#d4175f);color:#fff;font-weight:600;cursor:pointer;">Join the Inner Circle</button>
+  </form>
+  <div id="dlMsg" style="display:none;color:#d4a843;margin-top:.5rem;font-size:.85rem;"></div>
+</div>
+<h3 style="text-align:center;color:rgba(255,255,255,.5);margin:1.5rem 0;font-size:.9rem;">Your downloads are ready below</h3>
+<script>
+function dlSubmit(e){
+  e.preventDefault();
+  var n=document.getElementById("dlName").value.trim();
+  var em=document.getElementById("dlEmail").value.trim();
+  var b=window.location.pathname.split("/").pop().replace(".html","");
+  if(!em)return false;
+  fetch("https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/fan_subscribers",{
+    method:"POST",headers:{"apikey":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78","Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78","Content-Type":"application/json","Prefer":"return=minimal"},
+    body:JSON.stringify({email:em,name:n,source:"purchase",purchased_bundle:b})
+  }).then(function(){
+    document.getElementById("dlMsg").style.display="block";
+    document.getElementById("dlMsg").textContent="Welcome to the inner circle! You will never miss a drop.";
+    document.getElementById("dlSignup").style.display="none";
+  }).catch(function(){
+    document.getElementById("dlMsg").style.display="block";
+    document.getElementById("dlMsg").textContent="You are already in the circle!";
+  });
+  return false;
+}
+</script>
+<a href="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/MUSIC%20ALBUM%20RAINBOW%202025/PUFF%20%20planet%20(1).wav" download class="dl-btn" title="Download Puff Planet">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Download
           </a>
@@ -228,38 +260,7 @@
     <p class="footer-note">Howling Moon Music &copy; 2026 &middot; All rights reserved</p>
   </div>
 
-<div style="margin:2.5rem auto;max-width:420px;padding:1.5rem;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.03);text-align:center;">
-  <h3 style="color:#d4a843;font-size:1.1rem;margin-bottom:.5rem;">Stay in the Inner Circle</h3>
-  <p style="color:rgba(255,255,255,.6);font-size:.85rem;margin-bottom:1rem;">Get notified when new music drops, behind-the-scenes stories, and exclusive releases before anyone else.</p>
-  <form id="fanSignup" style="display:flex;flex-direction:column;gap:.5rem;" onsubmit="return submitFanEmail(event)">
-    <input type="text" id="fanName" placeholder="Your name" style="padding:.6rem;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#faf6f0;font-size:.9rem;">
-    <input type="email" id="fanEmail" placeholder="Your email" required style="padding:.6rem;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#faf6f0;font-size:.9rem;">
-    <button type="submit" style="padding:.6rem;border-radius:6px;border:none;background:linear-gradient(135deg,#ff2d7b,#d4175f);color:#fff;font-weight:600;font-size:.9rem;cursor:pointer;">Join the Inner Circle</button>
-  </form>
-  <div id="fanMsg" style="display:none;color:#d4a843;margin-top:.5rem;font-size:.85rem;"></div>
-</div>
-<script>
-function submitFanEmail(e){
-  e.preventDefault();
-  var name=document.getElementById("fanName").value.trim();
-  var email=document.getElementById("fanEmail").value.trim();
-  var bundle=window.location.pathname.split("/").pop().replace(".html","");
-  if(!email)return false;
-  fetch("https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/fan_subscribers",{
-    method:"POST",
-    headers:{"apikey":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78","Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78","Content-Type":"application/json","Prefer":"return=minimal"},
-    body:JSON.stringify({email:email,name:name,source:"purchase",purchased_bundle:bundle})
-  }).then(function(){
-    document.getElementById("fanMsg").style.display="block";
-    document.getElementById("fanMsg").textContent="Welcome to the inner circle!";
-    document.getElementById("fanSignup").style.display="none";
-  }).catch(function(){
-    document.getElementById("fanMsg").style.display="block";
-    document.getElementById("fanMsg").textContent="You are already in the circle!";
-  });
-  return false;
-}
-</script>
+
 
 </body>
 </html>
