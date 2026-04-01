@@ -169,10 +169,13 @@
     'southwest': '/moods/desert-vibes.html'
   };
   document.getElementById('catTabs').addEventListener('click', function(e) {
-    const btn = e.target.closest('.cat-btn');
+    var btn = e.target;
+    if (!btn.classList.contains('cat-btn')) btn = btn.closest('.cat-btn');
     if (!btn) return;
-    const cat = btn.dataset.cat;
-    // If this mood has a dedicated page, navigate there
+    e.preventDefault();
+    e.stopPropagation();
+    var cat = btn.dataset.cat;
+    // If this mood has a dedicated page, navigate IMMEDIATELY
     if (moodPages[cat]) {
       window.location.href = moodPages[cat];
       return;
