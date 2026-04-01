@@ -159,12 +159,26 @@
     'jt-rap': 'Country roots with modern edge. Rap, rhythm, grit, and storytelling with attitude.',
     'jt-hype': 'High energy. No excuses. Music that pushes you harder, louder, stronger.'
   };
+  // Mood pages that have dedicated landing pages
+  const moodPages = {
+    'healing': '/moods/healing.html',
+    'beach': '/moods/beach-country.html',
+    '420': '/moods/420.html',
+    'heartbreak': '/moods/toxic-relationships.html',
+    'rage': '/moods/empowerment.html',
+    'southwest': '/moods/desert-vibes.html'
+  };
   document.getElementById('catTabs').addEventListener('click', function(e) {
     const btn = e.target.closest('.cat-btn');
     if (!btn) return;
+    const cat = btn.dataset.cat;
+    // If this mood has a dedicated page, navigate there
+    if (moodPages[cat]) {
+      window.location.href = moodPages[cat];
+      return;
+    }
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    const cat = btn.dataset.cat;
     const desc = document.getElementById('catDesc');
     desc.style.opacity = '0';
     setTimeout(() => { desc.textContent = descs[cat] || ''; desc.style.opacity = '1'; }, 200);
