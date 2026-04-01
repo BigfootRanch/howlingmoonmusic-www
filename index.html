@@ -1136,12 +1136,12 @@ function playCurrentTrack() {
   document.getElementById('radioBuyBtn').onclick = function() { window.open('mailto:howlingmoonmusic@gmail.com?subject=Buy%20' + encodeURIComponent(song.title), '_blank'); };
   document.getElementById('radioHeart').onclick = function() {
     this.style.transform = 'scale(1.4)'; setTimeout(function(){ document.getElementById('radioHeart').style.transform = ''; }, 300);
-    if (typeof showToast === 'function') showToast('thanks darling for the love');
+    showToast('thanks darling for the love');
     fetch(SB_URL + '/rest/v1/song_reactions', { method:'POST', headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'}, body:JSON.stringify({song_slug:song.slug,reaction_type:'heart'}) }).catch(function(){});
   };
   document.getElementById('radioFire').onclick = function() {
     this.style.transform = 'scale(1.4)'; setTimeout(function(){ document.getElementById('radioFire').style.transform = ''; }, 300);
-    if (typeof showToast === 'function') showToast('thanks for the vibe');
+    showToast('thanks for the vibe');
     fetch(SB_URL + '/rest/v1/song_reactions', { method:'POST', headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'}, body:JSON.stringify({song_slug:song.slug,reaction_type:'fire'}) }).catch(function(){});
   };
 
@@ -1328,12 +1328,7 @@ function addSongActionButtons() {
 /* ============================================
    INIT
    ============================================ */
-loadSiteData();
-</script>
-
-<script src="/js/hm-track.js" defer></script>
-<script>
-// Global toast for reaction feedback — works across entire homepage
+// Global toast for reaction feedback
 function showToast(msg) {
   var existing = document.getElementById('loveToast');
   if (existing) existing.remove();
@@ -1345,7 +1340,11 @@ function showToast(msg) {
   setTimeout(function(){ toast.style.opacity='0'; toast.style.transition='opacity .3s'; }, 2000);
   setTimeout(function(){ toast.remove(); }, 2500);
 }
+
+loadSiteData();
 </script>
+
+<script src="/js/hm-track.js" defer></script>
 
 </body>
 </html>
