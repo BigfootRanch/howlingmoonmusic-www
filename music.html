@@ -26,6 +26,19 @@
     .song-list a { color: var(--ts); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0; transition: color 0.2s; }
     .song-list a:hover { color: var(--gold); }
     .song-list a:hover .song-name { color: var(--gold); }
+    .song-actions { display:inline-flex; gap:.4rem; margin-left:auto; align-items:center; }
+    .song-actions button, .song-actions a {
+      background:none; border:1px solid rgba(255,255,255,.1); color:var(--ts);
+      padding:.2rem .5rem; border-radius:4px; font-size:.7rem; cursor:pointer;
+      text-decoration:none; transition:all .2s; display:inline-flex; align-items:center; gap:.2rem;
+    }
+    .song-actions button:hover, .song-actions a:hover { border-color:var(--pink); color:var(--pink); }
+    .song-actions .sa-heart { font-size:.85rem; border:none; padding:.2rem; }
+    .song-actions .sa-fire { font-size:.85rem; border:none; padding:.2rem; }
+    .song-actions .sa-heart.active { color:#ff2d7b; }
+    .song-actions .sa-fire.active { color:#ff6b35; }
+    .song-actions .sa-buy { background:var(--pink); color:#fff; border-color:var(--pink); font-weight:600; }
+    .song-actions .sa-buy:hover { background:#d4175f; }
   </style>
 </head>
 <body>
@@ -372,6 +385,71 @@ function closeMob(){document.getElementById('mobNav').classList.remove('open')}
 window.closeMob=closeMob;
 const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+<script>
+// Add action buttons to every song in the album cards
+(function() {
+  var SB_URL = 'https://pxcxtnabyydhbfbholvh.supabase.co';
+  var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78';
+
+  document.querySelectorAll('.song-list li').forEach(function(li) {
+    var link = li.querySelector('a');
+    if (!link) return;
+    var href = link.getAttribute('href') || '';
+    var slug = href.split('/').pop().replace('.html','').replace('#video','').replace('#listen-now','');
+    if (!slug) return;
+
+    var actions = document.createElement('span');
+    actions.className = 'song-actions';
+
+    // Heart button
+    var heart = document.createElement('button');
+    heart.className = 'sa-heart';
+    heart.textContent = '\uD83D\uDC8B';
+    heart.title = 'Love it';
+    if (localStorage.getItem('react-' + slug + '-heart')) heart.classList.add('active');
+    heart.onclick = function(e) {
+      e.preventDefault(); e.stopPropagation();
+      heart.classList.add('active');
+      localStorage.setItem('react-' + slug + '-heart', '1');
+      fetch(SB_URL + '/rest/v1/song_reactions', {
+        method:'POST', headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
+        body:JSON.stringify({song_slug:slug,reaction_type:'heart'})
+      }).catch(function(){});
+    };
+
+    // Fire button
+    var fire = document.createElement('button');
+    fire.className = 'sa-fire';
+    fire.textContent = '\uD83D\uDD25';
+    fire.title = 'Fire';
+    if (localStorage.getItem('react-' + slug + '-fire')) fire.classList.add('active');
+    fire.onclick = function(e) {
+      e.preventDefault(); e.stopPropagation();
+      fire.classList.add('active');
+      localStorage.setItem('react-' + slug + '-fire', '1');
+      fetch(SB_URL + '/rest/v1/song_reactions', {
+        method:'POST', headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
+        body:JSON.stringify({song_slug:slug,reaction_type:'fire'})
+      }).catch(function(){});
+    };
+
+    // Buy button
+    var buy = document.createElement('a');
+    buy.className = 'sa-buy';
+    buy.textContent = '$';
+    buy.title = 'Buy $1.29';
+    buy.href = 'mailto:howlingmoonmusic@gmail.com?subject=Buy%20' + encodeURIComponent(link.textContent.trim());
+    buy.onclick = function(e) { e.stopPropagation(); };
+
+    actions.appendChild(heart);
+    actions.appendChild(fire);
+    actions.appendChild(buy);
+    li.style.display = 'flex';
+    li.style.alignItems = 'center';
+    li.appendChild(actions);
+  });
+})();
 </script>
 <script src="/js/hm-track.js" defer></script>
 <script src="/js/buy-music.js" defer></script>
