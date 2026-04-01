@@ -517,6 +517,19 @@ const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isInt
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 </script>
 <script>
+// Toast notification for reaction feedback
+function showToast(msg) {
+  var existing = document.getElementById('loveToast');
+  if (existing) existing.remove();
+  var toast = document.createElement('div');
+  toast.id = 'loveToast';
+  toast.textContent = msg;
+  toast.style.cssText = 'position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:rgba(255,45,123,.95);color:#fff;padding:.7rem 1.5rem;border-radius:50px;font-size:.85rem;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(255,45,123,.4);animation:toastIn .3s ease;';
+  document.body.appendChild(toast);
+  setTimeout(function(){ toast.style.opacity='0'; toast.style.transition='opacity .3s'; }, 2000);
+  setTimeout(function(){ toast.remove(); }, 2500);
+}
+
 // Add action buttons to every song in the album cards
 (function() {
   var SB_URL = 'https://pxcxtnabyydhbfbholvh.supabase.co';
@@ -540,8 +553,11 @@ document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
     if (localStorage.getItem('react-' + slug + '-heart')) heart.classList.add('active');
     heart.onclick = function(e) {
       e.preventDefault(); e.stopPropagation();
+      if (localStorage.getItem('react-' + slug + '-heart')) { showToast('you already showed this one love'); return; }
       heart.classList.add('active');
+      heart.style.transform = 'scale(1.4)'; setTimeout(function(){ heart.style.transform = ''; }, 300);
       localStorage.setItem('react-' + slug + '-heart', '1');
+      showToast('thanks darling for the love');
       fetch(SB_URL + '/rest/v1/song_reactions', {
         method:'POST', headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
         body:JSON.stringify({song_slug:slug,reaction_type:'heart'})
@@ -556,20 +572,23 @@ document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
     if (localStorage.getItem('react-' + slug + '-fire')) fire.classList.add('active');
     fire.onclick = function(e) {
       e.preventDefault(); e.stopPropagation();
+      if (localStorage.getItem('react-' + slug + '-fire')) { showToast('already vibing with this one'); return; }
       fire.classList.add('active');
+      fire.style.transform = 'scale(1.4)'; setTimeout(function(){ fire.style.transform = ''; }, 300);
       localStorage.setItem('react-' + slug + '-fire', '1');
+      showToast('thanks for the vibe');
       fetch(SB_URL + '/rest/v1/song_reactions', {
         method:'POST', headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
         body:JSON.stringify({song_slug:slug,reaction_type:'fire'})
       }).catch(function(){});
     };
 
-    // Buy button
+    // Buy button — links to song page where real buy options are
     var buy = document.createElement('a');
     buy.className = 'sa-buy';
     buy.textContent = '$';
     buy.title = 'Buy $1.29';
-    buy.href = 'mailto:howlingmoonmusic@gmail.com?subject=Buy%20' + encodeURIComponent(link.textContent.trim());
+    buy.href = '/songs/' + slug + '.html#buy';
     buy.onclick = function(e) { e.stopPropagation(); };
 
     actions.appendChild(heart);
