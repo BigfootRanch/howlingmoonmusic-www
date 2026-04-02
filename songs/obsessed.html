@@ -119,13 +119,16 @@ Your browser does not support audio.
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
-    <a href="/#listen" class="listen-now-btn">
-      <span class="play-pulse"></span>
-      <span class="listen-now-text">
-        <strong>Play on DogMother Radio</strong>
-        <span>Every song. Every mood. All day. No ads.</span>
-      </span>
-    </a>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Obsessed</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/obsessed.wav"></audio>
+    </div>
   </section>
 
   
