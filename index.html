@@ -162,15 +162,8 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
       <div class="radio-progress-bar" id="radioProgress"></div>
     </div>
   </div>
-  <div class="radio-mode-bar">
-    <button class="radio-mode active" data-mode="all">All Songs</button>
-    <button class="radio-mode" data-mode="mood">By Mood</button>
-    <button class="radio-mode" data-mode="valentina">Valentina</button>
-    <button class="radio-mode" data-mode="jt">JT</button>
-  </div>
-  <div class="radio-album-bar" id="radioAlbumBar"></div>
-  <!-- Radio Action Bar — shows when playing -->
-  <div id="radioActionBar" style="display:none;padding:.5rem 1rem;background:rgba(255,45,123,.1);border-top:1px solid rgba(255,45,123,.25);align-items:center;justify-content:center;gap:.6rem;flex-wrap:wrap;">
+  <!-- Radio Action Bar — shows when playing, directly under controls -->
+  <div id="radioActionBar" style="display:none;padding:.6rem 1rem;background:rgba(255,45,123,.1);border:1px solid rgba(255,45,123,.25);border-radius:8px;margin:.75rem auto;max-width:600px;align-items:center;justify-content:center;gap:.6rem;flex-wrap:wrap;">
     <span id="radioNowTitle" style="color:#ff2d7b;font-weight:700;font-size:.85rem;"></span>
     <button id="radioHeart" style="background:none;border:none;font-size:1.1rem;cursor:pointer;padding:.2rem;" title="Love it">&#x1F48B;</button>
     <button id="radioFire" style="background:none;border:none;font-size:1.1rem;cursor:pointer;padding:.2rem;" title="Fire">&#x1F525;</button>
@@ -179,6 +172,13 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
     <a id="radioStoryLink" href="#" style="color:var(--ts);font-size:.75rem;text-decoration:none;padding:.3rem .6rem;border:1px solid rgba(255,255,255,.15);border-radius:4px;">Story</a>
     <a href="https://open.spotify.com/artist/2oYIuTSjJZy1c4uOmscAJy" target="_blank" style="color:var(--ts);font-size:.75rem;text-decoration:none;padding:.3rem .6rem;border:1px solid rgba(255,255,255,.15);border-radius:4px;">Stream</a>
   </div>
+  <div class="radio-mode-bar">
+    <button class="radio-mode active" data-mode="all">All Songs</button>
+    <button class="radio-mode" data-mode="mood">By Mood</button>
+    <button class="radio-mode" data-mode="valentina">Valentina</button>
+    <button class="radio-mode" data-mode="jt">JT</button>
+  </div>
+  <div class="radio-album-bar" id="radioAlbumBar"></div>
   <audio id="radioAudio" preload="none"></audio>
 </div>
 
