@@ -3522,6 +3522,20 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// Expose functions used by inline onclick handlers to global scope
+window.openNewAlbumModal = openNewAlbumModal;
+window.openEditAlbumModal = openEditAlbumModal;
+window.filterAlbums = filterAlbums;
+window.setSocialView = setSocialView;
+window.filterSocialPosts = filterSocialPosts;
+window.setSocialStatus = setSocialStatus;
+window.calNavMonth = calNavMonth;
+window.renderCalendar = renderCalendar;
+window.loadYouTube = loadYoutube;
+window.openAddProductModal = typeof openAddProductModal !== 'undefined' ? openAddProductModal : function(){};
+window.openAddSaleModal = typeof openAddSaleModal !== 'undefined' ? openAddSaleModal : function(){};
+window.exportSalesCSV = typeof exportSalesCSV !== 'undefined' ? exportSalesCSV : function(){};
+
 })();
 </script>
 </body>
