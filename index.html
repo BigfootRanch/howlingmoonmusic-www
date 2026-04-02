@@ -1037,40 +1037,26 @@ function loadSiteData() {
    ============================================ */
 var MOOD_PAGES = {
   '420 Vibes & Slow High Nights': '/moods/420.html',
-  'Alpha Energy, Country Rap & Real Talk': '/moods/outlaw-genx.html',
-  'Bad Exes': '/moods/toxic-relationships.html',
-  'Boss Bitch Mode & Red Lipstick Revenge': '/moods/empowerment.html',
+  'Saltwater Souls & Tropical Escape': '/moods/beach-country.html',
+  'Southwest Desert Soul': '/moods/desert-vibes.html',
+  'Healing Frequencies & Calm Down Music': '/moods/healing.html',
+  'Ghosting, Gaslighting, Cancel Block Erase': '/moods/toxic-relationships.html',
+  'Rage, Fire & Don\'t Mess With Me': '/moods/empowerment.html',
+  'Heartbreak, Loss & Let It Hurt': '/moods/heartbreak.html',
+  'Love, Lust & Obsession': '/moods/love-romance.html',
+  'GenX Rage & Red Lipstick': '/moods/outlaw-genx.html',
+  'Spiritual & Faith': '/moods/faith.html',
   'Christmas, Chaos & Holiday Feels': '/moods/christmas.html',
   'Dog Songs & Unconditional Love': '/moods/dog-songs.html',
-  'Estrangement': '/moods/family-pain.html',
-  'Family / Parent-Child': '/moods/family-pain.html',
-  'GenX Rage & Red Lipstick': '/moods/outlaw-genx.html',
-  'Ghosting, Gaslighting, Cancel Block Erase': '/moods/toxic-relationships.html',
-  'Halloween, Karma & Reckoning Season': '/moods/empowerment.html',
-  'Healing Frequencies & Calm Down Music': '/moods/healing.html',
-  'Heartbreak, Loss & Let It Hurt': '/moods/heartbreak.html',
-  'Hot Summer Nights & Skin on Fire': '/moods/sensual.html',
   'Late Night Thoughts & Can\'t Sleep': '/moods/late-night-drive.html',
-  'Love, Lust & Obsession': '/moods/love-romance.html',
-  'New Mexico Nights & Desert Town Stories': '/moods/desert-vibes.html',
-  'Outlaw Country, Grit & Soul': '/moods/outlaw-genx.html',
-  'Pop Rock & Raw Hooks': '/moods/love-romance.html',
-  'Rage, Fire & Don\'t Mess With Me': '/moods/empowerment.html',
-  'Road Trip & Open Highway': '/moods/desert-vibes.html',
-  'Saltwater Souls & Tropical Escape': '/moods/beach-country.html',
-  'Songs for the Parent They Tried to Erase': '/moods/family-pain.html',
-  'Southwest Desert Soul': '/moods/desert-vibes.html',
-  'Spiritual & Faith': '/moods/faith.html',
-  'Spring Healing & Soft Rebirth': '/moods/healing.html',
-  'Under Covers & Midnight Confessions': '/moods/sensual.html',
   'Unhinged, Satire & Truth Bombs': '/moods/funny.html',
-  'Villain Mode & Zero Apologies': '/moods/empowerment.html',
-  'Wait... Man or Dog?': '/moods/dog-songs.html'
+  'Hot Summer Nights & Skin on Fire': '/moods/sensual.html',
+  'Songs for the Parent They Tried to Erase': '/moods/family-pain.html'
 };
 function buildMoodGrid() {
   const grid = document.getElementById('moodGrid');
   grid.innerHTML = '';
-  moodCategories.forEach(m => {
+  moodCategories.filter(m => MOOD_PAGES[m.name]).forEach(m => {
     if (m.status === 'coming_soon') {
       const card = document.createElement('div');
       card.className = 'mood-card mood-card--soon reveal';
