@@ -240,10 +240,11 @@
       font-family: var(--font-d);
       font-size: 2rem;
       font-weight: 700;
-      color: rgba(212,174,72,.3);
+      color: rgba(212,174,72,.7);
       line-height: 1;
       flex-shrink: 0;
       width: 2.5rem;
+      text-shadow: 0 0 20px rgba(212,174,72,.3);
     }
     .track-info { flex: 1; }
     .track-title {
@@ -253,6 +254,14 @@
       font-weight: 600;
       margin-bottom: .25rem;
     }
+    .track-title a { color: var(--text); text-decoration: none; }
+    .track-title a:hover { color: var(--pink); }
+    .track-actions { display: flex; align-items: center; gap: .5rem; margin-top: .75rem; }
+    .track-actions .sa-react { background: none; border: none; cursor: pointer; font-size: 1.1rem; padding: .2rem .3rem; opacity: .5; transition: transform .2s, opacity .2s; }
+    .track-actions .sa-react:hover { opacity: 1; transform: scale(1.2); }
+    .track-actions .sa-react.active { opacity: 1; filter: drop-shadow(0 0 6px rgba(255,45,123,.6)); }
+    .track-actions .sa-link { color: var(--gold); font-size: .75rem; text-decoration: none; padding: .2rem .5rem; border: 1px solid rgba(212,174,72,.3); border-radius: 4px; font-weight: 600; }
+    .track-actions .sa-link:hover { background: rgba(212,174,72,.15); }
     .track-hook {
       font-size: .85rem;
       font-style: italic;
@@ -432,7 +441,7 @@
     <div class="track-top">
       <div class="track-num">01</div>
       <div class="track-info">
-        <div class="track-title">Liar, Preacher Man</div>
+        <div class="track-title"><a href="/songs/liar-preacher-man.html">Liar, Preacher Man</a></div>
         <div class="track-hook">"He Was Supposed to Save Her..."</div>
         <p class="track-desc">The origin. The betrayal. The false accusation. A preacher who traded truth for power, and a woman who became his favorite sermon illustration. This is where the fire started.</p>
       </div>
@@ -449,7 +458,7 @@
     <div class="track-top">
       <div class="track-num">02</div>
       <div class="track-info">
-        <div class="track-title">I Didn't Die <span style="color:var(--text-m);font-size:.85rem;">(Scarlet Letter)</span></div>
+        <div class="track-title"><a href="/songs/i-didnt-die.html">I Didn't Die</a> <span style="color:var(--text-m);font-size:.85rem;">(Scarlet Letter)</span></div>
         <div class="track-hook">"They Tried to Burn Her Alive..."</div>
         <p class="track-desc">Branded scarlet. Burned at the stake of small-town gossip. But truth doesn't burn. She walked through the fire and came out breathing. This is the anthem of every woman who was supposed to disappear.</p>
       </div>
@@ -466,7 +475,7 @@
     <div class="track-top">
       <div class="track-num">03</div>
       <div class="track-info">
-        <div class="track-title">One Night with the Devil</div>
+        <div class="track-title"><a href="/songs/one-night-with-the-devil.html">One Night with the Devil</a></div>
         <div class="track-hook">"The Church Called Her a Sinner..."</div>
         <p class="track-desc">The forbidden love spark. The devil they warned her about turned out to be the only one who saw her as holy. One night changed everything. The church called it sin. She called it salvation.</p>
       </div>
@@ -483,7 +492,7 @@
     <div class="track-top">
       <div class="track-num">04</div>
       <div class="track-info">
-        <div class="track-title">Smoke Me</div>
+        <div class="track-title"><a href="/songs/smoke-me.html">Smoke Me</a></div>
         <div class="track-hook">"They Ran and Never Looked Back..."</div>
         <p class="track-desc">The cabin escape. Sacred fire. Slow burn. They left the small-town whisper game behind. Headlights faded. Dust turned to flame. This is what happens when two people who survived the fire find each other in the quiet.</p>
       </div>
@@ -500,7 +509,7 @@
     <div class="track-top">
       <div class="track-num">05</div>
       <div class="track-info">
-        <div class="track-title">Never Let Go / Hand in Hand</div>
+        <div class="track-title"><a href="/songs/never-let-go.html">Never Let Go / Hand in Hand</a></div>
         <div class="track-hook">"Wanted by the Town... Saved by Love"</div>
         <p class="track-desc">The forest wedding. God joined what the world tried to destroy. No guests except the pines. No witnesses except the stars. Two outlaws, hand in hand, making a covenant that no congregation could break.</p>
       </div>
@@ -517,7 +526,7 @@
     <div class="track-top">
       <div class="track-num">06</div>
       <div class="track-info">
-        <div class="track-title">Ghost Wanted Dead or Alive</div>
+        <div class="track-title"><a href="/songs/ghost-wanted-dead-or-alive.html">Ghost Wanted Dead or Alive</a></div>
         <div class="track-hook">"The Town Hunted Him for Loving Her..."</div>
         <p class="track-desc">JT's side of the story. Hunted by the town for loving the wrong woman. A ghost walking through the judgment, taking every bullet they fired at her. Dead or alive, he chose her.</p>
       </div>
@@ -534,7 +543,7 @@
     <div class="track-top">
       <div class="track-num">07</div>
       <div class="track-info">
-        <div class="track-title">Rodeo Cowboy</div>
+        <div class="track-title"><a href="/songs/rodeo-cowboy.html">Rodeo Cowboy</a></div>
         <div class="track-hook">"8 Seconds from Losing Everything..."</div>
         <p class="track-desc">His demons. Rock bottom. The rodeo was never about the bull. It was about holding on when everything in life throws you off. 8 seconds from losing everything, but love conquers. Every. Single. Time.</p>
       </div>
@@ -572,6 +581,94 @@
 
 <script>
 function closeMob(){ document.getElementById('mobNav').classList.remove('open'); }
+</script>
+
+<script>
+// Add reaction buttons to Outlaw Love track cards
+(function() {
+  var tracks = [
+    {slug: 'liar-preacher-man', title: 'Liar, Preacher Man'},
+    {slug: 'i-didnt-die', title: "I Didn't Die"},
+    {slug: 'one-night-with-the-devil', title: 'One Night with the Devil'},
+    {slug: 'smoke-me', title: 'Smoke Me'},
+    {slug: 'never-let-go', title: 'Never Let Go'},
+    {slug: 'ghost-wanted-dead-or-alive', title: 'Ghost Wanted Dead or Alive'},
+    {slug: 'rodeo-cowboy', title: 'Rodeo Cowboy'}
+  ];
+  var cards = document.querySelectorAll('.track-card');
+  var ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78';
+  var API = 'https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/song_reactions';
+  
+  var lipsMsgs = ["thanks darling for the love", "love you for that", "you get me"];
+  var fireMsgs = ["thanks for the vibe", "you feel that too?", "that's the energy"];
+  var toast = document.createElement('div');
+  toast.id = 'ol-toast';
+  toast.style.cssText = 'position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:linear-gradient(135deg,#1a1622,#2a2035);color:#faf6f0;padding:1rem 2rem;border-radius:12px;font-size:.95rem;z-index:9999;opacity:0;transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .3s;pointer-events:none;box-shadow:0 8px 32px rgba(0,0,0,.5);border:1px solid rgba(184,146,47,.25);text-align:center;max-width:90vw;font-family:Inter,sans-serif';
+  document.body.appendChild(toast);
+  var timer;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+    toast.style.opacity = '1';
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      toast.style.transform = 'translateX(-50%) translateY(100px)';
+      toast.style.opacity = '0';
+    }, 2500);
+  }
+
+  cards.forEach(function(card, i) {
+    if (i >= tracks.length) return;
+    var t = tracks[i];
+    var actions = document.createElement('div');
+    actions.className = 'track-actions';
+    
+    // Lips
+    var lips = document.createElement('button');
+    lips.className = 'sa-react' + (localStorage.getItem('react-'+t.slug+'-heart') ? ' active' : '');
+    lips.textContent = '\uD83D\uDC8B';
+    lips.title = 'Love it';
+    lips.onclick = function() {
+      if (localStorage.getItem('react-'+t.slug+'-heart')) { showToast('you already showed this one love'); return; }
+      this.classList.add('active');
+      this.style.transform='scale(1.4)';var self=this;setTimeout(function(){self.style.transform=''},300);
+      localStorage.setItem('react-'+t.slug+'-heart','1');
+      showToast(lipsMsgs[Math.floor(Math.random()*lipsMsgs.length)]);
+      fetch(API,{method:'POST',headers:{'apikey':ANON,'Authorization':'Bearer '+ANON,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({song_slug:t.slug,reaction_type:'heart'})});
+    };
+    actions.appendChild(lips);
+    
+    // Fire
+    var fire = document.createElement('button');
+    fire.className = 'sa-react' + (localStorage.getItem('react-'+t.slug+'-fire') ? ' active' : '');
+    fire.textContent = '\uD83D\uDD25';
+    fire.title = 'Fire';
+    fire.onclick = function() {
+      if (localStorage.getItem('react-'+t.slug+'-fire')) { showToast('already vibing with this one'); return; }
+      this.classList.add('active');
+      this.style.transform='scale(1.4)';var self=this;setTimeout(function(){self.style.transform=''},300);
+      localStorage.setItem('react-'+t.slug+'-fire','1');
+      showToast(fireMsgs[Math.floor(Math.random()*fireMsgs.length)]);
+      fetch(API,{method:'POST',headers:{'apikey':ANON,'Authorization':'Bearer '+ANON,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({song_slug:t.slug,reaction_type:'fire'})});
+    };
+    actions.appendChild(fire);
+    
+    // Song page link
+    var link = document.createElement('a');
+    link.className = 'sa-link';
+    link.href = '/songs/' + t.slug + '.html';
+    link.textContent = 'Full Song Page';
+    actions.appendChild(link);
+    
+    // Insert after track-play
+    var play = card.querySelector('.track-play');
+    if (play) {
+      play.parentNode.insertBefore(actions, play.nextSibling);
+    } else {
+      card.appendChild(actions);
+    }
+  });
+})();
 </script>
 </body>
 </html>
