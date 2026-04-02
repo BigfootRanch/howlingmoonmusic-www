@@ -169,6 +169,16 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
     <button class="radio-mode" data-mode="jt">JT</button>
   </div>
   <div class="radio-album-bar" id="radioAlbumBar"></div>
+  <!-- Radio Action Bar — shows when playing -->
+  <div id="radioActionBar" style="display:none;padding:.5rem 1rem;background:rgba(255,45,123,.1);border-top:1px solid rgba(255,45,123,.25);align-items:center;justify-content:center;gap:.6rem;flex-wrap:wrap;">
+    <span id="radioNowTitle" style="color:#ff2d7b;font-weight:700;font-size:.85rem;"></span>
+    <button id="radioHeart" style="background:none;border:none;font-size:1.1rem;cursor:pointer;padding:.2rem;" title="Love it">&#x1F48B;</button>
+    <button id="radioFire" style="background:none;border:none;font-size:1.1rem;cursor:pointer;padding:.2rem;" title="Fire">&#x1F525;</button>
+    <a id="radioSongLink" href="#" style="color:var(--gold);font-size:.75rem;text-decoration:none;padding:.3rem .6rem;border:1px solid var(--gold);border-radius:4px;">Song Page</a>
+    <button id="radioBuyBtn" style="background:#ff2d7b;color:#fff;border:none;padding:.35rem .8rem;border-radius:4px;font-size:.78rem;cursor:pointer;font-weight:600;">Buy $1.29</button>
+    <a id="radioStoryLink" href="#" style="color:var(--ts);font-size:.75rem;text-decoration:none;padding:.3rem .6rem;border:1px solid rgba(255,255,255,.15);border-radius:4px;">Story</a>
+    <a href="https://open.spotify.com/artist/2oYIuTSjJZy1c4uOmscAJy" target="_blank" style="color:var(--ts);font-size:.75rem;text-decoration:none;padding:.3rem .6rem;border:1px solid rgba(255,255,255,.15);border-radius:4px;">Stream</a>
+  </div>
   <audio id="radioAudio" preload="none"></audio>
 </div>
 
@@ -298,10 +308,13 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
           <svg width="11" height="13" viewBox="0 0 12 14" fill="currentColor" aria-hidden="true"><path d="M6 10.5L1 5.5h3.5V0h3v5.5H11L6 10.5zm-5.5 2h11V14h-11v-1.5z"/></svg>
           Download WAV
         </a>
-        <a class="lh-btn-secondary" href="songs/rock-a-bye-baby.html#buy" aria-label="Buy Rock a Bye Baby" style="border-color:var(--gold);color:var(--gold);">
-          <svg width="11" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-          Buy $1.29
-        </a>
+      </div>
+      <!-- Reaction + Story row for featured single -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:1rem;margin-top:1rem;flex-wrap:wrap;">
+        <button onclick="fetch('https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/song_reactions',{method:'POST',headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({song_slug:'rock-a-bye-baby',reaction_type:'heart'})});this.style.transform='scale(1.3)';setTimeout(()=>{this.style.transform=''},200)" style="background:none;border:none;font-size:1.4rem;cursor:pointer;" title="Love it">&#x1F48B;</button>
+        <button onclick="fetch('https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/song_reactions',{method:'POST',headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({song_slug:'rock-a-bye-baby',reaction_type:'fire'})});this.style.transform='scale(1.3)';setTimeout(()=>{this.style.transform=''},200)" style="background:none;border:none;font-size:1.4rem;cursor:pointer;" title="Fire">&#x1F525;</button>
+        <a href="/songs/rock-a-bye-baby.html#story" style="color:var(--gold);font-size:.8rem;text-decoration:none;padding:.4rem .8rem;border:1px solid var(--gold);border-radius:6px;">Story Behind This Song</a>
+        <a href="mailto:howlingmoonmusic@gmail.com?subject=Buy%20Rock%20a%20Bye%20Baby" style="background:#ff2d7b;color:#fff;font-size:.8rem;text-decoration:none;padding:.4rem .8rem;border-radius:6px;font-weight:600;">Buy $1.29</a>
       </div>
       <div class="lh-stream-label">Stream Everywhere</div>
       <div class="lh-stream-row">
@@ -514,6 +527,84 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
         </ul>
       </div>
 
+
+      <!-- OUTLAW LOVE SERIES -->
+      <div class="album-card reveal" style="border:2px solid rgba(255,45,123,.4);background:linear-gradient(135deg,rgba(255,45,123,.08),rgba(212,168,67,.05));box-shadow:0 0 30px rgba(255,45,123,.15),inset 0 0 30px rgba(255,45,123,.05);">
+        <div class="album-genre" style="color:#ff2d7b;">Southwest Gothic Series</div>
+        <h3 style="color:#fff;">OUTLAW LOVE: Wanted Dead or Alive</h3>
+        <span class="album-badge" style="background:rgba(255,45,123,.2);color:#ff2d7b;">7-Song Story</span>
+        <p style="color:var(--ts);font-size:.85rem;margin:.5rem 0 1rem;line-height:1.5;">Marked by fire. Branded scarlet. Saved by love. A 7-song cinematic love story.</p>
+        <ul class="song-list">
+          <li><span class="song-num">1</span><a href="songs/liar-preacher-man.html" class="song-name">Liar, Preacher Man</a></li>
+          <li><span class="song-num">2</span><a href="songs/i-didnt-die.html" class="song-name">I Didn't Die (Scarlet Letter)</a></li>
+          <li><span class="song-num">3</span><a href="songs/one-night-with-the-devil.html" class="song-name">One Night with the Devil</a></li>
+          <li><span class="song-num">4</span><a href="songs/smoke-me.html" class="song-name">Smoke Me</a></li>
+          <li><span class="song-num">5</span><a href="songs/never-let-go.html" class="song-name">Never Let Go / Hand in Hand</a></li>
+          <li><span class="song-num">6</span><a href="songs/ghost-wanted-dead-or-alive.html" class="song-name">Ghost Wanted Dead or Alive</a></li>
+          <li><span class="song-num">7</span><a href="songs/rodeo-cowboy.html" class="song-name">Rodeo Cowboy</a></li>
+        </ul>
+        <div style="display:flex;gap:.8rem;margin-top:1rem;">
+          <button onclick="window.open('https://buy.stripe.com/8x29AVfm29fr4Fc4psd7q0d','_blank')" style="flex:1;background:#ff2d7b;color:#fff;border:none;padding:.7rem 1rem;border-radius:8px;font-size:.9rem;cursor:pointer;font-weight:700;box-shadow:0 0 20px rgba(255,45,123,.3);">Buy Collection &mdash; $9.99</button>
+          <a href="/outlaw-love.html" style="flex:1;text-align:center;border:1px solid #ff2d7b;color:#ff2d7b;padding:.7rem 1rem;border-radius:8px;font-size:.9rem;text-decoration:none;font-weight:700;">Read the Story</a>
+        </div>
+      </div>
+
+      <!-- MOOD BUNDLES -->
+      <div class="album-card reveal" style="border:2px solid rgba(255,45,123,.4);background:linear-gradient(135deg,rgba(255,45,123,.08),rgba(212,168,67,.05));box-shadow:0 0 30px rgba(255,45,123,.15),inset 0 0 30px rgba(255,45,123,.05);">
+        <div class="album-genre" style="color:#ff2d7b;">Mood Bundles</div>
+        <h3 style="color:#fff;">Curated Song Packs</h3>
+        <span class="album-badge" style="background:rgba(255,45,123,.2);color:#ff2d7b;">Mix &amp; Match Vibes</span>
+        <ul class="song-list">
+          <li style="border-bottom:1px solid rgba(255,255,255,.05);padding:.8rem 0;">
+            <span style="font-weight:600;">&#x1F525; Burn It Down</span> <span style="opacity:.5;font-size:.8rem;">&mdash; Rage &amp; empowerment (4 songs)</span><br><span style="opacity:.35;font-size:.7rem;font-style:italic;">The Reckoning &bull; Villain &bull; Keep Pushing Me &bull; Still The Asshole</span>
+            <button onclick="window.open('https://buy.stripe.com/cNidRbehY8bnfjQ2hkd7q00','_blank')" style="float:right;background:#ff2d7b;color:#fff;border:none;padding:.3rem .8rem;border-radius:6px;font-size:.78rem;cursor:pointer;">$4.99</button>
+          </li>
+          <li style="border-bottom:1px solid rgba(255,255,255,.05);padding:.8rem 0;">
+            <span style="font-weight:600;">&#x1F30A; Beach Vibes</span> <span style="opacity:.5;font-size:.8rem;">&mdash; Coastal escape (4 songs)</span><br><span style="opacity:.35;font-size:.7rem;font-style:italic;">Barefoot Beach Beauty &bull; Coconut Kiss &bull; Sand in Toes &bull; Coastal Candy</span>
+            <button onclick="window.open('https://buy.stripe.com/cNibJ3ehYgHTfjQ5twd7q01','_blank')" style="float:right;background:#ff2d7b;color:#fff;border:none;padding:.3rem .8rem;border-radius:6px;font-size:.78rem;cursor:pointer;">$4.99</button>
+          </li>
+          <li style="border-bottom:1px solid rgba(255,255,255,.05);padding:.8rem 0;">
+            <span style="font-weight:600;">&#x1F3DC;&#xFE0F; Road Trip &amp; Travel</span> <span style="opacity:.5;font-size:.8rem;">&mdash; Open road songs (5 songs)</span><br><span style="opacity:.35;font-size:.7rem;font-style:italic;">Las Cruces Nights &bull; Port Lavaca Paradise &bull; Left My Heart in Santa Fe &bull; Lightning Strikes &bull; Down Under</span>
+            <button onclick="window.open('https://buy.stripe.com/bJecN7a1IajvfjQf46d7q02','_blank')" style="float:right;background:#ff2d7b;color:#fff;border:none;padding:.3rem .8rem;border-radius:6px;font-size:.78rem;cursor:pointer;">$5.99</button>
+          </li>
+          <li style="border-bottom:1px solid rgba(255,255,255,.05);padding:.8rem 0;">
+            <span style="font-weight:600;">&#x2764;&#xFE0F;&#x200D;&#x1FA79; Healing After Hell</span> <span style="opacity:.5;font-size:.8rem;">&mdash; Recovery &amp; strength (4 songs)</span><br><span style="opacity:.35;font-size:.7rem;font-style:italic;">Woke Up Laughing &bull; Breathe &bull; Don't Cry At My Funeral &bull; I Didn't Die</span>
+            <button onclick="window.open('https://buy.stripe.com/8x27sN7TAbnzdbI9JMd7q03','_blank')" style="float:right;background:#ff2d7b;color:#fff;border:none;padding:.3rem .8rem;border-radius:6px;font-size:.78rem;cursor:pointer;">$4.99</button>
+          </li>
+          <li style="border-bottom:1px solid rgba(255,255,255,.05);padding:.8rem 0;">
+            <span style="font-weight:600;">&#x1F33F; 420 Pack</span> <span style="opacity:.5;font-size:.8rem;">&mdash; Club bangers (3 songs)</span><br><span style="opacity:.35;font-size:.7rem;font-style:italic;">Puff Planet &bull; Enchanted Green Haze &bull; Hazy Bubble</span>
+            <button onclick="window.open('https://buy.stripe.com/8x2cN77TA8bn2x4e02d7q05','_blank')" style="float:right;background:#ff2d7b;color:#fff;border:none;padding:.3rem .8rem;border-radius:6px;font-size:.78rem;cursor:pointer;">$4.99</button>
+          </li>
+          <li style="padding:.8rem 0;">
+            <span style="font-weight:600;">&#x1F319; Sleep &amp; Relax</span> <span style="opacity:.5;font-size:.8rem;">&mdash; Healing frequencies (3 songs)</span><br><span style="opacity:.35;font-size:.7rem;font-style:italic;">Breathe &bull; Floating &bull; Sleep</span>
+            <button onclick="window.open('https://buy.stripe.com/4gM6oJc9Qbnz8Vs1dgd7q04','_blank')" style="float:right;background:#ff2d7b;color:#fff;border:none;padding:.3rem .8rem;border-radius:6px;font-size:.78rem;cursor:pointer;">$4.99</button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- BUILD YOUR OWN BUNDLE -->
+      <div class="album-card reveal" style="border:2px solid rgba(255,45,123,.4);background:linear-gradient(135deg,rgba(255,45,123,.08),rgba(212,168,67,.05));box-shadow:0 0 30px rgba(255,45,123,.15),inset 0 0 30px rgba(255,45,123,.05);">
+        <div class="album-genre" style="color:#ff2d7b;">Custom Bundle</div>
+        <h3 style="color:#fff;">Build Your Own Album</h3>
+        <span class="album-badge" style="background:rgba(255,45,123,.2);color:#ff2d7b;">Have It Your Way</span>
+        <p style="color:var(--ts);font-size:.9rem;margin:.8rem 0;line-height:1.6;">Pick your favorite songs from the entire catalog. More songs, bigger savings. 90 songs to choose from.</p>
+        <ul class="song-list" style="border-top:1px solid rgba(255,45,123,.15);">
+          <li style="padding:.8rem 0;border-bottom:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-weight:600;">Pick Any 3 Songs</span>
+            <button onclick="window.open('https://buy.stripe.com/eVqaEZehY3V76Nk7BEd7q0a','_blank')" style="background:#ff2d7b;color:#fff;border:none;padding:.4rem 1rem;border-radius:6px;font-size:.85rem;cursor:pointer;font-weight:700;box-shadow:0 0 15px rgba(255,45,123,.3);">$4.99</button>
+          </li>
+          <li style="padding:.8rem 0;border-bottom:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-weight:600;">Pick Any 5 Songs</span>
+            <button onclick="window.open('https://buy.stripe.com/6oU4gB4HofDP1t03lod7q0b','_blank')" style="background:#ff2d7b;color:#fff;border:none;padding:.4rem 1rem;border-radius:6px;font-size:.85rem;cursor:pointer;font-weight:700;box-shadow:0 0 15px rgba(255,45,123,.3);">$6.99</button>
+          </li>
+          <li style="padding:.8rem 0;display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-weight:600;">Pick Any 10 Songs</span>
+            <button onclick="window.open('https://buy.stripe.com/3cI8wRb5Mbnz8VscVYd7q0c','_blank')" style="background:#ff2d7b;color:#fff;border:none;padding:.4rem 1rem;border-radius:6px;font-size:.85rem;cursor:pointer;font-weight:700;box-shadow:0 0 15px rgba(255,45,123,.3);">$9.99</button>
+          </li>
+        </ul>
+        <a href="/build-your-own.html" style="display:block;text-align:center;margin-top:1rem;color:#ff2d7b;font-size:.85rem;text-decoration:none;font-weight:600;">Browse Full Catalog &rarr;</a>
+      </div>
+
       <!-- 2. Villain Album -->
       <div class="album-card reveal">
         <img src="https://s3.amazonaws.com/gather.fandalism.com/300x300-9897108--7A07A4CB-D273-412E-B5FD27FA6A42E553--0--3381129--you.png.jpg" alt="Villain Album — Album Cover" style="width:100%;border-radius:8px 8px 0 0;margin-bottom:1rem;" loading="lazy">
@@ -523,7 +614,7 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
         <ul class="song-list">
           <li><span class="song-num">1</span><a href="songs/villain.html#video" class="song-name">Villain<span class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Video</span></a></li>
           <li><span class="song-num">2</span><a href="songs/choke-on-the-wine.html#video" class="song-name">Choke On The Wine<span class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Video</span></a></li>
-          <li><span class="song-num">3</span><a href="songs/still-obsessed.html" class="song-name">Obsessed</a></li>
+          <li><span class="song-num">3</span><a href="songs/obsessed.html" class="song-name">Obsessed</a></li>
           <li><span class="song-num">4</span><a href="songs/favorite-mistake.html" class="song-name">Favorite Mistake</a></li>
           <li><span class="song-num">5</span><a href="songs/dont-cry-at-my-funeral.html" class="song-name">Don&rsquo;t Cry</a></li>
           <li><span class="song-num">6</span><a href="songs/good-to-me.html" class="song-name">Good To Me</a></li>
@@ -613,7 +704,7 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
         <h3>Red Lipstick &amp; Busted Knuckles</h3>
         <span class="album-badge badge-released">Released</span>
         <ul class="song-list">
-          <li><span class="song-num">1</span><a href="songs/i-aint-picking-up-your-shit.html" class="song-name">I Ain&rsquo;t Picking Up Your Shit No More</a></li>
+          <li><span class="song-num">1</span><a href="songs/i-aint-picking-up-your-shit-no-more.html" class="song-name">I Ain&rsquo;t Picking Up Your Shit No More</a></li>
           <li><span class="song-num">2</span><a href="songs/drown-me-in-slobbery-kisses.html#video" class="song-name">Drown Me in Slobbery Kisses<span class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Video</span></a></li>
           <li><span class="song-num">3</span><a href="songs/gaslight-and-glitter.html" class="song-name">Gaslight &amp; Glitter</a></li>
           <li><span class="song-num">4</span><a href="songs/tongue-and-groove.html" class="song-name">Tongue &amp; Groove</a></li>
@@ -670,38 +761,6 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
         </ul>
       </div>
 
-      <!-- MOOD BUNDLES -->
-      <div class="album-card reveal" style="border:1px solid rgba(255,45,123,.15);background:linear-gradient(135deg,rgba(255,45,123,.03),rgba(212,168,67,.03));">
-        <div class="album-genre" style="color:#ff2d7b;">Mood Bundles</div>
-        <h3>Curated Song Packs</h3>
-        <span class="album-badge" style="background:rgba(255,45,123,.12);color:#ff2d7b;">Mix &amp; Match Vibes</span>
-        <ul class="song-list">
-          <li style="border-bottom:1px solid rgba(255,255,255,.05);padding:.8rem 0;">
-            <span style="font-weight:600;">&#x1F525; Burn It Down</span> <span style="opacity:.5;font-size:.8rem;">&mdash; Rage &amp; empowerment (4 songs)</span><br><span style="opacity:.35;font-size:.7rem;font-style:italic;">The Reckoning &bull; Villain &bull; Keep Pushing Me &bull; Still The Asshole</span>
-            <button onclick="window.open('https://buy.stripe.com/cNidRbehY8bnfjQ2hkd7q00','_blank')" style="float:right;background:#ff2d7b;color:#fff;border:none;padding:.3rem .8rem;border-radius:6px;font-size:.78rem;cursor:pointer;">$4.99</button>
-          </li>
-          <li style="border-bottom:1px solid rgba(255,255,255,.05);padding:.8rem 0;">
-            <span style="font-weight:600;">&#x1F30A; Beach Vibes</span> <span style="opacity:.5;font-size:.8rem;">&mdash; Coastal escape (4 songs)</span><br><span style="opacity:.35;font-size:.7rem;font-style:italic;">Barefoot Beach Beauty &bull; Coconut Kiss &bull; Sand in Toes &bull; Coastal Candy</span>
-            <button onclick="window.open('https://buy.stripe.com/cNibJ3ehYgHTfjQ5twd7q01','_blank')" style="float:right;background:#ff2d7b;color:#fff;border:none;padding:.3rem .8rem;border-radius:6px;font-size:.78rem;cursor:pointer;">$4.99</button>
-          </li>
-          <li style="border-bottom:1px solid rgba(255,255,255,.05);padding:.8rem 0;">
-            <span style="font-weight:600;">&#x1F3DC;&#xFE0F; Road Trip &amp; Travel</span> <span style="opacity:.5;font-size:.8rem;">&mdash; Open road songs (5 songs)</span><br><span style="opacity:.35;font-size:.7rem;font-style:italic;">Las Cruces Nights &bull; Port Lavaca Paradise &bull; Left My Heart in Santa Fe &bull; Lightning Strikes &bull; Down Under</span>
-            <button onclick="window.open('https://buy.stripe.com/bJecN7a1IajvfjQf46d7q02','_blank')" style="float:right;background:#ff2d7b;color:#fff;border:none;padding:.3rem .8rem;border-radius:6px;font-size:.78rem;cursor:pointer;">$5.99</button>
-          </li>
-          <li style="border-bottom:1px solid rgba(255,255,255,.05);padding:.8rem 0;">
-            <span style="font-weight:600;">&#x2764;&#xFE0F;&#x200D;&#x1FA79; Healing After Hell</span> <span style="opacity:.5;font-size:.8rem;">&mdash; Recovery &amp; strength (4 songs)</span><br><span style="opacity:.35;font-size:.7rem;font-style:italic;">Woke Up Laughing &bull; Breathe &bull; Don't Cry At My Funeral &bull; I Didn't Die</span>
-            <button onclick="window.open('https://buy.stripe.com/8x27sN7TAbnzdbI9JMd7q03','_blank')" style="float:right;background:#ff2d7b;color:#fff;border:none;padding:.3rem .8rem;border-radius:6px;font-size:.78rem;cursor:pointer;">$4.99</button>
-          </li>
-          <li style="border-bottom:1px solid rgba(255,255,255,.05);padding:.8rem 0;">
-            <span style="font-weight:600;">&#x1F33F; 420 Pack</span> <span style="opacity:.5;font-size:.8rem;">&mdash; Club bangers (3 songs)</span><br><span style="opacity:.35;font-size:.7rem;font-style:italic;">Puff Planet &bull; Enchanted Green Haze &bull; Hazy Bubble</span>
-            <button onclick="window.open('https://buy.stripe.com/8x2cN77TA8bn2x4e02d7q05','_blank')" style="float:right;background:#ff2d7b;color:#fff;border:none;padding:.3rem .8rem;border-radius:6px;font-size:.78rem;cursor:pointer;">$4.99</button>
-          </li>
-          <li style="padding:.8rem 0;">
-            <span style="font-weight:600;">&#x1F319; Sleep &amp; Relax</span> <span style="opacity:.5;font-size:.8rem;">&mdash; Healing frequencies (3 songs)</span><br><span style="opacity:.35;font-size:.7rem;font-style:italic;">Breathe &bull; Floating &bull; Sleep</span>
-            <button onclick="window.open('https://buy.stripe.com/4gM6oJc9Qbnz8Vs1dgd7q04','_blank')" style="float:right;background:#ff2d7b;color:#fff;border:none;padding:.3rem .8rem;border-radius:6px;font-size:.78rem;cursor:pointer;">$4.99</button>
-          </li>
-        </ul>
-      </div>
 
     </div>
   </div>
@@ -969,10 +1028,9 @@ function openMoodPlaylist(mood) {
       + '<span class="modal-song-artist">' + s.vocalist + (album ? ' &bull; ' + album.title : '') + '</span></div>'
       + '</div>'
       + '<div class="song-actions">'
-      + '<button class="sa-react' + (localStorage.getItem('react-' + s.slug + '-lips') ? ' active' : '') + '" onclick="quickReact(\'' + s.slug + '\',\'lips\')" title="Love it">\uD83D\uDC8B</button>'
-      + '<button class="sa-react' + (localStorage.getItem('react-' + s.slug + '-fire') ? ' active' : '') + '" onclick="quickReact(\'' + s.slug + '\',\'fire\')" title="Fire">\uD83D\uDD25</button>'
       + '<button class="sa-btn sa-play" onclick="playSongInRadio(\'' + s.id + '\')" title="Play in Radio">&#9654;</button>'
-      + '<a href="songs/' + s.slug + '.html#buy" class="sa-btn sa-buy" title="Buy / Download">$</a>'
+      + '<a href="mailto:howlingmoonmusic@gmail.com?subject=Buy%20' + encodeURIComponent(s.title) + '&body=I%20want%20to%20buy%20' + encodeURIComponent(s.title) + '" class="sa-btn sa-buy" title="Buy / Download">$</a>'
+      + '<a href="https://open.spotify.com/artist/2oYIuTSjJZy1c4uOmscAJy" target="_blank" rel="noopener" class="sa-btn sa-stream" title="Stream">&#9835;</a>'
       + '</div>';
     list.appendChild(li);
   });
@@ -1068,6 +1126,24 @@ function playCurrentTrack() {
 
   document.getElementById('radioLabel').textContent = 'Now Playing';
   document.getElementById('radioTrack').textContent = song.title + ' \u2014 ' + song.vocalist;
+
+  // Update radio action bar
+  var actionBar = document.getElementById('radioActionBar');
+  actionBar.style.display = 'flex';
+  document.getElementById('radioNowTitle').textContent = song.title;
+  document.getElementById('radioSongLink').href = '/songs/' + song.slug + '.html';
+  document.getElementById('radioStoryLink').href = '/songs/' + song.slug + '.html#story';
+  document.getElementById('radioBuyBtn').onclick = function() { window.open('mailto:howlingmoonmusic@gmail.com?subject=Buy%20' + encodeURIComponent(song.title), '_blank'); };
+  document.getElementById('radioHeart').onclick = function() {
+    this.style.transform = 'scale(1.4)'; setTimeout(function(){ document.getElementById('radioHeart').style.transform = ''; }, 300);
+    showToast('thanks darling for the love');
+    fetch(SB_URL + '/rest/v1/song_reactions', { method:'POST', headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'}, body:JSON.stringify({song_slug:song.slug,reaction_type:'heart'}) }).catch(function(){});
+  };
+  document.getElementById('radioFire').onclick = function() {
+    this.style.transform = 'scale(1.4)'; setTimeout(function(){ document.getElementById('radioFire').style.transform = ''; }, 300);
+    showToast('thanks for the vibe');
+    fetch(SB_URL + '/rest/v1/song_reactions', { method:'POST', headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'}, body:JSON.stringify({song_slug:song.slug,reaction_type:'fire'}) }).catch(function(){});
+  };
 
   const audioPath = song.audio_path || song.slug + '.mp3';
   const audioUrl = AUDIO_BASE + encodeURIComponent(audioPath).replace(/%2F/g, '/');
@@ -1171,33 +1247,6 @@ document.querySelectorAll('.radio-mode').forEach(btn => {
 });
 
 /* ============================================
-   TOAST FEEDBACK
-   ============================================ */
-(function(){
-  var style = document.createElement('style');
-  style.textContent = '#hm-toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:linear-gradient(135deg,#1a1622,#2a2035);color:#faf6f0;padding:1rem 2rem;border-radius:12px;font-size:.95rem;z-index:9999;opacity:0;transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .3s;pointer-events:none;box-shadow:0 8px 32px rgba(0,0,0,.5);border:1px solid rgba(184,146,47,.25);text-align:center;max-width:90vw;font-family:var(--font-b)}#hm-toast.show{transform:translateX(-50%) translateY(0);opacity:1}.sa-react{transition:transform .2s cubic-bezier(.34,1.56,.64,1),color .2s}.sa-react.pop{transform:scale(1.5)}.sa-react.active{filter:drop-shadow(0 0 6px rgba(255,45,123,.6))}';
-  document.head.appendChild(style);
-  var toast = document.createElement('div');
-  toast.id = 'hm-toast';
-  document.body.appendChild(toast);
-})();
-
-var toastMsgs = {
-  lips: ["thanks darling for the love \uD83D\uDC8B", "love you for that \uD83D\uDC8B", "you get me \uD83D\uDC8B"],
-  fire: ["thanks for the vibe \uD83D\uDD25", "you feel that too? \uD83D\uDD25", "that's the energy \uD83D\uDD25"]
-};
-var toastTimer = null;
-function showToast(type) {
-  var msgs = toastMsgs[type] || toastMsgs.lips;
-  var msg = msgs[Math.floor(Math.random() * msgs.length)];
-  var el = document.getElementById('hm-toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(function(){ el.classList.remove('show'); }, 2500);
-}
-
-/* ============================================
    QUICK REACT — Lips + Fire reactions
    ============================================ */
 var HM_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78';
@@ -1205,13 +1254,11 @@ var HM_API_URL = 'https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/song_reaction
 
 function quickReact(slug, type) {
   var btn = event.target.closest('.sa-react');
-  if (!btn) return;
+  if (!btn || btn.classList.contains('active')) return;
+  btn.classList.add('active');
   var key = 'react-' + slug + '-' + type;
-  if (localStorage.getItem(key)) { showToast(type); return; }
-  btn.classList.add('active', 'pop');
-  setTimeout(function(){ btn.classList.remove('pop'); }, 300);
+  if (localStorage.getItem(key)) return;
   localStorage.setItem(key, '1');
-  showToast(type);
   fetch(HM_API_URL, {
     method: 'POST',
     headers: {
@@ -1281,6 +1328,19 @@ function addSongActionButtons() {
 /* ============================================
    INIT
    ============================================ */
+// Global toast for reaction feedback
+function showToast(msg) {
+  var existing = document.getElementById('loveToast');
+  if (existing) existing.remove();
+  var toast = document.createElement('div');
+  toast.id = 'loveToast';
+  toast.textContent = msg;
+  toast.style.cssText = 'position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:rgba(255,45,123,.95);color:#fff;padding:.7rem 1.5rem;border-radius:50px;font-size:.85rem;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(255,45,123,.4);';
+  document.body.appendChild(toast);
+  setTimeout(function(){ toast.style.opacity='0'; toast.style.transition='opacity .3s'; }, 2000);
+  setTimeout(function(){ toast.remove(); }, 2500);
+}
+
 loadSiteData();
 </script>
 
