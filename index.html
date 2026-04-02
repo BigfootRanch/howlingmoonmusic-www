@@ -967,7 +967,12 @@ function submitHomeSignup(e){
    CORE UI
    ============================================ */
 window.addEventListener('load', () => {
-  setTimeout(() => document.getElementById('preloader').classList.add('done'), 1800);
+  if (sessionStorage.getItem('hm_visited')) {
+    document.getElementById('preloader').classList.add('done');
+  } else {
+    sessionStorage.setItem('hm_visited', '1');
+    setTimeout(() => document.getElementById('preloader').classList.add('done'), 1800);
+  }
 });
 window.addEventListener('scroll', () => {
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
