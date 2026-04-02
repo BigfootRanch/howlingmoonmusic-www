@@ -658,23 +658,17 @@ tr:hover td{background:rgba(255,45,123,0.02)}
     <!-- ALBUMS -->
     <div class="page" id="page-albums">
       <div class="page-header">
-        <div class="page-title">Albums &amp; Music Catalog</div>
-        <div class="page-sub">Master catalog — artwork, tracklists, registration numbers, distribution</div>
-      </div>
-      <div class="stats-grid" style="margin-bottom:1rem">
-        <div class="stat-card pink"><div class="stat-icon">&#x1F4BF;</div><div class="stat-label">Albums</div><div class="stat-value" id="albumCountStat">--</div></div>
-        <div class="stat-card green"><div class="stat-icon">&#x1F3B5;</div><div class="stat-label">Total Songs</div><div class="stat-value" id="albumSongCountStat">--</div></div>
-        <div class="stat-card gold"><div class="stat-icon">&#x2705;</div><div class="stat-label">Released</div><div class="stat-value" id="albumReleasedStat">--</div></div>
-        <div class="stat-card blue"><div class="stat-icon">&#x1F4DD;</div><div class="stat-label">With UPC</div><div class="stat-value" id="albumUpcStat">--</div></div>
+        <div class="page-title">Albums</div>
+        <div class="page-sub">11 albums in catalog — artwork, tracklists, distribution status</div>
       </div>
       <div class="toolbar">
         <input type="search" id="albumSearch" placeholder="Search albums..." style="max-width:240px" oninput="filterAlbums()">
         <button class="btn btn-primary btn-sm" onclick="openNewAlbumModal()">+ New Album</button>
       </div>
-      <div class="album-grid" id="albumGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-top:0.5rem"><div class="loading-msg"><span class="spinner"></span> Loading albums...</div></div>
-      <div style="margin-top:1.5rem" id="albumDetailSection">
-        <div class="stat-label" style="margin-bottom:0.5rem" id="albumDetailLabel">Select an album above to view tracklist</div>
-        <div id="albumSongsPanel" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;color:var(--smoke);font-size:0.85rem"></div>
+      <div class="album-grid" id="albumGrid"><div class="loading-msg"><span class="spinner"></span> Loading albums...</div></div>
+      <div style="margin-top:1.5rem">
+        <div class="stat-label" style="margin-bottom:0.5rem">Album Detail — Songs</div>
+        <div id="albumSongsPanel" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;color:var(--smoke);font-size:0.85rem">Select an album to view its tracklist</div>
       </div>
     </div>
 
@@ -1064,47 +1058,6 @@ tr:hover td{background:rgba(255,45,123,0.02)}
   <div class="modal" style="max-width:700px">
     <div class="modal-title"><span id="dossierTitle">Person Dossier</span> <button class="modal-close" data-modal="personDossierModal">&times;</button></div>
     <div id="dossierBody"></div>
-  </div>
-</div>
-
-<!-- Album Create/Edit Modal -->
-<div class="modal-overlay" id="albumModal">
-  <div class="modal" style="max-width:680px">
-    <div class="modal-title"><span id="albumModalTitle">New Album</span> <button class="modal-close" data-modal="albumModal">&times;</button></div>
-    <input type="hidden" id="albumEditId">
-    <div class="form-row">
-      <div class="form-group" style="flex:2"><label>Album Title *</label><input type="text" id="albumTitle" placeholder="e.g. Dusty Roads & Red Lipstick"></div>
-      <div class="form-group"><label>Slug</label><input type="text" id="albumSlug" placeholder="auto-generated"></div>
-    </div>
-    <div class="form-row">
-      <div class="form-group"><label>Genre</label><input type="text" id="albumGenre" placeholder="Country / Rock"></div>
-      <div class="form-group"><label>Release Type</label>
-        <select id="albumReleaseType"><option value="album">Album</option><option value="ep">EP</option><option value="single">Single</option><option value="compilation">Compilation</option></select>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group"><label>UPC</label><input type="text" id="albumUpc" placeholder="Universal Product Code"></div>
-      <div class="form-group"><label>Release Date</label><input type="date" id="albumReleaseDate"></div>
-    </div>
-    <div class="form-group"><label>Description</label><textarea id="albumDescription" rows="3" placeholder="Album description, themes, etc."></textarea></div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>Cover Art URL</label>
-        <input type="text" id="albumCoverUrl" placeholder="https://...supabase.co/storage/...">
-        <img id="albumCoverPreview" style="display:none;width:80px;height:80px;object-fit:cover;border-radius:6px;margin-top:0.4rem" alt="Cover preview">
-      </div>
-      <div class="form-group"><label>Apple Music Search Term</label><input type="text" id="albumAppleSearch" placeholder="For Apple Music lookup"></div>
-    </div>
-    <div class="form-row">
-      <div class="form-group"><label><input type="checkbox" id="albumIsReleased"> Released</label></div>
-      <div class="form-group"><label><input type="checkbox" id="albumIsPublic"> Public on Website</label></div>
-      <div class="form-group"><label>Sort Order</label><input type="number" id="albumSortOrder" placeholder="0" style="width:80px"></div>
-    </div>
-    <div style="display:flex;gap:0.5rem;margin-top:1rem">
-      <button class="btn btn-primary" id="saveAlbumBtn">Save Album</button>
-      <button class="btn btn-ghost" id="deleteAlbumBtn" style="color:var(--red);border-color:var(--red);display:none">Delete</button>
-      <button class="btn btn-ghost modal-close" data-modal="albumModal">Cancel</button>
-    </div>
   </div>
 </div>
 
@@ -1844,134 +1797,39 @@ function filterCatalog() {
 // ALBUMS (NEW TAB)
 // =============================
 function loadAlbums() {
-  // Load albums + count songs per album
-  Promise.all([
-    q('albums', 'order=sort_order.asc.nullslast,title.asc'),
-    q('songs', 'select=album_id')
-  ]).then(function(results) {
-    var albums = results[0];
-    var songs = results[1];
+  q('albums', 'order=release_date.desc.nullslast,created_at.desc').then(function(data) {
     var c = $('albumGrid');
     clearEl(c);
-    if (!Array.isArray(albums) || albums.length === 0) {
-      c.appendChild(mk('div', {style:'color:var(--smoke);padding:2rem;text-align:center', text:'No albums found. Create one with the + button above.'}));
+    if (!Array.isArray(data) || data.length === 0) {
+      c.appendChild(mk('div', {style:'color:var(--smoke);padding:2rem;text-align:center', text:'No albums found in the database.'}));
       return;
     }
-    // Count songs per album
-    var songCounts = {};
-    var totalSongs = 0;
-    if (Array.isArray(songs)) {
-      songs.forEach(function(s) { if (s.album_id) { songCounts[s.album_id] = (songCounts[s.album_id] || 0) + 1; totalSongs++; } });
-    }
-    // Update stats
-    $('albumCountStat').textContent = albums.length;
-    $('albumSongCountStat').textContent = totalSongs;
-    $('albumReleasedStat').textContent = albums.filter(function(a) { return a.is_released; }).length;
-    $('albumUpcStat').textContent = albums.filter(function(a) { return a.upc; }).length;
-
-    albums.forEach(function(album) {
-      var trackCount = songCounts[album.id] || 0;
-      var card = mk('div', {cls:'card', style:'padding:1rem;display:flex;flex-direction:column;gap:0.5rem;cursor:pointer;transition:border-color 0.2s;border:2px solid transparent', 'data-album-id': album.id});
-      card.addEventListener('click', function() {
-        document.querySelectorAll('#albumGrid .card').forEach(function(c) { c.style.borderColor = 'transparent'; });
-        card.style.borderColor = 'var(--pink)';
-        loadAlbumSongs(album.id, album.title);
-      });
-      if (album.cover_art_url) {
-        card.appendChild(mk('img', {src: album.cover_art_url, alt: album.title || 'Album', style:'width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px'}));
-      } else {
-        card.appendChild(mk('div', {style:'width:100%;aspect-ratio:1;background:linear-gradient(135deg,var(--card),rgba(255,45,123,0.15));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:2.5rem', text:'\uD83C\uDFB5'}));
+    data.forEach(function(album) {
+      var card = mk('div', {cls:'card', style:'padding:1.25rem;display:flex;flex-direction:column;gap:0.6rem'});
+      if (album.artwork_url || album.cover_art_url) {
+        var img = mk('img', {src: album.artwork_url || album.cover_art_url, alt: album.title || 'Album', style:'width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;margin-bottom:0.4rem'});
+        card.appendChild(img);
       }
-      card.appendChild(mk('div', {style:'font-weight:700;font-size:0.95rem;color:var(--white)', text: album.title || 'Untitled'}));
-      var meta = mk('div', {style:'font-size:0.75rem;color:var(--smoke);display:flex;gap:0.6rem;flex-wrap:wrap'});
-      meta.appendChild(mk('span', {text: trackCount + ' song' + (trackCount !== 1 ? 's' : '')}));
-      if (album.core_genre) meta.appendChild(mk('span', {text: album.core_genre}));
-      if (album.release_date) meta.appendChild(mk('span', {text: shortDate(album.release_date)}));
+      card.appendChild(mk('div', {style:'font-weight:700;font-size:1rem;color:var(--white)', text: album.title || 'Untitled'}));
+      if (album.artist_name || album.artist) {
+        card.appendChild(mk('div', {style:'font-size:0.82rem;color:var(--pink)', text: album.artist_name || album.artist}));
+      }
+      var meta = mk('div', {style:'font-size:0.78rem;color:var(--smoke);display:flex;gap:0.8rem;flex-wrap:wrap'});
+      if (album.release_date) meta.appendChild(mk('span', {text: '\uD83D\uDCC5 ' + shortDate(album.release_date)}));
+      if (album.genre) meta.appendChild(mk('span', {text: '\uD83C\uDFB5 ' + album.genre}));
+      if (album.track_count != null) meta.appendChild(mk('span', {text: album.track_count + ' tracks'}));
+      if (album.label) meta.appendChild(mk('span', {text: album.label}));
       card.appendChild(meta);
-      var badgeRow = mk('div', {style:'display:flex;gap:0.3rem;flex-wrap:wrap;align-items:center'});
-      badgeRow.appendChild(mkBadge(album.is_released ? 'released' : 'unreleased'));
-      if (album.is_public) badgeRow.appendChild(mk('span', {cls:'badge badge-green', text:'PUBLIC'}));
-      if (album.upc) badgeRow.appendChild(mk('span', {cls:'badge badge-smoke', text:'UPC: ' + album.upc}));
+      if (album.description) {
+        card.appendChild(mk('div', {style:'font-size:0.8rem;color:var(--cream);opacity:0.8;line-height:1.5', text: String(album.description).substring(0, 150) + (album.description.length > 150 ? '...' : '')}));
+      }
+      var badgeRow = mk('div', {style:'display:flex;gap:0.4rem;flex-wrap:wrap'});
+      badgeRow.appendChild(mkBadge(album.status || album.release_status || 'released'));
+      if (album.isrc) badgeRow.appendChild(mk('span', {cls:'badge badge-smoke', text: 'ISRC: ' + album.isrc}));
       card.appendChild(badgeRow);
-      // Action buttons
-      var actions = mk('div', {style:'display:flex;gap:0.4rem;margin-top:auto;padding-top:0.4rem'});
-      var editBtn = mk('button', {cls:'btn btn-ghost btn-sm', text:'Edit', style:'font-size:0.7rem'});
-      editBtn.addEventListener('click', function(e) { e.stopPropagation(); openEditAlbumModal(album); });
-      actions.appendChild(editBtn);
-      card.appendChild(actions);
       c.appendChild(card);
     });
   });
-}
-
-function loadAlbumSongs(albumId, albumTitle) {
-  $('albumDetailLabel').textContent = albumTitle + ' — Tracklist';
-  var panel = $('albumSongsPanel');
-  clearEl(panel);
-  panel.appendChild(mk('div', {cls:'loading-msg', style:'padding:1rem'}, [mk('span', {cls:'spinner'}), mk('span', {text:' Loading songs...'})]));
-  q('songs', 'album_id=eq.' + albumId + '&order=track_number.asc.nullslast,title.asc').then(function(songs) {
-    clearEl(panel);
-    if (!Array.isArray(songs) || songs.length === 0) {
-      panel.appendChild(mk('div', {style:'color:var(--smoke);padding:1rem;text-align:center', text:'No songs in this album yet.'}));
-      return;
-    }
-    var table = mk('table');
-    var thead = mk('thead');
-    var headerRow = mk('tr');
-    ['#','Title','Vocalist','ISRC','BMI Work #','BMI Status','Copyright Reg','Audio','Duration'].forEach(function(h) {
-      headerRow.appendChild(mk('th', {text:h, style:'font-size:0.72rem'}));
-    });
-    thead.appendChild(headerRow);
-    table.appendChild(thead);
-    var tbody = mk('tbody');
-    songs.forEach(function(song) {
-      var tr = mk('tr', {style:'cursor:pointer'});
-      tr.addEventListener('click', function() { openSongFromAlbum(song); });
-      tr.appendChild(mk('td', {text: song.track_number || '-', style:'color:var(--smoke);width:2rem'}));
-      tr.appendChild(mk('td', {text: song.title, style:'font-weight:600;color:var(--cream)'}));
-      tr.appendChild(mk('td', {text: song.vocalist || '-', style:'color:var(--smoke)'}));
-      tr.appendChild(mk('td', {text: song.isrc || '-', style:'font-family:monospace;font-size:0.72rem;color:' + (song.isrc ? 'var(--gold)' : 'var(--smoke)')}));
-      tr.appendChild(mk('td', {text: song.bmi_work_number || '-', style:'font-family:monospace;font-size:0.72rem;color:' + (song.bmi_work_number ? 'var(--gold)' : 'var(--smoke)')}));
-      var bmiCell = mk('td');
-      bmiCell.appendChild(mkBadge(song.bmi_status || 'not_started'));
-      tr.appendChild(bmiCell);
-      tr.appendChild(mk('td', {text: song.copyright_reg_number || '-', style:'font-family:monospace;font-size:0.72rem;color:' + (song.copyright_reg_number ? 'var(--green)' : 'var(--smoke)')}));
-      var audioCell = mk('td');
-      audioCell.appendChild(mkBadge(song.audio_status || (song.audio_path ? 'active' : 'missing')));
-      tr.appendChild(audioCell);
-      var dur = song.duration_seconds ? Math.floor(song.duration_seconds/60) + ':' + String(song.duration_seconds%60).padStart(2,'0') : '-';
-      tr.appendChild(mk('td', {text: dur, style:'color:var(--smoke);font-size:0.78rem'}));
-      tbody.appendChild(tr);
-    });
-    table.appendChild(tbody);
-    var wrap = mk('div', {cls:'table-wrap'});
-    wrap.appendChild(table);
-    panel.appendChild(wrap);
-    // Summary row
-    var summary = mk('div', {style:'display:flex;gap:1.5rem;margin-top:0.8rem;font-size:0.75rem;color:var(--smoke)'});
-    var withIsrc = songs.filter(function(s) { return s.isrc; }).length;
-    var withBmi = songs.filter(function(s) { return s.bmi_work_number; }).length;
-    var withCopyright = songs.filter(function(s) { return s.copyright_reg_number; }).length;
-    var withAudio = songs.filter(function(s) { return s.audio_path; }).length;
-    summary.appendChild(mk('span', {text: 'ISRC: ' + withIsrc + '/' + songs.length, style:'color:' + (withIsrc === songs.length ? 'var(--green)' : 'var(--gold)')}));
-    summary.appendChild(mk('span', {text: 'BMI: ' + withBmi + '/' + songs.length, style:'color:' + (withBmi === songs.length ? 'var(--green)' : 'var(--gold)')}));
-    summary.appendChild(mk('span', {text: 'Copyright: ' + withCopyright + '/' + songs.length, style:'color:' + (withCopyright === songs.length ? 'var(--green)' : 'var(--gold)')}));
-    summary.appendChild(mk('span', {text: 'Audio: ' + withAudio + '/' + songs.length, style:'color:' + (withAudio === songs.length ? 'var(--green)' : 'var(--gold)')}));
-    panel.appendChild(summary);
-  });
-}
-
-function openSongFromAlbum(song) {
-  // Look up this song in song_pipeline and open its detail modal
-  if (song.id) {
-    q('song_pipeline', 'song_id=eq.' + song.id + '&limit=1').then(function(data) {
-      if (Array.isArray(data) && data.length > 0) {
-        openSongDetail(data[0]);
-      } else {
-        showToast('Song not in pipeline yet — add via Song Pipeline tab', 'warning');
-      }
-    });
-  }
 }
 
 // =============================
@@ -2271,112 +2129,8 @@ function filterAlbums() {
   });
 }
 function openNewAlbumModal() {
-  $('albumModalTitle').textContent = 'New Album';
-  $('albumEditId').value = '';
-  $('albumTitle').value = '';
-  $('albumSlug').value = '';
-  $('albumGenre').value = '';
-  $('albumReleaseType').value = 'album';
-  $('albumUpc').value = '';
-  $('albumReleaseDate').value = '';
-  $('albumDescription').value = '';
-  $('albumCoverUrl').value = '';
-  $('albumAppleSearch').value = '';
-  $('albumIsReleased').checked = false;
-  $('albumIsPublic').checked = false;
-  $('albumSortOrder').value = '';
-  $('albumCoverPreview').style.display = 'none';
-  $('deleteAlbumBtn').style.display = 'none';
-  openModal('albumModal');
+  alert('Album creation — use the Chat tab to ask Claude to create a new album.');
 }
-
-function openEditAlbumModal(album) {
-  $('albumModalTitle').textContent = 'Edit Album';
-  $('albumEditId').value = album.id;
-  $('albumTitle').value = album.title || '';
-  $('albumSlug').value = album.slug || '';
-  $('albumGenre').value = album.core_genre || '';
-  $('albumReleaseType').value = album.release_type || 'album';
-  $('albumUpc').value = album.upc || '';
-  $('albumReleaseDate').value = album.release_date || '';
-  $('albumDescription').value = album.description || '';
-  $('albumCoverUrl').value = album.cover_art_url || '';
-  $('albumAppleSearch').value = album.apple_music_search_term || '';
-  $('albumIsReleased').checked = !!album.is_released;
-  $('albumIsPublic').checked = !!album.is_public;
-  $('albumSortOrder').value = album.sort_order || '';
-  if (album.cover_art_url) {
-    $('albumCoverPreview').src = album.cover_art_url;
-    $('albumCoverPreview').style.display = 'block';
-  } else {
-    $('albumCoverPreview').style.display = 'none';
-  }
-  $('deleteAlbumBtn').style.display = '';
-  openModal('albumModal');
-}
-
-// Auto-generate slug from title
-$('albumTitle').addEventListener('input', function() {
-  if (!$('albumEditId').value) {
-    $('albumSlug').value = this.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-  }
-});
-
-// Preview album cover when URL changes
-$('albumCoverUrl').addEventListener('input', function() {
-  if (this.value) {
-    $('albumCoverPreview').src = this.value;
-    $('albumCoverPreview').style.display = 'block';
-  } else {
-    $('albumCoverPreview').style.display = 'none';
-  }
-});
-
-// Save album (create or update)
-$('saveAlbumBtn').addEventListener('click', function() {
-  var title = $('albumTitle').value.trim();
-  if (!title) { showToast('Album title is required', 'error'); return; }
-  var albumData = {
-    title: title,
-    slug: $('albumSlug').value.trim() || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
-    core_genre: $('albumGenre').value.trim() || null,
-    release_type: $('albumReleaseType').value,
-    upc: $('albumUpc').value.trim() || null,
-    release_date: $('albumReleaseDate').value || null,
-    description: $('albumDescription').value.trim() || null,
-    cover_art_url: $('albumCoverUrl').value.trim() || null,
-    apple_music_search_term: $('albumAppleSearch').value.trim() || null,
-    is_released: $('albumIsReleased').checked,
-    is_public: $('albumIsPublic').checked,
-    sort_order: $('albumSortOrder').value ? parseInt($('albumSortOrder').value) : null
-  };
-  var editId = $('albumEditId').value;
-  if (editId) {
-    patchData('albums', 'id=eq.' + editId, albumData).then(function() {
-      showToast('Album updated');
-      closeModal('albumModal');
-      loadAlbums();
-    }).catch(function(err) { showToast('Error: ' + err.message, 'error'); });
-  } else {
-    postData('albums', albumData).then(function() {
-      showToast('Album created');
-      closeModal('albumModal');
-      loadAlbums();
-    }).catch(function(err) { showToast('Error: ' + err.message, 'error'); });
-  }
-});
-
-// Delete album (with confirmation)
-$('deleteAlbumBtn').addEventListener('click', function() {
-  var editId = $('albumEditId').value;
-  if (!editId) return;
-  if (!confirm('Delete this album? Songs will be unlinked but not deleted.')) return;
-  delData('albums', 'id=eq.' + editId).then(function() {
-    showToast('Album deleted');
-    closeModal('albumModal');
-    loadAlbums();
-  }).catch(function(err) { showToast('Error: ' + err.message, 'error'); });
-});
 var calMonth = new Date().getMonth();
 var calYear = new Date().getFullYear();
 function calNavMonth(dir) {
@@ -2405,36 +2159,12 @@ function renderCalendar() {
   for (var i = 0; i < first.getDay(); i++) {
     grid.appendChild(document.createElement('div'));
   }
-  // Build day cells first, then populate with scheduled posts
-  var dayCells = {};
   for (var d = 1; d <= lastDay; d++) {
     var cell = document.createElement('div');
-    cell.style.cssText = 'font-size:0.75rem;color:var(--cream);padding:0.3rem;background:var(--card);border-radius:4px;min-height:3.5rem;position:relative';
-    var dayNum = document.createElement('div');
-    dayNum.style.cssText = 'font-weight:600;margin-bottom:0.2rem';
-    dayNum.textContent = d;
-    cell.appendChild(dayNum);
-    dayCells[d] = cell;
+    cell.style.cssText = 'text-align:center;font-size:0.75rem;color:var(--cream);padding:0.4rem;background:var(--card);border-radius:4px;min-height:2.5rem';
+    cell.textContent = d;
     grid.appendChild(cell);
   }
-  // Fetch scheduled posts for this month and place them on calendar
-  var monthStart = calYear + '-' + String(calMonth + 1).padStart(2, '0') + '-01';
-  var monthEnd = calYear + '-' + String(calMonth + 1).padStart(2, '0') + '-' + String(lastDay).padStart(2, '0') + 'T23:59:59';
-  q('social_media_queue', 'scheduled_for=gte.' + monthStart + '&scheduled_for=lte.' + monthEnd + '&order=scheduled_for.asc&select=id,platform,title,caption,status,scheduled_for').then(function(posts) {
-    if (!Array.isArray(posts)) return;
-    var platColors = {tiktok:'#ff0050',youtube:'#ff0000',instagram:'#e1306c',facebook:'#1877f2',twitter:'#1da1f2'};
-    posts.forEach(function(post) {
-      if (!post.scheduled_for) return;
-      var postDay = new Date(post.scheduled_for).getDate();
-      if (dayCells[postDay]) {
-        var dot = document.createElement('div');
-        dot.style.cssText = 'font-size:0.6rem;padding:0.1rem 0.3rem;border-radius:3px;margin-top:0.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:' + (platColors[post.platform] || 'var(--pink)') + ';color:#fff;cursor:pointer';
-        dot.textContent = (post.platform || '').substring(0, 2).toUpperCase() + ' ' + (post.title || post.caption || '').substring(0, 15);
-        dot.title = (post.platform || '') + ': ' + (post.title || post.caption || 'Untitled');
-        dayCells[postDay].appendChild(dot);
-      }
-    });
-  });
 }
 
 // =============================
