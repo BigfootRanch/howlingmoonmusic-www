@@ -1255,11 +1255,23 @@ var HM_API_URL = 'https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/song_reaction
 
 function quickReact(slug, type) {
   var btn = event.target.closest('.sa-react');
-  if (!btn || btn.classList.contains('active')) return;
+  if (!btn || btn.classList.contains('active')) {
+    showToast(type === 'fire' ? 'already vibing with this one' : 'you already showed this one love');
+    return;
+  }
   btn.classList.add('active');
+  btn.style.transform = 'scale(1.4)';
+  setTimeout(function(){ btn.style.transform = ''; }, 300);
   var key = 'react-' + slug + '-' + type;
-  if (localStorage.getItem(key)) return;
+  if (localStorage.getItem(key)) {
+    showToast(type === 'fire' ? 'already vibing with this one' : 'you already showed this one love');
+    return;
+  }
   localStorage.setItem(key, '1');
+  var msgs = type === 'fire'
+    ? ['thanks for the vibe', 'you feel that too?', "that's the energy"]
+    : ['thanks darling for the love', 'love you for that', 'you get me'];
+  showToast(msgs[Math.floor(Math.random() * msgs.length)]);
   fetch(HM_API_URL, {
     method: 'POST',
     headers: {
