@@ -1093,7 +1093,7 @@ function buildMoodGrid() {
     card.innerHTML = '<h4 style="color:' + m.color_hex + '">' + icon + heading + '</h4>'
       + '<em class="mood-subtitle">' + m.name + '</em>'
       + '<p>' + m.description + '</p>'
-      + '<span class="mood-count" style="color:' + m.color_hex + '">' + count + ' songs</span>';
+      + '<span class="mood-count" style="color:' + m.color_hex + '">Explore \u2192</span>';
     if (!page) {
       card.addEventListener('click', function(e) { e.preventDefault(); openMoodPlaylist(m); });
     }
