@@ -387,14 +387,24 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
         <span class="lh-tag" style="color:#fdcb6e;border-color:rgba(253,203,110,.38);background:rgba(253,203,110,.06);">Coastal</span>
         <span class="lh-tag" style="color:#fd79a8;border-color:rgba(253,121,168,.38);background:rgba(253,121,168,.06);">10 Songs</span>
       </div>
+      <!-- Inline Player — Preview: Woke Up Laughing -->
+      <div style="display:flex;align-items:center;gap:.8rem;padding:.8rem 1rem;background:rgba(0,206,201,.08);border:1px solid rgba(0,206,201,.2);border-radius:10px;margin-bottom:1rem;">
+        <button id="beachPlayBtn" onclick="var a=document.getElementById('beachAudio');if(a.paused){a.play();this.textContent='\u23F8'}else{a.pause();this.textContent='\u25B6'}" style="background:#00cec9;color:#0a0e0f;border:none;width:40px;height:40px;border-radius:50%;font-size:1.1rem;cursor:pointer;flex-shrink:0;">&#x25B6;</button>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:.85rem;font-weight:600;color:#00cec9;">Now Playing Preview</div>
+          <div style="font-size:.78rem;color:var(--ts);">Woke Up Laughing &middot; Valentina Talor</div>
+        </div>
+        <audio id="beachAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/Woke%20Up%20Laughing%20(1).mp3"></audio>
+      </div>
       <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
         <a href="/moods/beach-country.html" style="background:#00cec9;color:#0a0e0f;border:none;padding:.75rem 2rem;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;letter-spacing:.02em;box-shadow:0 0 25px rgba(0,206,201,.3);text-decoration:none;display:inline-block;">Explore Collection</a>
         <a href="/build-your-own.html" style="color:#00cec9;font-size:.9rem;font-weight:600;text-decoration:none;border:1px solid rgba(0,206,201,.3);padding:.6rem 1.5rem;border-radius:8px;">Build Your Own Bundle</a>
       </div>
-      <div style="display:flex;align-items:center;gap:1rem;margin-top:1.5rem;">
-        <button onclick="quickReact('beach-album','heart')" style="background:none;border:none;font-size:1.4rem;cursor:pointer;" class="sa-react" title="Love it">&#x1F48B;</button>
-        <button onclick="quickReact('beach-album','fire')" style="background:none;border:none;font-size:1.4rem;cursor:pointer;" class="sa-react" title="Fire">&#x1F525;</button>
-        <span style="color:rgba(255,255,255,.3);font-size:.8rem;">10 songs &middot; Summer vibes &middot; MP3</span>
+      <div style="display:flex;align-items:center;gap:1rem;margin-top:1rem;flex-wrap:wrap;">
+        <button onclick="quickReact('beach-album','heart');if(typeof showToast==='function')showToast('thanks darling for the love')" style="background:none;border:none;font-size:1.4rem;cursor:pointer;" class="sa-react" title="Love it">&#x1F48B;</button>
+        <button onclick="quickReact('beach-album','fire');if(typeof showToast==='function')showToast('thanks for the vibe')" style="background:none;border:none;font-size:1.4rem;cursor:pointer;" class="sa-react" title="Fire">&#x1F525;</button>
+        <a href="/songs/woke-up-laughing.html#story" style="color:#00cec9;font-size:.8rem;text-decoration:none;padding:.4rem .8rem;border:1px solid rgba(0,206,201,.3);border-radius:6px;">Story</a>
+        <a href="/songs/woke-up-laughing.html#buy" style="background:#ff2d7b;color:#fff;font-size:.8rem;text-decoration:none;padding:.4rem .8rem;border-radius:6px;font-weight:600;">Build a Bundle</a>
       </div>
     </div>
   </div>
@@ -419,14 +429,24 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
         <span class="lh-tag" style="color:#e8b963;border-color:rgba(232,185,99,.38);background:rgba(232,185,99,.06);">Love Story</span>
         <span class="lh-tag" style="color:#7ca6c8;border-color:rgba(124,166,200,.38);background:rgba(124,166,200,.06);">7 Songs</span>
       </div>
+      <!-- Inline Player — Preview: Liar, Preacher Man -->
+      <div style="display:flex;align-items:center;gap:.8rem;padding:.8rem 1rem;background:rgba(146,64,14,.1);border:1px solid rgba(146,64,14,.25);border-radius:10px;margin-bottom:1rem;">
+        <button id="outlawPlayBtn" onclick="var a=document.getElementById('outlawAudio');if(a.paused){a.play();this.textContent='\u23F8'}else{a.pause();this.textContent='\u25B6'}" style="background:#92400E;color:#fff;border:none;width:40px;height:40px;border-radius:50%;font-size:1.1rem;cursor:pointer;flex-shrink:0;">&#x25B6;</button>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:.85rem;font-weight:600;color:#d4ae48;">Now Playing Preview</div>
+          <div style="font-size:.78rem;color:var(--ts);">Liar, Preacher Man &middot; Valentina Talor</div>
+        </div>
+        <audio id="outlawAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/LIAR%2C%20PREACHER%20MAN%20(1).mp3"></audio>
+      </div>
       <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
         <button onclick="window.open('https://buy.stripe.com/8x29AVfm29fr4Fc4psd7q0d','_blank')" style="background:#92400E;color:#fff;border:none;padding:.75rem 2rem;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;letter-spacing:.02em;box-shadow:0 0 25px rgba(146,64,14,.3);">Buy Collection &mdash; $9.99</button>
         <a href="/outlaw-love.html" style="color:#d4ae48;font-size:.9rem;font-weight:600;text-decoration:none;border:1px solid rgba(212,174,72,.3);padding:.6rem 1.5rem;border-radius:8px;">Read the Story</a>
       </div>
-      <div style="display:flex;align-items:center;gap:1rem;margin-top:1.5rem;">
-        <button onclick="quickReact('outlaw-love-collection','heart')" style="background:none;border:none;font-size:1.4rem;cursor:pointer;" class="sa-react" title="Love it">&#x1F48B;</button>
-        <button onclick="quickReact('outlaw-love-collection','fire')" style="background:none;border:none;font-size:1.4rem;cursor:pointer;" class="sa-react" title="Fire">&#x1F525;</button>
-        <span style="color:rgba(255,255,255,.3);font-size:.8rem;">7 songs &middot; Instant download &middot; MP3</span>
+      <div style="display:flex;align-items:center;gap:1rem;margin-top:1rem;flex-wrap:wrap;">
+        <button onclick="quickReact('outlaw-love-collection','heart');if(typeof showToast==='function')showToast('thanks darling for the love')" style="background:none;border:none;font-size:1.4rem;cursor:pointer;" class="sa-react" title="Love it">&#x1F48B;</button>
+        <button onclick="quickReact('outlaw-love-collection','fire');if(typeof showToast==='function')showToast('thanks for the vibe')" style="background:none;border:none;font-size:1.4rem;cursor:pointer;" class="sa-react" title="Fire">&#x1F525;</button>
+        <a href="/songs/liar-preacher-man.html#story" style="color:#d4ae48;font-size:.8rem;text-decoration:none;padding:.4rem .8rem;border:1px solid rgba(212,174,72,.3);border-radius:6px;">Story</a>
+        <a href="/songs/liar-preacher-man.html#buy" style="background:#ff2d7b;color:#fff;font-size:.8rem;text-decoration:none;padding:.4rem .8rem;border-radius:6px;font-weight:600;">Build a Bundle</a>
       </div>
     </div>
   </div>
@@ -1442,7 +1462,7 @@ function showToast(msg) {
   var toast = document.createElement('div');
   toast.id = 'loveToast';
   toast.textContent = msg;
-  toast.style.cssText = 'position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:rgba(255,45,123,.95);color:#fff;padding:.7rem 1.5rem;border-radius:50px;font-size:.85rem;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(255,45,123,.4);';
+  toast.style.cssText = 'position:fixed;top:5rem;left:50%;transform:translateX(-50%);background:rgba(255,45,123,.95);color:#fff;padding:.7rem 1.5rem;border-radius:50px;font-size:.85rem;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(255,45,123,.4);';
   document.body.appendChild(toast);
   setTimeout(function(){ toast.style.opacity='0'; toast.style.transition='opacity .3s'; }, 2000);
   setTimeout(function(){ toast.remove(); }, 2500);
