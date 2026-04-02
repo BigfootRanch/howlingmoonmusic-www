@@ -710,10 +710,7 @@ tr:hover td{background:rgba(255,45,123,0.02)}
         <button class="pill" data-status="failed" onclick="setSocialStatus(this)">Failed</button>
       </div>
       <div id="socialListView">
-        <div class="table-wrap">
-          <table><thead><tr><th>Platform</th><th>Content</th><th>Status</th><th>Scheduled</th><th>Stats</th><th>Actions</th></tr></thead>
-          <tbody id="socialTableBody"><tr><td colspan="6"><div class="loading-msg"><span class="spinner"></span> Loading...</div></td></tr></tbody></table>
-        </div>
+        <div class="sm-grid" id="smGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem;"></div>
       </div>
       <div id="socialCalendarView" style="display:none">
         <div class="calendar-header">
@@ -1801,7 +1798,7 @@ function filterCatalog() {
 // =============================
 function loadAlbums() {
   q('albums', 'order=release_date.desc.nullslast,created_at.desc').then(function(data) {
-    var c = $('albumsGrid');
+    var c = $('albumGrid');
     clearEl(c);
     if (!Array.isArray(data) || data.length === 0) {
       c.appendChild(mk('div', {style:'color:var(--smoke);padding:2rem;text-align:center', text:'No albums found in the database.'}));
@@ -1875,10 +1872,11 @@ function loadSocialStats() {
     var pending = data.filter(function(d) { return d.status === 'pending' || d.status === 'draft'; }).length;
     var scheduled = data.filter(function(d) { return d.status === 'approved' || d.status === 'scheduled'; }).length;
     var published = data.filter(function(d) { return d.status === 'posted'; }).length;
-    $('smStatWeek').textContent = thisWeek;
-    $('smStatPending').textContent = pending;
-    $('smStatScheduled').textContent = scheduled;
-    $('smStatPublished').textContent = published;
+    $('smTotal').textContent = data.length;
+    $('smPending').textContent = pending;
+    $('smScheduled').textContent = scheduled;
+    $('smPublished').textContent = published;
+    $('smFailed').textContent = data.filter(function(d) { return d.status === 'failed'; }).length;
   });
 }
 
@@ -2088,6 +2086,86 @@ $('savePostBtn').addEventListener('click', function() {
     .catch(function(e) { alert('Failed to save post: ' + e.message); });
 });
 
+
+// =============================
+// MISSING FUNCTIONS — Social HQ + Albums + Calendar
+// =============================
+function setSocialView(view) {
+  if (view === 'calendar') {
+    $('socialListView').style.display = 'none';
+    $('socialCalendarView').style.display = 'block';
+    $('viewList').classList.remove('active');
+    $('viewCalendar').classList.add('active');
+    renderCalendar();
+  } else {
+    $('socialListView').style.display = 'block';
+    $('socialCalendarView').style.display = 'none';
+    $('viewList').classList.add('active');
+    $('viewCalendar').classList.remove('active');
+  }
+}
+function filterSocialPosts() {
+  var search = ($('socialSearch').value || '').toLowerCase();
+  var plat = ($('socialPlatformFilter').value || '').toLowerCase();
+  var cards = document.querySelectorAll('#smGrid .sm-card');
+  cards.forEach(function(c) {
+    var text = c.textContent.toLowerCase();
+    var matchSearch = !search || text.indexOf(search) >= 0;
+    var matchPlat = !plat || text.indexOf(plat) >= 0;
+    c.style.display = (matchSearch && matchPlat) ? '' : 'none';
+  });
+}
+function setSocialStatus(btn) {
+  document.querySelectorAll('#socialStatusPills .pill').forEach(function(p) { p.classList.remove('active'); });
+  btn.classList.add('active');
+  smStatusFilter = btn.dataset.status || '';
+  loadSocial();
+}
+function filterAlbums() {
+  var search = ($('albumSearch').value || '').toLowerCase();
+  var cards = document.querySelectorAll('#albumGrid .card');
+  cards.forEach(function(c) {
+    c.style.display = c.textContent.toLowerCase().indexOf(search) >= 0 ? '' : 'none';
+  });
+}
+function openNewAlbumModal() {
+  alert('Album creation — use the Chat tab to ask Claude to create a new album.');
+}
+var calMonth = new Date().getMonth();
+var calYear = new Date().getFullYear();
+function calNavMonth(dir) {
+  calMonth += dir;
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  if (calMonth < 0) { calMonth = 11; calYear--; }
+  renderCalendar();
+}
+function renderCalendar() {
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var el = $('calMonthLabel');
+  if (el) el.textContent = months[calMonth] + ' ' + calYear;
+  var grid = $('calGrid');
+  if (!grid) return;
+  while (grid.firstChild) grid.removeChild(grid.firstChild);
+  grid.style.cssText = 'display:grid;grid-template-columns:repeat(7,1fr);gap:2px;';
+  var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  days.forEach(function(d) {
+    var h = document.createElement('div');
+    h.style.cssText = 'text-align:center;font-size:0.7rem;color:var(--smoke);padding:0.3rem;font-weight:700';
+    h.textContent = d;
+    grid.appendChild(h);
+  });
+  var first = new Date(calYear, calMonth, 1);
+  var lastDay = new Date(calYear, calMonth + 1, 0).getDate();
+  for (var i = 0; i < first.getDay(); i++) {
+    grid.appendChild(document.createElement('div'));
+  }
+  for (var d = 1; d <= lastDay; d++) {
+    var cell = document.createElement('div');
+    cell.style.cssText = 'text-align:center;font-size:0.75rem;color:var(--cream);padding:0.4rem;background:var(--card);border-radius:4px;min-height:2.5rem';
+    cell.textContent = d;
+    grid.appendChild(cell);
+  }
+}
 
 // =============================
 // FAN INTELLIGENCE (social_engagements)
