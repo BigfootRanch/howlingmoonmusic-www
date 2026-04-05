@@ -1,0 +1,25 @@
+{
+  "name": "Howling Moon Music — Command Center",
+  "short_name": "HMM Admin",
+  "description": "Billionaire music executive admin dashboard with live Claude chat",
+  "start_url": "/admin/v4.html",
+  "display": "standalone",
+  "background_color": "#0e0b08",
+  "theme_color": "#0e0b08",
+  "orientation": "portrait-primary",
+  "categories": ["music", "business"],
+  "icons": [
+    {
+      "src": "https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,527 @@
+/* ============================================
+   Howling Moon Music — Fan Interaction Zone
+   Dark luxury saloon aesthetic
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+/* --- Fan Zone Container --- */
+.fan-zone {
+  position: relative;
+  padding: 3rem 0 2rem;
+  border-top: 1px solid rgba(255,255,255,.06);
+  overflow: hidden;
+}
+.fan-zone::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 200px;
+  background: radial-gradient(ellipse at 50% -20%, rgba(184,146,47,.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.fan-zone__header {
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+.fan-zone__title {
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+  font-weight: 500;
+  color: #faf6f0;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.3rem;
+}
+.fan-zone__sub {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,.4);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* --- Reaction Bar --- */
+.reaction-bar {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+.reaction-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 100px;
+  color: rgba(255,255,255,.5);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all .3s cubic-bezier(.4,0,.2,1);
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+.reaction-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, currentColor, transparent 70%);
+  opacity: 0;
+  transition: opacity .3s;
+}
+.reaction-btn:hover {
+  border-color: rgba(255,255,255,.2);
+  background: rgba(255,255,255,.08);
+  color: rgba(255,255,255,.8);
+  transform: translateY(-2px);
+}
+.reaction-btn:hover::after { opacity: 0.06; }
+
+.reaction-btn.active {
+  border-color: rgba(255,45,123,.4);
+  background: rgba(255,45,123,.1);
+  color: #ff5a9e;
+}
+.reaction-btn.active.r-heart { border-color: rgba(255,45,123,.4); color: #ff5a9e; }
+.reaction-btn.active.r-fire { border-color: rgba(255,160,40,.4); color: #ffa028; background: rgba(255,160,40,.08); }
+.reaction-btn.active.r-howl { border-color: rgba(184,146,47,.5); color: #d4ae48; background: rgba(184,146,47,.1); }
+.reaction-btn.active.r-star { border-color: rgba(255,215,0,.4); color: #ffd700; background: rgba(255,215,0,.08); }
+.reaction-btn.active.r-clap { border-color: rgba(160,200,255,.4); color: #a0c8ff; background: rgba(160,200,255,.08); }
+
+.reaction-emoji {
+  font-size: 1.15rem;
+  line-height: 1;
+  transition: transform .3s cubic-bezier(.4,0,.2,1);
+}
+.reaction-btn:hover .reaction-emoji,
+.reaction-btn.active .reaction-emoji {
+  transform: scale(1.2);
+}
+.reaction-btn.active.r-howl .reaction-emoji {
+  animation: howlPulse 2s ease-in-out infinite;
+}
+@keyframes howlPulse {
+  0%, 100% { transform: scale(1.1); }
+  50% { transform: scale(1.3) rotate(-5deg); }
+}
+.reaction-count {
+  font-size: 0.8rem;
+  font-weight: 500;
+  min-width: 1ch;
+  opacity: 0.7;
+}
+.reaction-btn.active .reaction-count { opacity: 1; }
+
+/* --- Comments Section --- */
+.comments-section {
+  max-width: 640px;
+  margin: 0 auto;
+}
+.comments-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+.comments-count {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  color: rgba(255,255,255,.6);
+}
+.comments-sort {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,.35);
+  font-size: 0.78rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.comments-sort:hover { color: rgba(255,255,255,.6); }
+
+/* Comment Composer */
+.comment-composer {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  align-items: flex-start;
+}
+.composer-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(184,146,47,.3), rgba(255,45,123,.2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,.7);
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,.1);
+}
+.composer-input-wrap {
+  flex: 1;
+  position: relative;
+}
+.composer-input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.6rem 1rem;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 12px;
+  color: #faf6f0;
+  font-size: 0.92rem;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color .3s, background .3s;
+  outline: none;
+}
+.composer-input::placeholder {
+  color: rgba(255,255,255,.25);
+}
+.composer-input:focus {
+  border-color: rgba(255,45,123,.3);
+  background: rgba(255,255,255,.06);
+}
+.composer-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity .3s, max-height .3s;
+}
+.composer-input:focus ~ .composer-actions,
+.composer-actions.show {
+  opacity: 1;
+  max-height: 60px;
+}
+.composer-btn {
+  padding: 0.4rem 1.2rem;
+  border-radius: 100px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all .2s;
+}
+.composer-btn--cancel {
+  background: none;
+  color: rgba(255,255,255,.4);
+}
+.composer-btn--cancel:hover { color: rgba(255,255,255,.6); }
+.composer-btn--post {
+  background: linear-gradient(135deg, var(--pink), var(--pink-d));
+  color: #fff;
+}
+.composer-btn--post:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(255,45,123,.25);
+}
+.composer-btn--post:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Sign-in prompt (replaces composer when logged out) */
+.fan-signin-prompt {
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(255,255,255,.02);
+  border: 1px dashed rgba(255,255,255,.1);
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+.fan-signin-prompt p {
+  color: rgba(255,255,255,.45);
+  font-size: 0.9rem;
+  margin-bottom: 0.8rem;
+  max-width: none;
+}
+.fan-signin-btn {
+  display: inline-block;
+  padding: 0.5rem 1.6rem;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(184,146,47,.3);
+  border-radius: 100px;
+  color: #d4ae48;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .3s;
+  letter-spacing: 0.03em;
+}
+.fan-signin-btn:hover {
+  background: rgba(184,146,47,.12);
+  border-color: rgba(184,146,47,.5);
+  color: #e8c55a;
+  transform: translateY(-1px);
+}
+
+/* Individual Comment */
+.comment-item {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+  animation: commentSlideIn .4s ease-out;
+}
+@keyframes commentSlideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.comment-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(184,146,47,.25), rgba(255,45,123,.15));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,.6);
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,.08);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.comment-body { flex: 1; min-width: 0; }
+.comment-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+.comment-author {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,.8);
+}
+.comment-author.is-dogmother {
+  color: #d4ae48;
+}
+.comment-author.is-dogmother::after {
+  content: '🐾';
+  margin-left: 0.3rem;
+  font-size: 0.75rem;
+}
+.comment-time {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,.25);
+}
+.comment-text {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,.7);
+  word-wrap: break-word;
+}
+.comment-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.4rem;
+}
+.comment-action-btn {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,.25);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: color .2s;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.comment-action-btn:hover { color: rgba(255,255,255,.5); }
+.comment-action-btn.liked { color: #ff5a9e; }
+
+/* Reply thread indent */
+.comment-replies {
+  margin-left: 2.5rem;
+  margin-top: 1rem;
+  padding-left: 0.75rem;
+  border-left: 2px solid rgba(255,255,255,.04);
+}
+
+/* No comments state */
+.no-comments {
+  text-align: center;
+  padding: 2rem 0;
+  color: rgba(255,255,255,.25);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* Loading */
+.fan-loading {
+  text-align: center;
+  padding: 2rem 0;
+  color: rgba(255,255,255,.2);
+}
+.fan-loading::after {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,.1);
+  border-top-color: rgba(184,146,47,.5);
+  border-radius: 50%;
+  animation: fanSpin .8s linear infinite;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+@keyframes fanSpin { to { transform: rotate(360deg); } }
+
+/* --- Sign-In Modal --- */
+.fan-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fanFadeIn .25s ease-out;
+}
+@keyframes fanFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.fan-modal {
+  background: linear-gradient(165deg, #1a1520 0%, #0d0b0f 100%);
+  border: 1px solid rgba(184,146,47,.2);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  max-width: 380px;
+  width: 90vw;
+  position: relative;
+  box-shadow: 0 24px 80px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.04);
+  animation: fanModalIn .3s cubic-bezier(.4,0,.2,1);
+}
+@keyframes fanModalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.fan-modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,.3);
+  font-size: 1.3rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: color .2s;
+}
+.fan-modal__close:hover { color: rgba(255,255,255,.6); }
+.fan-modal__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #faf6f0;
+  margin-bottom: 0.3rem;
+}
+.fan-modal__sub {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,.35);
+  margin-bottom: 1.5rem;
+}
+.fan-modal label {
+  display: block;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,.4);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.35rem;
+}
+.fan-modal input {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 8px;
+  color: #faf6f0;
+  font-size: 0.92rem;
+  font-family: inherit;
+  margin-bottom: 1rem;
+  transition: border-color .3s;
+  outline: none;
+}
+.fan-modal input:focus {
+  border-color: rgba(184,146,47,.4);
+}
+.fan-modal input::placeholder {
+  color: rgba(255,255,255,.2);
+}
+.fan-modal__submit {
+  width: 100%;
+  padding: 0.7rem;
+  background: linear-gradient(135deg, #b8922f, #d4ae48);
+  color: #0d0b0f;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .3s;
+  letter-spacing: 0.03em;
+}
+.fan-modal__submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(184,146,47,.3);
+}
+.fan-modal__submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+.fan-modal__error {
+  color: #ff5a5a;
+  font-size: 0.8rem;
+  margin-top: -0.5rem;
+  margin-bottom: 0.8rem;
+  display: none;
+}
+
+/* Fan badge (shown when logged in) */
+.fan-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.8rem;
+  background: rgba(184,146,47,.08);
+  border: 1px solid rgba(184,146,47,.2);
+  border-radius: 100px;
+  font-size: 0.78rem;
+  color: #d4ae48;
+  margin-bottom: 1rem;
+}
+.fan-badge__signout {
+  color: rgba(255,255,255,.25);
+  cursor: pointer;
+  font-size: 0.7rem;
+  margin-left: 0.3rem;
+  transition: color .2s;
+}
+.fan-badge__signout:hover { color: rgba(255,255,255,.5); }
+
+/* --- Responsive --- */
+@media (max-width: 640px) {
+  .reaction-bar { gap: 0.4rem; }
+  .reaction-btn { padding: 0.4rem 0.7rem; font-size: 0.82rem; }
+  .comment-composer { gap: 0.5rem; }
+  .composer-avatar { width: 30px; height: 30px; }
+  .comment-replies { margin-left: 1.5rem; }
+  .fan-modal { padding: 2rem 1.5rem; }
+}
