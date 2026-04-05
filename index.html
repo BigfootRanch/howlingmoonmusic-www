@@ -1095,7 +1095,7 @@ const audioEl = document.getElementById('radioAudio');
 function loadSiteData() {
   try {
     allSongs = SITE_DATA.songs.filter(s => !s.is_vault);
-    moodCategories = SITE_DATA.moods;
+    moodCategories = SITE_DATA.moods.slice().sort((a,b) => (a.sort_order||99) - (b.sort_order||99));
     SITE_DATA.albums.forEach(a => albumMap[a.id] = a);
     SITE_DATA.song_moods.forEach(sm => {
       if (!songMoodMap[sm.song_id]) songMoodMap[sm.song_id] = [];
