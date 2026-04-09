@@ -1,8 +1,8 @@
 {
-  "name": "Howling Moon Music — Command Center",
-  "short_name": "HMM Admin",
-  "description": "Billionaire music executive admin dashboard with live Claude chat",
-  "start_url": "/admin/v4.html",
+  "name": "Howling Moon Music — Local Access Required",
+  "short_name": "HMM Local",
+  "description": "Local-only notice for the Howling Moon Music admin surface",
+  "start_url": "/admin/",
   "display": "standalone",
   "background_color": "#0e0b08",
   "theme_color": "#0e0b08",

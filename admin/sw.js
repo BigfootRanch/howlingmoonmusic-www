@@ -1,9 +1,14 @@
-// Howling Moon Music — Service Worker v1
-// Cache-first for shell, pass-through for API calls
+// Howling Moon Music — Local-only admin notice shell
+// Cache the notice pages so legacy installs stop surfacing the old control UI.
 
-const CACHE_NAME = 'hmm-admin-v4';
+const CACHE_NAME = 'hmm-admin-local-only-v1';
 const SHELL_FILES = [
+  '/admin/',
+  '/admin/index.html',
+  '/admin/v2.html',
+  '/admin/v3.html',
   '/admin/v4.html',
+  '/admin/index.html.bak-apr2-pre-fix',
   '/admin/manifest.json'
 ];
 
@@ -36,13 +41,13 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Cache-first for shell files
+  // Cache-first for local-only shell files
   event.respondWith(
     caches.match(event.request)
       .then(cached => {
         if (cached) return cached;
         return fetch(event.request).then(response => {
-          // Cache successful responses for admin files
+          // Cache successful responses for admin notice files
           if (response.ok && url.pathname.startsWith('/admin/')) {
             const clone = response.clone();
             caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
@@ -50,6 +55,6 @@ self.addEventListener('fetch', event => {
           return response;
         });
       })
-      .catch(() => caches.match('/admin/v4.html'))
+      .catch(() => caches.match('/admin/'))
   );
 });

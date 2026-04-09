@@ -1,5 +1,10 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /admin/index.html
+Disallow: /admin/v2.html
+Disallow: /admin/v3.html
+Disallow: /admin/v4.html
+Disallow: /admin/index.html.bak-apr2-pre-fix
 
 Sitemap: https://howlingmoonmusic.com/sitemap.xml
