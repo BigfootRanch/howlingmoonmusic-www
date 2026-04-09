@@ -33,11 +33,22 @@
       tier.textContent = 'Pick ' + (3 - selected.length) + ' more for ' + tiers[0].price;
       btn.textContent = 'Need ' + (3 - selected.length) + ' more';
       btn.href = '#';
+      btn.onclick = null;
       btn.style.opacity = '.5';
     } else {
       tier.textContent = best.price + ' (' + best.per + ')';
       btn.textContent = 'Checkout \u2014 ' + best.price;
       btn.href = best.url;
+      btn.onclick = function(e) {
+        if (e) e.preventDefault();
+        return hmOpenStripeCheckout(best.url, {
+          product_slug: 'build-your-own',
+          product_name: 'Build Your Own Bundle',
+          price_label: best.price,
+          purchase_source: 'build-your-own-cart',
+          selected_count: selected.length
+        });
+      };
       btn.style.opacity = '1';
     }
   }

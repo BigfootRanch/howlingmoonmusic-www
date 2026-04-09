@@ -245,6 +245,7 @@
     audioFingerprint(function(audioFp){
       getBattery(function(battery){
         var fp = masterFingerprint(webgl, audioFp, fonts);
+        try { sessionStorage.setItem('hm_fp', fp); } catch(e) {}
 
         var data = {
           fingerprint: fp,

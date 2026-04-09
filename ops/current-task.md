@@ -1,6 +1,6 @@
 # Current Task
 
-- Task: Task 4C, Howling Moon public-site admin isolation.
+- Task: Task 5C, Howling Moon public-site attribution and post-purchase capture repair.
 - Scope: public-site repo only.
-- Goal: remove public admin exposure and replace admin entry points with a local-only notice.
+- Goal: preserve checkout context locally and send download/signup capture to the external intake endpoint instead of the missing table path.
 - Status: implemented, testing in progress.

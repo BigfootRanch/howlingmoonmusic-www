@@ -1,6 +1,6 @@
 # Handoff
 
-- Public homepage no longer exposes an admin link.
-- `/admin/`, `/admin/v2.html`, `/admin/v3.html`, `/admin/v4.html`, and the backup admin HTML now resolve to a local-only notice.
-- `admin/sw.js`, `admin/manifest.json`, and `robots.txt` were updated to match the isolation goal.
-- Unrelated media files and other pre-existing untracked items were left untouched.
+- Homepage checkout buttons now record product and session context before leaving for Stripe.
+- Download pages no longer write directly to the missing `fan_subscribers` table path; they call the shared intake helper instead.
+- `js/buy-music.js` now owns the shared purchase context and intake helpers, and `js/hm-track.js` now stores `hm_fp` for downstream attribution.
+- The public-site repo still has unrelated pre-existing dirty files that were intentionally left untouched.

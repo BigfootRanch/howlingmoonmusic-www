@@ -212,6 +212,7 @@
   <div id="dlMsg" style="display:none;color:#d4a843;margin-top:.5rem;font-size:.85rem;"></div>
 </div>
 <h3 style="text-align:center;color:rgba(255,255,255,.5);margin:1.5rem 0;font-size:.9rem;">Your downloads are ready below</h3>
+<script src="/js/buy-music.js" defer></script>
 <script>
 function dlSubmit(e){
   e.preventDefault();
@@ -219,10 +220,7 @@ function dlSubmit(e){
   var em=document.getElementById("dlEmail").value.trim();
   var b=window.location.pathname.split("/").pop().replace(".html","");
   if(!em)return false;
-  fetch("https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/fan_subscribers",{
-    method:"POST",headers:{"apikey":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78","Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78","Content-Type":"application/json","Prefer":"return=minimal"},
-    body:JSON.stringify({email:em,name:n,source:"purchase",purchased_bundle:b})
-  }).then(function(){
+  hmSubmitPurchaseCapture({email:em,name:n,bundle:b,product_slug:b,product_name:document.title,purchase_source:"download-page"}).then(function(){
     document.getElementById("dlMsg").style.display="block";
     document.getElementById("dlMsg").textContent="Welcome to the inner circle! You will never miss a drop.";
     document.getElementById("dlSignup").style.display="none";
