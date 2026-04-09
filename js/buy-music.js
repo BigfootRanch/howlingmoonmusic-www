@@ -16,7 +16,7 @@ var STRIPE_PRICES = {
 
   var SB = 'https://pxcxtnabyydhbfbholvh.supabase.co';
   var PURCHASE_KEY = 'hm_purchase_context_v1';
-  var INTAKE_URL = window.HM_PURCHASE_INTAKE_URL || (SB + '/functions/v1/fan-intake');
+  var INTAKE_URL = window.HM_PUBLIC_INTAKE_URL || window.HM_PURCHASE_INTAKE_URL || (SB + '/functions/v1/public-intake');
   var STRIPE_KEY = 'pk_live_51TGmT8PY5LxVsiI5diLmOi0Fq1x7yh2buFo2UZbhvD6mVv0LqOnpG7LJ8dxMaZyorCPav1YCWM1oKz5QlF4Uzp5X003y4isVcf';
 
   function safeJsonParse(raw, fallback) {
@@ -127,17 +127,23 @@ var STRIPE_PRICES = {
 
   function submitPurchaseCapture(data) {
     var formData = data || {};
+    var kind = formData.kind || ((formData.source === 'homepage' || formData.purchase_source === 'homepage') && !formData.amount && !formData.price_id ? 'fan_signup' : 'purchase_intent');
     var context = buildContext({
       product_slug: formData.product_slug || formData.bundle || formData.slug || '',
       product_name: formData.product_name || formData.bundle_label || document.title,
       bundle_slug: formData.bundle || formData.slug || formData.product_slug || '',
       purchase_source: 'download-form'
     });
+    var product = formData.product || formData.product_slug || formData.bundle || formData.slug || context.product_slug || '';
+    var amount = formData.amount || formData.price || formData.price_label || '';
 
     var payload = {
+      kind: kind,
       email: formData.email || '',
       name: formData.name || '',
-      source: formData.source || 'purchase',
+      source: formData.source || formData.purchase_source || 'purchase',
+      product: product,
+      amount: amount,
       purchased_bundle: formData.bundle || formData.slug || formData.product_slug || '',
       product_slug: context.product_slug,
       product_name: context.product_name,
@@ -152,6 +158,11 @@ var STRIPE_PRICES = {
       page_url: window.location.pathname,
       page_title: document.title
     };
+
+    if (kind === 'fan_signup') {
+      delete payload.amount;
+      delete payload.purchased_bundle;
+    }
 
     try {
       if (navigator.sendBeacon) {
