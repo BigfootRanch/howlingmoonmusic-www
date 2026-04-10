@@ -83,11 +83,11 @@
 
 <!-- Sticky Social Action Bar -->
 <div class="song-action-bar" id="songActionBar">
-  <button class="sab-btn sab-lips" onclick="this.classList.add('active');var s=location.pathname.split('/').pop().replace('.html','');var c=document.getElementById('heart-count');if(c)c.textContent=parseInt(c.textContent||'0')+1;localStorage.setItem('react-'+s+'-heart','1');fetch('https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/song_reactions',{method:'POST',headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({song_slug:s,reaction_type:'heart'})})" title="Love it">
+  <button class="sab-btn sab-heart" onclick="return reactSong('heart', this)" title="Love it">
     <span class="sab-icon">💋</span>
     <span class="sab-count" id="heart-count">0</span>
   </button>
-  <button class="sab-btn sab-fire" onclick="this.classList.add('active');var s=location.pathname.split('/').pop().replace('.html','');var c=document.getElementById('fire-count');if(c)c.textContent=parseInt(c.textContent||'0')+1;localStorage.setItem('react-'+s+'-fire','1');fetch('https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/song_reactions',{method:'POST',headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({song_slug:s,reaction_type:'fire'})})" title="Fire">
+  <button class="sab-btn sab-fire" onclick="return reactSong('fire', this)" title="Fire">
     <span class="sab-icon">🔥</span>
     <span class="sab-count" id="fire-count">0</span>
   </button>
@@ -402,67 +402,56 @@ if(nsb)nsb.onclick=function(){if(navigator.share)navigator.share({title:'Gasligh
 if(nsb&&!navigator.share)nsb.style.display='none';
 
 // Campfire comments
-var SB_URL='https://pxcxtnabyydhbfbholvh.supabase.co';
-var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78';
+var COMMENTS_API='https://pxcxtnabyydhbfbholvh.supabase.co/functions/v1/public-intake';
 var SONG_SLUG='gaslight-and-glitter';
 
-function loadComments(){
-  fetch(SB_URL+'/rest/v1/song_comments?song_slug=eq.'+SONG_SLUG+'&is_approved=eq.true&order=created_at.desc&limit=20',{headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY}})
-  .then(function(r){return r.json()})
-  .then(function(data){
-    var el=document.getElementById('campfireComments');
-    if(!data||!data.length)return;
-    el.innerHTML='';
-    data.forEach(function(c){
-      var d=document.createElement('div');d.className='campfire-comment';
-      d.innerHTML='<strong class="campfire-author">'+c.author_name+'</strong><p>'+c.message+'</p><span class="campfire-time">'+new Date(c.created_at).toLocaleDateString()+'</span>';
-      el.appendChild(d);
-    });
-  }).catch(function(){});
-}
-loadComments();
-
-function submitComment(e){
-  e.preventDefault();
-  var name=document.getElementById('campfireName').value.trim();
-  var msg=document.getElementById('campfireMsg').value.trim();
-  if(!name||!msg)return false;
-  fetch(SB_URL+'/rest/v1/song_comments',{method:'POST',headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({song_slug:SONG_SLUG,author_name:name,message:msg,is_approved:false})})
-  .then(function(){
-    document.getElementById('campfireMsg').value='';
-    var el=document.getElementById('campfireComments');
-    var d=document.createElement('div');d.className='campfire-comment campfire-pending';
-    d.innerHTML='<strong class="campfire-author">'+name+'</strong><p>'+msg+'</p><span class="campfire-time">Waiting for approval</span>';
-    el.insertBefore(d,el.firstChild);
-  });
-  return false;
-}
-
 // Song Reactions — inline to avoid external script blocking
-function reactSong(type) {
-  var btn = document.querySelector('.sab-' + type);
-  if (!btn || btn.classList.contains('active')) return;
+var HM_REACTION_API='https://pxcxtnabyydhbfbholvh.supabase.co/functions/v1/public-intake';
+
+function getStorageValue(storage,key){try{return storage.getItem(key)||null}catch(e){return null}}
+function setStorageValue(storage,key,value){try{storage.setItem(key,value)}catch(e){}}
+function getSessionId(){var existing=getStorageValue(sessionStorage,'hm_session');if(existing)return existing;var next='ses_'+Math.random().toString(36).slice(2,14)+'_'+Date.now();setStorageValue(sessionStorage,'hm_session',next);return next}
+function getFingerprint(){return getStorageValue(localStorage,'hm_fp')||getStorageValue(sessionStorage,'hm_fp')}
+function ensureTrackingScriptLoaded(){if(getFingerprint())return;if(document.querySelector('script[src="/js/hm-track.js"]'))return;var script=document.createElement('script');script.src='/js/hm-track.js';script.defer=true;script.setAttribute('data-hm-track-loader','1');document.head.appendChild(script)}
+
+function reactSong(type, btn) {
+  btn = btn || document.querySelector('.sab-' + (type === 'heart' ? 'heart' : type)) || document.querySelector('.sab-' + (type === 'heart' ? 'lips' : type));
+  if (!btn || btn.classList.contains('active')) return false;
   btn.classList.add('active');
   var countEl = document.getElementById(type + '-count');
-  if (countEl) countEl.textContent = parseInt(countEl.textContent || '0') + 1;
-  localStorage.setItem('react-' + songSlug + '-' + type, '1');
-  fetch(SB_URL + '/rest/v1/song_reactions', {
+  if (countEl) countEl.textContent = parseInt(countEl.textContent || '0', 10) + 1;
+  setStorageValue(localStorage,'react-' + SONG_SLUG + '-' + type,'1');
+  ensureTrackingScriptLoaded();
+  fetch(HM_REACTION_API, {
     method: 'POST',
-    headers: {'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal'},
-    body: JSON.stringify({song_slug: songSlug, reaction_type: type})
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      kind: 'song_reaction',
+      song_slug: SONG_SLUG,
+      reaction_type: type,
+      fingerprint: getFingerprint(),
+      session_id: getSessionId(),
+      page_url: location.pathname,
+      referrer: document.referrer || null,
+      user_agent: navigator.userAgent || null,
+      event_source: 'song_page_reaction_inline'
+    }),
+    keepalive: true
   }).catch(function(){});
+  return false;
 }
-var songSlug = location.pathname.split('/').pop().replace('.html','');
-if (localStorage.getItem('react-' + songSlug + '-heart')) {
-  var b = document.querySelector('.sab-heart');
+if (getStorageValue(localStorage,'react-' + SONG_SLUG + '-heart')) {
+  var b = document.querySelector('.sab-heart') || document.querySelector('.sab-lips');
   if (b) b.classList.add('active');
 }
-if (localStorage.getItem('react-' + songSlug + '-fire')) {
+if (getStorageValue(localStorage,'react-' + SONG_SLUG + '-fire')) {
   var b = document.querySelector('.sab-fire');
   if (b) b.classList.add('active');
 }
 
 </script>
+<script src="/js/song-comments.js" defer></script>
+<script src="/js/hm-track.js" defer></script>
 <script src="/js/play-tracker.js" defer></script>
 
 
