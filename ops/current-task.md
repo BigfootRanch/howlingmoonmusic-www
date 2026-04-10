@@ -1,8 +1,8 @@
 # Current Task
 
 - Comment hardening follow-up on April 9, 2026 swapped the song-page comment lane to a shared `js/song-comments.js` client that reads/writes through `public-intake` instead of inline direct `rest/v1/song_comments` browser calls.
-- Local GitHub Pages repo is ready for publication, but `https://howlingmoonmusic.com` was still serving stale comment HTML at validation time.
-- Do not mark the public-access hardening migration complete until the live site serves `song-comments.js`, contains `functions/v1/public-intake`, and no longer contains `rest/v1/song_comments`.
+- GitHub Pages publication is complete: live validation on April 10, 2026 confirmed song pages now serve `song-comments.js`, point at `functions/v1/public-intake`, and no longer contain `rest/v1/song_comments`.
+- The homepage quick-react block was also rewired off raw `song_reactions` REST; live root-page validation confirmed `song_reactions_total` via `public-intake` and removal of direct `rest/v1/song_reactions`.
 
 - Task: Task 5C complete, extended into elite song-page attribution hardening.
 - Scope: public-site repo only.
