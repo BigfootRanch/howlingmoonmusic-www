@@ -371,8 +371,8 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
       </div>
       <!-- Reaction + Story row for featured single -->
       <div style="display:flex;align-items:center;justify-content:center;gap:1rem;margin-top:1rem;flex-wrap:wrap;">
-        <button onclick="fetch('https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/song_reactions',{method:'POST',headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({song_slug:'rock-a-bye-baby',reaction_type:'heart'})});this.style.transform='scale(1.3)';setTimeout(()=>{this.style.transform=''},200)" style="background:none;border:none;font-size:1.4rem;cursor:pointer;" title="Love it">&#x1F48B;</button>
-        <button onclick="fetch('https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/song_reactions',{method:'POST',headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78','Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({song_slug:'rock-a-bye-baby',reaction_type:'fire'})});this.style.transform='scale(1.3)';setTimeout(()=>{this.style.transform=''},200)" style="background:none;border:none;font-size:1.4rem;cursor:pointer;" title="Fire">&#x1F525;</button>
+        <button onclick="hmTrackReaction('rock-a-bye-baby','heart','featured_reaction');this.style.transform='scale(1.3)';setTimeout(()=>{this.style.transform=''},200)" style="background:none;border:none;font-size:1.4rem;cursor:pointer;" title="Love it">&#x1F48B;</button>
+        <button onclick="hmTrackReaction('rock-a-bye-baby','fire','featured_reaction');this.style.transform='scale(1.3)';setTimeout(()=>{this.style.transform=''},200)" style="background:none;border:none;font-size:1.4rem;cursor:pointer;" title="Fire">&#x1F525;</button>
         <a href="/songs/rock-a-bye-baby.html#story" style="color:var(--gold);font-size:.8rem;text-decoration:none;padding:.4rem .8rem;border:1px solid var(--gold);border-radius:6px;">Story Behind This Song</a>
         <a href="/songs/rock-a-bye-baby.html#buy" style="background:#ff2d7b;color:#fff;font-size:.8rem;text-decoration:none;padding:.4rem .8rem;border-radius:6px;font-weight:600;">Build a Bundle</a>
       </div>
@@ -1084,8 +1084,22 @@ let radioQueue = [];
 let radioIndex = -1;
 let radioPlaying = false;
 let radioMode = 'all';
+let radioQueueSource = { mode: 'all', filterId: null, albumId: null };
+let radioShuffleEnabled = false;
+let radioLoadToken = 0;
+let radioFailureHandled = false;
+let radioConsecutiveFailures = 0;
+let radioPendingResumeTime = 0;
+let radioPersistTimer = null;
+let radioRecoveryTimer = null;
+let radioStallTimer = null;
 
 const audioEl = document.getElementById('radioAudio');
+const RADIO_SESSION_KEY = 'hm_radio_session_v3';
+const RADIO_SESSION_TTL_MS = 1000 * 60 * 60 * 12;
+const RADIO_STALL_TIMEOUT_MS = 12000;
+const RADIO_SKIP_DELAY_MS = 1800;
+const RADIO_MAX_CONSECUTIVE_FAILURES = 10;
 
 // Load from embedded SITE_DATA (no network calls!)
 function loadSiteData() {
@@ -1101,7 +1115,12 @@ function loadSiteData() {
     console.log('Site data loaded:', allSongs.length, 'songs,', moodCategories.length, 'moods');
     buildMoodGrid();
     addSongActionButtons();
-    buildRadioQueue('all');
+    syncShuffleButton();
+    if (!restoreRadioSession()) {
+      buildRadioQueue('all');
+      resetRadioDisplay();
+      updateRadioUI();
+    }
   } catch(e) {
     console.error('Failed to load site data:', e);
     document.getElementById('moodGrid').innerHTML = '<p style="color:#ff6b9d;padding:2rem;">Data failed to load. Please refresh.</p>';
@@ -1203,7 +1222,7 @@ function openMoodPlaylist(mood) {
       + '<span class="modal-song-artist">' + s.vocalist + (album ? ' &bull; ' + album.title : '') + '</span></div>'
       + '</div>'
       + '<div class="song-actions">'
-      + '<button class="sa-btn sa-play" onclick="playSongInRadio(\'' + s.id + '\')" title="Play in Radio">&#9654;</button>'
+      + '<button class="sa-btn sa-play" onclick="playSongInRadio(\'' + s.id + '\',\'' + mood.id + '\')" title="Play in Radio">&#9654;</button>'
       + '<a href="/songs/' + s.slug + '.html#buy" class="sa-btn sa-buy" title="Buy / Download">$</a>'
       + '<a href="https://open.spotify.com/artist/2oYIuTSjJZy1c4uOmscAJy" target="_blank" rel="noopener" class="sa-btn sa-stream" title="Stream">&#9835;</a>'
       + '</div>';
@@ -1212,9 +1231,7 @@ function openMoodPlaylist(mood) {
 
   document.getElementById('modalPlayAll').onclick = () => {
     if (songs.length === 0) return;
-    radioQueue = songs.slice();
-    shuffleArray(radioQueue);
-    radioIndex = 0;
+    buildRadioQueue('mood', mood.id, { startSongId: songs[0].id });
     playCurrentTrack();
     modal.classList.remove('open');
     document.getElementById('radio').scrollIntoView({ behavior: 'smooth' });
@@ -1233,58 +1250,134 @@ document.getElementById('moodModal').addEventListener('click', e => {
 /* ============================================
    RADIO ENGINE
    ============================================ */
-function buildRadioQueue(mode, filterId) {
-  radioMode = mode;
-  let songs = allSongs.filter(s => s.audio_path);
+function buildRadioQueue(mode, filterId, options) {
+  const nextOptions = options || {};
+  const source = {
+    mode: mode || 'all',
+    filterId: filterId || null,
+    albumId: Object.prototype.hasOwnProperty.call(nextOptions, 'albumId') ? nextOptions.albumId : null
+  };
+  const orderedSongs = getSongsForSource(source);
+  const startSongId = nextOptions.startSongId || null;
+  const preserveSongId = nextOptions.preserveCurrentSong ? getCurrentSongId() : null;
+  const anchorSongId = startSongId || preserveSongId;
 
-  if (mode === 'valentina') {
-    songs = songs.filter(s => s.vocalist === 'Valentina' || (s.vocalist && s.vocalist.includes('Valentina')));
-  } else if (mode === 'jt') {
-    songs = songs.filter(s => s.vocalist === 'JT' || (s.vocalist && s.vocalist.includes('JT')));
-  } else if (mode === 'album' && filterId) {
-    songs = songs.filter(s => s.album_id === filterId);
-  } else if (mode === 'mood' && filterId) {
-    songs = songs.filter(s => (songMoodMap[s.id] || []).includes(filterId));
+  radioMode = source.mode;
+  radioQueueSource = source;
+
+  if (!orderedSongs.length) {
+    radioQueue = [];
+    radioIndex = -1;
+    resetRadioDisplay();
+    updateModeButtons();
+    updateAlbumBar();
+    queuePersistRadioState();
+    return false;
   }
 
-  radioQueue = songs;
-  shuffleArray(radioQueue);
-  radioIndex = 0;
-  updateAlbumBar(mode);
+  radioQueue = radioShuffleEnabled
+    ? buildShuffledQueue(orderedSongs, anchorSongId)
+    : orderedSongs.slice();
+
+  if (anchorSongId) {
+    const anchoredIndex = radioQueue.findIndex(song => song.id === anchorSongId);
+    radioIndex = anchoredIndex >= 0 ? anchoredIndex : 0;
+  } else if (radioIndex < 0 || radioIndex >= radioQueue.length) {
+    radioIndex = 0;
+  }
+
+  updateModeButtons();
+  updateAlbumBar();
+  syncShuffleButton();
+  queuePersistRadioState();
+  return true;
 }
 
-function updateAlbumBar(mode) {
+function updateAlbumBar() {
   const bar = document.getElementById('radioAlbumBar');
   bar.innerHTML = '';
-  if (mode === 'mood') return;
-  const albumIds = [...new Set(radioQueue.map(s => s.album_id).filter(Boolean))];
+  if (radioQueueSource.mode === 'mood') return;
+  const sourceSongs = getSongsForSource({
+    mode: radioQueueSource.mode,
+    filterId: radioQueueSource.filterId,
+    albumId: null
+  });
+  const albumIds = [...new Set(sourceSongs.map(s => s.album_id).filter(Boolean))];
   if (albumIds.length <= 1) return;
   const allBtn = document.createElement('button');
-  allBtn.className = 'album-chip active';
+  allBtn.className = 'album-chip' + (!radioQueueSource.albumId ? ' active' : '');
   allBtn.textContent = 'All Albums';
   allBtn.addEventListener('click', () => {
-    buildRadioQueue(radioMode);
-    if (radioPlaying) playCurrentTrack();
+    const rebuilt = buildRadioQueue(radioMode, radioQueueSource.filterId, {
+      albumId: null,
+      preserveCurrentSong: true
+    });
+    if (!radioPlaying && rebuilt && getCurrentSong()) {
+      renderRadioTrack(getCurrentSong(), { label: 'Ready to Play' });
+    }
   });
   bar.appendChild(allBtn);
   albumIds.forEach(aid => {
     const album = albumMap[aid];
     if (!album) return;
     const btn = document.createElement('button');
-    btn.className = 'album-chip';
+    btn.className = 'album-chip' + (radioQueueSource.albumId === aid ? ' active' : '');
     btn.textContent = album.title;
     btn.addEventListener('click', () => {
       bar.querySelectorAll('.album-chip').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      radioQueue = allSongs.filter(s => s.album_id === aid);
-      if (radioMode === 'valentina') radioQueue = radioQueue.filter(s => s.vocalist === 'Valentina' || (s.vocalist && s.vocalist.includes('Valentina')));
-      if (radioMode === 'jt') radioQueue = radioQueue.filter(s => s.vocalist === 'JT' || (s.vocalist && s.vocalist.includes('JT')));
-      shuffleArray(radioQueue);
-      radioIndex = 0;
-      if (radioPlaying) playCurrentTrack();
+      const rebuilt = buildRadioQueue(radioMode, radioQueueSource.filterId, {
+        albumId: aid,
+        preserveCurrentSong: true
+      });
+      if (!radioPlaying && rebuilt && getCurrentSong()) {
+        renderRadioTrack(getCurrentSong(), { label: 'Ready to Play' });
+      }
     });
     bar.appendChild(btn);
   });
+}
+
+function getSongsForSource(source) {
+  let songs = allSongs.filter(s => s.audio_path);
+
+  if (source.mode === 'valentina') {
+    songs = songs.filter(isValentinaSong);
+  } else if (source.mode === 'jt') {
+    songs = songs.filter(isJtSong);
+  } else if (source.mode === 'mood' && source.filterId) {
+    songs = songs.filter(s => (songMoodMap[s.id] || []).includes(source.filterId));
+  }
+
+  if (source.albumId) {
+    songs = songs.filter(s => s.album_id === source.albumId);
+  }
+
+  if (source.mode === 'mood' && source.filterId) {
+    songs.sort((a, b) => compareMoodSongs(source.filterId, a, b));
+  } else {
+    songs.sort(compareCatalogSongs);
+  }
+
+  return songs;
+}
+
+function isValentinaSong(song) {
+  return song.vocalist === 'Valentina' || (song.vocalist && song.vocalist.includes('Valentina'));
+}
+
+function isJtSong(song) {
+  return song.vocalist === 'JT' || (song.vocalist && song.vocalist.includes('JT'));
+}
+
+function getAlbumOrder(albumId) {
+  const album = albumMap[albumId];
+  return typeof album?.sort_order === 'number' ? album.sort_order : 999;
+}
+
+function getTrackOrder(song) {
+  const value = Number(song.track_number);
+  return Number.isFinite(value) ? value : 999;
 }
 
 function shuffleArray(arr) {
@@ -1294,70 +1387,296 @@ function shuffleArray(arr) {
   }
 }
 
-function playCurrentTrack() {
-  if (radioQueue.length === 0) return;
-  if (radioIndex >= radioQueue.length) radioIndex = 0;
-  const song = radioQueue[radioIndex];
+function compareCatalogSongs(a, b) {
+  const albumDiff = getAlbumOrder(a.album_id) - getAlbumOrder(b.album_id);
+  if (albumDiff) return albumDiff;
 
-  document.getElementById('radioLabel').textContent = 'Now Playing';
-  document.getElementById('radioTrack').textContent = song.title + ' \u2014 ' + song.vocalist;
+  const trackDiff = getTrackOrder(a) - getTrackOrder(b);
+  if (trackDiff) return trackDiff;
 
-  // Update radio action bar
-  var actionBar = document.getElementById('radioActionBar');
-  actionBar.style.display = 'flex';
+  const vocalistDiff = String(a.vocalist || '').localeCompare(String(b.vocalist || ''));
+  if (vocalistDiff) return vocalistDiff;
+
+  return String(a.title || '').localeCompare(String(b.title || ''));
+}
+
+function compareMoodSongs(moodId, a, b) {
+  const moodDiff = (songMoodOrder[moodId + ':' + a.id] || 999) - (songMoodOrder[moodId + ':' + b.id] || 999);
+  if (moodDiff) return moodDiff;
+  return compareCatalogSongs(a, b);
+}
+
+function buildShuffledQueue(songs, anchorSongId) {
+  const queue = songs.slice();
+  let anchor = null;
+  if (anchorSongId) {
+    const anchorIndex = queue.findIndex(song => song.id === anchorSongId);
+    if (anchorIndex >= 0) {
+      anchor = queue.splice(anchorIndex, 1)[0];
+    }
+  }
+  shuffleArray(queue);
+  return anchor ? [anchor].concat(queue) : queue;
+}
+
+function getCurrentSong() {
+  if (radioIndex < 0 || radioIndex >= radioQueue.length) return null;
+  return radioQueue[radioIndex] || null;
+}
+
+function getCurrentSongId() {
+  const song = getCurrentSong();
+  return song ? song.id : null;
+}
+
+function getTrackLabel(song, suffix) {
+  return song.title + ' \u2014 ' + song.vocalist + (suffix || '');
+}
+
+function resetRadioDisplay() {
+  document.getElementById('radioLabel').textContent = 'Click Play to Start';
+  document.getElementById('radioTrack').textContent = 'The DogMother Radio';
+  document.getElementById('radioProgress').style.width = '0%';
+  document.getElementById('radioActionBar').style.display = 'none';
+}
+
+function renderRadioTrack(song, options) {
+  const nextOptions = options || {};
+  if (!song) {
+    resetRadioDisplay();
+    return;
+  }
+
+  document.getElementById('radioLabel').textContent = nextOptions.label || (radioPlaying ? 'Now Playing' : 'Ready to Play');
+  document.getElementById('radioTrack').textContent = nextOptions.trackText || getTrackLabel(song);
+  document.getElementById('radioActionBar').style.display = 'flex';
   document.getElementById('radioNowTitle').textContent = song.title;
   document.getElementById('radioSongLink').href = '/songs/' + song.slug + '.html';
   document.getElementById('radioStoryLink').href = '/songs/' + song.slug + '.html#story';
-  document.getElementById('radioBuyBtn').onclick = function() { window.location.href = '/songs/' + song.slug + '.html#buy'; };
+  document.getElementById('radioBuyBtn').onclick = function() {
+    window.location.href = '/songs/' + song.slug + '.html#buy';
+  };
   document.getElementById('radioHeart').onclick = function() {
-    this.style.transform = 'scale(1.4)'; setTimeout(function(){ document.getElementById('radioHeart').style.transform = ''; }, 300);
+    this.style.transform = 'scale(1.4)';
+    setTimeout(function() { document.getElementById('radioHeart').style.transform = ''; }, 300);
     showToast('thanks darling for the love');
-    fetch(SB_URL + '/rest/v1/song_reactions', { method:'POST', headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'}, body:JSON.stringify({song_slug:song.slug,reaction_type:'heart'}) }).catch(function(){});
+    hmTrackReaction(song.slug, 'heart', 'radio_reaction').catch(function() {});
   };
   document.getElementById('radioFire').onclick = function() {
-    this.style.transform = 'scale(1.4)'; setTimeout(function(){ document.getElementById('radioFire').style.transform = ''; }, 300);
+    this.style.transform = 'scale(1.4)';
+    setTimeout(function() { document.getElementById('radioFire').style.transform = ''; }, 300);
     showToast('thanks for the vibe');
-    fetch(SB_URL + '/rest/v1/song_reactions', { method:'POST', headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'}, body:JSON.stringify({song_slug:song.slug,reaction_type:'fire'}) }).catch(function(){});
+    hmTrackReaction(song.slug, 'fire', 'radio_reaction').catch(function() {});
   };
 
-  const audioPath = song.audio_path || song.slug + '.mp3';
-  const audioUrl = AUDIO_BASE + encodeURIComponent(audioPath).replace(/%2F/g, '/');
-  audioEl.src = audioUrl;
-  audioEl.play().then(() => {
-    radioPlaying = true;
-    updateRadioUI();
-  }).catch(() => {
-    document.getElementById('radioTrack').textContent = song.title + ' \u2014 ' + song.vocalist + ' (audio coming soon)';
-    radioPlaying = true;
-    updateRadioUI();
-    setTimeout(() => {
-      if (radioPlaying) nextTrack();
-    }, 3000);
+  if (nextOptions.resetProgress) {
+    document.getElementById('radioProgress').style.width = '0%';
+  }
+}
+
+function syncShuffleButton() {
+  const btn = document.getElementById('radioShuffle');
+  btn.setAttribute('aria-pressed', radioShuffleEnabled ? 'true' : 'false');
+  btn.title = radioShuffleEnabled ? 'Shuffle On' : 'Shuffle Off';
+  btn.style.background = radioShuffleEnabled ? 'rgba(255,45,123,.18)' : '';
+  btn.style.color = radioShuffleEnabled ? '#ff2d7b' : '';
+  btn.style.borderColor = radioShuffleEnabled ? 'rgba(255,45,123,.5)' : '';
+}
+
+function updateModeButtons() {
+  document.querySelectorAll('.radio-mode').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.mode === radioQueueSource.mode);
   });
 }
 
-function playSongInRadio(songId) {
-  const idx = radioQueue.findIndex(s => s.id === songId);
-  if (idx >= 0) {
-    radioIndex = idx;
-  } else {
-    const song = allSongs.find(s => s.id === songId);
-    if (song) {
-      radioQueue.unshift(song);
-      radioIndex = 0;
+function clearRadioTimers() {
+  clearTimeout(radioRecoveryTimer);
+  clearTimeout(radioStallTimer);
+}
+
+function queuePersistRadioState() {
+  clearTimeout(radioPersistTimer);
+  radioPersistTimer = setTimeout(persistRadioState, 150);
+}
+
+function persistRadioState() {
+  try {
+    const song = getCurrentSong();
+    localStorage.setItem(RADIO_SESSION_KEY, JSON.stringify({
+      updatedAt: Date.now(),
+      source: radioQueueSource,
+      shuffleEnabled: radioShuffleEnabled,
+      currentSongId: song ? song.id : null,
+      currentTime: Number.isFinite(audioEl.currentTime) ? audioEl.currentTime : 0,
+      wasPlaying: radioPlaying
+    }));
+  } catch (error) {
+    console.warn('Could not persist radio session', error);
+  }
+}
+
+function restoreRadioSession() {
+  try {
+    const raw = localStorage.getItem(RADIO_SESSION_KEY);
+    if (!raw) return false;
+
+    const saved = JSON.parse(raw);
+    if (!saved || !saved.updatedAt || Date.now() - saved.updatedAt > RADIO_SESSION_TTL_MS) {
+      localStorage.removeItem(RADIO_SESSION_KEY);
+      return false;
     }
+
+    radioShuffleEnabled = saved.shuffleEnabled === true;
+    syncShuffleButton();
+
+    const restored = buildRadioQueue(
+      saved.source?.mode || 'all',
+      saved.source?.filterId || null,
+      {
+        albumId: saved.source?.albumId || null,
+        startSongId: saved.currentSongId || null
+      }
+    );
+
+    if (!restored) return false;
+
+    const song = getCurrentSong();
+    if (!song) return false;
+
+    radioPendingResumeTime = Number.isFinite(saved.currentTime) ? Math.max(0, saved.currentTime) : 0;
+    primeCurrentTrack();
+    renderRadioTrack(song, {
+      label: saved.wasPlaying ? 'Ready to Resume' : 'Ready to Play',
+      resetProgress: true
+    });
+    radioPlaying = false;
+    updateRadioUI();
+    return true;
+  } catch (error) {
+    console.warn('Could not restore radio session', error);
+    return false;
+  }
+}
+
+function primeCurrentTrack() {
+  const song = getCurrentSong();
+  if (!song) return;
+  const audioPath = song.audio_path || (song.slug + '.mp3');
+  const audioUrl = AUDIO_BASE + encodeURIComponent(audioPath).replace(/%2F/g, '/');
+  if (audioEl.src !== audioUrl) {
+    audioEl.src = audioUrl;
+  }
+  audioEl.load();
+}
+
+function playCurrentTrack(options) {
+  const nextOptions = options || {};
+  if (!radioQueue.length) {
+    if (!buildRadioQueue(radioMode || 'all', radioQueueSource.filterId, {
+      albumId: radioQueueSource.albumId
+    })) {
+      return;
+    }
+  }
+
+  if (radioIndex < 0 || radioIndex >= radioQueue.length) {
+    radioIndex = 0;
+  }
+
+  const song = getCurrentSong();
+  if (!song) return;
+
+  clearRadioTimers();
+  radioLoadToken += 1;
+  radioFailureHandled = false;
+  radioPendingResumeTime = Number.isFinite(nextOptions.resumeTime) ? Math.max(0, nextOptions.resumeTime) : 0;
+
+  renderRadioTrack(song, {
+    label: 'Loading Track',
+    resetProgress: true
+  });
+  primeCurrentTrack();
+
+  radioPlaying = true;
+  updateRadioUI();
+  queuePersistRadioState();
+
+  const currentLoadToken = radioLoadToken;
+  radioStallTimer = setTimeout(function() {
+    if (currentLoadToken === radioLoadToken) {
+      handleTrackFailure('Track load stalled');
+    }
+  }, RADIO_STALL_TIMEOUT_MS);
+
+  audioEl.play().catch(function() {
+    if (currentLoadToken === radioLoadToken) {
+      handleTrackFailure('Track failed to play');
+    }
+  });
+}
+
+function handleTrackFailure(reason) {
+  const song = getCurrentSong();
+  if (!song || radioFailureHandled) return;
+
+  radioFailureHandled = true;
+  clearRadioTimers();
+  radioConsecutiveFailures += 1;
+
+  renderRadioTrack(song, {
+    label: 'Skipping Failed Track',
+    trackText: getTrackLabel(song, ' (recovering from load failure)')
+  });
+
+  if (radioConsecutiveFailures >= Math.min(RADIO_MAX_CONSECUTIVE_FAILURES, Math.max(radioQueue.length, 1))) {
+    radioPlaying = false;
+    updateRadioUI();
+    document.getElementById('radioLabel').textContent = 'Playback Paused';
+    document.getElementById('radioTrack').textContent = 'Multiple tracks failed to load. Try a different mode or press play again.';
+    queuePersistRadioState();
+    console.warn('Radio playback paused:', reason);
+    return;
+  }
+
+  radioRecoveryTimer = setTimeout(function() {
+    if (radioQueue.length > 1) {
+      nextTrack();
+    } else {
+      radioPlaying = false;
+      updateRadioUI();
+      queuePersistRadioState();
+    }
+  }, RADIO_SKIP_DELAY_MS);
+}
+
+function playSongInRadio(songId, moodId) {
+  if (moodId) {
+    buildRadioQueue('mood', moodId, { startSongId: songId });
+    playCurrentTrack();
+    document.getElementById('radio').scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+  const existingIndex = radioQueue.findIndex(song => song.id === songId);
+  if (existingIndex >= 0) {
+    radioIndex = existingIndex;
+  } else if (buildRadioQueue('all', null, { startSongId: songId })) {
+    const fallbackIndex = radioQueue.findIndex(song => song.id === songId);
+    radioIndex = fallbackIndex >= 0 ? fallbackIndex : radioIndex;
   }
   playCurrentTrack();
   document.getElementById('radio').scrollIntoView({ behavior: 'smooth' });
 }
+
 window.playSongInRadio = playSongInRadio;
 
 function nextTrack() {
+  if (!radioQueue.length) return;
   radioIndex = (radioIndex + 1) % radioQueue.length;
   playCurrentTrack();
 }
 
 function prevTrack() {
+  if (!radioQueue.length) return;
   radioIndex = (radioIndex - 1 + radioQueue.length) % radioQueue.length;
   playCurrentTrack();
 }
@@ -1372,60 +1691,161 @@ function updateRadioUI() {
     btn.innerHTML = '&#9654;';
     eq.classList.add('paused');
   }
+  syncShuffleButton();
 }
 
 // Radio button events
 document.getElementById('radioBtn').addEventListener('click', () => {
-  if (!radioPlaying && radioIndex === -1) {
-    buildRadioQueue('all');
+  if (!radioPlaying && (!audioEl.src || radioIndex === -1)) {
+    if (!radioQueue.length) {
+      buildRadioQueue(radioMode || 'all', radioQueueSource.filterId, {
+        albumId: radioQueueSource.albumId
+      });
+    }
     playCurrentTrack();
   } else if (radioPlaying) {
     radioPlaying = false;
     audioEl.pause();
+    document.getElementById('radioLabel').textContent = 'Paused';
     updateRadioUI();
+    queuePersistRadioState();
   } else {
     radioPlaying = true;
-    audioEl.play().catch(() => {});
+    document.getElementById('radioLabel').textContent = 'Resuming';
+    audioEl.play().catch(function() {
+      handleTrackFailure('Resume failed');
+    });
     updateRadioUI();
+    queuePersistRadioState();
   }
 });
 
 document.getElementById('radioNext').addEventListener('click', nextTrack);
 document.getElementById('radioPrev').addEventListener('click', prevTrack);
 document.getElementById('radioShuffle').addEventListener('click', () => {
-  shuffleArray(radioQueue);
-  radioIndex = 0;
-  playCurrentTrack();
+  const currentSongId = getCurrentSongId();
+  radioShuffleEnabled = !radioShuffleEnabled;
+  buildRadioQueue(radioMode || 'all', radioQueueSource.filterId, {
+    albumId: radioQueueSource.albumId,
+    startSongId: currentSongId
+  });
+  if (getCurrentSong()) {
+    renderRadioTrack(getCurrentSong(), {
+      label: radioPlaying ? 'Now Playing' : 'Ready to Play'
+    });
+  }
+  queuePersistRadioState();
 });
 
-audioEl.addEventListener('ended', nextTrack);
+audioEl.addEventListener('loadedmetadata', () => {
+  if (radioPendingResumeTime > 0) {
+    const safeResumeTime = Math.min(
+      radioPendingResumeTime,
+      Math.max((audioEl.duration || radioPendingResumeTime) - 1, 0)
+    );
+    try {
+      audioEl.currentTime = safeResumeTime;
+    } catch (error) {
+      console.warn('Could not restore radio time', error);
+    }
+    radioPendingResumeTime = 0;
+  }
+});
+
+audioEl.addEventListener('playing', () => {
+  clearTimeout(radioStallTimer);
+  radioConsecutiveFailures = 0;
+  radioFailureHandled = false;
+  const song = getCurrentSong();
+  if (song) {
+    renderRadioTrack(song, { label: 'Now Playing' });
+  }
+  updateRadioUI();
+  queuePersistRadioState();
+});
+
+audioEl.addEventListener('ended', () => {
+  clearRadioTimers();
+  nextTrack();
+});
+
+audioEl.addEventListener('error', () => {
+  handleTrackFailure('Audio error');
+});
+
+audioEl.addEventListener('stalled', () => {
+  if (!radioPlaying) return;
+  clearTimeout(radioStallTimer);
+  const currentLoadToken = radioLoadToken;
+  radioStallTimer = setTimeout(function() {
+    if (currentLoadToken === radioLoadToken) {
+      handleTrackFailure('Track stalled');
+    }
+  }, RADIO_STALL_TIMEOUT_MS);
+});
 
 audioEl.addEventListener('timeupdate', () => {
   if (audioEl.duration) {
     document.getElementById('radioProgress').style.width = (audioEl.currentTime / audioEl.duration * 100) + '%';
   }
+  queuePersistRadioState();
 });
 
 // Mode buttons
 document.querySelectorAll('.radio-mode').forEach(btn => {
   btn.addEventListener('click', function() {
-    document.querySelectorAll('.radio-mode').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
     const mode = this.dataset.mode;
     if (mode === 'mood') {
+      updateModeButtons();
       document.getElementById('moods').scrollIntoView({ behavior: 'smooth' });
       return;
     }
     buildRadioQueue(mode);
-    if (radioPlaying) playCurrentTrack();
+    if (radioPlaying) {
+      playCurrentTrack();
+    } else if (getCurrentSong()) {
+      renderRadioTrack(getCurrentSong(), { label: 'Ready to Play' });
+    }
   });
 });
 
 /* ============================================
    QUICK REACT — Lips + Fire reactions
    ============================================ */
-var HM_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78';
-var HM_API_URL = 'https://pxcxtnabyydhbfbholvh.supabase.co/rest/v1/song_reactions';
+var HM_PUBLIC_INTAKE_URL = 'https://pxcxtnabyydhbfbholvh.supabase.co/functions/v1/public-intake';
+var HM_COUNT_URL = HM_PUBLIC_INTAKE_URL + '?kind=song_reactions_total';
+function hmGetStorageValue(storage, key) { try { return storage.getItem(key) || null; } catch (e) { return null; } }
+function hmSetStorageValue(storage, key, value) { try { storage.setItem(key, value); } catch (e) {} }
+function hmGetSessionId() {
+  var existing = hmGetStorageValue(sessionStorage, 'hm_session');
+  if (existing) return existing;
+  var next = 'ses_' + Math.random().toString(36).slice(2, 14) + '_' + Date.now();
+  hmSetStorageValue(sessionStorage, 'hm_session', next);
+  return next;
+}
+function hmGetFingerprint() {
+  return hmGetStorageValue(localStorage, 'hm_fp') || hmGetStorageValue(sessionStorage, 'hm_fp');
+}
+function hmTrackReaction(slug, type, source) {
+  return fetch(HM_PUBLIC_INTAKE_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      kind: 'song_reaction',
+      song_slug: slug,
+      reaction_type: type,
+      fingerprint: hmGetFingerprint(),
+      session_id: hmGetSessionId(),
+      page_url: location.pathname,
+      referrer: document.referrer || null,
+      user_agent: navigator.userAgent || null,
+      event_source: source || 'homepage_reaction'
+    }),
+    keepalive: true
+  });
+}
 
 function quickReact(slug, type) {
   var btn = event.target.closest('.sa-react');
@@ -1446,24 +1866,15 @@ function quickReact(slug, type) {
     ? ['thanks for the vibe', 'you feel that too?', "that's the energy"]
     : ['thanks darling for the love', 'love you for that', 'you get me'];
   showToast(msgs[Math.floor(Math.random() * msgs.length)]);
-  fetch(HM_API_URL, {
-    method: 'POST',
-    headers: {
-      'apikey': HM_ANON_KEY,
-      'Authorization': 'Bearer ' + HM_ANON_KEY,
-      'Content-Type': 'application/json',
-      'Prefer': 'return=minimal'
-    },
-    body: JSON.stringify({song_slug: slug, reaction_type: type})
-  });
+  hmTrackReaction(slug, type, 'homepage_reaction');
 }
 
 // Fetch total reactions and display
 (function loadTotalReactions() {
-  fetch(HM_API_URL + '?select=id', {
-    headers: {'apikey': HM_ANON_KEY}
-  }).then(function(r) { return r.json(); }).then(function(data) {
-    var total = 125600 + (data.length || 0);
+  fetch(HM_COUNT_URL)
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+    var total = 125600 + ((data && data.count) || 0);
     var el = document.getElementById('totalReactions');
     if (el) el.textContent = total.toLocaleString() + '+';
     var lbl = document.getElementById('totalReactionsLabel');
