@@ -223,7 +223,7 @@
 <script>
 (function(){
   var AUDIO_BASE = 'https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/';
-  var DL_ICON = '\u2B07';
+  var DL_ICON = '⬇';
 
   var allSongs = [
     {t:"Almost Called",p:"Album Collections/BEACH VIBES/NEW MEXICO SONGS/Untitled folder/SAD SONGS GRIEF TEARS/Almost called (1).mp3"},
@@ -307,13 +307,46 @@
     {t:"Zero Rips Left",p:"Album Collections/BEACH VIBES/zero-rips-left.mp3"}
   ];
 
+  // PuppySongs — the 14-song puppy pack for buyers arriving from PuppyFM Radio (?pack=puppy).
+  // These live in the howls-music bucket, so each entry carries an absolute `u` url.
+  var PUPPY_BASE = 'https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/';
+  var PUPPY_SONGS = [
+    {t:"Will You Be My Friend",u:PUPPY_BASE+"WILL%20YOU%20BE%20MY%20FRIEND.wav"},
+    {t:"Trouble Trouble Pup",u:PUPPY_BASE+"Trouble%20Trouble%20Pup.wav"},
+    {t:"Uh Oh I Did It Again",u:PUPPY_BASE+"Zoomies%20In%20The%20House.wav"},
+    {t:"Spurs",u:PUPPY_BASE+"Spurs.mp3"},
+    {t:"Puppy Kisses",u:PUPPY_BASE+"Puppy%20Kisses.wav"},
+    {t:"Booty Boom Boom",u:PUPPY_BASE+"Booty%20Boom%20Boom.wav"},
+    {t:"Fleas",u:PUPPY_BASE+"FLEAS.wav"},
+    {t:"Hungry Eyes",u:PUPPY_BASE+"HUNGRY%20EYES%20(1).wav"},
+    {t:"I'm Begging You",u:PUPPY_BASE+"I'm%20Begging%20You.wav"},
+    {t:"Look in My Eyes",u:PUPPY_BASE+"Look%20in%20My%20Eyes.wav"},
+    {t:"My Bed Ain't Mine",u:PUPPY_BASE+"My%20Bed%20Aint%20Mine.wav"},
+    {t:"Drown Me in Slobbery Kisses",u:PUPPY_BASE+"Drown%20Me%20in%20Slobbery%20Kisses.wav"},
+    {t:"Puppy Christmas",u:PUPPY_BASE+"Puppy%20Christmas.wav"},
+    {t:"Slobbery Kiss",u:PUPPY_BASE+"SLOBBERY%20KISS%20.wav"}
+  ];
+
   var params = new URLSearchParams(window.location.search);
   var tier = parseInt(params.get('tier')) || 3;
   var prices = {3:'$4.99', 5:'$6.99', 10:'$9.99'};
+  var pack = (params.get('pack')||'').toLowerCase();
+  var songs = pack==='puppy' ? PUPPY_SONGS : allSongs;
 
-  document.getElementById('tierSub').textContent = tier + ' songs \u00B7 ' + (prices[tier] || '$4.99');
+  if (pack === 'puppy') {
+    document.title = 'PuppySongs | PuppyFM — Download | Howling Moon Music';
+    document.querySelector('.header h1').textContent = 'PuppySongs | PuppyFM';
+    var pfmNote = document.createElement('p');
+    pfmNote.className = 'sub';
+    pfmNote.style.color = 'var(--pink-l)';
+    pfmNote.style.marginTop = '.4rem';
+    pfmNote.textContent = '🐾 As heard on PuppyFM Radio — pick your songs below';
+    document.querySelector('.header').appendChild(pfmNote);
+  }
+
+  document.getElementById('tierSub').textContent = tier + ' songs · ' + (prices[tier] || '$4.99');
   document.getElementById('maxCount').textContent = tier;
-  document.getElementById('totalSongs').textContent = allSongs.length + ' songs';
+  document.getElementById('totalSongs').textContent = songs.length + ' songs';
 
   var selected = 0;
   var body = document.getElementById('songListBody');
@@ -343,8 +376,8 @@
     }
   }
 
-  allSongs.forEach(function(song, i) {
-    var url = encPath(song.p);
+  songs.forEach(function(song, i) {
+    var url = song.u ? song.u : encPath(song.p);
     var row = document.createElement('div');
     row.className = 'song-row';
 
