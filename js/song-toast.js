@@ -38,3 +38,22 @@
     };
   });
 })();
+
+/* PuppyReports crosslinks (CEO 2026-07-02) — DOG SONG pages only: "As heard on PuppyFM Radio |
+   PuppyHowls" + Search-for-a-Puppy + PuppyHowls|PuppyFM buttons, inserted above the viral footer.
+   Non-dog songs are untouched (slug allowlist). */
+(function(){
+  var DOG_SLUGS = ['puppy-kisses','booty-boom-boom','spurs','drown-me-in-slobbery-kisses','my-bed-aint-mine','bigfoot-lives-here','slobbery-kiss','christmas-puppy','trouble-trouble-pup','will-you-be-my-friend','zoomies-in-the-house'];
+  var slug = location.pathname.split('/').pop().replace('.html','');
+  if (DOG_SLUGS.indexOf(slug) < 0) return;
+  var box = document.createElement('div');
+  box.style.cssText = 'max-width:1100px;margin:2.5rem auto 0;padding:1.5rem;text-align:center;border:1px solid rgba(253,203,110,.3);border-radius:12px;background:rgba(253,203,110,.06);font-family:Inter,-apple-system,sans-serif';
+  box.innerHTML = '<p style="color:#c4b8a8;font-size:.95rem;margin:0 0 1rem">&#128251; As heard on <strong style="color:#fdcb6e">PuppyFM Radio</strong> | PuppyHowls &mdash; finally, social media for dogs</p>'
+    + '<div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">'
+    + '<a href="https://www.puppyreports.com/search" target="_blank" rel="noopener" style="display:inline-block;background:linear-gradient(135deg,#fdcb6e,#f39c12);color:#0d0b0f;padding:.6rem 1.4rem;border-radius:20px;font-size:.85rem;font-weight:700;text-decoration:none">&#128269; Search for a Puppy on PuppyReports</a>'
+    + '<a href="https://www.puppyreports.com/howls" target="_blank" rel="noopener" style="display:inline-block;border:1px solid #fdcb6e;color:#fdcb6e;padding:.6rem 1.4rem;border-radius:20px;font-size:.85rem;font-weight:600;text-decoration:none">&#128251; PuppyHowls | PuppyFM Radio</a>'
+    + '</div>';
+  var anchor = document.querySelector('.viral-footer') || document.querySelector('.footer');
+  if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(box, anchor);
+  else document.body.appendChild(box);
+})();
