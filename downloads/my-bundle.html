@@ -120,6 +120,14 @@
       padding: .2rem .6rem; border-radius: 20px;
     }
 
+    .section-label {
+      font-size: .7rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--text-s);
+      padding: .9rem 0 .35rem;
+    }
+    .section-label.puppy { color: var(--pink-l); padding-top: .1rem; }
+
     .song-row {
       display: flex;
       align-items: center;
@@ -331,7 +339,11 @@
   var tier = parseInt(params.get('tier')) || 3;
   var prices = {3:'$4.99', 5:'$6.99', 10:'$9.99'};
   var pack = (params.get('pack')||'').toLowerCase();
-  var songs = pack==='puppy' ? PUPPY_SONGS : allSongs;
+  // Default catalog: the 14 PuppySongs pinned on top, then the rest of the catalog
+  // (minus the 6 puppy titles it already carried, so nothing lists twice).
+  var HOISTED = {"Booty Boom Boom":1, "Christmas Puppy":1, "Drown Me in Slobbery Kisses":1, "Puppy Kisses":1, "Slobbery Kiss":1, "Spurs":1};
+  var restSongs = allSongs.filter(function(s){ return !HOISTED[s.t]; });
+  var songs = pack==='puppy' ? PUPPY_SONGS : PUPPY_SONGS.concat(restSongs);
 
   if (pack === 'puppy') {
     document.title = 'PuppySongs | PuppyFM — Download | Howling Moon Music';
@@ -376,7 +388,16 @@
     }
   }
 
+  function addLabel(text, cls) {
+    var el = document.createElement('div');
+    el.className = 'section-label' + (cls ? ' ' + cls : '');
+    el.textContent = text;
+    body.appendChild(el);
+  }
+  if (pack !== 'puppy') addLabel('🐾 PuppySongs | PuppyFM', 'puppy');
+
   songs.forEach(function(song, i) {
+    if (pack !== 'puppy' && i === PUPPY_SONGS.length) addLabel('Full Catalog');
     var url = song.u ? song.u : encPath(song.p);
     var row = document.createElement('div');
     row.className = 'song-row';
