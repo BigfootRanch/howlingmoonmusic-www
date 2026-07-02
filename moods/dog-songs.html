@@ -58,16 +58,16 @@
     :root {
       --bg: #0d0b0f; --bg2: #15121a; --bg3: #1c1823; --card: #1a1622;
       --gold: #b8922f; --gold-l: #d4ae48; --pink: #ff2d7b; --pink-l: #ff5a9e;
-      --cream: #faf6f0; --ts: #c4b8a8; --tm: #8a7e70;
-      --border: rgba(184,146,47,.15);
+      --cream: #ffffff; --ts: #ded6ee; --tm: #a79bc0;
+      --border: rgba(255,90,158,.18);
       --font-d: 'Playfair Display', Georgia, serif; --font-b: 'Inter', -apple-system, sans-serif;
       --max-w: 1100px; --nav-h: 68px;
-      --mood-accent: #fdcb6e; --mood-glow: rgba(253,203,110,.12);
+      --mood-accent: #ff5a9e; --mood-glow: rgba(255,90,158,.14);
     }
     html { scroll-behavior: smooth; font-size: 16px; }
     body { font-family: var(--font-b); background: var(--bg); color: var(--cream); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
     a { color: var(--mood-accent); text-decoration: none; transition: color .3s; }
-    a:hover { color: var(--pink); }
+    a:hover { color: #2dd4bf; }
     img { max-width: 100%; display: block; }
     h1,h2,h3,h4 { font-family: var(--font-d); font-weight: 500; line-height: 1.2; }
     .container { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem; }
@@ -88,7 +88,7 @@
     .mood-hero::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, var(--mood-glow) 0%, transparent 70%); pointer-events: none; }
     .mood-hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); color: var(--cream); margin-bottom: 1rem; position: relative; }
     .mood-hero h1 span { color: var(--mood-accent); }
-    .mood-hero .mood-count { display: inline-block; background: var(--mood-glow); border: 1px solid rgba(253,203,110,.3); color: var(--mood-accent); padding: .35rem 1.2rem; border-radius: 20px; font-size: .85rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1.5rem; }
+    .mood-hero .mood-count { display: inline-block; background: rgba(45,212,191,.08); border: 1px solid rgba(45,212,191,.5); color: #2dd4bf; padding: .35rem 1.2rem; border-radius: 20px; font-size: .85rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1.5rem; }
     .mood-hero .mood-intro { max-width: 700px; margin: 0 auto; color: var(--ts); font-size: 1.1rem; line-height: 1.8; position: relative; }
     .mood-back { display: inline-flex; align-items: center; gap: .5rem; color: var(--tm); font-size: .9rem; margin-bottom: 2rem; }
     .mood-back:hover { color: var(--pink); }
@@ -98,12 +98,12 @@
     .song-grid { display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
     .song-row { display: grid; grid-template-columns: auto 1fr auto; gap: 1.5rem; align-items: center; padding: 1.25rem 1.5rem; background: var(--card); transition: background .3s; }
     .song-row:hover { background: var(--bg3); }
-    .song-row__num { font-size: .85rem; color: var(--tm); font-weight: 600; min-width: 2rem; text-align: center; }
+    .song-row__num { font-size: .85rem; color: #2dd4bf; font-weight: 600; min-width: 2rem; text-align: center; }
     .song-row__info h3 { font-family: var(--font-d); font-size: 1.15rem; color: var(--cream); margin-bottom: .25rem; font-weight: 500; }
     .song-row__info h3 a { color: var(--cream); } .song-row__info h3 a:hover { color: var(--mood-accent); }
     .song-row__info p { font-size: .88rem; color: var(--tm); max-width: none; line-height: 1.5; }
-    .song-row__play { display: inline-flex; align-items: center; gap: .5rem; background: linear-gradient(135deg, var(--mood-accent), #f39c12); color: var(--bg); padding: .5rem 1.25rem; border-radius: 20px; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; transition: transform .2s, box-shadow .3s; white-space: nowrap; }
-    .song-row__play:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--mood-glow); color: var(--bg); }
+    .song-row__play { display: inline-flex; align-items: center; gap: .5rem; background: linear-gradient(135deg, #ff2d7b, #b23bff); color: #fff; padding: .5rem 1.25rem; border-radius: 20px; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; transition: transform .2s, box-shadow .3s; white-space: nowrap; }
+    .song-row__play:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(255,45,123,.45); color: #fff; }
     .song-row__play svg { width: 14px; height: 14px; fill: currentColor; }
     @media (max-width: 600px) { .song-row { grid-template-columns: 1fr; gap: .75rem; padding: 1rem 1.25rem; } .song-row__num { display: none; } .song-row__play { justify-self: start; } }
     .cross-links { padding: 4rem 0; border-top: 1px solid var(--border); }
@@ -121,7 +121,7 @@
     .signup-form input[type="email"] { flex: 1; min-width: 240px; padding: .85rem 1.25rem; border: 1px solid var(--border); border-radius: 8px; background: var(--card); color: var(--cream); font-size: 1rem; font-family: var(--font-b); outline: none; }
     .signup-form input[type="email"]:focus { border-color: var(--mood-accent); }
     .signup-form input[type="email"]::placeholder { color: var(--tm); }
-    .signup-form button { padding: .85rem 2rem; background: linear-gradient(135deg, var(--mood-accent), #f39c12); color: var(--bg); border: none; border-radius: 8px; font-size: .95rem; font-weight: 700; cursor: pointer; font-family: var(--font-b); text-transform: uppercase; letter-spacing: 1px; transition: transform .2s, box-shadow .3s; }
+    .signup-form button { padding: .85rem 2rem; background: linear-gradient(135deg, #ff2d7b, #b23bff); color: #fff; border: none; border-radius: 8px; font-size: .95rem; font-weight: 700; cursor: pointer; font-family: var(--font-b); text-transform: uppercase; letter-spacing: 1px; transition: transform .2s, box-shadow .3s; }
     .signup-form button:hover { transform: scale(1.03); box-shadow: 0 0 24px var(--mood-glow); }
     .mood-footer { padding: 2rem 0; text-align: center; border-top: 1px solid var(--border); color: var(--tm); font-size: .85rem; }
     .mood-footer a { color: var(--ts); } .mood-footer a:hover { color: var(--pink); }
@@ -154,14 +154,14 @@
 
 <section class="mood-hero">
   <div class="container">
-    <a href="/music.html" class="mood-back">&larr; All Music</a> <a href="/moods/dog-songs.html" style="display:inline-flex;align-items:center;margin-left:.6rem;margin-bottom:2rem;border:1px solid var(--mood-accent);color:var(--mood-accent);padding:.25rem 1rem;border-radius:20px;font-size:.85rem;font-weight:600">&#128062; PuppySongs</a>
+    <a href="/music.html" class="mood-back">&larr; All Music</a> <a href="/moods/dog-songs.html" style="display:inline-flex;align-items:center;margin-left:.6rem;margin-bottom:2rem;border:1px solid #2dd4bf;color:#2dd4bf;padding:.25rem 1rem;border-radius:20px;font-size:.85rem;font-weight:600">&#128062; PuppySongs</a>
     <div class="mood-count">15 Songs</div>
     <h1><span>Puppy</span> Dog Songs</h1>
     <p class="mood-intro">If your dog is your whole personality, this is your playlist. From slobber to spurs to full-on bed theft, these songs capture the beautiful chaos of life with dogs. Written by someone who shares her bed with Leonbergers and has zero regrets.</p>
     <p style="margin-top:1.25rem;position:relative;color:var(--ts);font-size:.95rem">&#128251; As heard on <strong style="color:var(--mood-accent)">PuppyFM Radio</strong> | PuppyHowls &mdash; finally, social media for dogs</p>
     <p style="margin-top:.9rem;position:relative;display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
-      <a href="https://www.puppyreports.com/search" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.45rem;background:linear-gradient(135deg,var(--mood-accent),#f39c12);color:var(--bg);padding:.45rem 1.4rem;border-radius:20px;font-size:.85rem;font-weight:700"><img src="https://www.puppyreports.com/assets/branding/2026/puppyreports-shield-glossy.jpg" alt="PuppyReports" style="height:20px;width:20px;border-radius:5px;display:inline-block">Search for a Puppy on PuppyReports</a>
-      <a href="https://www.puppyreports.com/howls" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.45rem;border:1px solid var(--mood-accent);color:var(--mood-accent);padding:.45rem 1.4rem;border-radius:20px;font-size:.85rem;font-weight:600"><img src="https://www.puppyreports.com/assets/branding/2026/puppyhowls-mark.jpg" alt="PuppyHowls" style="height:20px;width:20px;border-radius:5px;display:inline-block">PuppyHowls | PuppyFM Radio</a>
+      <a href="https://www.puppyreports.com/search" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.45rem;background:linear-gradient(135deg,#ff2d7b,#b23bff);color:#fff;padding:.45rem 1.4rem;border-radius:20px;font-size:.85rem;font-weight:700"><img src="https://www.puppyreports.com/assets/branding/2026/puppyreports-shield-glossy.jpg" alt="PuppyReports" style="height:20px;width:20px;border-radius:5px;display:inline-block">Search for a Puppy on PuppyReports</a>
+      <a href="https://www.puppyreports.com/howls" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.45rem;border:1px solid #2dd4bf;color:#2dd4bf;padding:.45rem 1.4rem;border-radius:20px;font-size:.85rem;font-weight:600"><img src="https://www.puppyreports.com/assets/branding/2026/puppyhowls-mark.jpg" alt="PuppyHowls" style="height:20px;width:20px;border-radius:5px;display:inline-block">PuppyHowls | PuppyFM Radio</a>
     </p>
   </div>
 </section>
