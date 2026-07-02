@@ -43,7 +43,7 @@
    PuppyHowls" + Search-for-a-Puppy + PuppyHowls|PuppyFM buttons, inserted above the viral footer.
    Non-dog songs are untouched (slug allowlist). */
 (function(){
-  var DOG_SLUGS = ['puppy-kisses','booty-boom-boom','spurs','drown-me-in-slobbery-kisses','my-bed-aint-mine','bigfoot-lives-here','slobbery-kiss','christmas-puppy','trouble-trouble-pup','will-you-be-my-friend','zoomies-in-the-house','fleas'];
+  var DOG_SLUGS = ['puppy-kisses','booty-boom-boom','spurs','drown-me-in-slobbery-kisses','my-bed-aint-mine','bigfoot-lives-here','slobbery-kiss','christmas-puppy','trouble-trouble-pup','will-you-be-my-friend','zoomies-in-the-house','fleas','hungry-eyes','im-begging-you','look-in-my-eyes'];
   var slug = location.pathname.split('/').pop().replace('.html','');
   if (DOG_SLUGS.indexOf(slug) < 0) return;
   var box = document.createElement('div');
