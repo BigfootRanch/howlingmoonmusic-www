@@ -53,6 +53,18 @@
     + '<a href="https://www.puppyreports.com/search" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.45rem;background:linear-gradient(135deg,#fdcb6e,#f39c12);color:#0d0b0f;padding:.5rem 1.4rem;border-radius:20px;font-size:.85rem;font-weight:700;text-decoration:none"><img src="https://www.puppyreports.com/assets/branding/2026/puppyreports-shield-glossy.jpg" alt="PuppyReports" style="height:20px;width:20px;border-radius:5px;display:inline-block">Search for a Puppy on PuppyReports</a>'
     + '<a href="https://www.puppyreports.com/howls" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.45rem;border:1px solid #fdcb6e;color:#fdcb6e;padding:.5rem 1.4rem;border-radius:20px;font-size:.85rem;font-weight:600;text-decoration:none"><img src="https://www.puppyreports.com/assets/branding/2026/puppyhowls-mark.jpg" alt="PuppyHowls" style="height:20px;width:20px;border-radius:5px;display:inline-block">PuppyHowls | PuppyFM Radio</a>'
     + '</div>';
+  // CEO 2026-07-02: every dog song page shows BOTH nav chips: "back to All Music" + a PuppySongs button.
+  var back = document.querySelector('.back-link');
+  if (back && !document.getElementById('hm-puppysongs-btn')) {
+    back.setAttribute('href', '/music.html');
+    back.innerHTML = '&larr; All Music';
+    var ps = document.createElement('a');
+    ps.id = 'hm-puppysongs-btn';
+    ps.href = '/moods/dog-songs.html';
+    ps.innerHTML = '&#128062; PuppySongs';
+    ps.style.cssText = 'display:inline-block;margin-left:.9rem;border:1px solid #fdcb6e;color:#fdcb6e;padding:.25rem 1rem;border-radius:20px;font-size:.85rem;font-weight:600;text-decoration:none';
+    back.parentNode.insertBefore(ps, back.nextSibling);
+  }
   var anchor = document.querySelector('.viral-footer') || document.querySelector('.footer');
   if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(box, anchor);
   else document.body.appendChild(box);
