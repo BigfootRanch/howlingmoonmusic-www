@@ -336,6 +336,26 @@
   ];
 
   var params = new URLSearchParams(window.location.search);
+
+  // Download tracking beacon — logs each download click to Supabase so
+  // purchases with delivered songs are visible to support/refund tooling.
+  var LOG_URL = 'https://pxcxtnabyydhbfbholvh.supabase.co/functions/v1/log-download';
+  function logDownload(songTitle) {
+    try {
+      var payload = JSON.stringify({
+        song_title: songTitle,
+        payment_ref: params.get('session_id') || params.get('client_reference_id') || params.get('ref') || null,
+        email: params.get('email') || null,
+        page: 'my-bundle'
+      });
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(LOG_URL, new Blob([payload], { type: 'text/plain' }));
+      } else {
+        fetch(LOG_URL, { method: 'POST', body: payload, keepalive: true, headers: { 'Content-Type': 'text/plain' } });
+      }
+    } catch (e) { /* logging must never block a download */ }
+  }
+
   var tier = parseInt(params.get('tier')) || 3;
   var prices = {3:'$4.99', 5:'$6.99', 10:'$9.99'};
   var pack = (params.get('pack')||'').toLowerCase();
@@ -420,6 +440,7 @@
     dl.setAttribute('download', '');
     dl.className = 'dl-btn';
     dl.textContent = DL_ICON + ' Download';
+    dl.addEventListener('click', function() { logDownload(song.t); });
 
     row.appendChild(cb);
     row.appendChild(title);
