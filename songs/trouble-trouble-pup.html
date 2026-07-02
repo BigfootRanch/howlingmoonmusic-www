@@ -276,6 +276,7 @@ var SB_URL='https://pxcxtnabyydhbfbholvh.supabase.co';
 var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78';
 var SONG_SLUG='trouble-trouble-pup';
 
+function escapeHtml(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
 function loadComments(){
   fetch(SB_URL+'/rest/v1/song_comments?song_slug=eq.'+SONG_SLUG+'&is_approved=eq.true&order=created_at.desc&limit=20',{headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY}})
   .then(function(r){return r.json()})
@@ -285,7 +286,7 @@ function loadComments(){
     el.innerHTML='';
     data.forEach(function(c){
       var d=document.createElement('div');d.className='campfire-comment';
-      d.innerHTML='<strong class="campfire-author">'+c.author_name+'</strong><p>'+c.message+'</p><span class="campfire-time">'+new Date(c.created_at).toLocaleDateString()+'</span>';
+      d.innerHTML='<strong class="campfire-author">'+escapeHtml(c.author_name)+'</strong><p>'+escapeHtml(c.message)+'</p><span class="campfire-time">'+escapeHtml(new Date(c.created_at).toLocaleDateString())+'</span>';
       el.appendChild(d);
     });
   }).catch(function(){});
@@ -302,7 +303,7 @@ function submitComment(e){
     document.getElementById('campfireMsg').value='';
     var el=document.getElementById('campfireComments');
     var d=document.createElement('div');d.className='campfire-comment campfire-pending';
-    d.innerHTML='<strong class="campfire-author">'+name+'</strong><p>'+msg+'</p><span class="campfire-time">Waiting for approval</span>';
+    d.innerHTML='<strong class="campfire-author">'+escapeHtml(name)+'</strong><p>'+escapeHtml(msg)+'</p><span class="campfire-time">Waiting for approval</span>';
     el.insertBefore(d,el.firstChild);
   });
   return false;
