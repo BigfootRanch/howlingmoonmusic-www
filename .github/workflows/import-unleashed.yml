@@ -13,12 +13,12 @@ jobs:
       - name: Fetch and verify payload
         run: |
           curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/unleashed-pages.tar.gz"
-          echo "30b1fa8139ede6ee03bdac3d798fc6816735f27b2b5bd6b39ee491e25ce2a2ea  /tmp/pages.tar.gz" | sha256sum -c -
+          echo "db7fa55e5d1dd1ac5cdc3fc50077c1f8aa813ee5e9be86d89ba43a4254fc40dd  /tmp/pages.tar.gz" | sha256sum -c -
           tar xzf /tmp/pages.tar.gz -C .
       - name: Commit pages
         run: |
           git config user.name "howling-moon-bot"
           git config user.email "actions@users.noreply.github.com"
           git add unleashed.html sitemap.xml songs/
-          git diff --cached --quiet || git commit -m "UNLEASHED album page + 15 SEO song pages (full lyrics, HyperFollow, Apple id fix)"
+          git diff --cached --quiet || git commit -m "UNLEASHED pages v2 — CashApp stripped (account deactivated)"
           git push
