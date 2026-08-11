@@ -47,6 +47,7 @@
 function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9nEqf','beach-vibes':'price_1TGmpFPY5LxVsiI51TqL0oZi','road-trip':'price_1TGmpQPY5LxVsiI5r6g6g3LP','healing':'price_1TGmpaPY5LxVsiI59hdVPCop','sleep-relax':'price_1TGmplPY5LxVsiI5dAOUr9Vb','420-pack':'price_1TGmpwPY5LxVsiI5IeDnPLo2','villain-album':'price_1TGmq6PY5LxVsiI5OkJsGT1i','rainbow-album':'price_1TGmqHPY5LxVsiI5NcMGfh3R','genx-album':'price_1TGmqSPY5LxVsiI5wbv7MFDp','christmas-album':'price_1TGmqdPY5LxVsiI5OdWO5dsi'};var priceId=prices[slug];if(!priceId){alert('Bundle not found: '+slug);return;}var s=document.createElement('script');s.src='https://js.stripe.com/v3/';s.onload=function(){Stripe('pk_live_51TGmT8PY5LxVsiI5diLmOi0Fq1x7yh2buFo2UZbhvD6mVv0LqOnpG7LJ8dxMaZyorCPav1YCWM1oKz5QlF4Uzp5X003y4isVcf').redirectToCheckout({lineItems:[{price:priceId,quantity:1}],mode:'payment',successUrl:'https://howlingmoonmusic.com/downloads/'+slug+'.html',cancelUrl:'https://howlingmoonmusic.com/music.html'}).then(function(r){if(r.error)alert(r.error.message);});};document.head.appendChild(s);}
 </script>
 <script src="/js/buy-music.js" defer></script>
+<style>@media(max-width:900px){.hm-panel-cols{column-count:1!important;padding:1rem 1.1rem!important;}}</style>
 </head>
 <body>
 
@@ -262,7 +263,7 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
             <a class="unl-tt" href="/songs/dogs-have-never.html">Dogs Have Never</a>
             <button onclick="quickReact('unl-dogs-have-never','heart')" title="Love it" class="unl-react">&#x1F48B;</button>
             <button onclick="quickReact('unl-dogs-have-never','fire')" title="Fire" class="unl-react">&#x1F525;</button>
-            <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" class="unl-buy">$</a>
+            <button class="unl-buy" onclick="hmBuyMenu(event,'unleashed')" title="Own this song &mdash; bundles from $4.99">$</button>
             <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" class="unl-str">&#x1F3B5;</a>
           </div>
 <div class="unl-row">
@@ -271,7 +272,7 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
             <a class="unl-tt" href="/songs/i-aint-picking-up-your-shit-no-more.html">I Ain&rsquo;t Picking Up Your Shit No More</a>
             <button onclick="quickReact('unl-i-aint-picking-up-your-shit-no-more','heart')" title="Love it" class="unl-react">&#x1F48B;</button>
             <button onclick="quickReact('unl-i-aint-picking-up-your-shit-no-more','fire')" title="Fire" class="unl-react">&#x1F525;</button>
-            <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" class="unl-buy">$</a>
+            <button class="unl-buy" onclick="hmBuyMenu(event,'unleashed')" title="Own this song &mdash; bundles from $4.99">$</button>
             <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" class="unl-str">&#x1F3B5;</a>
           </div>
 <div class="unl-row">
@@ -280,7 +281,7 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
             <a class="unl-tt" href="/songs/brown-eyes-say.html">Brown Eyes Say (Baby Let It Go)</a>
             <button onclick="quickReact('unl-brown-eyes-say','heart')" title="Love it" class="unl-react">&#x1F48B;</button>
             <button onclick="quickReact('unl-brown-eyes-say','fire')" title="Fire" class="unl-react">&#x1F525;</button>
-            <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" class="unl-buy">$</a>
+            <button class="unl-buy" onclick="hmBuyMenu(event,'unleashed')" title="Own this song &mdash; bundles from $4.99">$</button>
             <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" class="unl-str">&#x1F3B5;</a>
           </div>
 <div class="unl-row">
@@ -289,7 +290,7 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
             <a class="unl-tt" href="/songs/booty-boom-boom.html">Booty Boom Boom</a>
             <button onclick="quickReact('unl-booty-boom-boom','heart')" title="Love it" class="unl-react">&#x1F48B;</button>
             <button onclick="quickReact('unl-booty-boom-boom','fire')" title="Fire" class="unl-react">&#x1F525;</button>
-            <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" class="unl-buy">$</a>
+            <button class="unl-buy" onclick="hmBuyMenu(event,'unleashed')" title="Own this song &mdash; bundles from $4.99">$</button>
             <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" class="unl-str">&#x1F3B5;</a>
           </div>
 <div class="unl-row">
@@ -298,7 +299,7 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
             <a class="unl-tt" href="/songs/puppy-kisses.html">Puppy Kisses</a>
             <button onclick="quickReact('unl-puppy-kisses','heart')" title="Love it" class="unl-react">&#x1F48B;</button>
             <button onclick="quickReact('unl-puppy-kisses','fire')" title="Fire" class="unl-react">&#x1F525;</button>
-            <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" class="unl-buy">$</a>
+            <button class="unl-buy" onclick="hmBuyMenu(event,'unleashed')" title="Own this song &mdash; bundles from $4.99">$</button>
             <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" class="unl-str">&#x1F3B5;</a>
           </div>
 <div class="unl-row">
@@ -307,7 +308,7 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
             <a class="unl-tt" href="/songs/look-in-my-eyes.html">Look Into My Eyes</a>
             <button onclick="quickReact('unl-look-in-my-eyes','heart')" title="Love it" class="unl-react">&#x1F48B;</button>
             <button onclick="quickReact('unl-look-in-my-eyes','fire')" title="Fire" class="unl-react">&#x1F525;</button>
-            <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" class="unl-buy">$</a>
+            <button class="unl-buy" onclick="hmBuyMenu(event,'unleashed')" title="Own this song &mdash; bundles from $4.99">$</button>
             <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" class="unl-str">&#x1F3B5;</a>
           </div>
 <div class="unl-row">
@@ -316,7 +317,7 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
             <a class="unl-tt" href="/songs/uh-oh-i-did-it-again.html">Uh Oh, I Did It Again</a>
             <button onclick="quickReact('unl-uh-oh-i-did-it-again','heart')" title="Love it" class="unl-react">&#x1F48B;</button>
             <button onclick="quickReact('unl-uh-oh-i-did-it-again','fire')" title="Fire" class="unl-react">&#x1F525;</button>
-            <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" class="unl-buy">$</a>
+            <button class="unl-buy" onclick="hmBuyMenu(event,'unleashed')" title="Own this song &mdash; bundles from $4.99">$</button>
             <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" class="unl-str">&#x1F3B5;</a>
           </div>
 <div class="unl-row">
@@ -325,7 +326,7 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
             <a class="unl-tt" href="/songs/trouble-trouble-pup.html">Trouble Trouble</a>
             <button onclick="quickReact('unl-trouble-trouble-pup','heart')" title="Love it" class="unl-react">&#x1F48B;</button>
             <button onclick="quickReact('unl-trouble-trouble-pup','fire')" title="Fire" class="unl-react">&#x1F525;</button>
-            <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" class="unl-buy">$</a>
+            <button class="unl-buy" onclick="hmBuyMenu(event,'unleashed')" title="Own this song &mdash; bundles from $4.99">$</button>
             <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" class="unl-str">&#x1F3B5;</a>
           </div>
 <div class="unl-row">
@@ -334,7 +335,7 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
             <a class="unl-tt" href="/songs/fleas.html">FLEAS</a>
             <button onclick="quickReact('unl-fleas','heart')" title="Love it" class="unl-react">&#x1F48B;</button>
             <button onclick="quickReact('unl-fleas','fire')" title="Fire" class="unl-react">&#x1F525;</button>
-            <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" class="unl-buy">$</a>
+            <button class="unl-buy" onclick="hmBuyMenu(event,'unleashed')" title="Own this song &mdash; bundles from $4.99">$</button>
             <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" class="unl-str">&#x1F3B5;</a>
           </div>
 <div class="unl-row">
@@ -343,7 +344,7 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
             <a class="unl-tt" href="/songs/tongue-and-groove.html">Tongue &amp; Groove</a>
             <button onclick="quickReact('unl-tongue-and-groove','heart')" title="Love it" class="unl-react">&#x1F48B;</button>
             <button onclick="quickReact('unl-tongue-and-groove','fire')" title="Fire" class="unl-react">&#x1F525;</button>
-            <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" class="unl-buy">$</a>
+            <button class="unl-buy" onclick="hmBuyMenu(event,'unleashed')" title="Own this song &mdash; bundles from $4.99">$</button>
             <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" class="unl-str">&#x1F3B5;</a>
           </div>
 <div class="unl-row">
@@ -352,7 +353,7 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
             <a class="unl-tt" href="/songs/peach-on-fire.html">Peach on Fire</a>
             <button onclick="quickReact('unl-peach-on-fire','heart')" title="Love it" class="unl-react">&#x1F48B;</button>
             <button onclick="quickReact('unl-peach-on-fire','fire')" title="Fire" class="unl-react">&#x1F525;</button>
-            <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" class="unl-buy">$</a>
+            <button class="unl-buy" onclick="hmBuyMenu(event,'unleashed')" title="Own this song &mdash; bundles from $4.99">$</button>
             <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" class="unl-str">&#x1F3B5;</a>
           </div>
 <div class="unl-row">
@@ -361,7 +362,7 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
             <a class="unl-tt" href="/songs/will-you-be-my-friend.html">Will You Be My Friend</a>
             <button onclick="quickReact('unl-will-you-be-my-friend','heart')" title="Love it" class="unl-react">&#x1F48B;</button>
             <button onclick="quickReact('unl-will-you-be-my-friend','fire')" title="Fire" class="unl-react">&#x1F525;</button>
-            <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" class="unl-buy">$</a>
+            <button class="unl-buy" onclick="hmBuyMenu(event,'unleashed')" title="Own this song &mdash; bundles from $4.99">$</button>
             <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" class="unl-str">&#x1F3B5;</a>
           </div>
 <div class="unl-row">
@@ -370,7 +371,7 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
             <a class="unl-tt" href="/songs/spurs.html">Me &amp; My Dog | Spurs</a>
             <button onclick="quickReact('unl-spurs','heart')" title="Love it" class="unl-react">&#x1F48B;</button>
             <button onclick="quickReact('unl-spurs','fire')" title="Fire" class="unl-react">&#x1F525;</button>
-            <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" class="unl-buy">$</a>
+            <button class="unl-buy" onclick="hmBuyMenu(event,'unleashed')" title="Own this song &mdash; bundles from $4.99">$</button>
             <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" class="unl-str">&#x1F3B5;</a>
           </div>
 <div class="unl-row">
@@ -379,7 +380,7 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
             <a class="unl-tt" href="/songs/drown-me-in-slobbery-kisses.html">Drown Me in Slobbery Kisses</a>
             <button onclick="quickReact('unl-drown-me-in-slobbery-kisses','heart')" title="Love it" class="unl-react">&#x1F48B;</button>
             <button onclick="quickReact('unl-drown-me-in-slobbery-kisses','fire')" title="Fire" class="unl-react">&#x1F525;</button>
-            <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" class="unl-buy">$</a>
+            <button class="unl-buy" onclick="hmBuyMenu(event,'unleashed')" title="Own this song &mdash; bundles from $4.99">$</button>
             <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" class="unl-str">&#x1F3B5;</a>
           </div>
 <div class="unl-row">
@@ -388,7 +389,7 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
             <a class="unl-tt" href="/songs/those-big-brown-eyes.html">Those Big Brown Eyes</a>
             <button onclick="quickReact('unl-those-big-brown-eyes','heart')" title="Love it" class="unl-react">&#x1F48B;</button>
             <button onclick="quickReact('unl-those-big-brown-eyes','fire')" title="Fire" class="unl-react">&#x1F525;</button>
-            <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" class="unl-buy">$</a>
+            <button class="unl-buy" onclick="hmBuyMenu(event,'unleashed')" title="Own this song &mdash; bundles from $4.99">$</button>
             <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" class="unl-str">&#x1F3B5;</a>
           </div>
       </div>
@@ -638,6 +639,129 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
       </div>
     </div>
   </div>
+
+  <div style="position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 2rem 3rem;">
+    <div style="display:flex;align-items:center;gap:1.2rem;margin-bottom:1.1rem;">
+      <span style="flex:1;height:1px;background:linear-gradient(to right,transparent,#00cec9,transparent);opacity:.5;"></span>
+      <h3 style="font-family:'Cinzel',Georgia,serif;font-size:.9rem;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:var(--cream,#ede8df);white-space:nowrap;">Barefoot Beaches &amp; Coconut Kisses &mdash; The Tracks</h3>
+      <span style="flex:1;height:1px;background:linear-gradient(to right,transparent,#00cec9,transparent);opacity:.5;"></span>
+    </div>
+    <div style="background:rgba(255,255,255,.025);border:1px solid rgba(0,206,201,.25);border-radius:16px;padding:1.2rem 1.8rem;column-count:2;column-gap:2.6rem;" class="hm-panel-cols">
+        <div style="display:flex;align-items:center;gap:.55rem;padding:.45rem .1rem;border-bottom:1px solid rgba(0,206,201,.25);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#00cec9;width:1.2rem;text-align:right;flex-shrink:0;">01</span>
+          <button class="bbk-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/Woke%20Up%20Laughing%20(1).mp3" onclick="hmRowToggle(this,'bbkAudio','.bbk-play')" aria-label="Play Woke Up Laughing" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #00cec9;background:transparent;color:#00cec9;font-size:.58rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/woke-up-laughing.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Woke Up Laughing</a>
+          <button onclick="quickReact('bbk-woke-up-laughing','heart')" title="Love it" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
+          <button onclick="quickReact('bbk-woke-up-laughing','fire')" title="Fire" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
+          <button onclick="hmBuyMenu(event,'beach')" title="Own this song &mdash; bundles from $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #00cec9;border-radius:50%;color:#00cec9;font-size:.66rem;font-weight:800;background:transparent;cursor:pointer;">$</button>
+        </div>
+<div style="display:flex;align-items:center;gap:.55rem;padding:.45rem .1rem;border-bottom:1px solid rgba(0,206,201,.25);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#00cec9;width:1.2rem;text-align:right;flex-shrink:0;">02</span>
+          <button class="bbk-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/Mangroves%20%26%20Moonlight.mp3" onclick="hmRowToggle(this,'bbkAudio','.bbk-play')" aria-label="Play Mangroves &amp; Moonlight" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #00cec9;background:transparent;color:#00cec9;font-size:.58rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/mangroves-and-moonlight.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Mangroves &amp; Moonlight</a>
+          <button onclick="quickReact('bbk-mangroves-and-moonlight','heart')" title="Love it" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
+          <button onclick="quickReact('bbk-mangroves-and-moonlight','fire')" title="Fire" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
+          <button onclick="hmBuyMenu(event,'beach')" title="Own this song &mdash; bundles from $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #00cec9;border-radius:50%;color:#00cec9;font-size:.66rem;font-weight:800;background:transparent;cursor:pointer;">$</button>
+        </div>
+<div style="display:flex;align-items:center;gap:.55rem;padding:.45rem .1rem;border-bottom:1px solid rgba(0,206,201,.25);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#00cec9;width:1.2rem;text-align:right;flex-shrink:0;">03</span>
+          <button class="bbk-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/Endless%20Summer%20Heat%20(Cover).mp3" onclick="hmRowToggle(this,'bbkAudio','.bbk-play')" aria-label="Play Endless Summer" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #00cec9;background:transparent;color:#00cec9;font-size:.58rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/endless-summer.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Endless Summer</a>
+          <button onclick="quickReact('bbk-endless-summer','heart')" title="Love it" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
+          <button onclick="quickReact('bbk-endless-summer','fire')" title="Fire" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
+          <button onclick="hmBuyMenu(event,'beach')" title="Own this song &mdash; bundles from $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #00cec9;border-radius:50%;color:#00cec9;font-size:.66rem;font-weight:800;background:transparent;cursor:pointer;">$</button>
+        </div>
+<div style="display:flex;align-items:center;gap:.55rem;padding:.45rem .1rem;border-bottom:1px solid rgba(0,206,201,.25);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#00cec9;width:1.2rem;text-align:right;flex-shrink:0;">04</span>
+          <button class="bbk-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/DOWN%20UNDER.mp3" onclick="hmRowToggle(this,'bbkAudio','.bbk-play')" aria-label="Play Down Under" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #00cec9;background:transparent;color:#00cec9;font-size:.58rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/down-under.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Down Under</a>
+          <button onclick="quickReact('bbk-down-under','heart')" title="Love it" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
+          <button onclick="quickReact('bbk-down-under','fire')" title="Fire" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
+          <button onclick="hmBuyMenu(event,'beach')" title="Own this song &mdash; bundles from $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #00cec9;border-radius:50%;color:#00cec9;font-size:.66rem;font-weight:800;background:transparent;cursor:pointer;">$</button>
+        </div>
+<div style="display:flex;align-items:center;gap:.55rem;padding:.45rem .1rem;border-bottom:1px solid rgba(0,206,201,.25);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#00cec9;width:1.2rem;text-align:right;flex-shrink:0;">05</span>
+          <button class="bbk-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/COCONUT%20KISS%20(MASTER).mp3" onclick="hmRowToggle(this,'bbkAudio','.bbk-play')" aria-label="Play Coconut Kiss" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #00cec9;background:transparent;color:#00cec9;font-size:.58rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/coconut-kiss.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Coconut Kiss</a>
+          <button onclick="quickReact('bbk-coconut-kiss','heart')" title="Love it" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
+          <button onclick="quickReact('bbk-coconut-kiss','fire')" title="Fire" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
+          <button onclick="hmBuyMenu(event,'beach')" title="Own this song &mdash; bundles from $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #00cec9;border-radius:50%;color:#00cec9;font-size:.66rem;font-weight:800;background:transparent;cursor:pointer;">$</button>
+        </div>
+<div style="display:flex;align-items:center;gap:.55rem;padding:.45rem .1rem;border-bottom:1px solid rgba(0,206,201,.25);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#00cec9;width:1.2rem;text-align:right;flex-shrink:0;">06</span>
+          <button class="bbk-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/TANGLED%20(MASTER).mp3" onclick="hmRowToggle(this,'bbkAudio','.bbk-play')" aria-label="Play Tangled" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #00cec9;background:transparent;color:#00cec9;font-size:.58rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/tangled.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Tangled</a>
+          <button onclick="quickReact('bbk-tangled','heart')" title="Love it" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
+          <button onclick="quickReact('bbk-tangled','fire')" title="Fire" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
+          <button onclick="hmBuyMenu(event,'beach')" title="Own this song &mdash; bundles from $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #00cec9;border-radius:50%;color:#00cec9;font-size:.66rem;font-weight:800;background:transparent;cursor:pointer;">$</button>
+        </div>
+<div style="display:flex;align-items:center;gap:.55rem;padding:.45rem .1rem;border-bottom:1px solid rgba(0,206,201,.25);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#00cec9;width:1.2rem;text-align:right;flex-shrink:0;">07</span>
+          <button class="bbk-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/LIGHTNING%20STRIKES%20MY%20HEART.mp3" onclick="hmRowToggle(this,'bbkAudio','.bbk-play')" aria-label="Play Lightning Strikes" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #00cec9;background:transparent;color:#00cec9;font-size:.58rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/lightning-strikes.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Lightning Strikes</a>
+          <button onclick="quickReact('bbk-lightning-strikes','heart')" title="Love it" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
+          <button onclick="quickReact('bbk-lightning-strikes','fire')" title="Fire" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
+          <button onclick="hmBuyMenu(event,'beach')" title="Own this song &mdash; bundles from $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #00cec9;border-radius:50%;color:#00cec9;font-size:.66rem;font-weight:800;background:transparent;cursor:pointer;">$</button>
+        </div>
+<div style="display:flex;align-items:center;gap:.55rem;padding:.45rem .1rem;border-bottom:1px solid rgba(0,206,201,.25);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#00cec9;width:1.2rem;text-align:right;flex-shrink:0;">08</span>
+          <button class="bbk-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/PORT%20LAVACA.mp3" onclick="hmRowToggle(this,'bbkAudio','.bbk-play')" aria-label="Play Port Lavaca Paradise" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #00cec9;background:transparent;color:#00cec9;font-size:.58rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/port-lavaca-paradise.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Port Lavaca Paradise</a>
+          <button onclick="quickReact('bbk-port-lavaca-paradise','heart')" title="Love it" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
+          <button onclick="quickReact('bbk-port-lavaca-paradise','fire')" title="Fire" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
+          <button onclick="hmBuyMenu(event,'beach')" title="Own this song &mdash; bundles from $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #00cec9;border-radius:50%;color:#00cec9;font-size:.66rem;font-weight:800;background:transparent;cursor:pointer;">$</button>
+        </div>
+<div style="display:flex;align-items:center;gap:.55rem;padding:.45rem .1rem;border-bottom:1px solid rgba(0,206,201,.25);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#00cec9;width:1.2rem;text-align:right;flex-shrink:0;">09</span>
+          <button class="bbk-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/WORLD%20MELTS%20AWAY.mp3" onclick="hmRowToggle(this,'bbkAudio','.bbk-play')" aria-label="Play World Melts Away" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #00cec9;background:transparent;color:#00cec9;font-size:.58rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/world-melts-away.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">World Melts Away</a>
+          <button onclick="quickReact('bbk-world-melts-away','heart')" title="Love it" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
+          <button onclick="quickReact('bbk-world-melts-away','fire')" title="Fire" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
+          <button onclick="hmBuyMenu(event,'beach')" title="Own this song &mdash; bundles from $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #00cec9;border-radius:50%;color:#00cec9;font-size:.66rem;font-weight:800;background:transparent;cursor:pointer;">$</button>
+        </div>
+<div style="display:flex;align-items:center;gap:.55rem;padding:.45rem .1rem;border-bottom:1px solid rgba(0,206,201,.25);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#00cec9;width:1.2rem;text-align:right;flex-shrink:0;">10</span>
+          <button class="bbk-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/BOOTY%20BOOM%20BOOM%20%28UNLEASHED%20mix%29.wav" onclick="hmRowToggle(this,'bbkAudio','.bbk-play')" aria-label="Play Booty Boom Boom" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #00cec9;background:transparent;color:#00cec9;font-size:.58rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/booty-boom-boom.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Booty Boom Boom</a>
+          <button onclick="quickReact('bbk-booty-boom-boom','heart')" title="Love it" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
+          <button onclick="quickReact('bbk-booty-boom-boom','fire')" title="Fire" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
+          <button onclick="hmBuyMenu(event,'beach')" title="Own this song &mdash; bundles from $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #00cec9;border-radius:50%;color:#00cec9;font-size:.66rem;font-weight:800;background:transparent;cursor:pointer;">$</button>
+        </div>
+<div style="display:flex;align-items:center;gap:.55rem;padding:.45rem .1rem;border-bottom:1px solid rgba(0,206,201,.25);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#00cec9;width:1.2rem;text-align:right;flex-shrink:0;">11</span>
+          <button class="bbk-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/COTTON%20CANDY%20(1).mp3" onclick="hmRowToggle(this,'bbkAudio','.bbk-play')" aria-label="Play Cotton Candy" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #00cec9;background:transparent;color:#00cec9;font-size:.58rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/cotton-candy.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cotton Candy</a>
+          <button onclick="quickReact('bbk-cotton-candy','heart')" title="Love it" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
+          <button onclick="quickReact('bbk-cotton-candy','fire')" title="Fire" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
+          <button onclick="hmBuyMenu(event,'beach')" title="Own this song &mdash; bundles from $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #00cec9;border-radius:50%;color:#00cec9;font-size:.66rem;font-weight:800;background:transparent;cursor:pointer;">$</button>
+        </div>
+<div style="display:flex;align-items:center;gap:.55rem;padding:.45rem .1rem;border-bottom:1px solid rgba(0,206,201,.25);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#00cec9;width:1.2rem;text-align:right;flex-shrink:0;">12</span>
+          <button class="bbk-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BAREFOOT%20BEACH%20BEAUTY%20(2).mp3" onclick="hmRowToggle(this,'bbkAudio','.bbk-play')" aria-label="Play Barefoot Beach Beauty" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #00cec9;background:transparent;color:#00cec9;font-size:.58rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/barefoot-beach-beauty.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Barefoot Beach Beauty</a>
+          <button onclick="quickReact('bbk-barefoot-beach-beauty','heart')" title="Love it" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
+          <button onclick="quickReact('bbk-barefoot-beach-beauty','fire')" title="Fire" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
+          <button onclick="hmBuyMenu(event,'beach')" title="Own this song &mdash; bundles from $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #00cec9;border-radius:50%;color:#00cec9;font-size:.66rem;font-weight:800;background:transparent;cursor:pointer;">$</button>
+        </div>
+<div style="display:flex;align-items:center;gap:.55rem;padding:.45rem .1rem;border-bottom:1px solid rgba(0,206,201,.25);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#00cec9;width:1.2rem;text-align:right;flex-shrink:0;">13</span>
+          <button class="bbk-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/Sand%20in%20Toes%20(1).mp3" onclick="hmRowToggle(this,'bbkAudio','.bbk-play')" aria-label="Play Sand in the Toes" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #00cec9;background:transparent;color:#00cec9;font-size:.58rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/sand-in-toes.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Sand in the Toes</a>
+          <button onclick="quickReact('bbk-sand-in-toes','heart')" title="Love it" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
+          <button onclick="quickReact('bbk-sand-in-toes','fire')" title="Fire" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
+          <button onclick="hmBuyMenu(event,'beach')" title="Own this song &mdash; bundles from $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #00cec9;border-radius:50%;color:#00cec9;font-size:.66rem;font-weight:800;background:transparent;cursor:pointer;">$</button>
+        </div>
+<div style="display:flex;align-items:center;gap:.55rem;padding:.45rem .1rem;border-bottom:1px solid rgba(0,206,201,.25);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#00cec9;width:1.2rem;text-align:right;flex-shrink:0;">14</span>
+          <button class="bbk-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/NEVER%20LET%20GO%20(master).mp3" onclick="hmRowToggle(this,'bbkAudio','.bbk-play')" aria-label="Play Never Let Go" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #00cec9;background:transparent;color:#00cec9;font-size:.58rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/never-let-go.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Never Let Go</a>
+          <button onclick="quickReact('bbk-never-let-go','heart')" title="Love it" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
+          <button onclick="quickReact('bbk-never-let-go','fire')" title="Fire" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
+          <button onclick="hmBuyMenu(event,'beach')" title="Own this song &mdash; bundles from $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #00cec9;border-radius:50%;color:#00cec9;font-size:.66rem;font-weight:800;background:transparent;cursor:pointer;">$</button>
+        </div>
+    </div>
+    <audio id="bbkAudio" preload="none"></audio>
+  </div>
 </section>
 
 <!-- HOT OFF THE PRESS — Outlaw Love: Wanted Dead or Alive -->
@@ -679,6 +803,73 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
         <a href="/songs/liar-preacher-man.html#buy" style="background:#ff2d7b;color:#fff;font-size:.8rem;text-decoration:none;padding:.4rem .8rem;border-radius:6px;font-weight:600;">Build a Bundle</a>
       </div>
     </div>
+  </div>
+
+  <div style="position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 2rem 3rem;">
+    <div style="display:flex;align-items:center;gap:1.2rem;margin-bottom:1.1rem;">
+      <span style="flex:1;height:1px;background:linear-gradient(to right,transparent,#c87941,transparent);opacity:.5;"></span>
+      <h3 style="font-family:'Cinzel',Georgia,serif;font-size:.9rem;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:var(--cream,#ede8df);white-space:nowrap;">Outlaw Love &mdash; The 7-Song Story</h3>
+      <span style="flex:1;height:1px;background:linear-gradient(to right,transparent,#c87941,transparent);opacity:.5;"></span>
+    </div>
+    <div style="background:rgba(255,255,255,.025);border:1px solid rgba(200,121,65,.3);border-radius:16px;padding:1.2rem 1.8rem;column-count:2;column-gap:2.6rem;" class="hm-panel-cols">
+        <div style="display:flex;align-items:center;gap:.55rem;padding:.45rem .1rem;border-bottom:1px solid rgba(200,121,65,.3);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#c87941;width:1.2rem;text-align:right;flex-shrink:0;">01</span>
+          <button class="olv-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/LIAR%2C%20PREACHER%20MAN%20(1).mp3" onclick="hmRowToggle(this,'olvAudio','.olv-play')" aria-label="Play Liar, Preacher Man" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #c87941;background:transparent;color:#c87941;font-size:.58rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/liar-preacher-man.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Liar, Preacher Man</a>
+          <button onclick="quickReact('olv-liar-preacher-man','heart')" title="Love it" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
+          <button onclick="quickReact('olv-liar-preacher-man','fire')" title="Fire" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
+          <button onclick="hmBuyMenu(event,'outlawlove')" title="Own this song &mdash; bundles from $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #c87941;border-radius:50%;color:#c87941;font-size:.66rem;font-weight:800;background:transparent;cursor:pointer;">$</button>
+        </div>
+<div style="display:flex;align-items:center;gap:.55rem;padding:.45rem .1rem;border-bottom:1px solid rgba(200,121,65,.3);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#c87941;width:1.2rem;text-align:right;flex-shrink:0;">02</span>
+          <button class="olv-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/OUTLAW%20WESTERN%20ALBUM/I%20DIDN_T%20DIE%20(1).mp3" onclick="hmRowToggle(this,'olvAudio','.olv-play')" aria-label="Play I Didn't Die" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #c87941;background:transparent;color:#c87941;font-size:.58rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/i-didnt-die.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">I Didn't Die</a>
+          <button onclick="quickReact('olv-i-didnt-die','heart')" title="Love it" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
+          <button onclick="quickReact('olv-i-didnt-die','fire')" title="Fire" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
+          <button onclick="hmBuyMenu(event,'outlawlove')" title="Own this song &mdash; bundles from $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #c87941;border-radius:50%;color:#c87941;font-size:.66rem;font-weight:800;background:transparent;cursor:pointer;">$</button>
+        </div>
+<div style="display:flex;align-items:center;gap:.55rem;padding:.45rem .1rem;border-bottom:1px solid rgba(200,121,65,.3);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#c87941;width:1.2rem;text-align:right;flex-shrink:0;">03</span>
+          <button class="olv-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/OUTLAW%20WESTERN%20ALBUM/One%20night%20with%20the%20devil%20(1).mp3" onclick="hmRowToggle(this,'olvAudio','.olv-play')" aria-label="Play One Night with the Devil" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #c87941;background:transparent;color:#c87941;font-size:.58rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/one-night-with-the-devil.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">One Night with the Devil</a>
+          <button onclick="quickReact('olv-one-night-with-the-devil','heart')" title="Love it" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
+          <button onclick="quickReact('olv-one-night-with-the-devil','fire')" title="Fire" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
+          <button onclick="hmBuyMenu(event,'outlawlove')" title="Own this song &mdash; bundles from $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #c87941;border-radius:50%;color:#c87941;font-size:.66rem;font-weight:800;background:transparent;cursor:pointer;">$</button>
+        </div>
+<div style="display:flex;align-items:center;gap:.55rem;padding:.45rem .1rem;border-bottom:1px solid rgba(200,121,65,.3);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#c87941;width:1.2rem;text-align:right;flex-shrink:0;">04</span>
+          <button class="olv-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/OUTLAW%20WESTERN%20ALBUM/SMOKE%20ME%20(1).mp3" onclick="hmRowToggle(this,'olvAudio','.olv-play')" aria-label="Play Smoke Me" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #c87941;background:transparent;color:#c87941;font-size:.58rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/smoke-me.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Smoke Me</a>
+          <button onclick="quickReact('olv-smoke-me','heart')" title="Love it" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
+          <button onclick="quickReact('olv-smoke-me','fire')" title="Fire" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
+          <button onclick="hmBuyMenu(event,'outlawlove')" title="Own this song &mdash; bundles from $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #c87941;border-radius:50%;color:#c87941;font-size:.66rem;font-weight:800;background:transparent;cursor:pointer;">$</button>
+        </div>
+<div style="display:flex;align-items:center;gap:.55rem;padding:.45rem .1rem;border-bottom:1px solid rgba(200,121,65,.3);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#c87941;width:1.2rem;text-align:right;flex-shrink:0;">05</span>
+          <button class="olv-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/NEVER%20LET%20GO%20(master).mp3" onclick="hmRowToggle(this,'olvAudio','.olv-play')" aria-label="Play Never Let Go / Hand in Hand" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #c87941;background:transparent;color:#c87941;font-size:.58rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/never-let-go.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Never Let Go / Hand in Hand</a>
+          <button onclick="quickReact('olv-never-let-go','heart')" title="Love it" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
+          <button onclick="quickReact('olv-never-let-go','fire')" title="Fire" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
+          <button onclick="hmBuyMenu(event,'outlawlove')" title="Own this song &mdash; bundles from $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #c87941;border-radius:50%;color:#c87941;font-size:.66rem;font-weight:800;background:transparent;cursor:pointer;">$</button>
+        </div>
+<div style="display:flex;align-items:center;gap:.55rem;padding:.45rem .1rem;border-bottom:1px solid rgba(200,121,65,.3);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#c87941;width:1.2rem;text-align:right;flex-shrink:0;">06</span>
+          <button class="olv-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/OUTLAW%20WESTERN%20ALBUM/Ghost%20Wanted%20Dead%20or%20Alive%20(1).mp3" onclick="hmRowToggle(this,'olvAudio','.olv-play')" aria-label="Play Ghost Wanted Dead or Alive" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #c87941;background:transparent;color:#c87941;font-size:.58rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/ghost-wanted-dead-or-alive.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Ghost Wanted Dead or Alive</a>
+          <button onclick="quickReact('olv-ghost-wanted-dead-or-alive','heart')" title="Love it" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
+          <button onclick="quickReact('olv-ghost-wanted-dead-or-alive','fire')" title="Fire" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
+          <button onclick="hmBuyMenu(event,'outlawlove')" title="Own this song &mdash; bundles from $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #c87941;border-radius:50%;color:#c87941;font-size:.66rem;font-weight:800;background:transparent;cursor:pointer;">$</button>
+        </div>
+<div style="display:flex;align-items:center;gap:.55rem;padding:.45rem .1rem;border-bottom:1px solid rgba(200,121,65,.3);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#c87941;width:1.2rem;text-align:right;flex-shrink:0;">07</span>
+          <button class="olv-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/OUTLAW%20WESTERN%20ALBUM/RODEO%20COWBOY%20(EDIT)%20(Edit)%20(1).mp3" onclick="hmRowToggle(this,'olvAudio','.olv-play')" aria-label="Play Rodeo Cowboy" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #c87941;background:transparent;color:#c87941;font-size:.58rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/rodeo-cowboy.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Rodeo Cowboy</a>
+          <button onclick="quickReact('olv-rodeo-cowboy','heart')" title="Love it" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
+          <button onclick="quickReact('olv-rodeo-cowboy','fire')" title="Fire" style="background:none;border:none;font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
+          <button onclick="hmBuyMenu(event,'outlawlove')" title="Own this song &mdash; bundles from $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #c87941;border-radius:50%;color:#c87941;font-size:.66rem;font-weight:800;background:transparent;cursor:pointer;">$</button>
+        </div>
+    </div>
+    <audio id="olvAudio" preload="none"></audio>
   </div>
 </section>
 
@@ -2136,5 +2327,43 @@ loadSiteData();
 
 
 <script src="/beacon.js" defer></script>
+
+  <script>
+  /* Shared bundle chooser — CEO 8/11: one $ press must offer ALL ownership options.
+     Full Album $14.99 slot wires in the moment its Stripe payment link exists. */
+  function hmBuyMenu(e, ref) {
+    e.preventDefault(); e.stopPropagation();
+    var old = document.getElementById('hmBuyMenu'); if (old) { old.remove(); }
+    var btn = e.currentTarget;
+    var m = document.createElement('div'); m.id = 'hmBuyMenu';
+    m.style.cssText = 'position:absolute;z-index:99;background:#17111c;border:1px solid rgba(201,154,61,.4);border-radius:10px;padding:.45rem;box-shadow:0 10px 40px rgba(0,0,0,.6);min-width:190px;';
+    var opts = [["Any 3 songs \u2014 $4.99","https://buy.stripe.com/eVqaEZehY3V76Nk7BEd7q0a"],["Any 5 songs \u2014 $6.99","https://buy.stripe.com/6oU4gB4HofDP1t03lod7q0b"],["Any 10 songs \u2014 $9.99","https://buy.stripe.com/3cI8wRb5Mbnz8VscVYd7q0c"]];
+    opts.forEach(function(o) {
+      var a = document.createElement('a');
+      a.href = o[1] + '?client_reference_id=' + ref; a.target = '_blank'; a.rel = 'noopener';
+      a.textContent = o[0];
+      a.style.cssText = 'display:block;padding:.45rem .7rem;color:#F3EBDD;font-family:Instrument Sans,sans-serif;font-size:.78rem;font-weight:600;text-decoration:none;border-radius:6px;';
+      a.onmouseenter = function() { a.style.background = 'rgba(201,154,61,.15)'; };
+      a.onmouseleave = function() { a.style.background = ''; };
+      m.appendChild(a);
+    });
+    var note = document.createElement('div');
+    note.textContent = 'You pick the songs after checkout';
+    note.style.cssText = 'padding:.3rem .7rem .15rem;color:#B9AAA0;font-family:Instrument Sans,sans-serif;font-size:.6rem;';
+    m.appendChild(note);
+    document.body.appendChild(m);
+    var r = btn.getBoundingClientRect();
+    m.style.left = Math.max(8, Math.min(window.innerWidth - m.offsetWidth - 8, r.left + window.scrollX - m.offsetWidth + r.width)) + 'px';
+    m.style.top = (r.bottom + window.scrollY + 6) + 'px';
+    setTimeout(function() { document.addEventListener('click', function h(ev) { if (!m.contains(ev.target)) { m.remove(); document.removeEventListener('click', h); } }); }, 0);
+  }
+  function hmRowToggle(btn, audioId, groupSel) {
+    var a = document.getElementById(audioId); var src = btn.getAttribute('data-src');
+    if (a.src === src && !a.paused) { a.pause(); btn.innerHTML = '&#x25B6;'; return; }
+    document.querySelectorAll(groupSel).forEach(function(b) { b.innerHTML = '&#x25B6;'; });
+    a.src = src; a.play().catch(function() {}); btn.innerHTML = '&#x23F8;';
+    a.onended = function() { var all = Array.prototype.slice.call(document.querySelectorAll(groupSel)); var i = all.indexOf(btn); if (i > -1 && i + 1 < all.length) hmRowToggle(all[i + 1], audioId, groupSel); else btn.innerHTML = '&#x25B6;'; };
+  }
+  </script>
 </body>
 </html>
