@@ -89,6 +89,25 @@
 
 <div class="container">
 
+  <section class="song-section" id="video" aria-label="Puppy Kisses official video">
+    <style>
+    .pkv-wrap{max-width:640px;margin:0 auto;text-align:center}
+    .pkv-frame{position:relative;overflow:hidden;border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,.45),0 0 60px rgba(255,45,123,.12);max-width:340px;margin:0 auto}
+    .pkv-frame video{width:100%;display:block;border-radius:16px}
+    .pkv-badge{position:absolute;top:1rem;left:1rem;background:#ff2d7b;color:#fff;font-size:.58rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;padding:.33rem .85rem;border-radius:3px;z-index:2}
+    </style>
+    <h2>The Official Video</h2>
+    <div class="pink-divider"></div>
+    <div class="pkv-wrap">
+      <div class="pkv-frame">
+        <div class="pkv-badge">New Video</div>
+        <video controls playsinline preload="metadata" poster="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/artwork/puppy-kisses-cover.jpg">
+          <source src="/songs/puppy-kisses-video.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </section>
+
   <section class="song-section listen-now-section" id="listen-now">
     <h2>Listen Now</h2>
     <p class="section-vibe">A marina-dock party of a song. Tiny wet nose, little pink tongue, zero worries.</p>

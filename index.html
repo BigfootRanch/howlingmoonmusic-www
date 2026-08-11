@@ -177,73 +177,11 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
     <button class="radio-mode" data-mode="jt">JT</button>
   </div>
   <div class="radio-album-bar" id="radioAlbumBar"></div>
-  <div class="radio-album-bar" id="radioMoodBar" style="display:none"></div>
+  <div class="radio-album-bar" id="radioMoodBar"></div>
   <audio id="radioAudio" preload="none"></audio>
 </div>
 
-<!-- HOT OFF THE PRESS — Puppy Kisses (NEW VIDEO) -->
-<style>
-.pk-section{position:relative;overflow:hidden;background:linear-gradient(160deg,#0b0810 0%,#120818 35%,#16081a 58%,#0b0810 100%);padding:0}
-.pk-section::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:0.04;pointer-events:none;z-index:0}
-.pk-section::after{content:'';position:absolute;top:-10%;left:-5%;width:65%;height:120%;background:radial-gradient(ellipse at 30% 50%,rgba(255,45,123,0.12) 0%,rgba(255,45,123,0.04) 35%,transparent 70%);pointer-events:none;z-index:0}
-.pk-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:380px 1fr;gap:0;align-items:center;padding:3.5rem 2rem}
-.pk-video-wrap{position:relative;overflow:hidden;border-radius:16px;aspect-ratio:9/16;max-height:520px;box-shadow:0 8px 40px rgba(0,0,0,0.5),0 0 60px rgba(255,45,123,0.12)}
-.pk-video-wrap video{width:100%;height:100%;object-fit:cover;display:block;border-radius:16px}
-.pk-video-wrap::after{content:'';position:absolute;inset:0;border-radius:16px;background:linear-gradient(to bottom,rgba(11,8,16,0.1) 0%,transparent 20%,transparent 80%,rgba(11,8,16,0.3) 100%);pointer-events:none}
-.pk-video-wrap::before{content:'';position:absolute;inset:-1px;border-radius:17px;background:linear-gradient(135deg,rgba(255,45,123,0.35) 0%,rgba(255,153,204,0.2) 50%,rgba(255,45,123,0.1) 100%);z-index:-1}
-.pk-badge{position:absolute;top:1.25rem;left:1.25rem;background:#ff2d7b;color:#fff;font-family:'Instrument Sans',sans-serif;font-size:0.58rem;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;padding:0.33rem 0.85rem;border-radius:3px;z-index:2;animation:lh-blink 2.8s ease-in-out infinite}
-.pk-content{display:flex;flex-direction:column;justify-content:center;padding:2rem 2rem 2rem 3rem}
-@media(max-width:900px){.pk-inner{grid-template-columns:1fr;padding:2.5rem 1.5rem;gap:2rem}.pk-video-wrap{max-width:300px;margin:0 auto;max-height:420px}.pk-content{padding:0 0.5rem 1.5rem}}
-@media(max-width:560px){.pk-inner{padding:2rem 1rem}.pk-video-wrap{max-width:260px;max-height:380px}.pk-content{padding:0 0 1.5rem}}
-</style>
-
-<section class="pk-section" id="puppy-kisses-featured" aria-label="Hot off the press: Puppy Kisses">
-  <div class="pk-inner">
-    <div class="pk-video-wrap">
-      <div class="pk-badge">New Video</div>
-      <video controls playsinline preload="metadata" poster="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/artwork/puppy-kisses-cover.jpg">
-        <source src="/songs/puppy-kisses-video.mp4" type="video/mp4">
-      </video>
-    </div>
-    <div class="pk-content">
-      <div class="lh-eyebrow" style="color:#ff2d7b;">Hot Off The Press</div>
-      <h2 class="lh-title" style="text-shadow:0 2px 30px rgba(255,45,123,0.25);">Puppy Kisses</h2>
-      <p class="lh-artist"><strong>Valentina Talor</strong> &middot; The Dogmother</p>
-      <div class="lh-rule" style="background:linear-gradient(to right,#ff2d7b,transparent);"></div>
-      <p class="lh-desc">&ldquo;When the stress of life is too much, it&rsquo;s my puppies that bring me happiness. Pure joy. Wet nose. Wagging tail. The best kind of kiss comes from a dog who doesn&rsquo;t know what a bad day is.&rdquo;</p>
-      <div class="lh-tags">
-        <span class="lh-tag lh-tag--pop">Country / Novelty</span>
-        <span class="lh-tag" style="color:#ff99cc;border-color:rgba(255,153,204,.38);background:rgba(255,153,204,.06);">Puppy Love</span>
-        <span class="lh-tag" style="color:#74b9ff;border-color:rgba(116,185,255,.38);background:rgba(116,185,255,.06);">Feel Good</span>
-        <span class="lh-tag" style="color:#fdcb6e;border-color:rgba(253,203,110,.38);background:rgba(253,203,110,.06);">New Video</span>
-      </div>
-      <!-- Inline audio player -->
-      <div style="display:flex;align-items:center;gap:.8rem;padding:.8rem 1rem;background:rgba(255,45,123,.08);border:1px solid rgba(255,45,123,.2);border-radius:10px;margin-bottom:1rem;">
-        <button id="pkPlayBtn" onclick="var a=document.getElementById('pkAudio');if(a.paused){a.play();this.textContent='\u23F8'}else{a.pause();this.textContent='\u25B6'}" style="background:#ff2d7b;color:#fff;border:none;width:40px;height:40px;border-radius:50%;font-size:1.1rem;cursor:pointer;flex-shrink:0;">&#x25B6;</button>
-        <div style="flex:1;min-width:0;">
-          <div style="font-size:.85rem;font-weight:600;color:#ff2d7b;">Now Playing</div>
-          <div style="font-size:.78rem;color:var(--ts);">Puppy Kisses &middot; Valentina Talor</div>
-        </div>
-        <audio id="pkAudio" preload="none" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/Puppy%20Kisses.mp3"></audio>
-      </div>
-      <div class="lh-cta-row">
-        <a class="lh-btn-primary" href="/songs/puppy-kisses.html" style="background:linear-gradient(135deg,#ff2d7b 0%,#cc1a5e 100%);box-shadow:0 4px 20px rgba(255,45,123,0.3);">
-          Full Song Page
-        </a>
-        <a class="lh-btn-secondary" href="/songs/puppy-kisses.html#buy" style="border-color:rgba(255,45,123,.4);color:#ff2d7b;">
-          Build a Bundle
-        </a>
-      </div>
-      <div style="display:flex;align-items:center;gap:1rem;margin-top:1rem;flex-wrap:wrap;">
-        <button onclick="quickReact('puppy-kisses','heart');if(typeof showToast==='function')showToast('puppy kisses right back at ya')" style="background:none;border:none;font-size:1.4rem;cursor:pointer;" class="sa-react" title="Love it">&#x1F48B;</button>
-        <button onclick="quickReact('puppy-kisses','fire');if(typeof showToast==='function')showToast('tail wagging intensifies')" style="background:none;border:none;font-size:1.4rem;cursor:pointer;" class="sa-react" title="Fire">&#x1F525;</button>
-        <a href="/songs/puppy-kisses.html#story" style="color:#ff2d7b;font-size:.8rem;text-decoration:none;padding:.4rem .8rem;border:1px solid rgba(255,45,123,.3);border-radius:6px;">Story Behind This Song</a>
-        <a href="/songs/puppy-kisses.html#lyrics" style="color:#ff99cc;font-size:.8rem;text-decoration:none;padding:.4rem .8rem;border:1px solid rgba(255,153,204,.3);border-radius:6px;">Read Lyrics</a>
-      </div>
-    </div>
-  </div>
-</section>
-
+<!-- Puppy Kisses feature moved to /songs/puppy-kisses.html (CEO 8/10: UNLEASHED leads the homepage) -->
 
 <!-- NEW ALBUM — UNLEASHED (cinematic black-plum hero, CEO design brief 2026-08-10) -->
 <style>
@@ -466,6 +404,9 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
     a.onended=function(){var all=Array.prototype.slice.call(document.querySelectorAll('.unl-play'));var i=all.indexOf(btn);if(i>-1&&i+1<all.length)unlToggle(all[i+1]);else btn.innerHTML='&#x25B6;';};}
   </script>
 </section>
+
+
+
 
 <!-- LATEST HIT — Rock a Bye Baby -->
 <style>
@@ -1329,6 +1270,7 @@ function loadSiteData() {
     });
     console.log('Site data loaded:', allSongs.length, 'songs,', moodCategories.length, 'moods');
     buildMoodGrid();
+    buildMoodPills();
     addSongActionButtons();
     syncShuffleButton();
     if (!restoreRadioSession()) {
@@ -1520,7 +1462,11 @@ function buildMoodPills() {
       mb.querySelectorAll('.album-chip').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const rebuilt = buildRadioQueue('mood', m.id, { preserveCurrentSong: false });
-      if (!radioPlaying && rebuilt && getCurrentSong()) renderRadioTrack(getCurrentSong(), { label: 'Ready to Play' });
+      radioIndex = 0;
+      if (!radioPlaying && rebuilt && getCurrentSong()) {
+        renderRadioTrack(getCurrentSong(), { label: 'Ready to Play' });
+        primeCurrentTrack();
+      }
     });
     mb.appendChild(btn);
   });
@@ -1943,6 +1889,14 @@ document.getElementById('radioBtn').addEventListener('click', () => {
     updateRadioUI();
     queuePersistRadioState();
   } else {
+    // The queue may have been rebuilt (mood pill / album chip) since this src loaded —
+    // resuming the stale src replays the OLD song. Reload if src no longer matches.
+    const song = getCurrentSong();
+    const expectedUrl = song ? AUDIO_BASE + encodeURIComponent(song.audio_path || (song.slug + '.mp3')).replace(/%2F/g, '/') : null;
+    if (expectedUrl && audioEl.src !== expectedUrl) {
+      playCurrentTrack();
+      return;
+    }
     radioPlaying = true;
     document.getElementById('radioLabel').textContent = 'Resuming';
     audioEl.play().catch(function() {
