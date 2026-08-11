@@ -37,6 +37,7 @@
       "name": "Valentina Talor"
     },
     "album": [
+      {"@type": "MusicAlbum", "name": "UNLEASHED"},
       {"@type": "MusicAlbum", "name": "New Mexico Serenade"},
       {"@type": "MusicAlbum", "name": "Outlaw Hearts & Desert Stars"}
     ]
@@ -237,6 +238,51 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
         <button onclick="quickReact('puppy-kisses','fire');if(typeof showToast==='function')showToast('tail wagging intensifies')" style="background:none;border:none;font-size:1.4rem;cursor:pointer;" class="sa-react" title="Fire">&#x1F525;</button>
         <a href="/songs/puppy-kisses.html#story" style="color:#ff2d7b;font-size:.8rem;text-decoration:none;padding:.4rem .8rem;border:1px solid rgba(255,45,123,.3);border-radius:6px;">Story Behind This Song</a>
         <a href="/songs/puppy-kisses.html#lyrics" style="color:#ff99cc;font-size:.8rem;text-decoration:none;padding:.4rem .8rem;border:1px solid rgba(255,153,204,.3);border-radius:6px;">Read Lyrics</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- NEW ALBUM — UNLEASHED (added 2026-08-10) -->
+<section class="lh-section" id="unleashed-featured" aria-label="New Album: UNLEASHED" style="background:linear-gradient(160deg,#0e0b08 0%,#141006 35%,#171204 58%,#0e0b08 100%);">
+  <div class="lh-inner">
+    <div class="lh-visual" style="aspect-ratio:1/1;border-radius:12px;">
+      <img src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/unleashed-cover.png" alt="UNLEASHED — The Dogmother — new album cover" loading="lazy" style="object-position:center center;">
+      <div class="lh-badge-new" style="background:linear-gradient(135deg,#c9a84c,#a8862f);color:#171204;">NEW ALBUM &middot; AUG 14</div>
+    </div>
+    <div class="lh-content">
+      <div class="lh-eyebrow" style="color:#d4ae48;">The New Album &mdash; 15 Songs</div>
+      <h2 class="lh-title" style="text-shadow:0 2px 30px rgba(201,168,76,0.25);letter-spacing:0.06em;">UNLEASHED</h2>
+      <p class="lh-artist"><strong>The Dogmother</strong> &middot; Valentina Talor &middot; Howling Moon Music</p>
+      <div class="lh-rule" aria-hidden="true"></div>
+      <p class="lh-desc">&ldquo;Fifteen songs for the dog-obsessed &mdash; zoomies, slobber, fleas, stolen beds, and the big brown eyes that own you. Fully remixed, fully unleashed.&rdquo;</p>
+      <div class="lh-tags" aria-label="Album tags">
+        <span class="lh-tag" style="color:#d4ae48;border-color:rgba(212,174,72,.38);background:rgba(212,174,72,.06);">15 Songs</span>
+        <span class="lh-tag" style="color:#ff2d7b;border-color:rgba(255,45,123,.38);background:rgba(255,45,123,.06);">Dog Anthems</span>
+        <span class="lh-tag lh-tag--southwest">Country &middot; Pop</span>
+        <span class="lh-tag" style="color:#7ca6c8;border-color:rgba(124,166,200,.38);background:rgba(124,166,200,.06);">Out Aug 14</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:.8rem;padding:.8rem 1rem;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);border-radius:10px;margin-bottom:1.25rem;">
+        <button id="unlPlayBtn" onclick="var a=document.getElementById('unlAudio');if(a.paused){a.play();this.innerHTML='&#x23F8;'}else{a.pause();this.innerHTML='&#x25B6;'}" style="background:linear-gradient(135deg,#c9a84c,#a8862f);color:#171204;border:none;width:40px;height:40px;border-radius:50%;font-size:1.05rem;cursor:pointer;flex-shrink:0;">&#x25B6;</button>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:.85rem;font-weight:600;color:#d4ae48;">Hear the New Mix</div>
+          <div style="font-size:.78rem;color:var(--smoke,#a09888);">Drown Me in Slobbery Kisses &middot; The Dogmother</div>
+        </div>
+        <audio id="unlAudio" preload="none" src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/DROWN%20ME%20IN%20SLOBBERY%20KISSES%20%28UNLEASHED%20mix%29.wav"></audio>
+      </div>
+      <div class="lh-cta-row" style="margin-bottom:1rem;">
+        <a class="lh-btn-primary" href="/unleashed.html" style="background:linear-gradient(135deg,#c9a84c 0%,#a8862f 100%);color:#171204;box-shadow:0 4px 20px rgba(201,168,76,0.28);">
+          Explore the Album
+        </a>
+        <a class="lh-btn-secondary" href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener">
+          Stream Everywhere
+        </a>
+      </div>
+      <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+        <button onclick="quickReact('unleashed-album','heart');if(typeof showToast==='function')showToast('unleashed love right back at ya')" style="background:none;border:none;font-size:1.4rem;cursor:pointer;" class="sa-react" title="Love it">&#x1F48B;</button>
+        <button onclick="quickReact('unleashed-album','fire');if(typeof showToast==='function')showToast('fully unleashed')" style="background:none;border:none;font-size:1.4rem;cursor:pointer;" class="sa-react" title="Fire">&#x1F525;</button>
+        <a href="/moods/dog-songs.html" style="color:#d4ae48;font-size:.8rem;text-decoration:none;padding:.4rem .8rem;border:1px solid rgba(201,168,76,.3);border-radius:6px;">&#128251; Hear it on PuppyFM Radio</a>
       </div>
     </div>
   </div>
