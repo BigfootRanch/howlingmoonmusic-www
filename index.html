@@ -177,6 +177,7 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
     <button class="radio-mode" data-mode="jt">JT</button>
   </div>
   <div class="radio-album-bar" id="radioAlbumBar"></div>
+  <div class="radio-album-bar" id="radioMoodBar" style="display:none"></div>
   <audio id="radioAudio" preload="none"></audio>
 </div>
 
@@ -245,168 +246,180 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
 
 
 <!-- NEW ALBUM — UNLEASHED (added 2026-08-10) -->
-<section class="lh-section" id="unleashed-featured" aria-label="New Album: UNLEASHED" style="background:linear-gradient(160deg,#0e0b08 0%,#141006 35%,#171204 58%,#0e0b08 100%);">
+<style>
+#unleashed-featured::before,#unleashed-featured::after{display:none!important}
+#unleashed-featured .lh-eyebrow{color:#d81b60}
+#unleashed-featured .lh-eyebrow::before{background:#d81b60}
+#unleashed-featured .lh-title{color:#33121f;text-shadow:0 2px 24px rgba(255,45,123,.16)!important}
+#unleashed-featured .lh-artist{color:#96707f}
+#unleashed-featured .lh-artist strong{color:#33121f}
+#unleashed-featured .lh-rule{background:linear-gradient(to right,#ff2d7b,transparent)!important;opacity:.7}
+#unleashed-featured .lh-desc{color:#5f4350}
+#unleashed-featured .lh-visual::before{background:linear-gradient(135deg,rgba(255,45,123,.35) 0%,rgba(45,212,191,.28) 100%)}
+#unleashed-featured .lh-visual{box-shadow:0 8px 40px rgba(216,27,96,.18),0 0 80px rgba(255,45,123,.08)}
+</style>
+<section class="lh-section" id="unleashed-featured" aria-label="New Album: UNLEASHED" style="background:linear-gradient(160deg,#fff3f7 0%,#ffe6f0 45%,#f2fbf9 100%);">
   <div class="lh-inner">
     <div class="lh-visual" style="aspect-ratio:1/1;border-radius:12px;">
       <img src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/unleashed-cover.png" alt="UNLEASHED — The Dogmother — new album cover" loading="lazy" style="object-position:center center;">
-      <div class="lh-badge-new" style="background:linear-gradient(135deg,#c9a84c,#a8862f);color:#171204;">NEW ALBUM &middot; AUG 14</div>
+      <div class="lh-badge-new" style="background:linear-gradient(135deg,#ff2d7b,#b23bff);color:#fff;">NEW ALBUM &middot; AUG 14</div>
     </div>
     <div class="lh-content">
-      <div class="lh-eyebrow" style="color:#d4ae48;">The New Album &mdash; 15 Songs</div>
-      <h2 class="lh-title" style="text-shadow:0 2px 30px rgba(201,168,76,0.25);letter-spacing:0.06em;">UNLEASHED</h2>
+      <div class="lh-eyebrow" style="color:#d81b60;">The New Album &mdash; 15 Songs</div>
+      <h2 class="lh-title" style="letter-spacing:0.06em;">UNLEASHED</h2>
       <p class="lh-artist"><strong>The Dogmother</strong> &middot; Valentina Talor &middot; Howling Moon Music</p>
       <div class="lh-rule" aria-hidden="true"></div>
-      <p class="lh-desc" style="margin-bottom:.7rem;font-style:normal;"><strong style="color:#d4ae48">WARNING:</strong> You are going to have a favorite song on this album you never expected to love.</p>
+      <p class="lh-desc" style="margin-bottom:.7rem;font-style:normal;"><strong style="color:#d81b60">WARNING:</strong> You are going to have a favorite song on this album you never expected to love.</p>
       <p class="lh-desc" style="margin-bottom:.7rem;">UNLEASHED is fifteen tracks built to catch you off guard. One minute you&rsquo;re dancing. The next you&rsquo;re laughing. Then a line hits hard enough to shut the room up. There&rsquo;s bacon, bad behavior, loyalty, aging, loss, irresistible hooks, dangerous double meanings &mdash; and a couple of tracks that definitely change after dark.</p>
       <p class="lh-desc" style="margin-bottom:.7rem;">Some songs are told from a dog&rsquo;s point of view. None of them are novelty songs. This is real music with teeth: funny when it wants to be, sexy when it feels like it, and devastating when you least expect it.</p>
       <p class="lh-desc" style="margin-bottom:.7rem;">Press play. Pick your favorite. Then try explaining why that was the one that got you.</p>
-      <p class="lh-desc" style="font-style:normal;color:#ede8df;"><strong>Fifteen songs. Zero leash. The DogMother &mdash; UNLEASHED.</strong></p>
+      <p class="lh-desc" style="font-style:normal;color:#33121f;font-weight:700;"><strong>Fifteen songs. Zero leash. The DogMother &mdash; UNLEASHED.</strong></p>
       <div class="lh-tags" aria-label="Album tags">
-        <span class="lh-tag" style="color:#d4ae48;border-color:rgba(212,174,72,.38);background:rgba(212,174,72,.06);">15 Songs</span>
+        <span class="lh-tag" style="color:#0d9488;border-color:rgba(13,148,136,.45);background:rgba(45,212,191,.08);">15 Songs</span>
         <span class="lh-tag" style="color:#ff2d7b;border-color:rgba(255,45,123,.38);background:rgba(255,45,123,.06);">Dog Anthems</span>
         <span class="lh-tag lh-tag--southwest">Country &middot; Pop</span>
-        <span class="lh-tag" style="color:#7ca6c8;border-color:rgba(124,166,200,.38);background:rgba(124,166,200,.06);">Out Aug 14</span>
+        <span class="lh-tag" style="color:#b23bff;border-color:rgba(178,59,255,.35);background:rgba(178,59,255,.06);">Out Aug 14</span>
       </div>
-      <div style="background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.28);border-radius:12px;padding:1rem 1.1rem;margin-bottom:1.25rem;">
+      <div style="background:rgba(255,255,255,.82);border:1px solid rgba(255,45,123,.3);box-shadow:0 4px 24px rgba(216,27,96,.08);border-radius:12px;padding:1rem 1.1rem;margin-bottom:1.25rem;">
         <div style="display:flex;align-items:baseline;justify-content:space-between;gap:.75rem;flex-wrap:wrap;margin-bottom:.35rem;">
-          <div style="font-family:'Instrument Sans',sans-serif;font-size:.85rem;font-weight:700;color:#d4ae48;">&#x1F3A7; Listen to the Album</div>
-          <div style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:var(--smoke,#a09888);letter-spacing:.06em;">PREVIEW EVERY TRACK &middot; OWN IT TODAY &middot; STREAMS AUG 14</div>
+          <div style="font-family:'Instrument Sans',sans-serif;font-size:.85rem;font-weight:700;color:#d81b60;">&#x1F3A7; Listen to the Album</div>
+          <div style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#96707f;letter-spacing:.06em;">PREVIEW EVERY TRACK &middot; OWN IT TODAY &middot; STREAMS AUG 14</div>
         </div>
         <div style="max-height:322px;overflow-y:auto;padding-right:.25rem;">
-        <div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(201,168,76,.14);">
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#a8862f;width:1.1rem;text-align:right;flex-shrink:0;">01</span>
-          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/Dogs%20Have%20Never.wav" onclick="unlToggle(this)" aria-label="Play Dogs Have Never" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(201,168,76,.55);background:transparent;color:#d4ae48;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
-          <a href="/songs/dogs-have-never.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Dogs Have Never</a>
+        <div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(255,45,123,.14);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#d81b60;width:1.1rem;text-align:right;flex-shrink:0;">01</span>
+          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/Dogs%20Have%20Never.wav" onclick="unlToggle(this)" aria-label="Play Dogs Have Never" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(216,27,96,.55);background:#fff;color:#d81b60;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/dogs-have-never.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:#33121f;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Dogs Have Never</a>
           <button onclick="quickReact('unl-dogs-have-never','heart')" title="Love it" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
           <button onclick="quickReact('unl-dogs-have-never','fire')" title="Fire" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
-          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(201,168,76,.6);border-radius:50%;color:#d4ae48;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
-          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#7ca6c8;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
+          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(13,148,136,.6);border-radius:50%;color:#0d9488;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
+          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#0d9488;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
         </div>
-<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(201,168,76,.14);">
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#a8862f;width:1.1rem;text-align:right;flex-shrink:0;">02</span>
-          <button class="unl-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/I%20Ain%27t%20Picking%20Up%20Your%20Shhh..it%21.mp3" onclick="unlToggle(this)" aria-label="Play I Ain&rsquo;t Picking Up Your Shit No More" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(201,168,76,.55);background:transparent;color:#d4ae48;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
-          <a href="/songs/i-aint-picking-up-your-shit-no-more.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">I Ain&rsquo;t Picking Up Your Shit No More</a>
+<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(255,45,123,.14);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#d81b60;width:1.1rem;text-align:right;flex-shrink:0;">02</span>
+          <button class="unl-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/I%20Ain%27t%20Picking%20Up%20Your%20Shhh..it%21.mp3" onclick="unlToggle(this)" aria-label="Play I Ain&rsquo;t Picking Up Your Shit No More" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(216,27,96,.55);background:#fff;color:#d81b60;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/i-aint-picking-up-your-shit-no-more.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:#33121f;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">I Ain&rsquo;t Picking Up Your Shit No More</a>
           <button onclick="quickReact('unl-i-aint-picking-up-your-shit-no-more','heart')" title="Love it" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
           <button onclick="quickReact('unl-i-aint-picking-up-your-shit-no-more','fire')" title="Fire" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
-          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(201,168,76,.6);border-radius:50%;color:#d4ae48;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
-          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#7ca6c8;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
+          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(13,148,136,.6);border-radius:50%;color:#0d9488;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
+          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#0d9488;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
         </div>
-<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(201,168,76,.14);">
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#a8862f;width:1.1rem;text-align:right;flex-shrink:0;">03</span>
-          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/Brown%20Eyes%20Say.wav" onclick="unlToggle(this)" aria-label="Play Brown Eyes Say (Baby Let It Go)" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(201,168,76,.55);background:transparent;color:#d4ae48;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
-          <a href="/songs/brown-eyes-say.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Brown Eyes Say (Baby Let It Go)</a>
+<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(255,45,123,.14);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#d81b60;width:1.1rem;text-align:right;flex-shrink:0;">03</span>
+          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/Brown%20Eyes%20Say.wav" onclick="unlToggle(this)" aria-label="Play Brown Eyes Say (Baby Let It Go)" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(216,27,96,.55);background:#fff;color:#d81b60;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/brown-eyes-say.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:#33121f;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Brown Eyes Say (Baby Let It Go)</a>
           <button onclick="quickReact('unl-brown-eyes-say','heart')" title="Love it" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
           <button onclick="quickReact('unl-brown-eyes-say','fire')" title="Fire" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
-          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(201,168,76,.6);border-radius:50%;color:#d4ae48;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
-          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#7ca6c8;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
+          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(13,148,136,.6);border-radius:50%;color:#0d9488;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
+          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#0d9488;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
         </div>
-<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(201,168,76,.14);">
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#a8862f;width:1.1rem;text-align:right;flex-shrink:0;">04</span>
-          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/BOOTY%20BOOM%20BOOM%20%28UNLEASHED%20mix%29.wav" onclick="unlToggle(this)" aria-label="Play Booty Boom Boom" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(201,168,76,.55);background:transparent;color:#d4ae48;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
-          <a href="/songs/booty-boom-boom.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Booty Boom Boom</a>
+<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(255,45,123,.14);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#d81b60;width:1.1rem;text-align:right;flex-shrink:0;">04</span>
+          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/BOOTY%20BOOM%20BOOM%20%28UNLEASHED%20mix%29.wav" onclick="unlToggle(this)" aria-label="Play Booty Boom Boom" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(216,27,96,.55);background:#fff;color:#d81b60;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/booty-boom-boom.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:#33121f;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Booty Boom Boom</a>
           <button onclick="quickReact('unl-booty-boom-boom','heart')" title="Love it" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
           <button onclick="quickReact('unl-booty-boom-boom','fire')" title="Fire" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
-          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(201,168,76,.6);border-radius:50%;color:#d4ae48;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
-          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#7ca6c8;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
+          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(13,148,136,.6);border-radius:50%;color:#0d9488;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
+          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#0d9488;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
         </div>
-<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(201,168,76,.14);">
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#a8862f;width:1.1rem;text-align:right;flex-shrink:0;">05</span>
-          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/PUPPY%20KISSES%20%28UNLEASHED%20mix%29.wav" onclick="unlToggle(this)" aria-label="Play Puppy Kisses" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(201,168,76,.55);background:transparent;color:#d4ae48;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
-          <a href="/songs/puppy-kisses.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Puppy Kisses</a>
+<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(255,45,123,.14);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#d81b60;width:1.1rem;text-align:right;flex-shrink:0;">05</span>
+          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/PUPPY%20KISSES%20%28UNLEASHED%20mix%29.wav" onclick="unlToggle(this)" aria-label="Play Puppy Kisses" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(216,27,96,.55);background:#fff;color:#d81b60;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/puppy-kisses.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:#33121f;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Puppy Kisses</a>
           <button onclick="quickReact('unl-puppy-kisses','heart')" title="Love it" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
           <button onclick="quickReact('unl-puppy-kisses','fire')" title="Fire" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
-          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(201,168,76,.6);border-radius:50%;color:#d4ae48;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
-          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#7ca6c8;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
+          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(13,148,136,.6);border-radius:50%;color:#0d9488;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
+          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#0d9488;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
         </div>
-<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(201,168,76,.14);">
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#a8862f;width:1.1rem;text-align:right;flex-shrink:0;">06</span>
-          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/LOOK%20IN%20MY%20EYES%20%28UNLEASHED%20mix%29.wav" onclick="unlToggle(this)" aria-label="Play Look Into My Eyes" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(201,168,76,.55);background:transparent;color:#d4ae48;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
-          <a href="/songs/look-in-my-eyes.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Look Into My Eyes</a>
+<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(255,45,123,.14);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#d81b60;width:1.1rem;text-align:right;flex-shrink:0;">06</span>
+          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/LOOK%20IN%20MY%20EYES%20%28UNLEASHED%20mix%29.wav" onclick="unlToggle(this)" aria-label="Play Look Into My Eyes" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(216,27,96,.55);background:#fff;color:#d81b60;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/look-in-my-eyes.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:#33121f;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Look Into My Eyes</a>
           <button onclick="quickReact('unl-look-in-my-eyes','heart')" title="Love it" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
           <button onclick="quickReact('unl-look-in-my-eyes','fire')" title="Fire" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
-          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(201,168,76,.6);border-radius:50%;color:#d4ae48;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
-          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#7ca6c8;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
+          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(13,148,136,.6);border-radius:50%;color:#0d9488;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
+          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#0d9488;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
         </div>
-<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(201,168,76,.14);">
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#a8862f;width:1.1rem;text-align:right;flex-shrink:0;">07</span>
-          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/UH%20OH%20I%20DID%20IT%20AGAIN%20%28UNLEASHED%20mix%29.wav" onclick="unlToggle(this)" aria-label="Play Uh Oh, I Did It Again" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(201,168,76,.55);background:transparent;color:#d4ae48;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
-          <a href="/songs/uh-oh-i-did-it-again.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Uh Oh, I Did It Again</a>
+<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(255,45,123,.14);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#d81b60;width:1.1rem;text-align:right;flex-shrink:0;">07</span>
+          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/UH%20OH%20I%20DID%20IT%20AGAIN%20%28UNLEASHED%20mix%29.wav" onclick="unlToggle(this)" aria-label="Play Uh Oh, I Did It Again" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(216,27,96,.55);background:#fff;color:#d81b60;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/uh-oh-i-did-it-again.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:#33121f;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Uh Oh, I Did It Again</a>
           <button onclick="quickReact('unl-uh-oh-i-did-it-again','heart')" title="Love it" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
           <button onclick="quickReact('unl-uh-oh-i-did-it-again','fire')" title="Fire" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
-          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(201,168,76,.6);border-radius:50%;color:#d4ae48;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
-          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#7ca6c8;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
+          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(13,148,136,.6);border-radius:50%;color:#0d9488;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
+          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#0d9488;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
         </div>
-<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(201,168,76,.14);">
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#a8862f;width:1.1rem;text-align:right;flex-shrink:0;">08</span>
-          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/TROUBLE%20TROUBLE%20%28UNLEASHED%20mix%29.wav" onclick="unlToggle(this)" aria-label="Play Trouble Trouble" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(201,168,76,.55);background:transparent;color:#d4ae48;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
-          <a href="/songs/trouble-trouble-pup.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Trouble Trouble</a>
+<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(255,45,123,.14);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#d81b60;width:1.1rem;text-align:right;flex-shrink:0;">08</span>
+          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/TROUBLE%20TROUBLE%20%28UNLEASHED%20mix%29.wav" onclick="unlToggle(this)" aria-label="Play Trouble Trouble" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(216,27,96,.55);background:#fff;color:#d81b60;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/trouble-trouble-pup.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:#33121f;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Trouble Trouble</a>
           <button onclick="quickReact('unl-trouble-trouble-pup','heart')" title="Love it" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
           <button onclick="quickReact('unl-trouble-trouble-pup','fire')" title="Fire" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
-          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(201,168,76,.6);border-radius:50%;color:#d4ae48;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
-          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#7ca6c8;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
+          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(13,148,136,.6);border-radius:50%;color:#0d9488;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
+          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#0d9488;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
         </div>
-<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(201,168,76,.14);">
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#a8862f;width:1.1rem;text-align:right;flex-shrink:0;">09</span>
-          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/FLEAS%20%28UNLEASHED%20mix%29.wav" onclick="unlToggle(this)" aria-label="Play FLEAS" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(201,168,76,.55);background:transparent;color:#d4ae48;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
-          <a href="/songs/fleas.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">FLEAS</a>
+<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(255,45,123,.14);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#d81b60;width:1.1rem;text-align:right;flex-shrink:0;">09</span>
+          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/FLEAS%20%28UNLEASHED%20mix%29.wav" onclick="unlToggle(this)" aria-label="Play FLEAS" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(216,27,96,.55);background:#fff;color:#d81b60;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/fleas.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:#33121f;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">FLEAS</a>
           <button onclick="quickReact('unl-fleas','heart')" title="Love it" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
           <button onclick="quickReact('unl-fleas','fire')" title="Fire" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
-          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(201,168,76,.6);border-radius:50%;color:#d4ae48;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
-          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#7ca6c8;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
+          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(13,148,136,.6);border-radius:50%;color:#0d9488;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
+          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#0d9488;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
         </div>
-<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(201,168,76,.14);">
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#a8862f;width:1.1rem;text-align:right;flex-shrink:0;">10</span>
-          <button class="unl-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/Tongue%20%26%20Groove.mp3" onclick="unlToggle(this)" aria-label="Play Tongue &amp; Groove" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(201,168,76,.55);background:transparent;color:#d4ae48;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
-          <a href="/songs/tongue-and-groove.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Tongue &amp; Groove</a>
+<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(255,45,123,.14);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#d81b60;width:1.1rem;text-align:right;flex-shrink:0;">10</span>
+          <button class="unl-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/Tongue%20%26%20Groove.mp3" onclick="unlToggle(this)" aria-label="Play Tongue &amp; Groove" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(216,27,96,.55);background:#fff;color:#d81b60;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/tongue-and-groove.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:#33121f;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Tongue &amp; Groove</a>
           <button onclick="quickReact('unl-tongue-and-groove','heart')" title="Love it" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
           <button onclick="quickReact('unl-tongue-and-groove','fire')" title="Fire" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
-          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(201,168,76,.6);border-radius:50%;color:#d4ae48;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
-          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#7ca6c8;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
+          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(13,148,136,.6);border-radius:50%;color:#0d9488;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
+          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#0d9488;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
         </div>
-<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(201,168,76,.14);">
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#a8862f;width:1.1rem;text-align:right;flex-shrink:0;">11</span>
-          <button class="unl-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/peach-on-fire-%28remastered%29.mp3" onclick="unlToggle(this)" aria-label="Play Peach on Fire" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(201,168,76,.55);background:transparent;color:#d4ae48;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
-          <a href="/songs/peach-on-fire.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Peach on Fire</a>
+<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(255,45,123,.14);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#d81b60;width:1.1rem;text-align:right;flex-shrink:0;">11</span>
+          <button class="unl-play" data-src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/peach-on-fire-%28remastered%29.mp3" onclick="unlToggle(this)" aria-label="Play Peach on Fire" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(216,27,96,.55);background:#fff;color:#d81b60;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/peach-on-fire.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:#33121f;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Peach on Fire</a>
           <button onclick="quickReact('unl-peach-on-fire','heart')" title="Love it" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
           <button onclick="quickReact('unl-peach-on-fire','fire')" title="Fire" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
-          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(201,168,76,.6);border-radius:50%;color:#d4ae48;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
-          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#7ca6c8;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
+          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(13,148,136,.6);border-radius:50%;color:#0d9488;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
+          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#0d9488;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
         </div>
-<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(201,168,76,.14);">
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#a8862f;width:1.1rem;text-align:right;flex-shrink:0;">12</span>
-          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/WILL%20YOU%20BE%20MY%20FRIEND%20%28UNLEASHED%20mix%29.wav" onclick="unlToggle(this)" aria-label="Play Will You Be My Friend" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(201,168,76,.55);background:transparent;color:#d4ae48;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
-          <a href="/songs/will-you-be-my-friend.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Will You Be My Friend</a>
+<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(255,45,123,.14);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#d81b60;width:1.1rem;text-align:right;flex-shrink:0;">12</span>
+          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/WILL%20YOU%20BE%20MY%20FRIEND%20%28UNLEASHED%20mix%29.wav" onclick="unlToggle(this)" aria-label="Play Will You Be My Friend" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(216,27,96,.55);background:#fff;color:#d81b60;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/will-you-be-my-friend.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:#33121f;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Will You Be My Friend</a>
           <button onclick="quickReact('unl-will-you-be-my-friend','heart')" title="Love it" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
           <button onclick="quickReact('unl-will-you-be-my-friend','fire')" title="Fire" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
-          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(201,168,76,.6);border-radius:50%;color:#d4ae48;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
-          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#7ca6c8;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
+          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(13,148,136,.6);border-radius:50%;color:#0d9488;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
+          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#0d9488;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
         </div>
-<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(201,168,76,.14);">
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#a8862f;width:1.1rem;text-align:right;flex-shrink:0;">13</span>
-          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/ME%20%26%20MY%20DOG%20-%20SPURS%20%28UNLEASHED%20mix%29.wav" onclick="unlToggle(this)" aria-label="Play Me &amp; My Dog | Spurs" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(201,168,76,.55);background:transparent;color:#d4ae48;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
-          <a href="/songs/spurs.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Me &amp; My Dog | Spurs</a>
+<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(255,45,123,.14);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#d81b60;width:1.1rem;text-align:right;flex-shrink:0;">13</span>
+          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/ME%20%26%20MY%20DOG%20-%20SPURS%20%28UNLEASHED%20mix%29.wav" onclick="unlToggle(this)" aria-label="Play Me &amp; My Dog | Spurs" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(216,27,96,.55);background:#fff;color:#d81b60;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/spurs.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:#33121f;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Me &amp; My Dog | Spurs</a>
           <button onclick="quickReact('unl-spurs','heart')" title="Love it" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
           <button onclick="quickReact('unl-spurs','fire')" title="Fire" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
-          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(201,168,76,.6);border-radius:50%;color:#d4ae48;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
-          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#7ca6c8;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
+          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(13,148,136,.6);border-radius:50%;color:#0d9488;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
+          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#0d9488;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
         </div>
-<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(201,168,76,.14);">
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#a8862f;width:1.1rem;text-align:right;flex-shrink:0;">14</span>
-          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/DROWN%20ME%20IN%20SLOBBERY%20KISSES%20%28UNLEASHED%20mix%29.wav" onclick="unlToggle(this)" aria-label="Play Drown Me in Slobbery Kisses" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(201,168,76,.55);background:transparent;color:#d4ae48;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
-          <a href="/songs/drown-me-in-slobbery-kisses.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Drown Me in Slobbery Kisses</a>
+<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(255,45,123,.14);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#d81b60;width:1.1rem;text-align:right;flex-shrink:0;">14</span>
+          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/DROWN%20ME%20IN%20SLOBBERY%20KISSES%20%28UNLEASHED%20mix%29.wav" onclick="unlToggle(this)" aria-label="Play Drown Me in Slobbery Kisses" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(216,27,96,.55);background:#fff;color:#d81b60;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/drown-me-in-slobbery-kisses.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:#33121f;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Drown Me in Slobbery Kisses</a>
           <button onclick="quickReact('unl-drown-me-in-slobbery-kisses','heart')" title="Love it" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
           <button onclick="quickReact('unl-drown-me-in-slobbery-kisses','fire')" title="Fire" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
-          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(201,168,76,.6);border-radius:50%;color:#d4ae48;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
-          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#7ca6c8;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
+          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(13,148,136,.6);border-radius:50%;color:#0d9488;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
+          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#0d9488;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
         </div>
-<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(201,168,76,.14);">
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#a8862f;width:1.1rem;text-align:right;flex-shrink:0;">15</span>
-          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/Those%20Big%20Brown%20Eyes.wav" onclick="unlToggle(this)" aria-label="Play Those Big Brown Eyes" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(201,168,76,.55);background:transparent;color:#d4ae48;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
-          <a href="/songs/those-big-brown-eyes.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:var(--cream,#ede8df);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Those Big Brown Eyes</a>
+<div style="display:flex;align-items:center;gap:.5rem;padding:.42rem .2rem;border-bottom:1px solid rgba(255,45,123,.14);">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:.62rem;color:#d81b60;width:1.1rem;text-align:right;flex-shrink:0;">15</span>
+          <button class="unl-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/Those%20Big%20Brown%20Eyes.wav" onclick="unlToggle(this)" aria-label="Play Those Big Brown Eyes" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(216,27,96,.55);background:#fff;color:#d81b60;font-size:.62rem;cursor:pointer;line-height:1;">&#x25B6;</button>
+          <a href="/songs/those-big-brown-eyes.html" style="flex:1;min-width:0;font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;color:#33121f;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Those Big Brown Eyes</a>
           <button onclick="quickReact('unl-those-big-brown-eyes','heart')" title="Love it" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F48B;</button>
           <button onclick="quickReact('unl-those-big-brown-eyes','fire')" title="Fire" style="background:none;border:none;font-size:.85rem;cursor:pointer;padding:0;flex-shrink:0;">&#x1F525;</button>
-          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(201,168,76,.6);border-radius:50%;color:#d4ae48;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
-          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#7ca6c8;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
+          <a href="https://buy.stripe.com/8x200l4Ho63f4Fcg8ad7q0e?client_reference_id=unleashed" target="_blank" rel="noopener" title="Own this song &mdash; any 3 songs $4.99" style="flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(13,148,136,.6);border-radius:50%;color:#0d9488;font-size:.68rem;font-weight:800;text-decoration:none;">$</a>
+          <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" style="flex-shrink:0;color:#0d9488;font-size:.8rem;text-decoration:none;">&#x1F3B5;</a>
         </div>
         </div>
         <audio id="unlAudio" preload="none"></audio>
@@ -419,17 +432,17 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
         a.onended=function(){var all=Array.prototype.slice.call(document.querySelectorAll('.unl-play'));var i=all.indexOf(btn);if(i>-1&&i+1<all.length)unlToggle(all[i+1]);else btn.innerHTML='&#x25B6;';};}
       </script>
       <div class="lh-cta-row" style="margin-bottom:1rem;">
-        <a class="lh-btn-primary" href="/unleashed.html" style="background:linear-gradient(135deg,#c9a84c 0%,#a8862f 100%);color:#171204;box-shadow:0 4px 20px rgba(201,168,76,0.28);">
+        <a class="lh-btn-primary" href="/unleashed.html" style="background:linear-gradient(135deg,#ff2d7b 0%,#b23bff 100%);color:#fff;box-shadow:0 4px 20px rgba(255,45,123,0.3);">
           Explore the Album
         </a>
-        <a class="lh-btn-secondary" href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener">
+        <a class="lh-btn-secondary" href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" style="color:#0d9488;border-color:rgba(13,148,136,.5);">
           Stream Everywhere
         </a>
       </div>
       <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
         <button onclick="quickReact('unleashed-album','heart');if(typeof showToast==='function')showToast('unleashed love right back at ya')" style="background:none;border:none;font-size:1.4rem;cursor:pointer;" class="sa-react" title="Love it">&#x1F48B;</button>
         <button onclick="quickReact('unleashed-album','fire');if(typeof showToast==='function')showToast('fully unleashed')" style="background:none;border:none;font-size:1.4rem;cursor:pointer;" class="sa-react" title="Fire">&#x1F525;</button>
-        <a href="/moods/dog-songs.html" style="color:#d4ae48;font-size:.8rem;text-decoration:none;padding:.4rem .8rem;border:1px solid rgba(201,168,76,.3);border-radius:6px;">&#128251; Hear it on PuppyFM Radio</a>
+        <a href="/moods/dog-songs.html" style="color:#0d9488;font-size:.8rem;text-decoration:none;padding:.4rem .8rem;border:1px solid rgba(13,148,136,.4);border-radius:6px;">&#128251; Hear it on PuppyFM Radio</a>
       </div>
     </div>
   </div>
@@ -710,13 +723,8 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
 </section>
 
 <!-- Mood / Vibe Section — directly under radio -->
-<section class="section mood-section" id="moods" style="padding:2.5rem 0;">
-  <div class="container text-center">
-    <h2 class="sec-title reveal" style="font-size:1.6rem;margin-bottom:.5rem;">Browse by Mood</h2>
-    <p class="sec-sub reveal" style="margin-bottom:1.5rem;">Choose how you want to feel.</p>
-    <div class="mood-grid" id="moodGrid" style="display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;"></div>
-  </div>
-</section>
+<!-- mood containers removed 2026-08-10 per CEO: moods are FILTER PILLS in the radio player -->
+<div id="moods" style="display:none" aria-hidden="true"></div>
 
 <!-- Mood Playlist Modal -->
 <div class="modal-overlay" id="moodModal">
@@ -1291,7 +1299,8 @@ const RADIO_MAX_CONSECUTIVE_FAILURES = 10;
 // Load from embedded SITE_DATA (no network calls!)
 function loadSiteData() {
   try {
-    allSongs = SITE_DATA.songs.filter(s => !s.is_vault);
+    const PRIVATE_ALBUM_IDS = ['1348f1fe-8d34-4b8c-a5cd-8a0be17b0080']; // Unreleased / In Progress — CEO: private, never public
+    allSongs = SITE_DATA.songs.filter(s => !s.is_vault && !PRIVATE_ALBUM_IDS.includes(s.album_id));
     moodCategories = SITE_DATA.moods.slice().sort((a,b) => (a.sort_order||99) - (b.sort_order||99));
     SITE_DATA.albums.forEach(a => albumMap[a.id] = a);
     SITE_DATA.song_moods.forEach(sm => {
@@ -1350,6 +1359,7 @@ var MOOD_PAGES = {
 };
 function buildMoodGrid() {
   const grid = document.getElementById('moodGrid');
+  if (!grid) return;
   grid.innerHTML = '';
   moodCategories.filter(m => MOOD_PAGES[m.name]).forEach(m => {
     if (m.status === 'coming_soon') {
@@ -1478,6 +1488,23 @@ function buildRadioQueue(mode, filterId, options) {
   syncShuffleButton();
   queuePersistRadioState();
   return true;
+}
+
+function buildMoodPills() {
+  const mb = document.getElementById('radioMoodBar');
+  mb.innerHTML = '';
+  moodCategories.forEach(m => {
+    const btn = document.createElement('button');
+    btn.className = 'album-chip' + (radioQueueSource.mode === 'mood' && radioQueueSource.filterId === m.id ? ' active' : '');
+    btn.textContent = (m.icon ? m.icon + ' ' : '') + (m.name || m.heading || '');
+    btn.addEventListener('click', () => {
+      mb.querySelectorAll('.album-chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const rebuilt = buildRadioQueue('mood', m.id, { preserveCurrentSong: false });
+      if (!radioPlaying && rebuilt && getCurrentSong()) renderRadioTrack(getCurrentSong(), { label: 'Ready to Play' });
+    });
+    mb.appendChild(btn);
+  });
 }
 
 function updateAlbumBar() {
@@ -1983,10 +2010,13 @@ document.querySelectorAll('.radio-mode').forEach(btn => {
   btn.addEventListener('click', function() {
     const mode = this.dataset.mode;
     if (mode === 'mood') {
-      updateModeButtons();
-      document.getElementById('moods').scrollIntoView({ behavior: 'smooth' });
+      const mb = document.getElementById('radioMoodBar');
+      const show = mb.style.display === 'none';
+      mb.style.display = show ? '' : 'none';
+      if (show) buildMoodPills();
       return;
     }
+    document.getElementById('radioMoodBar').style.display = 'none';
     buildRadioQueue(mode);
     if (radioPlaying) {
       playCurrentTrack();
