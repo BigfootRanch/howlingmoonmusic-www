@@ -12,13 +12,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Fetch and verify payload
         run: |
-          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v12b-pages.tar.gz"
-          echo "e491c60651ca83621359fbb40da9fda9ec8649a2ed77bbc58b1a412097d3125e  /tmp/pages.tar.gz" | sha256sum -c -
+          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v13-pages.tar.gz"
+          echo "e7bce488aa579b46242f6eebe25ef7d03359a0a27db0d140d6e32b3f7f7062c4  /tmp/pages.tar.gz" | sha256sum -c -
           tar xzf /tmp/pages.tar.gz -C .
       - name: Commit pages
         run: |
           git config user.name "howling-moon-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add songs/
-          git diff --cached --quiet || git commit -m "v12: liner-notes QC + CEO Will You Be My Friend story copy"
+          git add moods/
+          git diff --cached --quiet || git commit -m "v13: link PuppyFM Radio + PuppyHowls in dog-songs hero"
           git push
