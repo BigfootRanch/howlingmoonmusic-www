@@ -1653,6 +1653,10 @@ function buildMoodPills() {
       mb.querySelectorAll('.album-chip').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const rebuilt = buildRadioQueue('mood', m.id, { preserveCurrentSong: false });
+      // SCRAMBLE WITHIN THE SELECTION (CEO 2026-08-11: Outlaw + Pop Rock pills both led with
+      // Ride or Die — deterministic mood order made every overlapping mood open on the same
+      // song). Every pill tap shuffles its mood's queue, so the lead varies per tap too.
+      if (rebuilt && radioQueue.length > 1) radioQueue = buildShuffledQueue(radioQueue, null);
       radioIndex = 0;
       if (!radioPlaying && rebuilt && getCurrentSong()) {
         renderRadioTrack(getCurrentSong(), { label: 'Ready to Play' });
@@ -1932,7 +1936,7 @@ function primeCurrentTrack() {
   const song = getCurrentSong();
   if (!song) return;
   const audioPath = song.audio_path || (song.slug + '.mp3');
-  const audioUrl = AUDIO_BASE + encodeURIComponent(audioPath).replace(/%2F/g, '/');
+  const audioUrl = /^https?:\/\//.test(audioPath) ? audioPath : AUDIO_BASE + encodeURIComponent(audioPath).replace(/%2F/g, '/');
   if (audioEl.src !== audioUrl) {
     audioEl.src = audioUrl;
   }
@@ -2083,7 +2087,7 @@ document.getElementById('radioBtn').addEventListener('click', () => {
     // The queue may have been rebuilt (mood pill / album chip) since this src loaded —
     // resuming the stale src replays the OLD song. Reload if src no longer matches.
     const song = getCurrentSong();
-    const expectedUrl = song ? AUDIO_BASE + encodeURIComponent(song.audio_path || (song.slug + '.mp3')).replace(/%2F/g, '/') : null;
+    const expectedUrl = song ? (/^https?:\/\//.test(song.audio_path || '') ? song.audio_path : AUDIO_BASE + encodeURIComponent(song.audio_path || (song.slug + '.mp3')).replace(/%2F/g, '/')) : null;
     if (expectedUrl && audioEl.src !== expectedUrl) {
       playCurrentTrack();
       return;
