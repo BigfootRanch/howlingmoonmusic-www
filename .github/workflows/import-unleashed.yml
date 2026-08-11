@@ -12,13 +12,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Fetch and verify payload
         run: |
-          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v15-pages.tar.gz"
-          echo "bfbb09db9372d8c3de8fe49fc9c769b16edc3a15212ee9238b538ae8c5b56a58  /tmp/pages.tar.gz" | sha256sum -c -
+          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v16-pages.tar.gz"
+          echo "9a90b184b7c114365522a571cfdea12e32718c326b497636bb4ecab52f72b4bc  /tmp/pages.tar.gz" | sha256sum -c -
           tar xzf /tmp/pages.tar.gz -C .
       - name: Commit pages
         run: |
           git config user.name "howling-moon-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add index.html
-          git diff --cached --quiet || git commit -m "v15: hero album player — 15 previewable tracks"
+          git add index.html moods/
+          git diff --cached --quiet || git commit -m "v16: unreleased private, mood pills in player, UNLEASHED pink/teal restyle"
           git push
