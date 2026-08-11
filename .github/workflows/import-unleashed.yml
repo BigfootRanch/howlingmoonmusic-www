@@ -12,13 +12,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Fetch and verify payload
         run: |
-          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v7-pages.tar.gz"
-          echo "adfd8bb38f15c286a0dc4fd2f4de07e96c460fa5263aba2d28257a70756c4165  /tmp/pages.tar.gz" | sha256sum -c -
+          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v8-pages.tar.gz"
+          echo "b2429d938706872fab7c11081f26e66d73c87093760608652f81bd4133364375  /tmp/pages.tar.gz" | sha256sum -c -
           tar xzf /tmp/pages.tar.gz -C .
       - name: Commit pages
         run: |
           git config user.name "howling-moon-bot"
           git config user.email "actions@users.noreply.github.com"
           git add songs/
-          git diff --cached --quiet || git commit -m "v7: strip Suno prompt instructions from lyrics + production-speak from story cards"
+          git diff --cached --quiet || git commit -m "v8: CEO Peach on Fire copy + liner-notes law sweep"
           git push
