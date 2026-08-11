@@ -12,13 +12,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Fetch and verify payload
         run: |
-          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v19-pages.tar.gz"
-          echo "8ddfc188dc1814f98420dd89cfdeae3d481a90ca44458aaa92c5460b7374ab9b  /tmp/pages.tar.gz" | sha256sum -c -
+          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v20-pages.tar.gz"
+          echo "d8dab6a1b2f40438bb3f9245ca6e262cad19fbf36fefc95b16f5de9512fa857a  /tmp/pages.tar.gz" | sha256sum -c -
           tar xzf /tmp/pages.tar.gz -C .
       - name: Commit pages
         run: |
           git config user.name "howling-moon-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add index.html
-          git diff --cached --quiet || git commit -m "v19: bundle chooser + beach/outlaw tracklist panels"
+          git add index.html songs/
+          git diff --cached --quiet || git commit -m "v20: album versions for Tongue & Groove, Peach on Fire, Shit No More"
           git push
