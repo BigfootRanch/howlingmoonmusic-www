@@ -1714,6 +1714,10 @@ function updateAlbumBar() {
 
 function getSongsForSource(source) {
   let songs = allSongs.filter(s => s.audio_path);
+  // CEO 2026-08-10 (verbatim: JT explicit songs are "way too offensive to casually be with my
+  // brand" — "move to JT designation or hide"): explicit tracks play ONLY under the JT pill.
+  // Found live 8/11: Pussy Juice led the Hot Summer Nights mood on the Dogmother homepage.
+  if (source.mode !== 'jt') songs = songs.filter(s => !s.explicit);
 
   if (source.mode === 'valentina') {
     songs = songs.filter(isValentinaSong);
