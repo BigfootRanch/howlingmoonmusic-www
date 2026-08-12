@@ -12,13 +12,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Fetch and verify payload
         run: |
-          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v24c-pages.tar.gz"
-          echo "4798747f18846514b575af7507a13db278355e3ea76b315350185097c13cdc57  /tmp/pages.tar.gz" | sha256sum -c -
+          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v25-pages.tar.gz"
+          echo "605b88c80a68aae720b7813515cb7df7127a04fbf125964ed62f267f0919c933  /tmp/pages.tar.gz" | sha256sum -c -
           tar xzf /tmp/pages.tar.gz -C .
       - name: Commit pages
         run: |
           git config user.name "howling-moon-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add index.html site-data.js
-          git diff --cached --quiet || git commit -m "v24c: versioned site-data ref"
+          git add index.html unleashed.html
+          git diff --cached --quiet || git commit -m "v25: Full Album \$14.99 working Stripe link"
           git push
