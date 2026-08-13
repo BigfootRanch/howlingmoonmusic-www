@@ -2403,8 +2403,12 @@ loadSiteData();
   .album-card .hm-card-chev{color:var(--gold,#d4a843);font-size:.85rem;transition:transform .25s;position:absolute;right:0;top:.25rem;}
   .album-card.hm-open .hm-card-chev{transform:rotate(180deg);}
   .album-card .hm-card-body{margin-top:1rem;}
-  .hm-str{margin-left:.45rem;font-size:.8rem;text-decoration:none;flex-shrink:0;opacity:.85;}
-  .hm-str:hover{opacity:1;}
+  .hm-str{margin-left:.45rem;font-size:.8rem;flex-shrink:0;opacity:.9;display:inline-flex;align-items:center;gap:.35rem;}
+  .hm-str-tog{background:none;border:none;cursor:pointer;font-size:.85rem;padding:0;opacity:.85;}
+  .hm-str-tog:hover{opacity:1;}
+  .hm-str-menu{display:inline-flex;gap:.4rem;}
+  .hm-str-menu a{font-size:.68rem;font-weight:700;letter-spacing:.02em;text-decoration:none;color:var(--gold,#d4a843);border:1px solid rgba(212,168,67,.45);border-radius:4px;padding:.12rem .4rem;white-space:nowrap;}
+  .hm-str-menu a:hover{background:rgba(212,168,67,.12);}
 </style>
 <script>
 (function(){
@@ -2560,11 +2564,19 @@ loadSiteData();
         var hit=released[t]||null;
         if(!hit){ for(var i=0;i<relKeys.length;i++){ var k=relKeys[i]; if(k.length>5&&(k.indexOf(t)===0||t.indexOf(k)===0)){ hit=released[k]; break; } } }
         if(!hit) return;
-        var s=document.createElement('a'); s.className='hm-str'; s.target='_blank'; s.rel='noopener';
-        s.title='Stream "'+hit+'"';
-        s.href='https://open.spotify.com/search/'+encodeURIComponent(hit+' The Dogmother');
-        s.textContent='🎧';
-        li.appendChild(s); wired++;
+        /* CEO 8/13: not Spotify-only — 🎧 opens a per-song menu: Spotify · Apple Music · YouTube */
+        var q=encodeURIComponent(hit+' The Dogmother');
+        var wrap=document.createElement('span'); wrap.className='hm-str';
+        var tog=document.createElement('button'); tog.className='hm-str-tog'; tog.type='button'; tog.textContent='🎧'; tog.title='Stream "'+hit+'"';
+        var menu=document.createElement('span'); menu.className='hm-str-menu hm-hidden';
+        [['Spotify','https://open.spotify.com/search/'+q],
+         ['Apple','https://music.apple.com/us/search?term='+q],
+         ['YouTube','https://www.youtube.com/results?search_query='+q]].forEach(function(svc){
+          var a=document.createElement('a'); a.href=svc[1]; a.target='_blank'; a.rel='noopener'; a.textContent=svc[0]; menu.appendChild(a);
+        });
+        tog.addEventListener('click', function(ev){ ev.preventDefault(); ev.stopPropagation(); menu.classList.toggle('hm-hidden'); });
+        wrap.appendChild(tog); wrap.appendChild(menu);
+        li.appendChild(wrap); wired++;
       });
       console.log('[hm-condense] live · stream links wired:', wired);
     }catch(e){ console.warn('hm-condense failed', e); }
