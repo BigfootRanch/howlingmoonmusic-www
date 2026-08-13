@@ -12,13 +12,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Fetch and verify payload
         run: |
-          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v27b-pages.tar.gz"
-          echo "f991c723d0dd6762004603168c52dd22492a614736c38e560f126bb000a37236  /tmp/pages.tar.gz" | sha256sum -c -
+          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v28-pages.tar.gz"
+          echo "105073bdda974818e9d2713c4f714ad50238709abc81351c9e379d8df0c7f9c1  /tmp/pages.tar.gz" | sha256sum -c -
           tar xzf /tmp/pages.tar.gz -C .
       - name: Commit pages
         run: |
           git config user.name "howling-moon-bot"
           git config user.email "actions@users.noreply.github.com"
           git add index.html
-          git diff --cached --quiet || git commit -m "v27: cover-tile catalog, retired containers, Howling Moon Radio card, PuppyFM pill + catalog item"
+          git diff --cached --quiet || git commit -m "v28: radio/new-release/catalog always open, UNLEASHED cue, Rock a Bye Baby into catalog"
           git push
