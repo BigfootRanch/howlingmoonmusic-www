@@ -187,7 +187,9 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
 
 <!-- NEW ALBUM — UNLEASHED (cinematic black-plum hero, CEO design brief 2026-08-10) -->
 <style>
-#unleashed-featured{position:relative;overflow:hidden;padding:4.5rem 2rem 4rem;background:linear-gradient(165deg,#0C080D 0%,#180B17 20%,#09070B 46%,#171108 70%,#0C080D 100%);}
+/* CEO 2026-08-13: pink-moon desert art behind the whole UNLEASHED stage (soft dark scrim keeps the
+   cover + headings + tracklist readable) — replaces the flat black-plum gradient. */
+#unleashed-featured{position:relative;overflow:hidden;padding:4.5rem 2rem 4rem;background:linear-gradient(165deg,rgba(12,8,13,.72) 0%,rgba(24,11,23,.55) 20%,rgba(9,7,11,.62) 46%,rgba(23,17,8,.55) 70%,rgba(12,8,13,.78) 100%),url('https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/unleashed-section-bg.jpg') center/cover no-repeat #0C080D;}
 #unleashed-featured::before{content:'';position:absolute;top:-12%;left:-8%;width:44%;height:60%;background:radial-gradient(ellipse at 35% 35%,rgba(178,59,255,.11) 0%,rgba(255,45,123,.05) 45%,transparent 72%);pointer-events:none;}
 #unleashed-featured::after{content:'';position:absolute;top:8%;left:2%;width:52%;height:84%;background:radial-gradient(ellipse at 45% 50%,rgba(190,135,35,.11) 0%,rgba(190,135,35,.04) 48%,transparent 74%);pointer-events:none;}
 #unleashed-featured .unl-wrap{position:relative;z-index:1;max-width:1200px;margin:0 auto;}
@@ -1365,7 +1367,6 @@ function submitHomeSignup(e){
 <footer class="footer">
   <img src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png" alt="Howling Moon Music">
   <p>&copy; 2026 Howling Moon Music LLC. All rights reserved.</p>
-  <p class="gold-line">All songs original compositions by Valentina Talor</p>
   <p style="font-size:.55rem;color:var(--tm);margin-top:1rem;opacity:.15;line-height:1.4;">Howling Moon Music LLC &bull; 1309 Coffeen Ave, Ste 18072, Sheridan, WY 82801 &bull; (361) 426-8742</p>
 </footer>
 
@@ -2509,7 +2510,7 @@ loadSiteData();
       var grid=document.querySelector('#music .album-grid');
       if(grid){
         var pc=document.createElement('div'); pc.className='album-card';
-        pc.innerHTML='<div class="album-genre">Dog Songs &amp; Unconditional Love</div><h3>PuppyFM Radio</h3><span class="album-badge" style="background:rgba(255,45,123,.12);color:#e91e63">🐶 STATION</span><p style="color:var(--ts,#b9aaa0);font-size:.85rem;margin:.5rem 0 1rem;line-height:1.5;">Every dog song in one place — brought to you by Howling Moon Music.</p><div style="display:flex;gap:.8rem;margin-top:1rem;"><a href="/moods/dog-songs.html" style="flex:1;text-align:center;background:#ff2d7b;color:#fff;border:none;padding:.7rem 1rem;border-radius:8px;font-size:.9rem;text-decoration:none;font-weight:700;">&#9654; Open PuppyFM Radio</a></div>';
+        pc.innerHTML='<img src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/puppyfm-radio-cover.jpg" alt="PuppyFM Radio" style="width:100%;border-radius:8px;margin-bottom:1rem;" loading="lazy"><div class="album-genre">Dog Songs &amp; Unconditional Love</div><h3>PuppyFM Radio</h3><span class="album-badge" style="background:rgba(255,45,123,.12);color:#e91e63">🐶 STATION</span><p style="color:var(--ts,#b9aaa0);font-size:.85rem;margin:.5rem 0 1rem;line-height:1.5;">Every dog song in one place — brought to you by Howling Moon Music.</p><div style="display:flex;gap:.8rem;margin-top:1rem;"><a href="/moods/dog-songs.html" style="flex:1;text-align:center;background:#ff2d7b;color:#fff;border:none;padding:.7rem 1rem;border-radius:8px;font-size:.9rem;text-decoration:none;font-weight:700;">&#9654; Open PuppyFM Radio</a></div>';
         /* CEO 8/13: Build Your Own Album rides at the END, just before PuppyFM Radio */
         var byo=[...document.querySelectorAll('#music .album-card')].find(function(c){ var h=c.querySelector('h3'); return h&&/Build Your Own Album/i.test(h.textContent); });
         if(byo) grid.appendChild(byo);
