@@ -12,13 +12,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Fetch and verify payload
         run: |
-          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v31-pages.tar.gz"
-          echo "1df6705acda9550be2fa01768611e434ca193b40d13ddcfd39edf270251db099  /tmp/pages.tar.gz" | sha256sum -c -
+          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v32-pages.tar.gz"
+          echo "8cb48f0e87bf2cfb27a8b2dae03b0b6cbacb7091a1965e1352b27f39ca1f6f26  /tmp/pages.tar.gz" | sha256sum -c -
           tar xzf /tmp/pages.tar.gz -C .
       - name: Commit pages
         run: |
           git config user.name "howling-moon-bot"
           git config user.email "actions@users.noreply.github.com"
           git add index.html
-          git diff --cached --quiet || git commit -m "v31: Build Your Own Album cover art + end-of-catalog placement"
+          git diff --cached --quiet || git commit -m "v32: Healing Frequencies cover art"
           git push
