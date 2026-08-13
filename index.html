@@ -2392,14 +2392,15 @@ loadSiteData();
   .hm-hidden{display:none!important;}
   #music .album-grid{align-items:start;}
   #music .album-card{height:auto!important;min-height:0!important;align-self:start;}
-  .album-card .hm-card-head{display:flex;align-items:center;gap:.9rem;cursor:pointer;}
-  .album-card .hm-card-head img{width:64px!important;height:64px!important;max-width:64px!important;object-fit:cover;border-radius:8px!important;margin:0!important;flex-shrink:0;}
-  .album-card .hm-card-head .hm-ch-txt{flex:1;min-width:0;}
-  .album-card .hm-card-head h3{margin:.1rem 0!important;font-size:1rem!important;}
+  /* CEO 8/13: catalog previews = the ALBUM COVER + caption; tap the cover to open the tracklist */
+  .album-card .hm-card-head{display:block;cursor:pointer;}
+  .album-card .hm-card-head img{width:100%!important;height:auto!important;max-width:100%!important;aspect-ratio:1/1;object-fit:cover;border-radius:10px!important;margin:0 0 .65rem!important;display:block;box-shadow:0 6px 24px rgba(0,0,0,.25);}
+  .album-card .hm-card-ph{width:100%;aspect-ratio:1/1;border-radius:10px;margin:0 0 .65rem;display:flex;align-items:center;justify-content:center;text-align:center;padding:1rem;background:linear-gradient(135deg,rgba(212,168,67,.3),rgba(255,45,123,.18));font-family:'Cinzel',Georgia,serif;font-size:1.15rem;letter-spacing:.06em;color:var(--gold,#d4a843);}
+  .album-card .hm-card-head .hm-ch-txt{position:relative;padding-right:1.5rem;min-width:0;}
+  .album-card .hm-card-head h3{margin:.1rem 0!important;font-size:1.02rem!important;white-space:normal!important;}
   .album-card .hm-card-head .album-genre{margin:0!important;white-space:nowrap!important;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
-  .album-card .hm-card-head h3{white-space:normal!important;}
   .album-card .hm-card-count{font-size:.72rem;color:var(--ts,#b9aaa0);margin-top:.15rem;}
-  .album-card .hm-card-chev{color:var(--gold,#d4a843);font-size:.85rem;flex-shrink:0;transition:transform .25s;}
+  .album-card .hm-card-chev{color:var(--gold,#d4a843);font-size:.85rem;transition:transform .25s;position:absolute;right:0;top:.25rem;}
   .album-card.hm-open .hm-card-chev{transform:rotate(180deg);}
   .album-card .hm-card-body{margin-top:1rem;}
   .hm-str{margin-left:.45rem;font-size:.8rem;text-decoration:none;flex-shrink:0;opacity:.85;}
@@ -2418,7 +2419,7 @@ loadSiteData();
       /* 3) every homepage section = collapsed preview container */
       var UNL_COVER='https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/unleashed-cover.png';
       var SECTIONS=[
-        {id:'radio', emoji:'📻', title:'PuppyFM Radio', sub:'Press play — every song · moods · Valentina · JT'},
+        {id:'radio', emoji:'📻', title:'Howling Moon Radio', sub:'24/7 Southwest Country Soul — press play · moods · Valentina · JT · PuppyFM'},
         {id:'unleashed-featured', art:UNL_COVER, title:'NEW RELEASE — UNLEASHED', sub:'The Dogmother · 15 tracks · out Aug 14 — tap to hear every song'},
         {id:'music', emoji:'💿', title:'The Full Catalog', sub:'Every album & single — tap any album for the tracklist, listen, buy & stream'},
         {id:'latest-hit', emoji:'🌙', title:'Rock a Bye Baby', sub:'Featured single'},
@@ -2453,8 +2454,48 @@ loadSiteData();
         head.addEventListener('click', toggle);
         head.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(); } });
       });
+      /* 4a) CEO 8/13: retired containers — Viral Hits, More New Songs (Website Exclusive),
+         and the 8/12 archive decisions applied to the LIVE site: GenX Rage & Red Lipstick
+         (archived private) + the redundant Released Singles comp (albums = source of truth). */
+      var RETIRED=[/Viral Hits/i, /More New Songs/i, /GenX Rage/i, /Released Singles/i];
+      /* the matching radio album chip for an archived album goes too */
+      setTimeout(function(){
+        document.querySelectorAll('#radioAlbumBar *').forEach(function(ch){
+          if(/GENX RAGE/i.test(ch.textContent||'') && ch.children.length===0) ch.style.display='none';
+        });
+      }, 400);
+      /* CEO 8/13: PuppyFM = its own PILL on the main radio (dog-songs queue) ... */
+      var DOG_MOOD='e90379e9-d58b-4d70-b8ae-a733f13db8cc';
+      var modeBar=document.querySelector('.radio-mode-bar');
+      if(modeBar){
+        var pfm=document.createElement('button'); pfm.className='radio-mode'; pfm.dataset.mode='puppyfm'; pfm.textContent='PuppyFM';
+        pfm.addEventListener('click',function(){
+          try{
+            document.getElementById('radioMoodBar').style.display='none';
+            var rebuilt=buildRadioQueue('mood', DOG_MOOD, {preserveCurrentSong:false});
+            if(rebuilt && radioQueue.length>1) radioQueue=buildShuffledQueue(radioQueue,null);
+            radioIndex=0;
+            document.querySelectorAll('.radio-mode').forEach(function(b){b.classList.remove('active');});
+            pfm.classList.add('active');
+            if(!radioPlaying && rebuilt && getCurrentSong()){ renderRadioTrack(getCurrentSong(),{label:'PuppyFM · Ready to Play'}); primeCurrentTrack(); }
+            else if(radioPlaying){ playCurrentTrack(); }
+          }catch(e){ console.warn('puppyfm pill', e); }
+        });
+        modeBar.appendChild(pfm);
+      }
+      /* ... AND its own catalog item at the END of the list */
+      var grid=document.querySelector('#music .album-grid');
+      if(grid){
+        var pc=document.createElement('div'); pc.className='album-card';
+        pc.innerHTML='<div class="album-genre">Dog Songs &amp; Unconditional Love</div><h3>PuppyFM Radio</h3><span class="album-badge" style="background:rgba(255,45,123,.12);color:#e91e63">🐶 STATION</span><p style="color:var(--ts,#b9aaa0);font-size:.85rem;margin:.5rem 0 1rem;line-height:1.5;">Every dog song in one place — brought to you by Howling Moon Music.</p><div style="display:flex;gap:.8rem;margin-top:1rem;"><a href="/moods/dog-songs.html" style="flex:1;text-align:center;background:#ff2d7b;color:#fff;border:none;padding:.7rem 1rem;border-radius:8px;font-size:.9rem;text-decoration:none;font-weight:700;">&#9654; Open PuppyFM Radio</a></div>';
+        grid.appendChild(pc);
+      }
       /* 4) album cards inside the catalog = preview containers (tap → tracklist / listen / buy / stream) */
       document.querySelectorAll('#music .album-card').forEach(function(card){
+        var h3t=(card.querySelector('h3')||{}).textContent||'';
+        if(RETIRED.some(function(rx){ return rx.test(h3t); })){ card.classList.add('hm-hidden'); return; }
+        /* no dups: the tracklist-less Barefoot promo card duplicates the real 10-song card */
+        if(/Barefoot Beaches/i.test(h3t) && card.querySelectorAll('.song-list li').length===0){ card.classList.add('hm-hidden'); return; }
         var head=document.createElement('div'); head.className='hm-card-head';
         var body=document.createElement('div'); body.className='hm-card-body';
         var img=card.querySelector(':scope > img');
@@ -2464,16 +2505,18 @@ loadSiteData();
         var count=card.querySelectorAll('.song-list li').length;
         while(card.firstChild) body.appendChild(card.firstChild);
         var txt=document.createElement('div'); txt.className='hm-ch-txt';
-        if(img) head.appendChild(img);
+        /* COVER preview (CEO 8/13): full album art on top; albums without art get a branded tile */
+        if(img){ head.appendChild(img); }
+        else { var ph=document.createElement('div'); ph.className='hm-card-ph'; ph.textContent=(h3&&h3.textContent)||'Album'; head.appendChild(ph); }
         if(genre) txt.appendChild(genre);
         if(h3) txt.appendChild(h3);
         var meta=document.createElement('div'); meta.className='hm-card-count';
         meta.textContent=count?count+' song'+(count===1?'':'s')+' · tap to open':'tap to open';
         txt.appendChild(meta);
-        head.appendChild(txt);
         /* badge rides under the title, not beside it — the grid columns are narrow */
         if(badge){ badge.style.margin='.2rem 0 0'; badge.style.display='inline-block'; txt.appendChild(badge); }
-        var chev=document.createElement('div'); chev.className='hm-card-chev'; chev.textContent='▼'; head.appendChild(chev);
+        var chev=document.createElement('div'); chev.className='hm-card-chev'; chev.textContent='▼'; txt.appendChild(chev);
+        head.appendChild(txt);
         body.classList.add('hm-hidden');
         card.appendChild(head); card.appendChild(body);
         head.addEventListener('click', function(){
