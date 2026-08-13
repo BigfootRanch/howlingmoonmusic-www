@@ -1005,8 +1005,9 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
         </ul>
       </div>
 
-      <!-- BUILD YOUR OWN BUNDLE -->
+      <!-- BUILD YOUR OWN BUNDLE (CEO art 2026-08-13; keeps its native aspect so the neon design isn't cropped) -->
       <div class="album-card reveal" style="border:2px solid rgba(255,45,123,.4);background:linear-gradient(135deg,rgba(255,45,123,.08),rgba(212,168,67,.05));box-shadow:0 0 30px rgba(255,45,123,.15),inset 0 0 30px rgba(255,45,123,.05);">
+        <img src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/build-your-own-album-cover.jpg" alt="Build Your Own Album — The Dogmother" style="width:100%;border-radius:8px;margin-bottom:1rem;aspect-ratio:auto;" loading="lazy">
         <div class="album-genre" style="color:#ff2d7b;">Custom Bundle</div>
         <h3 style="color:#fff;">Build Your Own Album</h3>
         <span class="album-badge" style="background:rgba(255,45,123,.2);color:#ff2d7b;">Have It Your Way</span>
@@ -2508,6 +2509,9 @@ loadSiteData();
       if(grid){
         var pc=document.createElement('div'); pc.className='album-card';
         pc.innerHTML='<div class="album-genre">Dog Songs &amp; Unconditional Love</div><h3>PuppyFM Radio</h3><span class="album-badge" style="background:rgba(255,45,123,.12);color:#e91e63">🐶 STATION</span><p style="color:var(--ts,#b9aaa0);font-size:.85rem;margin:.5rem 0 1rem;line-height:1.5;">Every dog song in one place — brought to you by Howling Moon Music.</p><div style="display:flex;gap:.8rem;margin-top:1rem;"><a href="/moods/dog-songs.html" style="flex:1;text-align:center;background:#ff2d7b;color:#fff;border:none;padding:.7rem 1rem;border-radius:8px;font-size:.9rem;text-decoration:none;font-weight:700;">&#9654; Open PuppyFM Radio</a></div>';
+        /* CEO 8/13: Build Your Own Album rides at the END, just before PuppyFM Radio */
+        var byo=[...document.querySelectorAll('#music .album-card')].find(function(c){ var h=c.querySelector('h3'); return h&&/Build Your Own Album/i.test(h.textContent); });
+        if(byo) grid.appendChild(byo);
         grid.appendChild(pc);
       }
       /* 4) album cards inside the catalog = preview containers (tap → tracklist / listen / buy / stream) */
