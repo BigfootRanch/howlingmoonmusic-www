@@ -178,7 +178,8 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
     <button class="radio-mode" data-mode="jt">JT</button>
   </div>
   <div class="radio-album-bar" id="radioAlbumBar"></div>
-  <div class="radio-album-bar" id="radioMoodBar"></div>
+  <!-- starts hidden so the FIRST "By Mood" tap OPENS the pills (was: first tap hid an already-empty bar) -->
+  <div class="radio-album-bar" id="radioMoodBar" style="display:none"></div>
   <audio id="radioAudio" preload="none"></audio>
 </div>
 
@@ -2373,5 +2374,142 @@ loadSiteData();
     a.onended = function() { var all = Array.prototype.slice.call(document.querySelectorAll(groupSel)); var i = all.indexOf(btn); if (i > -1 && i + 1 < all.length) hmRowToggle(all[i + 1], audioId, groupSel); else btn.innerHTML = '&#x25B6;'; };
   }
   </script>
+<!-- ══ HM CONDENSED HOME (CEO 2026-08-13): every section collapses to a preview container;
+     order = Radio → UNLEASHED → Full Catalog; duplicate feature panels hidden (albums live
+     in the catalog); 🎧 stream links injected for every store-released (ISRC) song. ══ -->
+<style>
+  .hm-acc-head{max-width:1100px;margin:.65rem auto;padding:.9rem 1.2rem;display:flex;align-items:center;gap:1rem;
+    background:rgba(255,255,255,.03);border:1px solid rgba(212,168,67,.25);border-radius:12px;cursor:pointer;
+    transition:border-color .2s, background .2s;}
+  .hm-acc-head:hover{border-color:rgba(212,168,67,.6);background:rgba(255,255,255,.05);}
+  .hm-acc-head img{width:56px;height:56px;object-fit:cover;border-radius:8px;flex-shrink:0;}
+  .hm-acc-emoji{font-size:1.6rem;width:56px;text-align:center;flex-shrink:0;}
+  .hm-acc-titles{flex:1;min-width:0;text-align:left;}
+  .hm-acc-title{font-family:'Cinzel',Georgia,serif;font-size:1.05rem;letter-spacing:.06em;color:var(--gold,#d4a843);margin:0;}
+  .hm-acc-sub{font-size:.78rem;color:var(--ts,#b9aaa0);margin:.15rem 0 0;}
+  .hm-acc-chev{flex-shrink:0;color:var(--gold,#d4a843);font-size:.9rem;transition:transform .25s;}
+  .hm-acc-head.hm-open .hm-acc-chev{transform:rotate(180deg);}
+  .hm-hidden{display:none!important;}
+  #music .album-grid{align-items:start;}
+  #music .album-card{height:auto!important;min-height:0!important;align-self:start;}
+  .album-card .hm-card-head{display:flex;align-items:center;gap:.9rem;cursor:pointer;}
+  .album-card .hm-card-head img{width:64px!important;height:64px!important;max-width:64px!important;object-fit:cover;border-radius:8px!important;margin:0!important;flex-shrink:0;}
+  .album-card .hm-card-head .hm-ch-txt{flex:1;min-width:0;}
+  .album-card .hm-card-head h3{margin:.1rem 0!important;font-size:1rem!important;}
+  .album-card .hm-card-head .album-genre{margin:0!important;white-space:nowrap!important;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+  .album-card .hm-card-head h3{white-space:normal!important;}
+  .album-card .hm-card-count{font-size:.72rem;color:var(--ts,#b9aaa0);margin-top:.15rem;}
+  .album-card .hm-card-chev{color:var(--gold,#d4a843);font-size:.85rem;flex-shrink:0;transition:transform .25s;}
+  .album-card.hm-open .hm-card-chev{transform:rotate(180deg);}
+  .album-card .hm-card-body{margin-top:1rem;}
+  .hm-str{margin-left:.45rem;font-size:.8rem;text-decoration:none;flex-shrink:0;opacity:.85;}
+  .hm-str:hover{opacity:1;}
+</style>
+<script>
+(function(){
+  function onReady(fn){ if(document.readyState!=='loading') fn(); else document.addEventListener('DOMContentLoaded',fn); }
+  onReady(function(){
+    try{
+      /* 1) ORDER: full catalog directly after UNLEASHED (CEO: radio → new release → catalog) */
+      var unl=document.getElementById('unleashed-featured'), music=document.getElementById('music');
+      if(unl&&music&&unl.parentNode) unl.parentNode.insertBefore(music, unl.nextSibling);
+      /* 2) duplicate feature panels off — these albums live in the catalog accordion */
+      ['beach-featured','outlaw-featured'].forEach(function(id){ var el=document.getElementById(id); if(el) el.classList.add('hm-hidden'); });
+      /* 3) every homepage section = collapsed preview container */
+      var UNL_COVER='https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/unleashed-cover.png';
+      var SECTIONS=[
+        {id:'radio', emoji:'📻', title:'PuppyFM Radio', sub:'Press play — every song · moods · Valentina · JT'},
+        {id:'unleashed-featured', art:UNL_COVER, title:'NEW RELEASE — UNLEASHED', sub:'The Dogmother · 15 tracks · out Aug 14 — tap to hear every song'},
+        {id:'music', emoji:'💿', title:'The Full Catalog', sub:'Every album & single — tap any album for the tracklist, listen, buy & stream'},
+        {id:'latest-hit', emoji:'🌙', title:'Rock a Bye Baby', sub:'Featured single'},
+        {id:'about', emoji:'🎤', title:'The Artists', sub:'The Dogmother · JT'},
+        {id:'gallery', emoji:'📸', title:'Gallery', sub:'Behind the music'},
+        {id:'around-the-fire', emoji:'🔥', title:'Around the Fire', sub:'Stories & community'},
+        {id:'listen', emoji:'🎧', title:'Listen & Support', sub:'Stream everywhere · buy direct · bundles'}
+      ];
+      /* the Sync/License section has no id — tag it at runtime so it collapses like the rest */
+      var licH2=Array.prototype.find.call(document.querySelectorAll('h2'), function(h){ return /License This Music/i.test(h.textContent); });
+      if(licH2){ var licSec=licH2.closest('section')||licH2.parentElement; if(licSec&&!licSec.id) licSec.id='hm-sync-license'; SECTIONS.push({id:'hm-sync-license', emoji:'🎬', title:'License This Music', sub:'Sync for film, TV & ads — one-stop clearance'}); }
+      SECTIONS.forEach(function(cfg){
+        var sec=document.getElementById(cfg.id); if(!sec) return;
+        var head=document.createElement('div');
+        head.className='hm-acc-head';
+        head.setAttribute('role','button'); head.setAttribute('tabindex','0'); head.setAttribute('aria-expanded','false');
+        head.innerHTML=(cfg.art?'<img src="'+cfg.art+'" alt="" loading="lazy">':'<div class="hm-acc-emoji">'+cfg.emoji+'</div>')+
+          '<div class="hm-acc-titles"><div class="hm-acc-title">'+cfg.title+'</div><div class="hm-acc-sub">'+cfg.sub+'</div></div>'+
+          '<div class="hm-acc-chev">▼</div>';
+        sec.parentNode.insertBefore(head, sec);
+        sec.classList.add('hm-hidden');
+        function toggle(){
+          var open=sec.classList.toggle('hm-hidden')===false;
+          head.classList.toggle('hm-open', open);
+          head.setAttribute('aria-expanded', open?'true':'false');
+          if(open){
+            /* .reveal children may not have intersected while hidden — force them visible */
+            sec.querySelectorAll('.reveal').forEach(function(r){ r.classList.add('visible','active','in','revealed'); r.style.opacity='1'; r.style.transform='none'; });
+            setTimeout(function(){ head.scrollIntoView({behavior:'smooth',block:'start'}); },60);
+          }
+        }
+        head.addEventListener('click', toggle);
+        head.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(); } });
+      });
+      /* 4) album cards inside the catalog = preview containers (tap → tracklist / listen / buy / stream) */
+      document.querySelectorAll('#music .album-card').forEach(function(card){
+        var head=document.createElement('div'); head.className='hm-card-head';
+        var body=document.createElement('div'); body.className='hm-card-body';
+        var img=card.querySelector(':scope > img');
+        var genre=card.querySelector(':scope > .album-genre');
+        var h3=card.querySelector(':scope > h3');
+        var badge=card.querySelector(':scope > .album-badge');
+        var count=card.querySelectorAll('.song-list li').length;
+        while(card.firstChild) body.appendChild(card.firstChild);
+        var txt=document.createElement('div'); txt.className='hm-ch-txt';
+        if(img) head.appendChild(img);
+        if(genre) txt.appendChild(genre);
+        if(h3) txt.appendChild(h3);
+        var meta=document.createElement('div'); meta.className='hm-card-count';
+        meta.textContent=count?count+' song'+(count===1?'':'s')+' · tap to open':'tap to open';
+        txt.appendChild(meta);
+        head.appendChild(txt);
+        /* badge rides under the title, not beside it — the grid columns are narrow */
+        if(badge){ badge.style.margin='.2rem 0 0'; badge.style.display='inline-block'; txt.appendChild(badge); }
+        var chev=document.createElement('div'); chev.className='hm-card-chev'; chev.textContent='▼'; head.appendChild(chev);
+        body.classList.add('hm-hidden');
+        card.appendChild(head); card.appendChild(body);
+        head.addEventListener('click', function(){
+          var open=body.classList.toggle('hm-hidden')===false;
+          card.classList.toggle('hm-open', open);
+        });
+      });
+      /* 5) 🎧 stream links for every store-released (ISRC) song, matched vs SITE_DATA */
+      function norm(t){ return String(t||'').toLowerCase()
+        .replace(/[’‘]/g,"'").replace(/[“”]/g,'"')
+        .replace(/\s*\/.*$/,'')
+        .replace(/\(.*?\)/g,'')
+        .replace(/&/g,'and').replace(/[^a-z0-9' ]+/g,' ').replace(/\s+/g,' ').trim(); }
+      var released={};
+      /* SITE_DATA is a top-level const — a global binding but NOT window.SITE_DATA */
+      try{ ((typeof SITE_DATA!=='undefined'&&SITE_DATA.songs)||[]).forEach(function(s){ if(s.isrc&&String(s.isrc).trim()) released[norm(s.title)]=s.title; }); }catch(_e){}
+      var relKeys=Object.keys(released);
+      var wired=0;
+      document.querySelectorAll('.song-list li').forEach(function(li){
+        if(li.querySelector('.hm-str')) return;
+        var a=li.querySelector('a.song-name'); if(!a) return;
+        var t=norm(a.childNodes.length?a.childNodes[0].textContent:a.textContent);
+        if(!t) return;
+        var hit=released[t]||null;
+        if(!hit){ for(var i=0;i<relKeys.length;i++){ var k=relKeys[i]; if(k.length>5&&(k.indexOf(t)===0||t.indexOf(k)===0)){ hit=released[k]; break; } } }
+        if(!hit) return;
+        var s=document.createElement('a'); s.className='hm-str'; s.target='_blank'; s.rel='noopener';
+        s.title='Stream "'+hit+'"';
+        s.href='https://open.spotify.com/search/'+encodeURIComponent(hit+' The Dogmother');
+        s.textContent='🎧';
+        li.appendChild(s); wired++;
+      });
+      console.log('[hm-condense] live · stream links wired:', wired);
+    }catch(e){ console.warn('hm-condense failed', e); }
+  });
+})();
+</script>
 </body>
 </html>
