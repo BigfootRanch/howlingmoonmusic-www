@@ -2418,12 +2418,10 @@ loadSiteData();
       ['beach-featured','outlaw-featured'].forEach(function(id){ var el=document.getElementById(id); if(el) el.classList.add('hm-hidden'); });
       /* 3) every homepage section = collapsed preview container */
       var UNL_COVER='https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/unleashed-cover.png';
+      /* CEO 8/13 v28: Radio, NEW RELEASE and Full Catalog are ALWAYS OPEN — never collapsed.
+         The featured-single section is GONE (Rock a Bye Baby becomes a catalog card). */
       var SECTIONS=[
-        {id:'radio', emoji:'📻', title:'Howling Moon Radio', sub:'24/7 Southwest Country Soul — press play · moods · Valentina · JT · PuppyFM'},
-        {id:'unleashed-featured', art:UNL_COVER, title:'NEW RELEASE — UNLEASHED', sub:'The Dogmother · 15 tracks · out Aug 14 — tap to hear every song'},
-        {id:'music', emoji:'💿', title:'The Full Catalog', sub:'Every album & single — tap any album for the tracklist, listen, buy & stream'},
-        {id:'latest-hit', emoji:'🌙', title:'Rock a Bye Baby', sub:'Featured single'},
-        {id:'about', emoji:'🎤', title:'The Artists', sub:'The Dogmother · JT'},
+        {id:'about', emoji:'🎤', title:'The Artists', sub:''},
         {id:'gallery', emoji:'📸', title:'Gallery', sub:'Behind the music'},
         {id:'around-the-fire', emoji:'🔥', title:'Around the Fire', sub:'Stories & community'},
         {id:'listen', emoji:'🎧', title:'Listen & Support', sub:'Stream everywhere · buy direct · bundles'}
@@ -2437,7 +2435,7 @@ loadSiteData();
         head.className='hm-acc-head';
         head.setAttribute('role','button'); head.setAttribute('tabindex','0'); head.setAttribute('aria-expanded','false');
         head.innerHTML=(cfg.art?'<img src="'+cfg.art+'" alt="" loading="lazy">':'<div class="hm-acc-emoji">'+cfg.emoji+'</div>')+
-          '<div class="hm-acc-titles"><div class="hm-acc-title">'+cfg.title+'</div><div class="hm-acc-sub">'+cfg.sub+'</div></div>'+
+          '<div class="hm-acc-titles"><div class="hm-acc-title">'+cfg.title+'</div>'+(cfg.sub?'<div class="hm-acc-sub">'+cfg.sub+'</div>':'')+'</div>'+
           '<div class="hm-acc-chev">▼</div>';
         sec.parentNode.insertBefore(head, sec);
         sec.classList.add('hm-hidden');
@@ -2483,6 +2481,25 @@ loadSiteData();
         });
         modeBar.appendChild(pfm);
       }
+      /* CEO 8/13 v28: featured-single section removed; Rock a Bye Baby lives under the catalog */
+      var lh=document.getElementById('latest-hit'); if(lh) lh.classList.add('hm-hidden');
+      var grid0=document.querySelector('#music .album-grid');
+      if(grid0){
+        var rb=document.createElement('div'); rb.className='album-card';
+        rb.innerHTML='<img src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/photos/gallery/IMG_0138.jpeg" alt="Rock a Bye Baby" loading="lazy"><div class="album-genre">Lullaby / Single</div><h3>Rock a Bye Baby</h3><span class="album-badge" style="background:rgba(212,168,67,.15);color:var(--gold,#d4a843)">🌙 SINGLE</span><ul class="song-list"><li><span class="song-num">1</span><a href="songs/rock-a-bye-baby.html" class="song-name">Rock a Bye Baby</a></li></ul>';
+        grid0.appendChild(rb);
+      }
+      /* v28: radio opens READY TO PLAY, cued to the UNLEASHED-mix beach favorite (fresh visitors only —
+         a returning listener keeps their restored session) */
+      try{
+        var CUE_ID='e17d3be5-3c51-4c58-ae25-94c40defb59f'; /* Tongue & Groove — beach album, UNLEASHED mix */
+        var hadSession=false; try{ hadSession=!!localStorage.getItem('hm_radio_session_v3'); }catch(_s){}
+        if(!hadSession && typeof buildRadioQueue==='function' && !radioPlaying){
+          if(buildRadioQueue('all', null, {startSongId: CUE_ID}) && getCurrentSong()){
+            renderRadioTrack(getCurrentSong(), {label:'UNLEASHED · Ready to Play'});
+          }
+        }
+      }catch(_cue){}
       /* ... AND its own catalog item at the END of the list */
       var grid=document.querySelector('#music .album-grid');
       if(grid){
