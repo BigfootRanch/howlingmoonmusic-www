@@ -2393,7 +2393,15 @@ loadSiteData();
   .hm-acc-head.hm-open .hm-acc-chev{transform:rotate(180deg);}
   .hm-hidden{display:none!important;}
   #music .album-grid{align-items:start;}
-  #music .album-card{height:auto!important;min-height:0!important;align-self:start;}
+  /* CEO 2026-08-13: WHITE containers + BLACK song titles — white-on-light was unreadable */
+  #music .album-card{height:auto!important;min-height:0!important;align-self:start;background:#ffffff!important;border-color:rgba(0,0,0,.1)!important;box-shadow:0 6px 22px rgba(0,0,0,.08)!important;}
+  #music .album-card h3{color:#111111!important;}
+  #music .album-card .hm-card-count{color:#555555!important;}
+  #music .album-card p{color:#444444!important;}
+  #music .album-card .song-list a{color:#111111!important;}
+  #music .album-card .song-list a:hover{color:#ff2d7b!important;}
+  #music .album-card .song-num{color:#8a6d1f!important;}
+  #music .album-card .song-list li{border-color:rgba(0,0,0,.07)!important;}
   /* CEO 8/13: catalog previews = the ALBUM COVER + caption; tap the cover to open the tracklist */
   .album-card .hm-card-head{display:block;cursor:pointer;}
   .album-card .hm-card-head img{width:100%!important;height:auto!important;max-width:100%!important;aspect-ratio:1/1;object-fit:cover;border-radius:10px!important;margin:0 0 .65rem!important;display:block;box-shadow:0 6px 24px rgba(0,0,0,.25);}
@@ -2405,12 +2413,14 @@ loadSiteData();
   .album-card .hm-card-chev{color:var(--gold,#d4a843);font-size:.85rem;transition:transform .25s;position:absolute;right:0;top:.25rem;}
   .album-card.hm-open .hm-card-chev{transform:rotate(180deg);}
   .album-card .hm-card-body{margin-top:1rem;}
-  .hm-str{margin-left:.45rem;font-size:.8rem;flex-shrink:0;opacity:.9;display:inline-flex;align-items:center;gap:.35rem;}
+  /* CEO 2026-08-13: stream menu was squeezing rows off the card edge — now a dropdown BELOW the row */
+  .hm-str{margin-left:.45rem;font-size:.8rem;flex-shrink:0;opacity:.9;display:inline-flex;align-items:center;position:relative;}
   .hm-str-tog{background:none;border:none;cursor:pointer;font-size:.85rem;padding:0;opacity:.85;}
   .hm-str-tog:hover{opacity:1;}
-  .hm-str-menu{display:inline-flex;gap:.4rem;}
-  .hm-str-menu a{font-size:.68rem;font-weight:700;letter-spacing:.02em;text-decoration:none;color:var(--gold,#d4a843);border:1px solid rgba(212,168,67,.45);border-radius:4px;padding:.12rem .4rem;white-space:nowrap;}
-  .hm-str-menu a:hover{background:rgba(212,168,67,.12);}
+  #music .album-card .song-list li{position:relative;}
+  .hm-str-menu{position:absolute;right:0;top:calc(100% + 4px);z-index:40;display:flex;gap:.4rem;background:#ffffff;border:1px solid rgba(0,0,0,.15);border-radius:9px;padding:.35rem .5rem;box-shadow:0 10px 26px rgba(0,0,0,.2);}
+  .hm-str-menu a{font-size:.72rem;font-weight:700;letter-spacing:.02em;text-decoration:none;color:#8a6d1f!important;border:1px solid rgba(138,109,31,.5);border-radius:5px;padding:.18rem .5rem;white-space:nowrap;}
+  .hm-str-menu a:hover{background:rgba(212,168,67,.15);}
 </style>
 <script>
 (function(){
@@ -2576,6 +2586,7 @@ loadSiteData();
         var menu=document.createElement('span'); menu.className='hm-str-menu hm-hidden';
         [['Spotify','https://open.spotify.com/search/'+q],
          ['Apple','https://music.apple.com/us/search?term='+q],
+         ['Amazon','https://music.amazon.com/search/'+q],
          ['YouTube','https://www.youtube.com/results?search_query='+q]].forEach(function(svc){
           var a=document.createElement('a'); a.href=svc[1]; a.target='_blank'; a.rel='noopener'; a.textContent=svc[0]; menu.appendChild(a);
         });
