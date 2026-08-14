@@ -12,13 +12,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Fetch and verify payload
         run: |
-          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v40-pages.tar.gz"
-          echo "4aef21f090c7ce489329e6eb2c3fd77421633117845b6dd64ead7eb32578a84a  /tmp/pages.tar.gz" | sha256sum -c -
+          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v41-pages.tar.gz"
+          echo "0bd7b2d3b9294dfdf296a088195d135d9cc72d0f9cb16b4d7a9b2452a9afa834  /tmp/pages.tar.gz" | sha256sum -c -
           tar xzf /tmp/pages.tar.gz -C .
       - name: Commit pages
         run: |
           git config user.name "howling-moon-bot"
           git config user.email "actions@users.noreply.github.com"
           git add -A
-          git diff --cached --quiet || git commit -m "v40: streaming links fixed sitewide, white catalog cards, dropdown stream menu"
+          git diff --cached --quiet || git commit -m "v41: UNLEASHED radio album + queue cleanups"
           git push
