@@ -12,13 +12,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Fetch and verify payload
         run: |
-          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v43-pages.tar.gz"
-          echo "25fb206957a7a0a2b2cf5e4ef1d2ebb30bf0cb8ec00585a33322f3894fd1bc6a  /tmp/pages.tar.gz" | sha256sum -c -
+          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v44-pages.tar.gz"
+          echo "4a6e136ace0d4513ec9756ceb004b81d29f1c0ab42efd26aababd0a1c1c103b4  /tmp/pages.tar.gz" | sha256sum -c -
           tar xzf /tmp/pages.tar.gz -C .
       - name: Commit pages
         run: |
           git config user.name "howling-moon-bot"
           git config user.email "actions@users.noreply.github.com"
           git add -A
-          git diff --cached --quiet || git commit -m "v43: Puff Planet removed from radio"
+          git diff --cached --quiet || git commit -m "v44: radio removals complete — vault sweep + JT lane"
           git push
