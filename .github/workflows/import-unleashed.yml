@@ -12,13 +12,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Fetch and verify payload
         run: |
-          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v34-pages.tar.gz"
-          echo "0f97add85965085a9b57a00adc05043915334a5aa389513bce8d84b59da4c36f  /tmp/pages.tar.gz" | sha256sum -c -
+          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v35-pages.tar.gz"
+          echo "baa2f3fc33c9fd6f9ec351de85060a381f53ab971ebcd4cd6dad0b5583e2cb41  /tmp/pages.tar.gz" | sha256sum -c -
           tar xzf /tmp/pages.tar.gz -C .
       - name: Commit pages
         run: |
           git config user.name "howling-moon-bot"
           git config user.email "actions@users.noreply.github.com"
           git add -A
-          git diff --cached --quiet || git commit -m "v34: condensed hero — radio above the fold"
+          git diff --cached --quiet || git commit -m "v35: desktop hero 72vh + radio visualizer background"
           git push
