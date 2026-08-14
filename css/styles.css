@@ -119,9 +119,11 @@ p { color: var(--ts); max-width: 700px; font-size: 1.05rem; }
 
 /* --- Hero with B&W Photo Montage --- */
 .hero {
-  position: relative; min-height: 100vh;
+  /* CEO 2026-08-13: condensed — the main radio must sit above the fold */
+  position: relative; min-height: 48vh;
   display: flex; align-items: center; justify-content: center; overflow: hidden;
   background: #1a1410;
+  padding: 4.5rem 0 2.5rem;
 }
 .hero__montage {
   position: absolute; inset: 0;
@@ -1237,7 +1239,7 @@ li:hover .sa-react.active { opacity: 1; }
   .mood-grid { grid-template-columns: repeat(2, 1fr); }
   .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
   .section { padding: 4rem 0; }
-  .hero { min-height: 90vh; }
+  .hero { min-height: 55vh; }
   .container { padding: 0 1.25rem; }
   .stats { gap: 1.5rem; }
   .radio-player { padding: .5rem 1rem .5rem .5rem; }
