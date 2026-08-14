@@ -2472,12 +2472,13 @@ loadSiteData();
          and the 8/12 archive decisions applied to the LIVE site: GenX Rage & Red Lipstick
          (archived private) + the redundant Released Singles comp (albums = source of truth). */
       var RETIRED=[/Viral Hits/i, /More New Songs/i, /GenX Rage/i, /Released Singles/i];
-      /* the matching radio album chip for an archived album goes too */
-      setTimeout(function(){
-        document.querySelectorAll('#radioAlbumBar *').forEach(function(ch){
-          if(/GENX RAGE/i.test(ch.textContent||'') && ch.children.length===0) ch.style.display='none';
-        });
-      }, 400);
+      /* the matching radio album chip for an archived album goes too — the bar re-renders on every
+         queue change, so watch it instead of hiding once */
+      (function(){
+        var bar=document.getElementById('radioAlbumBar'); if(!bar) return;
+        var hide=function(){ bar.querySelectorAll('.album-chip').forEach(function(ch){ if(/GENX RAGE/i.test(ch.textContent||'')) ch.style.display='none'; }); };
+        hide(); new MutationObserver(hide).observe(bar,{childList:true,subtree:true});
+      })();
       /* CEO 8/13: PuppyFM = its own PILL on the main radio (dog-songs queue) ... */
       var DOG_MOOD='e90379e9-d58b-4d70-b8ae-a733f13db8cc';
       var modeBar=document.querySelector('.radio-mode-bar');
@@ -2508,7 +2509,7 @@ loadSiteData();
       /* v28: radio opens READY TO PLAY, cued to the UNLEASHED-mix beach favorite (fresh visitors only —
          a returning listener keeps their restored session) */
       try{
-        var CUE_ID='e17d3be5-3c51-4c58-ae25-94c40defb59f'; /* Tongue & Groove — beach album, UNLEASHED mix */
+        var CUE_ID='d2f1c798-d024-427e-9926-c83ec050fa27'; /* Booty Boom Boom — clean UNLEASHED lead (T&G is now explicit-fenced) */
         var hadSession=false; try{ hadSession=!!localStorage.getItem('hm_radio_session_v3'); }catch(_s){}
         if(!hadSession && typeof buildRadioQueue==='function' && !radioPlaying){
           if(buildRadioQueue('all', null, {startSongId: CUE_ID}) && getCurrentSong()){
