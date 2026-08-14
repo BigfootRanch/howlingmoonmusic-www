@@ -119,8 +119,9 @@ p { color: var(--ts); max-width: 700px; font-size: 1.05rem; }
 
 /* --- Hero with B&W Photo Montage --- */
 .hero {
-  /* CEO 2026-08-13: condensed — the main radio must sit above the fold */
-  position: relative; min-height: 48vh;
+  /* CEO 2026-08-13: desktop hero must NOT crop her face (48vh did) — 72vh shows the montage
+     portrait properly; mobile stays condensed at 55vh via the media block below. */
+  position: relative; min-height: 72vh;
   display: flex; align-items: center; justify-content: center; overflow: hidden;
   background: #1a1410;
   padding: 4.5rem 0 2.5rem;
@@ -228,7 +229,9 @@ p { color: var(--ts); max-width: 700px; font-size: 1.05rem; }
 
 /* --- Radio Station --- */
 .radio-section {
-  background: linear-gradient(135deg, #1a1410 0%, #2a1f18 100%);
+  /* CEO 2026-08-13: golden cosmic visualizer art behind the player (soft scrim keeps controls readable) */
+  background: linear-gradient(135deg, rgba(26,20,16,.55) 0%, rgba(42,31,24,.5) 100%),
+    url('https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/radio-section-bg.jpg') center/cover no-repeat #1a1410;
   padding: 2.5rem 2rem; text-align: center;
   border-bottom: 2px solid var(--pink);
   position: relative; overflow: hidden;
