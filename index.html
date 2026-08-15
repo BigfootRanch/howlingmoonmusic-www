@@ -2569,7 +2569,9 @@ loadSiteData();
         .replace(/&/g,'and').replace(/[^a-z0-9' ]+/g,' ').replace(/\s+/g,' ').trim(); }
       var released={};
       /* SITE_DATA is a top-level const — a global binding but NOT window.SITE_DATA */
-      try{ ((typeof SITE_DATA!=='undefined'&&SITE_DATA.songs)||[]).forEach(function(s){ if(s.isrc&&String(s.isrc).trim()) released[norm(s.title)]=s.title; }); }catch(_e){}
+      /* v45: a song is 'released' if it has an ISRC OR direct store links (UNLEASHED tracks carry
+         spotify_url/apple_url in site-data now). Store the OBJECT so menus can link DIRECT. */
+      try{ ((typeof SITE_DATA!=='undefined'&&SITE_DATA.songs)||[]).forEach(function(s){ if((s.isrc&&String(s.isrc).trim())||s.spotify_url||s.apple_url) released[norm(s.title)]=s; }); }catch(_e){}
       var relKeys=Object.keys(released);
       var wired=0;
       document.querySelectorAll('.song-list li').forEach(function(li){
@@ -2580,13 +2582,15 @@ loadSiteData();
         var hit=released[t]||null;
         if(!hit){ for(var i=0;i<relKeys.length;i++){ var k=relKeys[i]; if(k.length>5&&(k.indexOf(t)===0||t.indexOf(k)===0)){ hit=released[k]; break; } } }
         if(!hit) return;
-        /* CEO 8/13: not Spotify-only — 🎧 opens a per-song menu: Spotify · Apple Music · YouTube */
-        var q=encodeURIComponent(hit+' The Dogmother');
+        /* CEO 8/13: not Spotify-only — 🎧 opens a per-song menu: Spotify · Apple Music · YouTube.
+           v45 (CEO 8/14): UNLEASHED songs carry DIRECT track links — use them; search stays the fallback. */
+        var hitTitle=(typeof hit==='string')?hit:hit.title;
+        var q=encodeURIComponent(hitTitle+' The Dogmother');
         var wrap=document.createElement('span'); wrap.className='hm-str';
-        var tog=document.createElement('button'); tog.className='hm-str-tog'; tog.type='button'; tog.textContent='🎧'; tog.title='Stream "'+hit+'"';
+        var tog=document.createElement('button'); tog.className='hm-str-tog'; tog.type='button'; tog.textContent='🎧'; tog.title='Stream "'+hitTitle+'"';
         var menu=document.createElement('span'); menu.className='hm-str-menu hm-hidden';
-        [['Spotify','https://open.spotify.com/search/'+q],
-         ['Apple','https://music.apple.com/us/search?term='+q],
+        [['Spotify',(hit&&hit.spotify_url)||'https://open.spotify.com/search/'+q],
+         ['Apple',(hit&&hit.apple_url)||'https://music.apple.com/us/search?term='+q],
          ['Amazon','https://music.amazon.com/search/'+q],
          ['YouTube','https://www.youtube.com/results?search_query='+q]].forEach(function(svc){
           var a=document.createElement('a'); a.href=svc[1]; a.target='_blank'; a.rel='noopener'; a.textContent=svc[0]; menu.appendChild(a);
@@ -2596,6 +2600,34 @@ loadSiteData();
         li.appendChild(wrap); wired++;
       });
       console.log('[hm-condense] live · stream links wired:', wired);
+      /* ── v45 (CEO 2026-08-14): UNLEASHED panel rows — per-song DIRECT streaming.
+         Each row's 🎵 becomes a menu: Spotify (direct track) · Apple Music (direct track) ·
+         All stores (album HyperFollow). Rows whose song has no direct links keep the old link. */
+      try{
+        var unlWired=0;
+        document.querySelectorAll('#unlTracklist .unl-row').forEach(function(row){
+          if(row.querySelector('.hm-str')) return;
+          var tt=row.querySelector('.unl-tt'); var old=row.querySelector('a.unl-str');
+          if(!tt||!old) return;
+          /* two panel rows use display titles that differ from site-data: alias them */
+          var unlAlias={'peach on fire':'juicy peach on fire','me and my dog spurs':'spurs'};
+          var key=norm(tt.textContent);
+          var hit=released[key]||released[norm(unlAlias[key]||'')];
+          if(!hit||typeof hit==='string'||(!hit.spotify_url&&!hit.apple_url)) return;
+          var wrap=document.createElement('span'); wrap.className='hm-str';
+          var tog=document.createElement('button'); tog.className='hm-str-tog'; tog.type='button'; tog.textContent='🎧'; tog.title='Stream "'+hit.title+'"';
+          var menu=document.createElement('span'); menu.className='hm-str-menu hm-hidden';
+          var rows=[];
+          if(hit.spotify_url) rows.push(['Spotify',hit.spotify_url]);
+          if(hit.apple_url) rows.push(['Apple Music',hit.apple_url]);
+          rows.push(['All stores','https://distrokid.com/hyperfollow/thedogmother/unleashed']);
+          rows.forEach(function(svc){ var a=document.createElement('a'); a.href=svc[1]; a.target='_blank'; a.rel='noopener'; a.textContent=svc[0]; menu.appendChild(a); });
+          tog.addEventListener('click', function(ev){ ev.preventDefault(); ev.stopPropagation(); menu.classList.toggle('hm-hidden'); });
+          wrap.appendChild(tog); wrap.appendChild(menu);
+          old.replaceWith(wrap); unlWired++;
+        });
+        console.log('[hm-condense] UNLEASHED direct-stream rows wired:', unlWired);
+      }catch(_eu){ console.warn('unl stream wiring failed', _eu); }
     }catch(e){ console.warn('hm-condense failed', e); }
   });
 })();
