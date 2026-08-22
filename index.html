@@ -2774,6 +2774,29 @@ loadSiteData();
  border-color:#2ee6d6 !important;box-shadow:0 0 0 2px rgba(46,230,214,.55),0 0 26px rgba(46,230,214,.95) !important;}
 </style>
 <script>
+/* CEO 8/22: the v28 catalog rework REBUILDS the album cards after loadSiteData()
+   already ran addSongActionButtons(), so every track in the newest albums
+   (COCONUT KISSES, GHOST WANTED, SILENT TREATMENT, SONGS TO CRY TO, UNLEASHED)
+   was created after the only pass that attaches play handlers -> 74 songs with
+   no play button. addSongActionButtons() early-returns on any li that already has
+   .song-actions, so re-running it is idempotent and only fills the gaps. */
+(function(){
+  function sweep(){
+    if(typeof addSongActionButtons!=='function') return false;
+    try{ addSongActionButtons(); }catch(e){ return false; }
+    return true;
+  }
+  function boot(){
+    if(!sweep()){ var n=0,t=setInterval(function(){ n++; if(sweep()||n>12) clearInterval(t); },500); }
+    [300,800,1500,3000].forEach(function(ms){ setTimeout(sweep, ms); });
+    var grid=document.querySelector('.album-grid');
+    if(grid) grid.addEventListener('click', function(){ setTimeout(sweep,0); }, true);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
+
+<script>
 (function(){function cue(){var m=/[?&]play=([^&#]+)/.exec(location.search);if(!m)return true;
 if(typeof playSongInRadio!=='function')return false;
 try{playSongInRadio(decodeURIComponent(m[1]));}catch(e){return false;}
