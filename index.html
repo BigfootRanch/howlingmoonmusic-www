@@ -2786,11 +2786,25 @@ loadSiteData();
     try{ addSongActionButtons(); }catch(e){ return false; }
     return true;
   }
+  /* The v28 rework builds some cards well after DOMContentLoaded (COCONUT KISSES and
+     GHOST WANTED were still empty at 3s), so a fixed timer ladder cannot cover it.
+     Watch the grid instead and sweep whenever song rows appear. sweep() is idempotent,
+     so the nodes it adds do not cause another round of real work. */
+  var pending=false, busy=false;
+  function schedule(){
+    if(pending||busy) return; pending=true;
+    setTimeout(function(){ pending=false; busy=true; try{ sweep(); } finally { busy=false; } }, 60);
+  }
   function boot(){
     if(!sweep()){ var n=0,t=setInterval(function(){ n++; if(sweep()||n>12) clearInterval(t); },500); }
-    [300,800,1500,3000].forEach(function(ms){ setTimeout(sweep, ms); });
-    var grid=document.querySelector('.album-grid');
+    [300,800,1500,3000,5000,8000].forEach(function(ms){ setTimeout(sweep, ms); });
+    var grid=document.querySelector('.album-grid') || document.body;
     if(grid) grid.addEventListener('click', function(){ setTimeout(sweep,0); }, true);
+    if(typeof MutationObserver==='function'){
+      try{ new MutationObserver(function(muts){
+        for(var i=0;i<muts.length;i++){ if(muts[i].addedNodes && muts[i].addedNodes.length){ schedule(); return; } }
+      }).observe(document.body,{childList:true,subtree:true}); }catch(e){}
+    }
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
