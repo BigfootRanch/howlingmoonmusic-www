@@ -12,13 +12,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Fetch and verify payload
         run: |
-          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v50-pages.tar.gz"
-          echo "47a5d07b56df5581ec8eebc3d51d3a1959628aff2d7a79a3d41ab725d2368b31  /tmp/pages.tar.gz" | sha256sum -c -
+          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v51-pages.tar.gz"
+          echo "425e166a086c2fd6645302effa341b478581d2854e4dc36487bd6df08edbedc1  /tmp/pages.tar.gz" | sha256sum -c -
           tar xzf /tmp/pages.tar.gz -C .
       - name: Commit pages
         run: |
           git config user.name "howling-moon-bot"
           git config user.email "actions@users.noreply.github.com"
           git add -A
-          git diff --cached --quiet || git commit -m "v50: album card expand fixed — the toggle target is the .hm-card-body wrapper, not .hm-open on the card; Silent Treatment, Songs To Cry To and UNLEASHED now open. UNLEASHED lives in the Full Catalog, opening banner retired."
+          git diff --cached --quiet || git commit -m "v51: all six album cards expand — the toggle is bound only on cards we create; original cards keep the site's own handler (binding both cancelled them out)"
           git push
