@@ -2633,13 +2633,20 @@ loadSiteData();
 })();
 </script>
 
-<!-- ══ HM v51 (CEO 2026-08-21): (1) cloned cards had no expand handler — cloneNode copies
+<!-- ══ HM v54 (CEO 2026-08-21): clears the inherited Outlaw Love descriptor from every catalog card and makes catalog song rows cue Howling Moon Radio. (1) cloned cards had no expand handler — cloneNode copies
      markup but NOT addEventListener bindings, so Silent Treatment / Songs To Cry To were dead
      on click. The site's toggle just adds .hm-open to the card, so bind that directly.
      (2) UNLEASHED moves out of the opening banner and into the Full Catalog. ══ -->
 <script>
 (function(){
   var D = {"update":[{"match":"outlaw-love-cover","title":"GHOST WANTED DEAD OR ALIVE","genre":"Outlaw Country","badge":"15 Songs","css":"background:rgba(212,168,67,.14);color:#d4a843","cover":"ghost-wanted-dead-or-alive","dir":"GHOST-WANTED-DEAD-OR-ALIVE","tracks":[{"n":1,"t":"LIAR, PREACHER MAN","p":"liar-preacher-man","x":false},{"n":2,"t":"I DIDN'T DIE","p":null,"x":false},{"n":3,"t":"ONE NIGHT WITH THE DEVIL","p":"one-night-with-the-devil","x":false},{"n":4,"t":"SMOKE ME","p":"smoke-me","x":false},{"n":5,"t":"RODEO COWBOY","p":"rodeo-cowboy","x":false},{"n":6,"t":"GHOST WANTED DEAD OR ALIVE","p":"ghost-wanted-dead-or-alive","x":false},{"n":7,"t":"HELD YOU FIRST","p":"held-you-first","x":false},{"n":8,"t":"DROWN IN THE BOTTLE","p":"drown-in-the-bottle","x":false},{"n":9,"t":"HE JUST CALLED MY NAME","p":null,"x":false},{"n":10,"t":"WISH YOU WERE ME","p":null,"x":false},{"n":11,"t":"LOST IN SANTA FE","p":"lost-in-santa-fe","x":false},{"n":12,"t":"BROWN EYES SAY","p":"brown-eyes-say","x":true},{"n":13,"t":"ME & MY DOG | SPURS","p":"spurs","x":false},{"n":14,"t":"WORLD MELTS AWAY","p":"world-melts-away","x":false},{"n":15,"t":"LEFT MY HEART IN SANTA FE","p":"left-my-heart-in-santa-fe","x":false}]},{"match":"beach-album-cover","title":"COCONUT KISSES","genre":"Beach Country &amp; Summer Nights","badge":"16 Songs","css":"background:rgba(0,180,180,.14);color:#00b4b4","cover":"coconut-kisses","dir":"COCONUT-KISSES","tracks":[{"n":1,"t":"WOKE UP LAUGHING","p":"woke-up-laughing","x":false},{"n":2,"t":"MANGROVES & MOONLIGHT","p":null,"x":false},{"n":3,"t":"ENDLESS SUMMER HEAT","p":"endless-summer","x":false},{"n":4,"t":"DOWN UNDER","p":"down-under","x":false},{"n":5,"t":"COCONUT KISS","p":"coconut-kiss","x":false},{"n":6,"t":"TANGLED","p":"tangled","x":false},{"n":7,"t":"LIGHTNING STRIKES MY HEART","p":"lightning-strikes","x":false},{"n":8,"t":"PORT LAVACA","p":"port-lavaca-paradise","x":false},{"n":9,"t":"WORLD MELTS AWAY","p":"world-melts-away","x":false},{"n":10,"t":"BOOTY BOOM BOOM","p":"booty-boom-boom","x":false},{"n":11,"t":"COTTON CANDY","p":"cotton-candy","x":false},{"n":12,"t":"NEVER LET GO","p":"never-let-go","x":false},{"n":13,"t":"BAREFOOT BEACH BEAUTY","p":"barefoot-beach-beauty","x":false},{"n":14,"t":"SAND IN TOES","p":"sand-in-toes","x":false},{"n":15,"t":"GET STONED WITH YOU","p":null,"x":false},{"n":16,"t":"WILDFLOWER DREAMS","p":null,"x":false}]},{"match":"healing-frequencies-cover","title":"Healing Frequencies","genre":"Meditation / Healing","badge":"8 Songs","css":"background:rgba(198,40,40,.12);color:#c62828","cover":"healing-frequencies","dir":"HEALING-FREQUENCIES","tracks":[{"n":1,"t":"BREATHE","p":"breathe","x":false},{"n":2,"t":"FLOATING","p":"floating","x":false},{"n":3,"t":"HEALING WATERS","p":null,"x":false},{"n":4,"t":"MY CUP","p":null,"x":false},{"n":5,"t":"FILL ME WITH LOVE","p":null,"x":false},{"n":6,"t":"NO FEAR","p":null,"x":false},{"n":7,"t":"PEACE","p":null,"x":false},{"n":8,"t":"SLEEP","p":"sleep","x":false}]}],"add":[{"title":"SONGS TO CRY TO","genre":"Teardrops in My Coffee","badge":"11 Songs","css":"background:rgba(255,45,123,.14);color:#ff2d7b","cover":"songs-to-cry-to","dir":"SONGS-TO-CRY-TO","tracks":[{"n":1,"t":"TEARDROPS IN MY COFFEE","p":null,"x":false},{"n":2,"t":"HAZY BUBBLE","p":"hazy-bubble","x":false},{"n":3,"t":"COFFEE CONSTELLATION","p":"coffee-constellation","x":false},{"n":4,"t":"ROCK A BYE BABY","p":"rock-a-bye-baby","x":false},{"n":5,"t":"ALMOST CALLED","p":"almost-called","x":false},{"n":6,"t":"THE LAST TIME","p":null,"x":false},{"n":7,"t":"HAPPY BIRTHDAY","p":null,"x":false},{"n":8,"t":"DROWNING IN MY TEARS","p":"drowning-in-my-tears","x":false},{"n":9,"t":"NOT ENOUGH BOTTLES","p":"not-enough-bottles","x":false},{"n":10,"t":"BROKEN HEART AND BUSTED DREAMS","p":null,"x":false},{"n":11,"t":"IF TEARS COULD CALL HEAVEN","p":"if-tears-could-call-heaven","x":false}]},{"title":"SILENT TREATMENT","genre":"You Stopped Talking. I Started Writing.","badge":"8 Songs","css":"background:rgba(255,45,123,.14);color:#ff2d7b","cover":"silent-treatment","dir":"SILENT-TREATMENT","tracks":[{"n":1,"t":"SHERIFF","p":null,"x":true},{"n":2,"t":"SILENCE IS YOUR FANGS","p":"silence-is-your-fangs","x":false},{"n":3,"t":"SHOVE IT","p":null,"x":false},{"n":4,"t":"SUFFER IN SILENCE","p":null,"x":false},{"n":5,"t":"EMOTIONAL HOSTAGE","p":null,"x":true},{"n":6,"t":"INVISIBLE WOMAN","p":"invisible-woman","x":false},{"n":7,"t":"LOVE ME COMPLICATED","p":"love-me-complicated","x":false},{"n":8,"t":"UNCONTAINABLE","p":"uncontainable","x":false}]},{"title":"UNLEASHED","genre":"The New Album","badge":"15 Songs","css":"background:rgba(212,168,67,.14);color:#d4a843","cover":"unleashed-cover","tracks":[{"n":1,"t":"Booty Boom Boom","p":"booty-boom-boom","x":false},{"n":2,"t":"Drown Me in Slobbery Kisses","p":"drown-me-in-slobbery-kisses","x":false},{"n":3,"t":"I Ain't Picking Up Your Shit No More","p":"i-aint-picking-up-your-shit-no-more","x":true},{"n":4,"t":"Juicy Peach on Fire","p":"juicy-peach-on-fire","x":true},{"n":5,"t":"Puppy Kisses","p":"puppy-kisses","x":false},{"n":6,"t":"Spurs","p":"spurs","x":false},{"n":7,"t":"Tongue & Groove","p":"tongue-and-groove","x":true},{"n":8,"t":"Dogs Have Never","p":"dogs-have-never","x":false},{"n":9,"t":"Brown Eyes Say","p":"brown-eyes-say","x":false},{"n":10,"t":"Look Into My Eyes","p":"look-in-my-eyes","x":false},{"n":11,"t":"Uh Oh I Did It Again","p":"uh-oh-i-did-it-again","x":false},{"n":12,"t":"Trouble Trouble","p":"trouble-trouble-pup","x":false},{"n":13,"t":"Fleas","p":"fleas","x":false},{"n":14,"t":"Will You Be My Friend","p":"will-you-be-my-friend","x":false},{"n":15,"t":"Those Big Brown Eyes","p":"those-big-brown-eyes","x":false}],"ext":"png"}],"bucket":"https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music"};
+  function nrm(t){ return String(t).toLowerCase().replace(/\([^)]*\)/g,'').replace(/[^a-z0-9]+/g,' ').trim(); }
+  function songIdByTitle(t){
+    if (typeof SITE_DATA === 'undefined' || !SITE_DATA.songs) return null;
+    var k = nrm(t);
+    var hit = SITE_DATA.songs.find(function(s){ return nrm(s.title) === k; });
+    return hit ? hit.id : null;
+  }
   function li(t){
     var nm = t.p ? '<a href="songs/'+t.p+'.html" class="song-name">'+t.t+'</a>'
                  : '<span class="song-name">'+t.t+'</span>';
@@ -2650,7 +2657,7 @@ loadSiteData();
   /* the site binds its toggle with addEventListener, which cloneNode does not copy.
      the toggle itself is just .hm-open on the card, so re-bind it explicitly. */
   function bindToggle(card){
-    if (card.getAttribute('data-hm51bound')) return;
+    if (card.getAttribute('data-hm54bound')) return;
     var head = card.querySelector('.hm-card-head');
     if (!head) return;
     head.addEventListener('click', function(e){
@@ -2660,7 +2667,7 @@ loadSiteData();
       if (body) body.classList.toggle('hm-hidden');
       card.classList.toggle('hm-open');
     });
-    card.setAttribute('data-hm51bound','1');
+    card.setAttribute('data-hm54bound','1');
   }
   function fill(card, a){
     var img = card.querySelector('img');
@@ -2669,8 +2676,33 @@ loadSiteData();
     var h3 = card.querySelector('h3'); if (h3) h3.textContent = a.title;
     var b = card.querySelector('.album-badge');
     if (b){ b.textContent = a.badge; b.setAttribute('style', a.css); }
+    /* CEO 8/21: every cloned card inherited the Outlaw Love blurb. Clear the
+       descriptor paragraph that sits between the badge and the tracklist. */
+    var badge2 = card.querySelector('.album-badge');
+    if (badge2){
+      var p = badge2.nextElementSibling;
+      while (p && p.tagName !== 'P' && p.tagName !== 'UL') p = p.nextElementSibling;
+      if (p && p.tagName === 'P') p.remove();
+    }
     var ul = card.querySelector('.song-list');
-    if (ul) ul.innerHTML = a.tracks.map(li).join('');
+    if (ul){
+      ul.innerHTML = a.tracks.map(li).join('');
+      /* clicking a catalog row cues that track in Howling Moon Radio */
+      ul.querySelectorAll('li').forEach(function(row, i){
+        var t = a.tracks[i]; if (!t) return;
+        row.style.cursor = 'pointer';
+        row.addEventListener('click', function(e){
+          if (e.target.closest('a')) return;      /* let the song-page link work */
+          var id = songIdByTitle(t.t);
+          if (id && typeof playSongInRadio === 'function'){
+            e.preventDefault();
+            try { playSongInRadio(id); } catch(err){}
+            var r = document.getElementById('radio') || document.querySelector('.radio-album-bar');
+            if (r && r.scrollIntoView) r.scrollIntoView({behavior:'smooth', block:'center'});
+          }
+        });
+      });
+    }
     var cnt = card.querySelector('.hm-card-count');
     if (cnt) cnt.textContent = a.tracks.length+' songs · tap to open';
     card.setAttribute('data-hm47', a.cover);
@@ -2697,7 +2729,7 @@ loadSiteData();
         if (ex && document.body.contains(ex)) { show(ex); return; }   /* already bound when created */
         var c = anchor.cloneNode(true);
         c.classList.remove('hm-open');
-        c.removeAttribute('data-hm51bound');
+        c.removeAttribute('data-hm54bound');
         fill(c, a);
         bindToggle(c);   /* ONLY clones need this — originals keep the site's own handler,
                             and binding both makes the two toggles cancel each other out */
@@ -2712,7 +2744,7 @@ loadSiteData();
     run();
     [400,1200,2500,5000].forEach(function(ms){ setTimeout(run, ms); });
     var grid = document.querySelector('.album-grid') || document.body;
-    new MutationObserver(function(){ clearTimeout(window.__hm51t); window.__hm51t=setTimeout(run,250); })
+    new MutationObserver(function(){ clearTimeout(window.__hm54t); window.__hm54t=setTimeout(run,250); })
       .observe(grid,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style']});
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
@@ -2720,25 +2752,25 @@ loadSiteData();
 })();
 </script>
 
-<!-- ══ HM v48 (CEO 2026-08-21): radio album pills were white-on-dark at 8% opacity —
-     unreadable. Now solid white with dark text; neon turquoise glow on hover/active. ══ -->
 <style>
-.radio-album-bar .album-chip{
-  background:#ffffff !important; color:#141414 !important;
-  border:1px solid rgba(0,0,0,.18) !important; font-weight:600 !important;
-  text-shadow:none !important;
-  transition:box-shadow .25s ease,border-color .25s ease,transform .15s ease !important;
-}
-.radio-album-bar .album-chip:hover,
-.radio-album-bar .album-chip:focus-visible{
-  color:#062b2b !important; border-color:#2ee6d6 !important; transform:translateY(-1px);
-  box-shadow:0 0 0 2px rgba(46,230,214,.40),0 0 18px rgba(46,230,214,.70) !important;
-}
-.radio-album-bar .album-chip.active{
-  background:#ffffff !important; color:#062b2b !important; border-color:#2ee6d6 !important;
-  box-shadow:0 0 0 2px rgba(46,230,214,.55),0 0 26px rgba(46,230,214,.95) !important;
-}
+.radio-album-bar .album-chip{background:#ffffff !important;color:#141414 !important;
+ border:1px solid rgba(0,0,0,.18) !important;font-weight:600 !important;text-shadow:none !important;
+ transition:box-shadow .25s ease,border-color .25s ease,transform .15s ease !important;}
+.radio-album-bar .album-chip:hover,.radio-album-bar .album-chip:focus-visible{
+ color:#062b2b !important;border-color:#2ee6d6 !important;transform:translateY(-1px);
+ box-shadow:0 0 0 2px rgba(46,230,214,.40),0 0 18px rgba(46,230,214,.70) !important;}
+.radio-album-bar .album-chip.active{background:#ffffff !important;color:#062b2b !important;
+ border-color:#2ee6d6 !important;box-shadow:0 0 0 2px rgba(46,230,214,.55),0 0 26px rgba(46,230,214,.95) !important;}
 </style>
+<script>
+(function(){function cue(){var m=/[?&]play=([^&#]+)/.exec(location.search);if(!m)return true;
+if(typeof playSongInRadio!=='function')return false;
+try{playSongInRadio(decodeURIComponent(m[1]));}catch(e){return false;}
+var r=document.getElementById('radio')||document.querySelector('.radio-album-bar');
+if(r&&r.scrollIntoView)r.scrollIntoView({behavior:'smooth',block:'center'});return true;}
+function boot(){if(cue()===false){var n=0,t=setInterval(function(){n++;if(cue()!==false||n>12)clearInterval(t);},500);}}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();})();
+</script>
 
 </body>
 </html>
