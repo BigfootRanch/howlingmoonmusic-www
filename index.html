@@ -2633,7 +2633,7 @@ loadSiteData();
 })();
 </script>
 
-<!-- ══ HM v50 (CEO 2026-08-21): (1) cloned cards had no expand handler — cloneNode copies
+<!-- ══ HM v51 (CEO 2026-08-21): (1) cloned cards had no expand handler — cloneNode copies
      markup but NOT addEventListener bindings, so Silent Treatment / Songs To Cry To were dead
      on click. The site's toggle just adds .hm-open to the card, so bind that directly.
      (2) UNLEASHED moves out of the opening banner and into the Full Catalog. ══ -->
@@ -2650,7 +2650,7 @@ loadSiteData();
   /* the site binds its toggle with addEventListener, which cloneNode does not copy.
      the toggle itself is just .hm-open on the card, so re-bind it explicitly. */
   function bindToggle(card){
-    if (card.getAttribute('data-hm50bound')) return;
+    if (card.getAttribute('data-hm51bound')) return;
     var head = card.querySelector('.hm-card-head');
     if (!head) return;
     head.addEventListener('click', function(e){
@@ -2660,7 +2660,7 @@ loadSiteData();
       if (body) body.classList.toggle('hm-hidden');
       card.classList.toggle('hm-open');
     });
-    card.setAttribute('data-hm50bound','1');
+    card.setAttribute('data-hm51bound','1');
   }
   function fill(card, a){
     var img = card.querySelector('img');
@@ -2674,7 +2674,7 @@ loadSiteData();
     var cnt = card.querySelector('.hm-card-count');
     if (cnt) cnt.textContent = a.tracks.length+' songs · tap to open';
     card.setAttribute('data-hm47', a.cover);
-    show(card); bindToggle(card);
+    show(card);
   }
   function tracksIn(c){ return c.querySelectorAll('.song-list li').length; }
   function run(){
@@ -2694,11 +2694,13 @@ loadSiteData();
     if (anchor && anchor.parentNode){
       D.add.forEach(function(a){
         var ex = document.querySelector('[data-hm47="'+a.cover+'"]');
-        if (ex && document.body.contains(ex)) { show(ex); bindToggle(ex); return; }
+        if (ex && document.body.contains(ex)) { show(ex); return; }   /* already bound when created */
         var c = anchor.cloneNode(true);
         c.classList.remove('hm-open');
-        c.removeAttribute('data-hm50bound');
+        c.removeAttribute('data-hm51bound');
         fill(c, a);
+        bindToggle(c);   /* ONLY clones need this — originals keep the site's own handler,
+                            and binding both makes the two toggles cancel each other out */
         anchor.parentNode.insertBefore(c, anchor.nextSibling);
       });
     }
@@ -2710,7 +2712,7 @@ loadSiteData();
     run();
     [400,1200,2500,5000].forEach(function(ms){ setTimeout(run, ms); });
     var grid = document.querySelector('.album-grid') || document.body;
-    new MutationObserver(function(){ clearTimeout(window.__hm50t); window.__hm50t=setTimeout(run,250); })
+    new MutationObserver(function(){ clearTimeout(window.__hm51t); window.__hm51t=setTimeout(run,250); })
       .observe(grid,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style']});
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
