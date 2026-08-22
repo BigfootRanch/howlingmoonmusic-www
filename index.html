@@ -2330,7 +2330,11 @@ function addSongActionButtons() {
     const href = link.getAttribute('href') || '';
     const slug = href.replace('songs/', '').replace('.html', '').replace(/#.*/, '');
     const title = link.textContent;
-    const song = allSongs.find(s => s.slug === slug);
+    // identity comes from the stamped catalog id; the slug is only a fallback
+    const stamped = li.getAttribute('data-song-id');
+    const song = (stamped && allSongs.find(s => s.id === stamped))
+      || (slug && allSongs.find(s => s.slug === slug))
+      || null;
 
     const actions = document.createElement('div');
     actions.className = 'song-actions';
@@ -2742,6 +2746,13 @@ loadSiteData();
       /* clicking a catalog row cues that track in Howling Moon Radio */
       ul.querySelectorAll('li').forEach(function(row, i){
         var t = a.tracks[i]; if (!t) return;
+        /* ⛔ CEO 8/22: these tracklists are hardcoded here with their own page slugs,
+           separate from SITE_DATA. Rows without a slug (SHERIFF, SUFFER IN SILENCE...)
+           resolved to NO song, so their button showed "Audio coming soon" and the row
+           click fell through. Stamp the catalog id on the row once, here, and let every
+           control read identity from it instead of scraping the markup. */
+        var rid = songIdByTitle(t.t);
+        if (rid) row.setAttribute('data-song-id', rid);
         row.style.cursor = 'pointer';
         row.addEventListener('click', function(e){
           if (e.target.closest('a')) return;      /* let the song-page link work */
