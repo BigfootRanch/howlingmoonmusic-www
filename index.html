@@ -2703,5 +2703,25 @@ loadSiteData();
 })();
 </script>
 
+<!-- ══ HM v48 (CEO 2026-08-21): radio album pills were white-on-dark at 8% opacity —
+     unreadable. Now solid white with dark text; neon turquoise glow on hover/active. ══ -->
+<style>
+.radio-album-bar .album-chip{
+  background:#ffffff !important; color:#141414 !important;
+  border:1px solid rgba(0,0,0,.18) !important; font-weight:600 !important;
+  text-shadow:none !important;
+  transition:box-shadow .25s ease,border-color .25s ease,transform .15s ease !important;
+}
+.radio-album-bar .album-chip:hover,
+.radio-album-bar .album-chip:focus-visible{
+  color:#062b2b !important; border-color:#2ee6d6 !important; transform:translateY(-1px);
+  box-shadow:0 0 0 2px rgba(46,230,214,.40),0 0 18px rgba(46,230,214,.70) !important;
+}
+.radio-album-bar .album-chip.active{
+  background:#ffffff !important; color:#062b2b !important; border-color:#2ee6d6 !important;
+  box-shadow:0 0 0 2px rgba(46,230,214,.55),0 0 26px rgba(46,230,214,.95) !important;
+}
+</style>
+
 </body>
 </html>
