@@ -2632,5 +2632,59 @@ loadSiteData();
   });
 })();
 </script>
+
+<!-- ══ HM v46 (CEO 2026-08-21): 2026 albums — current covers, current songlists.
+     Retitles the superseded Outlaw Love / Barefoot Beaches cards, refreshes Healing
+     Frequencies, adds Songs To Cry To + Silent Treatment. Additive DOM only. ══ -->
+<script>
+(function(){
+  var D = {"update": [{"match": "outlaw-love-cover", "title": "GHOST WANTED DEAD OR ALIVE", "genre": "Outlaw Country", "badge": "15 Songs", "css": "background:rgba(212,168,67,.14);color:#d4a843", "cover": "ghost-wanted-dead-or-alive", "dir": "GHOST-WANTED-DEAD-OR-ALIVE", "tracks": [{"n": 1, "t": "LIAR, PREACHER MAN", "p": "liar-preacher-man", "x": false}, {"n": 2, "t": "I DIDN'T DIE", "p": null, "x": false}, {"n": 3, "t": "ONE NIGHT WITH THE DEVIL", "p": "one-night-with-the-devil", "x": false}, {"n": 4, "t": "SMOKE ME", "p": "smoke-me", "x": false}, {"n": 5, "t": "RODEO COWBOY", "p": "rodeo-cowboy", "x": false}, {"n": 6, "t": "GHOST WANTED DEAD OR ALIVE", "p": "ghost-wanted-dead-or-alive", "x": false}, {"n": 7, "t": "HELD YOU FIRST", "p": "held-you-first", "x": false}, {"n": 8, "t": "DROWN IN THE BOTTLE", "p": "drown-in-the-bottle", "x": false}, {"n": 9, "t": "HE JUST CALLED MY NAME", "p": null, "x": false}, {"n": 10, "t": "WISH YOU WERE ME", "p": null, "x": false}, {"n": 11, "t": "LOST IN SANTA FE", "p": "lost-in-santa-fe", "x": false}, {"n": 12, "t": "BROWN EYES SAY", "p": "brown-eyes-say", "x": true}, {"n": 13, "t": "ME & MY DOG | SPURS", "p": "spurs", "x": false}, {"n": 14, "t": "WORLD MELTS AWAY", "p": "world-melts-away", "x": false}, {"n": 15, "t": "LEFT MY HEART IN SANTA FE", "p": "left-my-heart-in-santa-fe", "x": false}]}, {"match": "beach-album-cover", "title": "COCONUT KISSES", "genre": "Beach Country &amp; Summer Nights", "badge": "16 Songs", "css": "background:rgba(0,180,180,.14);color:#00b4b4", "cover": "coconut-kisses", "dir": "COCONUT-KISSES", "tracks": [{"n": 1, "t": "WOKE UP LAUGHING", "p": "woke-up-laughing", "x": false}, {"n": 2, "t": "MANGROVES & MOONLIGHT", "p": null, "x": false}, {"n": 3, "t": "ENDLESS SUMMER HEAT", "p": "endless-summer", "x": false}, {"n": 4, "t": "DOWN UNDER", "p": "down-under", "x": false}, {"n": 5, "t": "COCONUT KISS", "p": "coconut-kiss", "x": false}, {"n": 6, "t": "TANGLED", "p": "tangled", "x": false}, {"n": 7, "t": "LIGHTNING STRIKES MY HEART", "p": "lightning-strikes", "x": false}, {"n": 8, "t": "PORT LAVACA", "p": "port-lavaca-paradise", "x": false}, {"n": 9, "t": "WORLD MELTS AWAY", "p": "world-melts-away", "x": false}, {"n": 10, "t": "BOOTY BOOM BOOM", "p": "booty-boom-boom", "x": false}, {"n": 11, "t": "COTTON CANDY", "p": "cotton-candy", "x": false}, {"n": 12, "t": "NEVER LET GO", "p": "never-let-go", "x": false}, {"n": 13, "t": "BAREFOOT BEACH BEAUTY", "p": "barefoot-beach-beauty", "x": false}, {"n": 14, "t": "SAND IN TOES", "p": "sand-in-toes", "x": false}, {"n": 15, "t": "GET STONED WITH YOU", "p": null, "x": false}, {"n": 16, "t": "WILDFLOWER DREAMS", "p": null, "x": false}]}, {"match": "healing-frequencies-cover", "title": "Healing Frequencies", "genre": "Meditation / Healing", "badge": "8 Songs", "css": "background:rgba(198,40,40,.12);color:#c62828", "cover": "healing-frequencies", "dir": "HEALING-FREQUENCIES", "tracks": [{"n": 1, "t": "BREATHE", "p": "breathe", "x": false}, {"n": 2, "t": "FLOATING", "p": "floating", "x": false}, {"n": 3, "t": "HEALING WATERS", "p": null, "x": false}, {"n": 4, "t": "MY CUP", "p": null, "x": false}, {"n": 5, "t": "FILL ME WITH LOVE", "p": null, "x": false}, {"n": 6, "t": "NO FEAR", "p": null, "x": false}, {"n": 7, "t": "PEACE", "p": null, "x": false}, {"n": 8, "t": "SLEEP", "p": "sleep", "x": false}]}], "add": [{"title": "SONGS TO CRY TO", "genre": "Teardrops in My Coffee", "badge": "11 Songs", "css": "background:rgba(255,45,123,.14);color:#ff2d7b", "cover": "songs-to-cry-to", "dir": "SONGS-TO-CRY-TO", "tracks": [{"n": 1, "t": "TEARDROPS IN MY COFFEE", "p": null, "x": false}, {"n": 2, "t": "HAZY BUBBLE", "p": "hazy-bubble", "x": false}, {"n": 3, "t": "COFFEE CONSTELLATION", "p": "coffee-constellation", "x": false}, {"n": 4, "t": "ROCK A BYE BABY", "p": "rock-a-bye-baby", "x": false}, {"n": 5, "t": "ALMOST CALLED", "p": "almost-called", "x": false}, {"n": 6, "t": "THE LAST TIME", "p": null, "x": false}, {"n": 7, "t": "HAPPY BIRTHDAY", "p": null, "x": false}, {"n": 8, "t": "DROWNING IN MY TEARS", "p": "drowning-in-my-tears", "x": false}, {"n": 9, "t": "NOT ENOUGH BOTTLES", "p": "not-enough-bottles", "x": false}, {"n": 10, "t": "BROKEN HEART AND BUSTED DREAMS", "p": null, "x": false}, {"n": 11, "t": "IF TEARS COULD CALL HEAVEN", "p": "if-tears-could-call-heaven", "x": false}]}, {"title": "SILENT TREATMENT", "genre": "You Stopped Talking. I Started Writing.", "badge": "8 Songs", "css": "background:rgba(255,45,123,.14);color:#ff2d7b", "cover": "silent-treatment", "dir": "SILENT-TREATMENT", "tracks": [{"n": 1, "t": "SHERIFF", "p": null, "x": true}, {"n": 2, "t": "SILENCE IS YOUR FANGS", "p": "silence-is-your-fangs", "x": false}, {"n": 3, "t": "SHOVE IT", "p": null, "x": false}, {"n": 4, "t": "SUFFER IN SILENCE", "p": null, "x": false}, {"n": 5, "t": "EMOTIONAL HOSTAGE", "p": null, "x": true}, {"n": 6, "t": "INVISIBLE WOMAN", "p": "invisible-woman", "x": false}, {"n": 7, "t": "LOVE ME COMPLICATED", "p": "love-me-complicated", "x": false}, {"n": 8, "t": "UNCONTAINABLE", "p": "uncontainable", "x": false}]}], "bucket": "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music"};
+  function li(t){
+    var name = t.p ? '<a href="songs/'+t.p+'.html" class="song-name">'+t.t+'</a>'
+                   : '<span class="song-name">'+t.t+'</span>';
+    return '<li><span class="song-num">'+t.n+'</span>'+name+(t.x?' <span style="font-size:.6rem;color:#c62828;letter-spacing:.04em;">EXPLICIT</span>':'')+'</li>';
+  }
+  function fill(card, a){
+    var img = card.querySelector('img');
+    if (img){ img.src = D.bucket+'/'+a.cover+'.jpg'; img.alt = a.title+' — The Dogmother'; }
+    var g = card.querySelector('.album-genre'); if (g) g.innerHTML = a.genre;
+    var h3 = card.querySelector('h3'); if (h3) h3.textContent = a.title;
+    var b = card.querySelector('.album-badge');
+    if (b){ b.textContent = a.badge; b.setAttribute('style', a.css); }
+    var ul = card.querySelector('.song-list');
+    if (ul) ul.innerHTML = a.tracks.map(li).join('');
+    var cnt = card.querySelector('.hm-card-count');
+    if (cnt) cnt.textContent = a.tracks.length+' songs · tap to open';
+  }
+  function run(){
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.album-card'));
+    var used = [];
+    D.update.forEach(function(a){
+      var hits = cards.filter(function(c){
+        var i=c.querySelector('img'); return i && i.src.indexOf(a.match)>-1;
+      });
+      if(!hits.length) return;
+      fill(hits[0], a); used.push(hits[0]);
+      hits.slice(1).forEach(function(dup){ dup.style.display='none'; });  /* duplicate Barefoot card */
+    });
+    var host = used[0] && used[0].parentNode;
+    if (host){
+      D.add.forEach(function(a){
+        if (document.querySelector('[data-hm46="'+a.cover+'"]')) return;
+        var c = used[0].cloneNode(true);
+        c.setAttribute('data-hm46', a.cover);
+        c.style.display='';
+        var buy=c.querySelector('button'); if(buy&&buy.parentNode) buy.parentNode.remove();
+        fill(c, a);
+        host.insertBefore(c, used[0].nextSibling);
+      });
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+  else run();
+  setTimeout(run, 1200);   /* the condensed-home script rebuilds cards after load */
+})();
+</script>
+
 </body>
 </html>
