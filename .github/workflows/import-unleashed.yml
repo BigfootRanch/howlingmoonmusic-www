@@ -12,13 +12,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Fetch and verify payload
         run: |
-          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v56-pages.tar.gz"
-          echo "ab4ee13c18558f6f4a4967c9f5179100561c21d010e54185f6b5fd39dfe6669c  /tmp/pages.tar.gz" | sha256sum -c -
+          curl -sSL -o /tmp/pages.tar.gz "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/www-v57-pages.tar.gz"
+          echo "101da301154cb634e247bda91f50babe8421cb9da7a07488a3aa757c3a88b249  /tmp/pages.tar.gz" | sha256sum -c -
           tar xzf /tmp/pages.tar.gz -C .
       - name: Commit pages
         run: |
           git config user.name "howling-moon-bot"
           git config user.email "actions@users.noreply.github.com"
           git add -A
-          git diff --cached --quiet || git commit -m "v56: descriptor removal fixed — the blurb is nested inside .hm-card-body, not a sibling of the badge, so the sibling walk never reached it; now queried across the whole card"
+          git diff --cached --quiet || git commit -m "v57: all 145 songs repointed to verified-live MP3s (0 WAVs remaining)"
           git push
