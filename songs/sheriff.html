@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sheriff — The Dogmother | Howling Moon Music</title>
+  <meta name="description" content="Sheriff came from being told, essentially, you don&#x27;t get access anymore — by somebody who appointed himself gatekeeper and tried to back that control…">
+  <meta name="keywords" content="Sheriff, The Dogmother, Valentina Talor, Country Rock, Silent Treatment, original song">
+  <meta name="author" content="Valentina Talor">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://howlingmoonmusic.com/songs/sheriff.html">
+  <meta property="og:title" content="Sheriff — The Dogmother">
+  <meta property="og:description" content="Sheriff came from being told, essentially, you don&#x27;t get access anymore — by somebody who appointed himself gatekeeper and tried to back that control…">
+  <meta property="og:type" content="music.song">
+  <meta property="og:url" content="https://howlingmoonmusic.com/songs/sheriff.html">
+  <meta property="og:image" content="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png">
+  <meta property="og:site_name" content="Howling Moon Music">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Sheriff — The Dogmother">
+  <meta name="twitter:description" content="Sheriff came from being told, essentially, you don&#x27;t get access anymore — by somebody who appointed himself gatekeeper and tried to back that control…">
+  <meta name="twitter:image" content="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png">
+  <link rel="icon" href="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "MusicRecording", "name": "Sheriff", "url": "https://howlingmoonmusic.com/songs/sheriff.html", "genre": "Country Rock", "byArtist": {"@type": "MusicGroup", "name": "The Dogmother", "alternateName": "Valentina Talor"}, "image": "https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png", "inAlbum": {"@type": "MusicAlbum", "name": "Silent Treatment"}}</script>
+</head>
+<body class="song-page-body">
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="/" class="nav__logo">
+      <img src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png" alt="Howling Moon Music" style="height:36px">
+      <span>The Dogmother</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/music.html">Music</a></li>
+      <li><a href="/#gallery">Gallery</a></li>
+      <li><a href="/#listen">Listen</a></li>
+    </ul>
+    <button class="nav__toggle" id="mobBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mob-nav" id="mobNav">
+  <a href="/" onclick="closeMob()">Home</a>
+  <a href="/music.html" onclick="closeMob()">Music</a>
+  <a href="/#about" onclick="closeMob()">About</a>
+  <a href="/#gallery" onclick="closeMob()">Gallery</a>
+  <a href="/#listen" onclick="closeMob()">Listen</a>
+  <button class="close-btn" onclick="closeMob()">Close</button>
+</div>
+
+<!-- Song Hero -->
+<section class="song-hero">
+  <div class="container">
+    <a href="/music.html" class="back-link">&larr; All Music</a>
+    <div class="song-hero-inner">
+      <div class="song-hero-art"><img src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/silent-treatment.jpg" alt="Silent Treatment — Album Art" loading="lazy"></div>
+      <div class="song-hero-text">
+        <h1 class="song-title">Sheriff</h1>
+        <p class="song-artist">Valentina &middot; Howling Moon Music</p>
+        <div class="song-details"><span class="detail-item">Album: <strong>Healing Frequencies</strong></span> <span style="color:var(--tm)">&middot;</span> <span class="detail-item">Track 97</span></div>
+        <div class="song-tags">
+          <span class="badge">Meditation / Healing</span>
+        </div>
+        <!-- Quick-jump navigation -->
+        <div class="song-nav">
+          <a href="#listen-now" class="song-nav__btn song-nav__btn--play">Listen Now</a>
+          
+          <a href="#buy" class="song-nav__btn song-nav__btn--buy">Support the Artist</a>
+          <a href="#share" class="song-nav__btn song-nav__btn--share">Set This Song on Fire</a>
+          <a href="#stream" class="song-nav__btn">Stream It</a>
+          <a href="#story" class="song-nav__btn">Behind the Song</a>
+          <a href="#lyrics" class="song-nav__btn">Lyrics</a>
+          <a href="#campfire" class="song-nav__btn">Around the Fire</a>
+          <a href="#more" class="song-nav__btn">More Songs</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sticky Social Action Bar -->
+<div class="song-action-bar" id="songActionBar">
+  <button class="sab-btn sab-heart" onclick="return reactSong('heart', this)" title="Love it">
+    <span class="sab-icon">💋</span>
+    <span class="sab-count" id="heart-count">0</span>
+  </button>
+  <button class="sab-btn sab-fire" onclick="return reactSong('fire', this)" title="Fire">
+    <span class="sab-icon">🔥</span>
+    <span class="sab-count" id="fire-count">0</span>
+  </button>
+  <button class="sab-btn sab-comment" onclick="document.getElementById('campfire').scrollIntoView({behavior:'smooth'})" title="Leave Your Mark">
+    <span class="sab-icon">💬</span>
+    <span class="sab-label">Leave Your Mark</span>
+  </button>
+  <button class="sab-btn sab-join" onclick="document.getElementById('campfire').scrollIntoView({behavior:'smooth'})" title="Join the Fire">
+    <span class="sab-icon">🔥</span>
+    <span class="sab-label">Join the Fire</span>
+  </button>
+  <button class="sab-btn sab-share" onclick="if(navigator.share)navigator.share({title:'Sheriff by The DogMother',url:location.href});else{navigator.clipboard.writeText(location.href);this.querySelector('.sab-label').textContent='Copied!'}" title="Share">
+    <span class="sab-icon">⬆️</span>
+    <span class="sab-label">Share</span>
+  </button>
+  <a href="#buy" class="sab-btn sab-buy">
+    <span class="sab-icon">💋</span>
+    <span class="sab-label">Support</span>
+  </a>
+</div>
+
+<div class="container">
+
+  <!-- LISTEN NOW -->
+  <section class="song-section listen-now-section" id="listen-now">
+    <h2>Listen Now</h2>
+    <p class="section-vibe">Hit play. Turn it up. Let the desert take you.</p>
+    <div class="inline-player">
+      <button class="listen-now-btn" id="playBtn" onclick="togglePlay()">
+        <span class="play-pulse" id="playPulse"></span>
+        <span class="listen-now-text">
+          <strong id="playLabel">Play Sheriff</strong>
+          <span>Hit play. No ads. Just music.</span>
+        </span>
+      </button>
+      <audio id="songAudio" preload="none" src=""></audio>
+    </div>
+  </section>
+
+  
+
+  <!-- BUY & SUPPORT -->
+  <section class="song-section" id="buy">
+    <h2>Show Her You Mean It</h2>
+    <p class="section-vibe">Streaming pays artists $0.003 per play. That&rsquo;s three-tenths of a penny. Buying a song says &ldquo;I see you, I hear you, and your art matters.&rdquo;</p>
+    <div class="buy-grid">
+      <a href="https://buy.stripe.com/eVqaEZehY3V76Nk7BEd7q0a" target="_blank" class="buy-btn buy-btn--featured">
+        <span class="buy-label">Build Your Own &mdash; Pick 3 Songs $4.99</span>
+        <span class="buy-sub">Stripe &bull; Choose any 3 songs &bull; 100% goes to the artist</span>
+      </a>
+      <a href="https://buy.stripe.com/6oU4gB4HofDP1t03lod7q0b" target="_blank" class="buy-btn buy-btn--album">
+        <span class="buy-label">Pick 5 Songs &mdash; $6.99</span>
+        <span class="buy-sub">Best value &bull; Stripe secure checkout</span>
+      </a>
+      <a href="https://buy.stripe.com/3cI8wRb5Mbnz8VscVYd7q0c" target="_blank" class="buy-btn">
+        <span class="buy-label">Pick 10 Songs &mdash; $9.99</span>
+        <span class="buy-sub">Full collection &bull; Stripe secure checkout</span>
+      </a>
+    </div>
+    <a href="/how-to-listen.html" class="help-link">New to downloading music? We made it easy &rarr;</a>
+  </section>
+
+  <!-- SHARE -->
+  <section class="song-section share-section" id="share">
+    <h2>Set This Song on Fire</h2>
+    <p class="section-vibe">If this song hit you &mdash; send it to someone who needs it.</p>
+    <div class="share-grid">
+      <a class="share-card" href="https://www.facebook.com/sharer/sharer.php?u=https://howlingmoonmusic.com/songs/sheriff.html" target="_blank" rel="noopener">Facebook</a>
+      <a class="share-card" href="https://twitter.com/intent/tweet?text=%22Sheriff%22%20by%20The%20Dogmother%20just%20hit%20me.&url=https://howlingmoonmusic.com/songs/sheriff.html" target="_blank" rel="noopener">X / Twitter</a>
+      <a class="share-card" href="https://www.tiktok.com/@thedogmothermusic" target="_blank" rel="noopener">TikTok</a>
+      <a class="share-card" href="https://www.instagram.com/thedogmother/" target="_blank" rel="noopener">Instagram</a>
+      <a class="share-card" href="https://wa.me/?text=Sheriff%20by%20The%20Dogmother%3A%20https%3A%2F%2Fhowlingmoonmusic.com%2Fsongs%2Fsheriff.html" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="share-card" href="sms:?body=Listen%20to%20Sheriff%20by%20The%20Dogmother%3A%20https%3A%2F%2Fhowlingmoonmusic.com%2Fsongs%2Fsheriff.html" rel="noopener">Text a Friend</a>
+      <button class="share-card" id="copyLinkBtn">Copy Link</button>
+      <button class="share-card share-card--native" id="nativeShareBtn">Share (All Apps)</button>
+    </div>
+  </section>
+
+  <!-- STREAM -->
+  <section class="song-section" id="stream">
+    <h2>Stream It Free</h2>
+    <p class="section-vibe">Free to listen. If you love it, come back and buy it.</p>
+    <div class="listen-options">
+      <a href="https://open.spotify.com/artist/2oYIuTSjJZy1c4uOmscAJy" target="_blank" rel="noopener" class="listen-option listen-option--primary">Spotify</a>
+      <a href="https://music.apple.com/us/artist/the-dogmother/1825492000" target="_blank" rel="noopener" class="listen-option">Apple Music</a>
+      <a href="https://music.amazon.com/artists/B0DQP85XQ3/the-dogmother" target="_blank" rel="noopener" class="listen-option">Amazon Music</a>
+      <a href="https://www.youtube.com/@TheDogMotherMusic" target="_blank" rel="noopener" class="listen-option">YouTube Music</a>
+      <a href="https://www.tiktok.com/@thedogmothermusic" target="_blank" rel="noopener" class="listen-option">TikTok</a>
+    </div>
+  </section>
+
+  <!-- Story Section -->
+  <section class="song-section" id="story">
+    <h2>The Story Behind This Song</h2>
+    <div class="pink-divider"></div>
+    <div class="story-card">
+      <div class="story-text"><p><strong>Sheriff</strong> came from being told, essentially, <em>you don&#x27;t get access anymore</em> — by somebody who appointed himself gatekeeper and tried to back that control with authority and intimidation.</p><p>But there&#x27;s one problem with trying to silence a songwriter.</p><p><strong>You can control a phone. Block a page. Delete a message. Stand at a doorway. You cannot put handcuffs on a song.</strong></p><p>And when the complaint became <em>&quot;her music keeps coming and coming and coming,&quot;</em> he accidentally wrote the hook.</p><p>Damn right it keeps coming.</p><p>Every song is another flare over the wall. Another breadcrumb. Another way of saying: <em>I&#x27;m still here.</em></p><p>So shine that fake Sheriff Spanky badge. Demand silence. Demand submission. Demand control.</p><p><strong>The music keeps coming.</strong></p></div>
+    </div>
+  </section>
+
+  <!-- Lyrics Section -->
+  <section class="song-section" id="lyrics">
+    <h2 class="lyrics-heading">Lyrics</h2>
+    <div class="lyrics-divider"></div>
+    <div class="lyrics-content">**[COLD OPEN — MALE, DISTORTED / PHONE-VOICE]**<br>
+<br>
+&quot;Her music...<br>
+it keeps coming and coming and coming.&quot;<br>
+<br>
+**[FEMALE — DEAD CALM]**<br>
+<br>
+Yeah.<br>
+<br>
+That&#x27;s the point.<br>
+<br>
+**[DROP]**<br>
+<br>
+---<br>
+<br>
+**[CHORUS — IMMEDIATE / MASSIVE / CHANTABLE]**<br>
+<br>
+Coming, coming, coming<br>
+My music keeps coming<br>
+Coming, coming, coming<br>
+And you can&#x27;t fucking stop it<br>
+<br>
+Crazy, crazy, crazy<br>
+Go ahead, go crazy<br>
+Crazy, crazy, crazy<br>
+&#x27;Cause I&#x27;m not going quiet<br>
+<br>
+Block my number<br>
+Block my name<br>
+Block every door and shift the blame<br>
+<br>
+You can lock the gate<br>
+You can play God—<br>
+<br>
+**But you can&#x27;t put handcuffs on a song.**<br>
+<br>
+Coming, coming, coming<br>
+Yeah, the music keeps coming<br>
+<br>
+---<br>
+<br>
+**[VERSE 1 — GATEKEEPER / HARDER]**<br>
+<br>
+Who made you the gatekeeper?<br>
+Who handed you the key?<br>
+Who the fuck gave you jurisdiction<br>
+Over blood, over love, over me?<br>
+<br>
+Shine that fake sheriff badge<br>
+Sheriff Spanky demands silence<br>
+Sheriff Spanky demands submission<br>
+Silence. Submission. Control.<br>
+<br>
+**[WHISPERED REVERB]**<br>
+Coming... coming... coming...<br>
+<br>
+Fuck your badge<br>
+Fuck your bluff<br>
+Fuck your cuffs and your tough-guy stuff<br>
+<br>
+Po-po poser<br>
+Pew-pew threats<br>
+Big-man theater, zero respect<br>
+<br>
+Go back in the dark<br>
+Spank your monkey like it&#x27;s mandatory<br>
+Polish up that plastic power<br>
+Practice your imaginary authority<br>
+<br>
+You don&#x27;t like me<br>
+&#x27;Cause I call out your lies<br>
+I call out the control<br>
+And it drives you—<br>
+<br>
+**Crazy, crazy, crazy.**<br>
+<br>
+**[REVERB — FEMALE STACKS]**<br>
+Crazy... crazy... crazy...<br>
+<br>
+You can play sheriff<br>
+You can play king<br>
+You can pound your chest<br>
+You can pull every string<br>
+<br>
+But you don&#x27;t own her<br>
+You don&#x27;t own me<br>
+And you don&#x27;t get custody<br>
+Of somebody else&#x27;s family<br>
+<br>
+**[LOW BACKING CHANT]**<br>
+Can&#x27;t block the song...<br>
+Can&#x27;t block the song...<br>
+<br>
+You built yourself a little kingdom<br>
+Out of fear and locked-up doors<br>
+<br>
+Put her in a cage<br>
+Put me in one too<br>
+<br>
+Careful, little sheriff—<br>
+Cages have a way of closing around you<br>
+<br>
+---<br>
+<br>
+**[BREAK — MALE, DISTORTED]**<br>
+<br>
+&quot;Stay away.&quot;<br>
+<br>
+**[FEMALE]**<br>
+<br>
+From my own family?<br>
+<br>
+Who the fuck are you?<br>
+<br>
+You walked in<br>
+Made yourself king<br>
+Then called everybody else the problem<br>
+<br>
+---<br>
+<br>
+**[HOOK DROP — HALF-TIME / CROWD RESPONSE]**<br>
+<br>
+Fuck your rules—<br>
+**COMING.**<br>
+<br>
+Fuck your lies—<br>
+**COMING.**<br>
+<br>
+Fuck your gate—<br>
+**COMING.**<br>
+<br>
+Fuck your pride—<br>
+**COMING.**<br>
+<br>
+You can block the call—<br>
+**CAN&#x27;T BLOCK THE SONG.**<br>
+<br>
+Delete the text—<br>
+**CAN&#x27;T BLOCK THE SONG.**<br>
+<br>
+Kill the page—<br>
+**CAN&#x27;T BLOCK THE SONG.**<br>
+<br>
+Say my name—<br>
+<br>
+**THE MUSIC KEEPS COMING.**<br>
+<br>
+---<br>
+<br>
+**[VERSE 3 — HAUNTING / DAUGHTER &amp; CHILDREN]**<br>
+<br>
+Do the emails ever reach her?<br>
+Do the pictures disappear?<br>
+<br>
+Do the &quot;I love yous&quot; get buried<br>
+Before she knows that they were here?<br>
+<br>
+What do you tell the children<br>
+When somebody says my name?<br>
+<br>
+Do you turn a living grandmother<br>
+Into someone they can&#x27;t explain?<br>
+<br>
+Do you make me the villain<br>
+So nobody asks what changed?<br>
+<br>
+Funny—we were family<br>
+Before you started guarding the gate<br>
+<br>
+Maybe she walks beside you now<br>
+Because fighting costs too much<br>
+<br>
+Maybe silence buys one peaceful night<br>
+Maybe giving in feels safer than enough<br>
+<br>
+But control ain&#x27;t love<br>
+And fear ain&#x27;t home<br>
+<br>
+One day the fog can lift<br>
+One day the truth can show<br>
+<br>
+**[DISTANT REVERB]**<br>
+Coming... coming... coming...<br>
+<br>
+---<br>
+<br>
+**[PRE-BRIDGE — MUSIC FALLS AWAY]**<br>
+<br>
+<br>
+Every note a breadcrumb<br>
+Through the dark.<br>
+<br>
+If every road to you<br>
+Gets cut off one by one—<br>
+<br>
+Follow the notes.<br>
+Follow the sound.<br>
+<br>
+If you ever lose the road<br>
+Let the music lead you home.<br>
+<br>
+---<br>
+<br>
+**[MALE — DISTORTED / ANNOYED]**<br>
+<br>
+&quot;Her music keeps coming<br>
+and coming<br>
+and coming.&quot;<br>
+<br>
+**[FEMALE — SMILING]**<br>
+<br>
+Coming.<br>
+<br>
+Coming.<br>
+<br>
+Coming.<br>
+<br>
+---<br>
+<br>
+**[FINAL CHORUS — NUCLEAR / CHOIR / GUITARS / STOMPS]**<br>
+<br>
+Coming, coming, coming<br>
+My music keeps coming<br>
+Coming, coming, coming<br>
+And you can&#x27;t fucking stop it<br>
+<br>
+Crazy, crazy, crazy<br>
+Go ahead, go crazy<br>
+Crazy, crazy, crazy<br>
+I&#x27;m never going quiet<br>
+<br>
+Block my number<br>
+Block my name<br>
+Block every door and shift the blame<br>
+<br>
+Play your sheriff<br>
+Play your God—<br>
+<br>
+**YOU CAN&#x27;T PUT HANDCUFFS ON A SONG.**<br>
+<br>
+Can&#x27;t cuff it<br>
+Can&#x27;t mute it<br>
+Can&#x27;t kill it<br>
+Can&#x27;t choose it<br>
+<br>
+Every lie becomes a lyric<br>
+Every bruise becomes a beat<br>
+<br>
+Every time you try to mute me<br>
+I put another one on repeat<br>
+<br>
+Coming, coming, coming<br>
+Crazy, crazy, crazy<br>
+<br>
+Sheriff Spanky—hear it coming<br>
+Shine that fake badge—still it&#x27;s coming<br>
+<br>
+Silence?<br>
+**COMING.**<br>
+<br>
+Submission?<br>
+**COMING.**<br>
+<br>
+Control?<br>
+**COMING.**<br>
+<br>
+You wanted me quiet?<br>
+<br>
+**You should&#x27;ve treated me better.**<br>
+<br>
+---<br>
+<br>
+**[OUTRO — BEAT CUTS / ONE DRY VOCAL]**<br>
+<br>
+You can control a phone.<br>
+<br>
+You can control a page.<br>
+<br>
+You can stand in a doorway<br>
+and call yourself whatever the hell you want.<br>
+<br>
+You can make yourself king<br>
+inside a house built out of fear.<br>
+<br>
+But once I sing it—<br>
+<br>
+Past you.<br>
+<br>
+Into the world.<br>
+<br>
+**You can&#x27;t put handcuffs on a song.**<br>
+<br>
+**[WHISPERED STACKS, FADING]**<br>
+<br>
+Coming...<br>
+coming...<br>
+coming...<br>
+<br>
+Crazy...<br>
+crazy...<br>
+crazy...<br>
+<br>
+Can&#x27;t block the song...<br>
+can&#x27;t block the song...<br></div>
+  </section>
+
+  <!-- AROUND THE FIRE — Fan comments -->
+  <section class="song-section campfire-section" id="campfire">
+    <h2>Around the Fire</h2>
+    <p class="section-vibe">Pull up a chair. Tell us what this song means to you.</p>
+    <div class="campfire-glow">
+      <div class="campfire-comments" id="campfireComments">
+        <div class="campfire-empty">
+          <span class="fire-emoji">&#x1F525;</span>
+          <p>Be the first one around the fire.</p>
+        </div>
+      </div>
+      <form class="campfire-form" id="campfireForm" onsubmit="return submitComment(event)">
+        <input type="text" id="campfireName" placeholder="Your name (or trail name)" required maxlength="50">
+        <textarea id="campfireMsg" placeholder="What does this song make you feel?" required maxlength="500" rows="3"></textarea>
+        <button type="submit" class="campfire-submit">Drop it in the fire</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- More Songs -->
+  <section class="song-section" id="more">
+    <h2>More Songs Like This</h2>
+    <div class="more-songs-grid">
+        <a href="still-the-asshole.html" class="more-song-card">
+          <h4>Still The Asshole</h4>
+          <p>Valentina &middot; Country Rock / Anthem</p>
+        </a>
+        <a href="twinkle.html" class="more-song-card">
+          <h4>Twinkle Twinkle Little Bitch (JT)</h4>
+          <p>Valentina</p>
+        </a>
+        <a href="puff-planet.html" class="more-song-card">
+          <h4>Puff Planet</h4>
+          <p>Valentina &middot; Hip-Hop / Comedy</p>
+        </a>
+    </div>
+  </section>
+
+</div>
+
+<!-- Viral Footer -->
+<div class="viral-footer">
+  <div class="container">
+    <p>If this song hit you&hellip; send it to someone who needs it.</p>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <img src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png" alt="Howling Moon Music" style="height:48px;margin:0 auto 1rem;">
+  <p>&copy; 2026 Howling Moon Music LLC. All rights reserved.</p>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50)});
+document.getElementById('mobBtn').addEventListener('click',()=>{document.getElementById('mobNav').classList.add('open')});
+function closeMob(){document.getElementById('mobNav').classList.remove('open')}
+window.closeMob=closeMob;
+
+// Audio player
+function togglePlay(){
+  var a=document.getElementById('songAudio');
+  var b=document.getElementById('playLabel');
+  var p=document.getElementById('playPulse');
+  if(!a)return;
+  if(a.paused){a.play();if(b)b.textContent='Playing...';if(p)p.classList.add('playing')}
+  else{a.pause();if(b)b.textContent='Play';if(p)p.classList.remove('playing')}
+}
+var sa=document.getElementById('songAudio');
+if(sa){sa.addEventListener('ended',function(){var b=document.getElementById('playLabel');var p=document.getElementById('playPulse');if(b)b.textContent='Play Again';if(p)p.classList.remove('playing')})}
+
+// Copy Link button
+var clb=document.getElementById('copyLinkBtn');
+if(clb)clb.onclick=function(){navigator.clipboard.writeText(window.location.href).then(function(){clb.textContent='Copied!';setTimeout(function(){clb.textContent='Copy Link'},2000)})};
+
+// Native Share button
+var nsb=document.getElementById('nativeShareBtn');
+if(nsb)nsb.onclick=function(){if(navigator.share)navigator.share({title:'Sheriff by The Dogmother',url:window.location.href})};
+if(nsb&&!navigator.share)nsb.style.display='none';
+
+// Campfire comments
+var COMMENTS_API='https://pxcxtnabyydhbfbholvh.supabase.co/functions/v1/public-intake';
+var SONG_SLUG='breathe';
+
+// Song Reactions — inline to avoid external script blocking
+var HM_REACTION_API='https://pxcxtnabyydhbfbholvh.supabase.co/functions/v1/public-intake';
+
+function getStorageValue(storage,key){try{return storage.getItem(key)||null}catch(e){return null}}
+function setStorageValue(storage,key,value){try{storage.setItem(key,value)}catch(e){}}
+function getSessionId(){var existing=getStorageValue(sessionStorage,'hm_session');if(existing)return existing;var next='ses_'+Math.random().toString(36).slice(2,14)+'_'+Date.now();setStorageValue(sessionStorage,'hm_session',next);return next}
+function getFingerprint(){return getStorageValue(localStorage,'hm_fp')||getStorageValue(sessionStorage,'hm_fp')}
+function ensureTrackingScriptLoaded(){if(getFingerprint())return;if(document.querySelector('script[src="/js/hm-track.js"]'))return;var script=document.createElement('script');script.src='/js/hm-track.js';script.defer=true;script.setAttribute('data-hm-track-loader','1');document.head.appendChild(script)}
+
+function reactSong(type, btn) {
+  btn = btn || document.querySelector('.sab-' + (type === 'heart' ? 'heart' : type)) || document.querySelector('.sab-' + (type === 'heart' ? 'lips' : type));
+  if (!btn || btn.classList.contains('active')) return false;
+  btn.classList.add('active');
+  var countEl = document.getElementById(type + '-count');
+  if (countEl) countEl.textContent = parseInt(countEl.textContent || '0', 10) + 1;
+  setStorageValue(localStorage,'react-' + SONG_SLUG + '-' + type,'1');
+  ensureTrackingScriptLoaded();
+  fetch(HM_REACTION_API, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      kind: 'song_reaction',
+      song_slug: SONG_SLUG,
+      reaction_type: type,
+      fingerprint: getFingerprint(),
+      session_id: getSessionId(),
+      page_url: location.pathname,
+      referrer: document.referrer || null,
+      user_agent: navigator.userAgent || null,
+      event_source: 'song_page_reaction_inline'
+    }),
+    keepalive: true
+  }).catch(function(){});
+  return false;
+}
+if (getStorageValue(localStorage,'react-' + SONG_SLUG + '-heart')) {
+  var b = document.querySelector('.sab-heart') || document.querySelector('.sab-lips');
+  if (b) b.classList.add('active');
+}
+if (getStorageValue(localStorage,'react-' + SONG_SLUG + '-fire')) {
+  var b = document.querySelector('.sab-fire');
+  if (b) b.classList.add('active');
+}
+
+</script>
+<script src="/js/song-comments.js" defer></script>
+<script src="/js/hm-track.js" defer></script>
+<script src="/js/play-tracker.js" defer></script>
+
+
+<script src="/js/song-toast.js" defer></script>
+</body>
+</html>
