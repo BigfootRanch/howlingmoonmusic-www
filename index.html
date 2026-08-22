@@ -2633,7 +2633,7 @@ loadSiteData();
 })();
 </script>
 
-<!-- ══ HM v54 (CEO 2026-08-21): clears the inherited Outlaw Love descriptor from every catalog card and makes catalog song rows cue Howling Moon Radio. (1) cloned cards had no expand handler — cloneNode copies
+<!-- ══ HM v56 (CEO 2026-08-21): clears the inherited Outlaw Love descriptor from every catalog card and makes catalog song rows cue Howling Moon Radio. (1) cloned cards had no expand handler — cloneNode copies
      markup but NOT addEventListener bindings, so Silent Treatment / Songs To Cry To were dead
      on click. The site's toggle just adds .hm-open to the card, so bind that directly.
      (2) UNLEASHED moves out of the opening banner and into the Full Catalog. ══ -->
@@ -2657,7 +2657,7 @@ loadSiteData();
   /* the site binds its toggle with addEventListener, which cloneNode does not copy.
      the toggle itself is just .hm-open on the card, so re-bind it explicitly. */
   function bindToggle(card){
-    if (card.getAttribute('data-hm54bound')) return;
+    if (card.getAttribute('data-hm56bound')) return;
     var head = card.querySelector('.hm-card-head');
     if (!head) return;
     head.addEventListener('click', function(e){
@@ -2667,7 +2667,7 @@ loadSiteData();
       if (body) body.classList.toggle('hm-hidden');
       card.classList.toggle('hm-open');
     });
-    card.setAttribute('data-hm54bound','1');
+    card.setAttribute('data-hm56bound','1');
   }
   function fill(card, a){
     var img = card.querySelector('img');
@@ -2678,12 +2678,13 @@ loadSiteData();
     if (b){ b.textContent = a.badge; b.setAttribute('style', a.css); }
     /* CEO 8/21: every cloned card inherited the Outlaw Love blurb. Clear the
        descriptor paragraph that sits between the badge and the tracklist. */
-    var badge2 = card.querySelector('.album-badge');
-    if (badge2){
-      var p = badge2.nextElementSibling;
-      while (p && p.tagName !== 'P' && p.tagName !== 'UL') p = p.nextElementSibling;
-      if (p && p.tagName === 'P') p.remove();
-    }
+    /* CEO 8/22: the descriptor is NOT a sibling of the badge — the condensed-home
+       script nests cards in .hm-card-head/.hm-card-body, so a sibling walk never
+       reaches it. Query the whole card and drop any paragraph outside the tracklist. */
+    card.querySelectorAll('p').forEach(function(p){
+      if (p.closest('.song-list')) return;      /* never touch track rows */
+      p.remove();
+    });
     var ul = card.querySelector('.song-list');
     if (ul){
       ul.innerHTML = a.tracks.map(li).join('');
@@ -2729,7 +2730,7 @@ loadSiteData();
         if (ex && document.body.contains(ex)) { show(ex); return; }   /* already bound when created */
         var c = anchor.cloneNode(true);
         c.classList.remove('hm-open');
-        c.removeAttribute('data-hm54bound');
+        c.removeAttribute('data-hm56bound');
         fill(c, a);
         bindToggle(c);   /* ONLY clones need this — originals keep the site's own handler,
                             and binding both makes the two toggles cancel each other out */
@@ -2744,7 +2745,7 @@ loadSiteData();
     run();
     [400,1200,2500,5000].forEach(function(ms){ setTimeout(run, ms); });
     var grid = document.querySelector('.album-grid') || document.body;
-    new MutationObserver(function(){ clearTimeout(window.__hm54t); window.__hm54t=setTimeout(run,250); })
+    new MutationObserver(function(){ clearTimeout(window.__hm56t); window.__hm56t=setTimeout(run,250); })
       .observe(grid,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style']});
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
