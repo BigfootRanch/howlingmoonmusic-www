@@ -1424,6 +1424,16 @@ const SB_URL = 'https://pxcxtnabyydhbfbholvh.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4Y3h0bmFieXlkaGJmYmhvbHZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzAxNTQsImV4cCI6MjA4OTQ0NjE1NH0.4FUt6aghawOpAHM87DVhz-ZDZNj4w-b2n64ZphVyu78';
 const AUDIO_BASE = SB_URL + '/storage/v1/object/public/audio/';
 
+// Single source of truth for a track's playable URL.
+// audio_url is absolute and authoritative (the v55 masters live in the howls-music bucket
+// on a different Supabase project); audio_path is the legacy bucket-relative fallback.
+function trackAudioUrl(song) {
+  if (!song) return null;
+  if (song.audio_url) return song.audio_url;
+  const audioPath = song.audio_path || (song.slug + '.mp3');
+  return /^https?:\/\//.test(audioPath) ? audioPath : AUDIO_BASE + encodeURIComponent(audioPath).replace(/%2F/g, '/');
+}
+
 let allSongs = [];
 let moodCategories = [];
 let songMoodMap = {};
@@ -1942,8 +1952,8 @@ function restoreRadioSession() {
 function primeCurrentTrack() {
   const song = getCurrentSong();
   if (!song) return;
-  const audioPath = song.audio_path || (song.slug + '.mp3');
-  const audioUrl = /^https?:\/\//.test(audioPath) ? audioPath : AUDIO_BASE + encodeURIComponent(audioPath).replace(/%2F/g, '/');
+  const audioUrl = trackAudioUrl(song);
+  if (!audioUrl) return;
   if (audioEl.src !== audioUrl) {
     audioEl.src = audioUrl;
   }
@@ -2094,7 +2104,7 @@ document.getElementById('radioBtn').addEventListener('click', () => {
     // The queue may have been rebuilt (mood pill / album chip) since this src loaded —
     // resuming the stale src replays the OLD song. Reload if src no longer matches.
     const song = getCurrentSong();
-    const expectedUrl = song ? (/^https?:\/\//.test(song.audio_path || '') ? song.audio_path : AUDIO_BASE + encodeURIComponent(song.audio_path || (song.slug + '.mp3')).replace(/%2F/g, '/')) : null;
+    const expectedUrl = trackAudioUrl(song);
     if (expectedUrl && audioEl.src !== expectedUrl) {
       playCurrentTrack();
       return;
