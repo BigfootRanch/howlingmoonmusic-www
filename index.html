@@ -2043,6 +2043,10 @@ function handleTrackFailure(reason) {
 function playSongInRadio(songId, moodId) {
   if (moodId) {
     buildRadioQueue('mood', moodId, { startSongId: songId });
+    // same invariant as below: the mood queue may not contain this song either
+    const moodIdx = radioQueue.findIndex(song => song.id === songId);
+    if (moodIdx < 0) { refuseTrack(songId); return; }
+    radioIndex = moodIdx;
     playCurrentTrack();
     document.getElementById('radio').scrollIntoView({ behavior: 'smooth' });
     return;
@@ -2050,12 +2054,43 @@ function playSongInRadio(songId, moodId) {
   const existingIndex = radioQueue.findIndex(song => song.id === songId);
   if (existingIndex >= 0) {
     radioIndex = existingIndex;
-  } else if (buildRadioQueue('all', null, { startSongId: songId })) {
-    const fallbackIndex = radioQueue.findIndex(song => song.id === songId);
-    radioIndex = fallbackIndex >= 0 ? fallbackIndex : radioIndex;
+  } else {
+    buildRadioQueue('all', null, { startSongId: songId });
   }
+
+  // ⛔ INVARIANT (CEO 8/22): a play request plays THAT song or nothing. The old code
+  // did radioIndex = fallbackIndex >= 0 ? fallbackIndex : radioIndex — on a miss it
+  // kept the previous index and played a DIFFERENT song. Clicking SHERIFF (explicit, so
+  // fenced out of the queue by the 8/10 JT rule above) played "Dogs Have Never" at index 0.
+  // Never guess. Never substitute.
+  const landed = radioQueue.findIndex(song => song.id === songId);
+  if (landed < 0) { refuseTrack(songId); return; }
+  radioIndex = landed;
+
   playCurrentTrack();
   document.getElementById('radio').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Say plainly that the track cannot be cued, instead of playing something else.
+function refuseTrack(songId) {
+  const song = allSongs.find(s => s.id === songId) || null;
+  const labelEl = document.getElementById('radioLabel');
+  const trackEl = document.getElementById('radioTrack');
+  const wasLabel = labelEl ? labelEl.textContent : '';
+  const wasTrack = trackEl ? trackEl.textContent : '';
+  const why = !song ? 'That track is not in the catalog.'
+    : (!song.audio_path ? song.title + ' — audio coming soon.'
+    : (song.explicit ? song.title + ' is explicit — it plays under the JT pill only.'
+    : song.title + ' is not available in the radio right now.'));
+  if (labelEl) labelEl.textContent = 'Not Available In Radio';
+  if (trackEl) trackEl.textContent = why;
+  const r = document.getElementById('radio');
+  if (r && r.scrollIntoView) r.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  // never leave a playing track mislabelled
+  if (radioPlaying) setTimeout(function(){
+    if (labelEl) labelEl.textContent = wasLabel;
+    if (trackEl) trackEl.textContent = wasTrack;
+  }, 4000);
 }
 
 window.playSongInRadio = playSongInRadio;
@@ -2309,16 +2344,22 @@ function addSongActionButtons() {
       + '<a href="songs/' + slug + '.html#buy" class="sa-act" title="Buy">$</a>'
       + '<a href="https://open.spotify.com/artist/2oYIuTSjJZy1c4uOmscAJy" target="_blank" rel="noopener" class="sa-btn sa-stream" title="Stream on Spotify">&#9835;</a>';
 
-    if (song && song.audio_path) {
-      actions.querySelector('.sa-play').addEventListener('click', e => {
+    // ⛔ INVARIANT (CEO 8/22): "playable in the catalog" and "queueable in the radio"
+    // must be ONE predicate. They disagreed (111 vs 101) and the catalog rendered off the
+    // looser one, so 8 explicit tracks got a live-looking button that played the wrong song.
+    const btn = actions.querySelector('.sa-play');
+    if (song && song.audio_path && !song.explicit) {
+      btn.addEventListener('click', e => {
         e.preventDefault();
         e.stopPropagation();
         playSongInRadio(song.id);
       });
     } else {
-      actions.querySelector('.sa-play').style.opacity = '0.3';
-      actions.querySelector('.sa-play').style.cursor = 'default';
-      actions.querySelector('.sa-play').title = 'Audio coming soon';
+      btn.style.opacity = '0.3';
+      btn.style.cursor = 'default';
+      btn.title = (song && song.explicit && song.audio_path)
+        ? 'Explicit — plays under the JT pill'
+        : 'Audio coming soon';
     }
 
     li.appendChild(actions);
