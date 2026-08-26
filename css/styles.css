@@ -549,8 +549,8 @@ li:hover .sa-react.active { opacity: 1; }
   box-shadow: 0 0 20px rgba(57,255,20,.35);
 }
 .buy-btn--featured:hover { box-shadow: 0 0 32px rgba(57,255,20,.55); }
-.buy-btn--featured .buy-label { color: #06280a; }
-.buy-btn--featured .buy-sub { color: rgba(6,40,10,.65); }
+.buy-btn--featured .buy-label { color: #06280a !important; }
+.buy-btn--featured .buy-sub { color: rgba(6,40,10,.72) !important; }  /* generic .buy-btn .buy-sub sits later in the file — dark text must win on neon green */
 
 /* --- Campfire Comments --- */
 .campfire-section { text-align: center; }
