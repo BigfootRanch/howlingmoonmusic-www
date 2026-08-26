@@ -961,7 +961,7 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
         </ul>
         <div style="display:flex;gap:.8rem;margin-top:1rem;">
           <button onclick="return hmOpenStripeCheckout('https://buy.stripe.com/eVqcN71vc1MZefM4psd7q0g',{product_slug:'ghost-wanted-dead-or-alive',product_name:'GHOST WANTED DEAD OR ALIVE',price_label:'$15.99',purchase_source:'homepage'})" style="flex:1;background:#ff2d7b;color:#fff;border:none;padding:.7rem 1rem;border-radius:8px;font-size:.9rem;cursor:pointer;font-weight:700;box-shadow:0 0 20px rgba(255,45,123,.3);">Buy Collection &mdash; $15.99</button>
-          <a href="/ghost-wanted-dead-or-alive.html" style="flex:1;text-align:center;border:1px solid #ff2d7b;color:#ff2d7b;padding:.7rem 1rem;border-radius:8px;font-size:.9rem;text-decoration:none;font-weight:700;">Read the Story</a>
+          <a href="/ghost-wanted-dead-or-alive.html" style="flex:1;text-align:center;border:1px solid #ff2d7b;color:#ff2d7b;padding:.7rem 1rem;border-radius:8px;font-size:.9rem;text-decoration:none;font-weight:700;box-shadow:0 0 12px rgba(255,45,123,.28);">Read the Story</a>
         </div>
       </div>
 
@@ -2801,7 +2801,7 @@ loadSiteData();
         return !x.closest('.song-list') && /read the story/i.test(x.textContent); })[0];
       if (!st){
         st = document.createElement('a');
-        st.setAttribute('style','display:block;text-align:center;border:1px solid #ff2d7b;color:#ff2d7b;padding:.7rem 1rem;border-radius:8px;font-size:.9rem;text-decoration:none;font-weight:700;margin:.6rem 0;');
+        st.setAttribute('style','display:block;text-align:center;border:1px solid #ff2d7b;color:#ff2d7b;padding:.7rem 1rem;border-radius:8px;font-size:.9rem;text-decoration:none;font-weight:700;margin:.6rem 0;box-shadow:0 0 12px rgba(255,45,123,.28);');
         var bb2 = Array.prototype.slice.call(card.querySelectorAll('button')).filter(function(x){
           return /Buy Collection|Buy This Entire/i.test(x.textContent); })[0];
         if (bb2 && bb2.parentNode) bb2.parentNode.insertBefore(st, bb2.nextSibling);

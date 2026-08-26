@@ -522,7 +522,7 @@ li:hover .sa-react.active { opacity: 1; }
 
 /* --- Song Nav Button Variants --- */
 .song-nav__btn--play { background: var(--pink) !important; color: #fff !important; }
-.song-nav__btn--buy { background: var(--gold) !important; color: var(--bg) !important; font-weight: 700; }
+.song-nav__btn--buy { background: #39ff14 !important; color: #06280a !important; font-weight: 700; box-shadow: 0 0 14px rgba(57,255,20,.4); }
 .song-nav__btn--share { border-color: var(--pink) !important; color: var(--pink) !important; }
 
 /* --- Share Section --- */
@@ -541,12 +541,16 @@ li:hover .sa-react.active { opacity: 1; }
 .share-card:hover { border-color: var(--pink); color: var(--pink); transform: translateY(-1px); }
 
 /* --- Buy Button Featured --- */
+/* CEO 2026-08-26: no dull gold buttons — vibrant neon against the dark theme.
+   Bundle/secondary CTAs = neon green with dark text; primary buys stay neon pink. */
 .buy-btn--featured {
-  background: linear-gradient(135deg, var(--gold), var(--gold-d)) !important;
-  color: var(--bg) !important; border: none !important;
+  background: linear-gradient(135deg, #39ff14, #2be00f) !important;
+  color: #06280a !important; border: none !important;
+  box-shadow: 0 0 20px rgba(57,255,20,.35);
 }
-.buy-btn--featured .buy-label { color: var(--bg); }
-.buy-btn--featured .buy-sub { color: rgba(14,11,8,.6); }
+.buy-btn--featured:hover { box-shadow: 0 0 32px rgba(57,255,20,.55); }
+.buy-btn--featured .buy-label { color: #06280a; }
+.buy-btn--featured .buy-sub { color: rgba(6,40,10,.65); }
 
 /* --- Campfire Comments --- */
 .campfire-section { text-align: center; }
@@ -575,8 +579,9 @@ li:hover .sa-react.active { opacity: 1; }
 }
 .campfire-form input:focus, .campfire-form textarea:focus { border-color: var(--gold); }
 .campfire-submit {
-  background: linear-gradient(135deg, var(--gold), var(--gold-d));
-  color: var(--bg); border: none; padding: .8rem 2rem; border-radius: 6px;
+  background: linear-gradient(135deg, #39ff14, #2be00f);
+  box-shadow: 0 0 14px rgba(57,255,20,.3);
+  color: #06280a; border: none; padding: .8rem 2rem; border-radius: 6px;
   font-size: .8rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
   cursor: pointer; transition: all .3s; align-self: flex-start;
 }
@@ -1077,7 +1082,8 @@ li:hover .sa-react.active { opacity: 1; }
 .buy-btn .buy-sub { font-size: 0.8rem; color: rgba(255,255,255,.45); margin-top: 0.3rem; }
 .buy-btn:hover .buy-sub { color: rgba(255,255,255,.7); }
 .buy-btn--album {
-  border-image: linear-gradient(135deg, var(--pink-d), var(--gold), var(--pink)) 1;
+  border-image: linear-gradient(135deg, #2be00f, #39ff14, #8dff70) 1;
+  box-shadow: 0 0 16px rgba(57,255,20,.18);
 }
 .buy-btn--album:hover {
   box-shadow: 0 6px 25px rgba(255,45,123,.2);
