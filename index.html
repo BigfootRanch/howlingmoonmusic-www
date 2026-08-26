@@ -1727,10 +1727,8 @@ function updateAlbumBar() {
 
 function getSongsForSource(source) {
   let songs = allSongs.filter(s => s.audio_path);
-  // CEO 2026-08-10 (verbatim: JT explicit songs are "way too offensive to casually be with my
-  // brand" — "move to JT designation or hide"): explicit tracks play ONLY under the JT pill.
-  // Found live 8/11: Pussy Juice led the Hot Summer Nights mood on the Dogmother homepage.
-  if (source.mode !== 'jt') songs = songs.filter(s => !s.explicit);
+  // CEO 2026-08-26: explicit tracks play everywhere under The Dogmother;
+  // explicit is shown only as an E badge on the tracklist.
 
   if (source.mode === 'valentina') {
     songs = songs.filter(isValentinaSong);
@@ -2060,8 +2058,8 @@ function playSongInRadio(songId, moodId) {
 
   // ⛔ INVARIANT (CEO 8/22): a play request plays THAT song or nothing. The old code
   // did radioIndex = fallbackIndex >= 0 ? fallbackIndex : radioIndex — on a miss it
-  // kept the previous index and played a DIFFERENT song. Clicking SHERIFF (explicit, so
-  // fenced out of the queue by the 8/10 JT rule above) played "Dogs Have Never" at index 0.
+  // kept the previous index and played a DIFFERENT song. Clicking SHERIFF (then fenced
+  // out of the queue by the since-repealed 8/10 JT rule) played "Dogs Have Never" at index 0.
   // Never guess. Never substitute.
   const landed = radioQueue.findIndex(song => song.id === songId);
   if (landed < 0) { refuseTrack(songId); return; }
@@ -2080,8 +2078,7 @@ function refuseTrack(songId) {
   const wasTrack = trackEl ? trackEl.textContent : '';
   const why = !song ? 'That track is not in the catalog.'
     : (!song.audio_path ? song.title + ' — audio coming soon.'
-    : (song.explicit ? song.title + ' is explicit — it plays under the JT pill only.'
-    : song.title + ' is not available in the radio right now.'));
+    : song.title + ' is not available in the radio right now.');
   if (labelEl) labelEl.textContent = 'Not Available In Radio';
   if (trackEl) trackEl.textContent = why;
   const r = document.getElementById('radio');
@@ -2352,7 +2349,7 @@ function addSongActionButtons() {
     // must be ONE predicate. They disagreed (111 vs 101) and the catalog rendered off the
     // looser one, so 8 explicit tracks got a live-looking button that played the wrong song.
     const btn = actions.querySelector('.sa-play');
-    if (song && song.audio_path && !song.explicit) {
+    if (song && song.audio_path) {
       btn.addEventListener('click', e => {
         e.preventDefault();
         e.stopPropagation();
@@ -2361,9 +2358,7 @@ function addSongActionButtons() {
     } else {
       btn.style.opacity = '0.3';
       btn.style.cursor = 'default';
-      btn.title = (song && song.explicit && song.audio_path)
-        ? 'Explicit — plays under the JT pill'
-        : 'Audio coming soon';
+      btn.title = 'Audio coming soon';
     }
 
     li.appendChild(actions);
@@ -2564,7 +2559,7 @@ loadSiteData();
       /* v28: radio opens READY TO PLAY, cued to the UNLEASHED-mix beach favorite (fresh visitors only —
          a returning listener keeps their restored session) */
       try{
-        var CUE_ID='d2f1c798-d024-427e-9926-c83ec050fa27'; /* Booty Boom Boom — clean UNLEASHED lead (T&G is now explicit-fenced) */
+        var CUE_ID='d2f1c798-d024-427e-9926-c83ec050fa27'; /* Booty Boom Boom — UNLEASHED lead (CEO 2026-08-26: explicit plays everywhere; badge-only) */
         var hadSession=false; try{ hadSession=!!localStorage.getItem('hm_radio_session_v3'); }catch(_s){}
         if(!hadSession && typeof buildRadioQueue==='function' && !radioPlaying){
           if(buildRadioQueue('all', null, {startSongId: CUE_ID}) && getCurrentSong()){
@@ -2694,7 +2689,7 @@ loadSiteData();
      (2) UNLEASHED moves out of the opening banner and into the Full Catalog. ══ -->
 <script>
 (function(){
-  var D = {"update":[{"match":"outlaw-love-cover","title":"GHOST WANTED DEAD OR ALIVE","genre":"Outlaw Country","badge":"15 Songs","css":"background:rgba(212,168,67,.14);color:#d4a843","cover":"ghost-wanted-dead-or-alive","dir":"GHOST-WANTED-DEAD-OR-ALIVE","tracks":[{"n":1,"t":"LIAR, PREACHER MAN","p":"liar-preacher-man","x":false},{"n":2,"t":"I DIDN'T DIE","p":null,"x":false},{"n":3,"t":"ONE NIGHT WITH THE DEVIL","p":"one-night-with-the-devil","x":false},{"n":4,"t":"SMOKE ME","p":"smoke-me","x":false},{"n":5,"t":"RODEO COWBOY","p":"rodeo-cowboy","x":false},{"n":6,"t":"GHOST WANTED DEAD OR ALIVE","p":"ghost-wanted-dead-or-alive","x":false},{"n":7,"t":"HELD YOU FIRST","p":"held-you-first","x":false},{"n":8,"t":"DROWN IN THE BOTTLE","p":"drown-in-the-bottle","x":false},{"n":9,"t":"HE JUST CALLED MY NAME","p":null,"x":false},{"n":10,"t":"WISH YOU WERE ME","p":null,"x":false},{"n":11,"t":"LOST IN SANTA FE","p":"lost-in-santa-fe","x":false},{"n":12,"t":"BROWN EYES SAY","p":"brown-eyes-say","x":true},{"n":13,"t":"ME & MY DOG | SPURS","p":"spurs","x":false},{"n":14,"t":"WORLD MELTS AWAY","p":"world-melts-away","x":false},{"n":15,"t":"LEFT MY HEART IN SANTA FE","p":"left-my-heart-in-santa-fe","x":false}]},{"match":"beach-album-cover","title":"COCONUT KISSES","genre":"Beach Country &amp; Summer Nights","badge":"16 Songs","css":"background:rgba(0,180,180,.14);color:#00b4b4","cover":"coconut-kisses","dir":"COCONUT-KISSES","tracks":[{"n":1,"t":"WOKE UP LAUGHING","p":"woke-up-laughing","x":false},{"n":2,"t":"MANGROVES & MOONLIGHT","p":null,"x":false},{"n":3,"t":"ENDLESS SUMMER HEAT","p":"endless-summer","x":false},{"n":4,"t":"DOWN UNDER","p":"down-under","x":false},{"n":5,"t":"COCONUT KISS","p":"coconut-kiss","x":false},{"n":6,"t":"TANGLED","p":"tangled","x":false},{"n":7,"t":"LIGHTNING STRIKES MY HEART","p":"lightning-strikes","x":false},{"n":8,"t":"PORT LAVACA","p":"port-lavaca-paradise","x":false},{"n":9,"t":"WORLD MELTS AWAY","p":"world-melts-away","x":false},{"n":10,"t":"BOOTY BOOM BOOM","p":"booty-boom-boom","x":false},{"n":11,"t":"COTTON CANDY","p":"cotton-candy","x":false},{"n":12,"t":"NEVER LET GO","p":"never-let-go","x":false},{"n":13,"t":"BAREFOOT BEACH BEAUTY","p":"barefoot-beach-beauty","x":false},{"n":14,"t":"SAND IN TOES","p":"sand-in-toes","x":false},{"n":15,"t":"GET STONED WITH YOU","p":null,"x":false},{"n":16,"t":"WILDFLOWER DREAMS","p":null,"x":false}]},{"match":"healing-frequencies-cover","title":"Healing Frequencies","genre":"Meditation / Healing","badge":"8 Songs","css":"background:rgba(198,40,40,.12);color:#c62828","cover":"healing-frequencies","dir":"HEALING-FREQUENCIES","tracks":[{"n":1,"t":"BREATHE","p":"breathe","x":false},{"n":2,"t":"FLOATING","p":"floating","x":false},{"n":3,"t":"HEALING WATERS","p":null,"x":false},{"n":4,"t":"MY CUP","p":null,"x":false},{"n":5,"t":"FILL ME WITH LOVE","p":null,"x":false},{"n":6,"t":"NO FEAR","p":null,"x":false},{"n":7,"t":"PEACE","p":null,"x":false},{"n":8,"t":"SLEEP","p":"sleep","x":false}]}],"add":[{"title":"SONGS TO CRY TO","genre":"Teardrops in My Coffee","badge":"11 Songs","css":"background:rgba(255,45,123,.14);color:#ff2d7b","cover":"songs-to-cry-to","dir":"SONGS-TO-CRY-TO","tracks":[{"n":1,"t":"TEARDROPS IN MY COFFEE","p":null,"x":false},{"n":2,"t":"HAZY BUBBLE","p":"hazy-bubble","x":false},{"n":3,"t":"COFFEE CONSTELLATION","p":"coffee-constellation","x":false},{"n":4,"t":"ROCK A BYE BABY","p":"rock-a-bye-baby","x":false},{"n":5,"t":"ALMOST CALLED","p":"almost-called","x":false},{"n":6,"t":"THE LAST TIME","p":null,"x":false},{"n":7,"t":"HAPPY BIRTHDAY","p":null,"x":false},{"n":8,"t":"DROWNING IN MY TEARS","p":"drowning-in-my-tears","x":false},{"n":9,"t":"NOT ENOUGH BOTTLES","p":"not-enough-bottles","x":false},{"n":10,"t":"BROKEN HEART AND BUSTED DREAMS","p":null,"x":false},{"n":11,"t":"IF TEARS COULD CALL HEAVEN","p":"if-tears-could-call-heaven","x":false}]},{"title":"SILENT TREATMENT","genre":"You Stopped Talking. I Started Writing.","badge":"8 Songs","css":"background:rgba(255,45,123,.14);color:#ff2d7b","cover":"silent-treatment","dir":"SILENT-TREATMENT","tracks":[{"n":1,"t":"SHERIFF","p":null,"x":true},{"n":2,"t":"SILENCE IS YOUR FANGS","p":"silence-is-your-fangs","x":false},{"n":3,"t":"SHOVE IT","p":null,"x":false},{"n":4,"t":"SUFFER IN SILENCE","p":null,"x":false},{"n":5,"t":"EMOTIONAL HOSTAGE","p":null,"x":true},{"n":6,"t":"INVISIBLE WOMAN","p":"invisible-woman","x":false},{"n":7,"t":"LOVE ME COMPLICATED","p":"love-me-complicated","x":false},{"n":8,"t":"UNCONTAINABLE","p":"uncontainable","x":false}]},{"title":"UNLEASHED","genre":"The New Album","badge":"15 Songs","css":"background:rgba(212,168,67,.14);color:#d4a843","cover":"unleashed-cover","tracks":[{"n":1,"t":"Booty Boom Boom","p":"booty-boom-boom","x":false},{"n":2,"t":"Drown Me in Slobbery Kisses","p":"drown-me-in-slobbery-kisses","x":false},{"n":3,"t":"I Ain't Picking Up Your Shit No More","p":"i-aint-picking-up-your-shit-no-more","x":true},{"n":4,"t":"Juicy Peach on Fire","p":"juicy-peach-on-fire","x":true},{"n":5,"t":"Puppy Kisses","p":"puppy-kisses","x":false},{"n":6,"t":"Spurs","p":"spurs","x":false},{"n":7,"t":"Tongue & Groove","p":"tongue-and-groove","x":true},{"n":8,"t":"Dogs Have Never","p":"dogs-have-never","x":false},{"n":9,"t":"Brown Eyes Say","p":"brown-eyes-say","x":false},{"n":10,"t":"Look Into My Eyes","p":"look-in-my-eyes","x":false},{"n":11,"t":"Uh Oh I Did It Again","p":"uh-oh-i-did-it-again","x":false},{"n":12,"t":"Trouble Trouble","p":"trouble-trouble-pup","x":false},{"n":13,"t":"Fleas","p":"fleas","x":false},{"n":14,"t":"Will You Be My Friend","p":"will-you-be-my-friend","x":false},{"n":15,"t":"Those Big Brown Eyes","p":"those-big-brown-eyes","x":false}],"ext":"png"}],"bucket":"https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music"};
+  var D = {"update":[{"match":"outlaw-love-cover","title":"GHOST WANTED DEAD OR ALIVE","genre":"Outlaw Country","badge":"15 Songs","css":"background:rgba(212,168,67,.14);color:#d4a843","cover":"ghost-wanted-dead-or-alive","dir":"GHOST-WANTED-DEAD-OR-ALIVE","tracks":[{"n":1,"t":"LIAR, PREACHER MAN","p":"liar-preacher-man","x":false},{"n":2,"t":"I DIDN'T DIE","p":null,"x":false},{"n":3,"t":"ONE NIGHT WITH THE DEVIL","p":"one-night-with-the-devil","x":false},{"n":4,"t":"SMOKE ME","p":"smoke-me","x":false},{"n":5,"t":"RODEO COWBOY","p":"rodeo-cowboy","x":false},{"n":6,"t":"GHOST WANTED DEAD OR ALIVE","p":"ghost-wanted-dead-or-alive","x":false},{"n":7,"t":"HELD YOU FIRST","p":"held-you-first","x":false},{"n":8,"t":"DROWN IN THE BOTTLE","p":"drown-in-the-bottle","x":true},{"n":9,"t":"HE JUST CALLED MY NAME","p":null,"x":false},{"n":10,"t":"WISH YOU WERE ME","p":null,"x":false},{"n":11,"t":"LOST IN SANTA FE","p":"lost-in-santa-fe","x":false},{"n":12,"t":"BROWN EYES SAY","p":"brown-eyes-say","x":false},{"n":13,"t":"ME & MY DOG | SPURS","p":"spurs","x":false},{"n":14,"t":"WORLD MELTS AWAY","p":"world-melts-away","x":false},{"n":15,"t":"LEFT MY HEART IN SANTA FE","p":"left-my-heart-in-santa-fe","x":false}]},{"match":"beach-album-cover","title":"COCONUT KISSES","genre":"Beach Country &amp; Summer Nights","badge":"16 Songs","css":"background:rgba(0,180,180,.14);color:#00b4b4","cover":"coconut-kisses","dir":"COCONUT-KISSES","tracks":[{"n":1,"t":"WOKE UP LAUGHING","p":"woke-up-laughing","x":false},{"n":2,"t":"MANGROVES & MOONLIGHT","p":null,"x":false},{"n":3,"t":"ENDLESS SUMMER HEAT","p":"endless-summer","x":false},{"n":4,"t":"DOWN UNDER","p":"down-under","x":false},{"n":5,"t":"COCONUT KISS","p":"coconut-kiss","x":false},{"n":6,"t":"TANGLED","p":"tangled","x":false},{"n":7,"t":"LIGHTNING STRIKES MY HEART","p":"lightning-strikes","x":false},{"n":8,"t":"PORT LAVACA","p":"port-lavaca-paradise","x":false},{"n":9,"t":"WORLD MELTS AWAY","p":"world-melts-away","x":false},{"n":10,"t":"BOOTY BOOM BOOM","p":"booty-boom-boom","x":false},{"n":11,"t":"COTTON CANDY","p":"cotton-candy","x":false},{"n":12,"t":"NEVER LET GO","p":"never-let-go","x":false},{"n":13,"t":"BAREFOOT BEACH BEAUTY","p":"barefoot-beach-beauty","x":false},{"n":14,"t":"SAND IN TOES","p":"sand-in-toes","x":false},{"n":15,"t":"GET STONED WITH YOU","p":null,"x":false},{"n":16,"t":"WILDFLOWER DREAMS","p":null,"x":false}]},{"match":"healing-frequencies-cover","title":"Healing Frequencies","genre":"Meditation / Healing","badge":"8 Songs","css":"background:rgba(198,40,40,.12);color:#c62828","cover":"healing-frequencies","dir":"HEALING-FREQUENCIES","tracks":[{"n":1,"t":"BREATHE","p":"breathe","x":false},{"n":2,"t":"FLOATING","p":"floating","x":false},{"n":3,"t":"HEALING WATERS","p":null,"x":false},{"n":4,"t":"MY CUP","p":null,"x":false},{"n":5,"t":"FILL ME WITH LOVE","p":null,"x":false},{"n":6,"t":"NO FEAR","p":null,"x":false},{"n":7,"t":"PEACE","p":null,"x":false},{"n":8,"t":"SLEEP","p":"sleep","x":false}]}],"add":[{"title":"SONGS TO CRY TO","genre":"Teardrops in My Coffee","badge":"11 Songs","css":"background:rgba(255,45,123,.14);color:#ff2d7b","cover":"songs-to-cry-to","dir":"SONGS-TO-CRY-TO","tracks":[{"n":1,"t":"TEARDROPS IN MY COFFEE","p":null,"x":false},{"n":2,"t":"HAZY BUBBLE","p":"hazy-bubble","x":false},{"n":3,"t":"COFFEE CONSTELLATION","p":"coffee-constellation","x":false},{"n":4,"t":"ROCK A BYE BABY","p":"rock-a-bye-baby","x":false},{"n":5,"t":"ALMOST CALLED","p":"almost-called","x":false},{"n":6,"t":"THE LAST TIME","p":null,"x":false},{"n":7,"t":"HAPPY BIRTHDAY","p":null,"x":false},{"n":8,"t":"DROWNING IN MY TEARS","p":"drowning-in-my-tears","x":false},{"n":9,"t":"NOT ENOUGH BOTTLES","p":"not-enough-bottles","x":false},{"n":10,"t":"BROKEN HEART AND BUSTED DREAMS","p":null,"x":false},{"n":11,"t":"IF TEARS COULD CALL HEAVEN","p":"if-tears-could-call-heaven","x":false}]},{"title":"SILENT TREATMENT","genre":"You Stopped Talking. I Started Writing.","badge":"8 Songs","css":"background:rgba(255,45,123,.14);color:#ff2d7b","cover":"silent-treatment","dir":"SILENT-TREATMENT","tracks":[{"n":1,"t":"SHERIFF","p":"sheriff","x":true},{"n":2,"t":"SILENCE IS YOUR FANGS","p":"silence-is-your-fangs","x":false},{"n":3,"t":"SHOVE IT","p":"shove-it","x":false},{"n":4,"t":"SUFFER IN SILENCE","p":"suffer-in-silence","x":false},{"n":5,"t":"EMOTIONAL HOSTAGE","p":"emotional-hostage","x":true},{"n":6,"t":"INVISIBLE WOMAN","p":"invisible-woman","x":false},{"n":7,"t":"LOVE ME COMPLICATED","p":"love-me-complicated","x":false},{"n":8,"t":"UNCONTAINABLE","p":"uncontainable","x":false}]},{"title":"UNLEASHED","genre":"The New Album","badge":"15 Songs","css":"background:rgba(212,168,67,.14);color:#d4a843","cover":"unleashed-cover","tracks":[{"n":1,"t":"Booty Boom Boom","p":"booty-boom-boom","x":false},{"n":2,"t":"Drown Me in Slobbery Kisses","p":"drown-me-in-slobbery-kisses","x":false},{"n":3,"t":"I Ain't Picking Up Your Shit No More","p":"i-aint-picking-up-your-shit-no-more","x":true},{"n":4,"t":"Juicy Peach on Fire","p":"juicy-peach-on-fire","x":true},{"n":5,"t":"Puppy Kisses","p":"puppy-kisses","x":false},{"n":6,"t":"Spurs","p":"spurs","x":false},{"n":7,"t":"Tongue & Groove","p":"tongue-and-groove","x":true},{"n":8,"t":"Dogs Have Never","p":"dogs-have-never","x":false},{"n":9,"t":"Brown Eyes Say","p":"brown-eyes-say","x":false},{"n":10,"t":"Look Into My Eyes","p":"look-in-my-eyes","x":false},{"n":11,"t":"Uh Oh I Did It Again","p":"uh-oh-i-did-it-again","x":false},{"n":12,"t":"Trouble Trouble","p":"trouble-trouble-pup","x":false},{"n":13,"t":"Fleas","p":"fleas","x":false},{"n":14,"t":"Will You Be My Friend","p":"will-you-be-my-friend","x":false},{"n":15,"t":"Those Big Brown Eyes","p":"those-big-brown-eyes","x":false}],"ext":"png"}],"bucket":"https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music"};
   function nrm(t){ return String(t).toLowerCase().replace(/\([^)]*\)/g,'').replace(/[^a-z0-9]+/g,' ').trim(); }
   function songIdByTitle(t){
     if (typeof SITE_DATA === 'undefined' || !SITE_DATA.songs) return null;
@@ -2705,7 +2700,17 @@ loadSiteData();
   function li(t){
     var nm = t.p ? '<a href="songs/'+t.p+'.html" class="song-name">'+t.t+'</a>'
                  : '<span class="song-name">'+t.t+'</span>';
-    return '<li><span class="song-num">'+t.n+'</span>'+nm+(t.x?' <span style="font-size:.6rem;color:#c62828;letter-spacing:.04em;">EXPLICIT</span>':'')+'</li>';
+    /* CEO 2026-08-26: Apple-Music-style boxed E badge; the word itself never renders.
+       SITE_DATA.explicit is the truth where the title resolves; t.x is the fallback. */
+    var xflag = t.x;
+    try{
+      if (typeof SITE_DATA !== 'undefined' && SITE_DATA.songs){
+        var xk = nrm(t.t);
+        var xhit = SITE_DATA.songs.find(function(s){ return nrm(s.title) === xk; });
+        if (xhit && typeof xhit.explicit === 'boolean') xflag = xhit.explicit;
+      }
+    }catch(_x){}
+    return '<li><span class="song-num">'+t.n+'</span>'+nm+(xflag?' <span aria-label="Explicit" title="Explicit" style="display:inline-block;font-size:.55rem;line-height:1;padding:2px 4px;border:1px solid rgba(198,40,40,.5);border-radius:2px;color:#c62828;font-weight:700;letter-spacing:0;vertical-align:middle;">E</span>':'')+'</li>';
   }
   function show(c){ c.classList.remove('hm-hidden'); c.classList.add('visible'); c.style.display=''; }
   function hide(c){ c.classList.add('hm-hidden'); c.style.display='none'; }
@@ -2782,7 +2787,11 @@ loadSiteData();
       });
       if (!hits.length) return;
       hits.sort(function(x,y){ return tracksIn(y) - tracksIn(x); });
-      fill(hits[0], a);
+      /* CEO 2026-08-26 idempotency guard: fill() re-sets img.src (cover flash) and
+         rebuilds the tracklist (destroying .song-actions play buttons), and each
+         rebuild re-triggered the observer — an endless flash loop. A card already
+         stamped with this album's data-hm47 is done; never rebuild it. */
+      if (hits[0].getAttribute('data-hm47') !== a.cover) fill(hits[0], a);
       hits.slice(1).forEach(hide);
       if (!anchor) anchor = hits[0];
     });
@@ -2807,8 +2816,10 @@ loadSiteData();
     run();
     [400,1200,2500,5000].forEach(function(ms){ setTimeout(run, ms); });
     var grid = document.querySelector('.album-grid') || document.body;
+    /* CEO 2026-08-26: childList only — watching class/style attributes made this
+       observer re-fire on fill()'s own writes and on unrelated style tweaks. */
     new MutationObserver(function(){ clearTimeout(window.__hm56t); window.__hm56t=setTimeout(run,250); })
-      .observe(grid,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style']});
+      .observe(grid,{childList:true,subtree:true});
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
