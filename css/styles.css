@@ -522,7 +522,7 @@ li:hover .sa-react.active { opacity: 1; }
 
 /* --- Song Nav Button Variants --- */
 .song-nav__btn--play { background: var(--pink) !important; color: #fff !important; }
-.song-nav__btn--buy { background: #39ff14 !important; color: #06280a !important; font-weight: 700; box-shadow: 0 0 14px rgba(57,255,20,.4); }
+.song-nav__btn--buy { background: #39ff14 !important; color: #0a0a0a !important; font-weight: 700; box-shadow: 0 0 14px rgba(57,255,20,.4); }
 .song-nav__btn--share { border-color: var(--pink) !important; color: var(--pink) !important; }
 
 /* --- Share Section --- */
@@ -545,12 +545,12 @@ li:hover .sa-react.active { opacity: 1; }
    Bundle/secondary CTAs = neon green with dark text; primary buys stay neon pink. */
 .buy-btn--featured {
   background: linear-gradient(135deg, #39ff14, #2be00f) !important;
-  color: #06280a !important; border: none !important;
+  color: #0a0a0a !important; border: none !important;
   box-shadow: 0 0 20px rgba(57,255,20,.35);
 }
 .buy-btn--featured:hover { box-shadow: 0 0 32px rgba(57,255,20,.55); }
-.buy-btn--featured .buy-label { color: #06280a !important; }
-.buy-btn--featured .buy-sub { color: rgba(6,40,10,.72) !important; }  /* generic .buy-btn .buy-sub sits later in the file — dark text must win on neon green */
+.buy-btn--featured .buy-label { color: #0a0a0a !important; }
+.buy-btn--featured .buy-sub { color: rgba(0,0,0,.72) !important; }  /* generic .buy-btn .buy-sub sits later in the file — dark text must win on neon green */
 
 /* --- Campfire Comments --- */
 .campfire-section { text-align: center; }
@@ -581,7 +581,7 @@ li:hover .sa-react.active { opacity: 1; }
 .campfire-submit {
   background: linear-gradient(135deg, #39ff14, #2be00f);
   box-shadow: 0 0 14px rgba(57,255,20,.3);
-  color: #06280a; border: none; padding: .8rem 2rem; border-radius: 6px;
+  color: #0a0a0a; border: none; padding: .8rem 2rem; border-radius: 6px;
   font-size: .8rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
   cursor: pointer; transition: all .3s; align-self: flex-start;
 }
