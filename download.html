@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Your Album Download | Howling Moon Music</title>
+  <link rel="icon" href="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --bg: #0d0b0f;
+      --bg2: #161318;
+      --text: #faf6f0;
+      --text-s: #b0a99e;
+      --gold: #d4ae48;
+      --gold-d: #b8922f;
+      --pink: #ff2d7b;
+      --pink-l: #ff5a9e;
+      --border: rgba(212,174,72,.15);
+      --font-d: 'Playfair Display', Georgia, serif;
+      --font-b: 'Inter', -apple-system, sans-serif;
+    }
+    html { font-size: 16px; }
+    body {
+      font-family: var(--font-b);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--gold); text-decoration: none; transition: color .3s; }
+    a:hover { color: var(--pink); }
+
+    .container { width: 100%; max-width: 640px; padding: 3rem 1.5rem 4rem; }
+
+    .header { text-align: center; margin-bottom: 2rem; }
+    .header .logo {
+      width: 90px; height: 90px; border-radius: 50%; margin: 0 auto 1.25rem;
+      filter: drop-shadow(0 0 20px rgba(255,45,123,.25));
+    }
+    .header .thank-you {
+      font-family: var(--font-d); font-style: italic;
+      font-size: 1.15rem; color: var(--pink-l); margin-bottom: .35rem;
+    }
+    .header h1 {
+      font-family: var(--font-d); font-size: 1.6rem; font-weight: 600;
+      color: var(--gold); margin-bottom: .5rem; line-height: 1.3;
+      letter-spacing: .02em;
+    }
+    .header .sub { font-size: .85rem; color: var(--text-s); }
+
+    .cover-wrap { text-align: center; margin-bottom: 2rem; }
+    .cover-wrap img {
+      width: 100%; max-width: 320px; border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 40px rgba(0,0,0,.55), 0 0 30px rgba(212,174,72,.08);
+    }
+
+    .zip-cta { text-align: center; margin-bottom: 2.25rem; }
+    .zip-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 1rem; font-weight: 600; color: var(--bg);
+      background: linear-gradient(135deg, var(--gold), var(--gold-d));
+      padding: .9rem 2rem; border-radius: 10px; transition: all .25s;
+    }
+    .zip-btn:hover {
+      background: linear-gradient(135deg, var(--pink), #d4175f);
+      color: #fff; transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(255,45,123,.35);
+    }
+    .zip-note { margin-top: .6rem; font-size: .75rem; color: var(--text-s); opacity: .8; }
+
+    .track-list {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.25rem; margin-bottom: 2rem;
+    }
+    .track-list-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 1rem; padding-bottom: .75rem; border-bottom: 1px solid var(--border);
+    }
+    .track-list-header h2 { font-family: var(--font-d); font-size: 1.1rem; font-weight: 500; }
+    .track-list-header .count {
+      font-size: .8rem; color: var(--text-s);
+      background: rgba(255,255,255,.06); padding: .2rem .6rem; border-radius: 20px;
+    }
+    .dl-row {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: .75rem; padding: .7rem 0; border-bottom: 1px solid rgba(255,255,255,.04);
+    }
+    .dl-row:last-child { border-bottom: none; }
+    .dl-num { font-size: .8rem; color: var(--text-s); min-width: 1.4rem; }
+    .dl-title { font-size: .95rem; color: var(--text); flex: 1; }
+    .dl-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .8rem; font-weight: 500; color: var(--bg);
+      background: var(--gold); padding: .35rem .85rem; border-radius: 6px;
+      transition: all .25s; white-space: nowrap;
+    }
+    .dl-btn:hover {
+      background: var(--pink); color: #fff; transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(255,45,123,.3);
+    }
+
+    .state-box {
+      text-align: center; background: var(--bg2);
+      border: 1px solid var(--border); border-radius: 12px;
+      padding: 2.5rem 1.5rem; margin-bottom: 2rem;
+    }
+    .state-box h2 { font-family: var(--font-d); font-size: 1.25rem; color: var(--gold); margin-bottom: .75rem; }
+    .state-box p { font-size: .9rem; color: var(--text-s); line-height: 1.6; }
+    .state-box .support { margin-top: 1rem; }
+    .state-box .support a { font-weight: 600; }
+
+    .spinner {
+      width: 34px; height: 34px; margin: 0 auto 1rem;
+      border: 3px solid rgba(212,174,72,.2); border-top-color: var(--gold);
+      border-radius: 50%; animation: spin 0.9s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .actions { text-align: center; }
+    .actions a {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .9rem; font-weight: 500; color: var(--gold);
+      border: 1px solid var(--border); padding: .6rem 1.5rem; border-radius: 8px;
+      transition: all .25s;
+    }
+    .actions a:hover { border-color: var(--pink); color: var(--pink); }
+
+    .footer-note {
+      text-align: center; margin-top: 2rem;
+      font-size: .75rem; color: var(--text-s); opacity: .6; line-height: 1.6;
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 480px) {
+      .container { padding: 2rem 1rem 3rem; }
+      .header h1 { font-size: 1.35rem; }
+      .cover-wrap img { max-width: 240px; }
+      .zip-btn { padding: .8rem 1.5rem; font-size: .95rem; }
+      .dl-btn { padding: .3rem .65rem; font-size: .75rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img class="logo" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png" alt="Howling Moon Music">
+      <p class="thank-you" id="thankYou">Thank you for supporting The DogMother 💋</p>
+      <h1 id="albumTitle">Your Album</h1>
+      <p class="sub" id="albumSub"></p>
+    </div>
+
+    <!-- loading state -->
+    <div class="state-box" id="loadingBox">
+      <div class="spinner"></div>
+      <h2>Checking your purchase&hellip;</h2>
+      <p>One moment — we're confirming your order with our payment processor.</p>
+    </div>
+
+    <!-- error state -->
+    <div class="state-box hidden" id="errorBox">
+      <h2>We couldn't verify your purchase</h2>
+      <p id="errorMsg">If you just bought this album, give it a minute and refresh this page. Still stuck? Email us and we'll get your music to you — human to human.</p>
+      <p class="support"><a id="supportLink" href="mailto:dogsongstudio@gmail.com">dogsongstudio@gmail.com</a></p>
+    </div>
+
+    <!-- success state -->
+    <div id="successWrap" class="hidden">
+      <div class="cover-wrap"><img id="coverImg" src="" alt=""></div>
+      <div class="zip-cta">
+        <a class="zip-btn" id="zipBtn" href="#">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download entire album (ZIP)
+        </a>
+        <p class="zip-note">High-quality MP3s, all tracks in one file. Link is good for 24 hours — reload this page any time for a fresh one.</p>
+      </div>
+      <div class="track-list">
+        <div class="track-list-header">
+          <h2>Individual Tracks</h2>
+          <span class="count" id="trackCount"></span>
+        </div>
+        <div id="trackRows"></div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a href="/">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to Howling Moon Music
+      </a>
+    </div>
+
+    <p class="footer-note">Keep this page's link — your download keeps working if you come back later.<br>Questions? <a href="mailto:dogsongstudio@gmail.com">dogsongstudio@gmail.com</a> &middot; &copy; Howling Moon Music LLC</p>
+  </div>
+
+  <script>
+  (function () {
+    var VERIFY_URL = 'https://pxcxtnabyydhbfbholvh.supabase.co/functions/v1/verify-album-purchase';
+    var params = new URLSearchParams(window.location.search);
+    var album = params.get('album') || '';
+    var sessionId = params.get('session_id') || '';
+
+    var loadingBox = document.getElementById('loadingBox');
+    var errorBox = document.getElementById('errorBox');
+    var successWrap = document.getElementById('successWrap');
+
+    function esc(s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    function showError(msg) {
+      loadingBox.classList.add('hidden');
+      successWrap.classList.add('hidden');
+      if (msg) document.getElementById('errorMsg').textContent = msg;
+      errorBox.classList.remove('hidden');
+    }
+
+    function dlName(n, title) {
+      var safe = String(title).replace(/[<>:"\/\\|?*]/g, '-').replace(/\s+/g, ' ').trim();
+      return (n < 10 ? '0' + n : '' + n) + ' ' + safe + '.mp3';
+    }
+
+    function trackHref(url, n, title) {
+      // Supabase public object URLs accept ?download=<filename> to force a save dialog.
+      return url + (url.indexOf('?') === -1 ? '?' : '&') + 'download=' + encodeURIComponent(dlName(n, title));
+    }
+
+    function showSuccess(d) {
+      document.getElementById('albumTitle').textContent = d.title;
+      document.getElementById('albumSub').textContent = d.tracks.length + ' tracks · your album is ready';
+      var cover = document.getElementById('coverImg');
+      cover.src = d.cover;
+      cover.alt = d.title + ' — album cover';
+      document.getElementById('zipBtn').setAttribute('href', d.zip_url);
+      document.getElementById('trackCount').textContent = d.tracks.length + ' tracks';
+      var rows = '';
+      d.tracks.forEach(function (t) {
+        rows += '<div class="dl-row">' +
+          '<span class="dl-num">' + t.n + '</span>' +
+          '<span class="dl-title">' + esc(t.title) + '</span>' +
+          '<a class="dl-btn" href="' + esc(trackHref(t.url, t.n, t.title)) + '" download title="Download ' + esc(t.title) + '">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
+          'Download</a></div>';
+      });
+      document.getElementById('trackRows').innerHTML = rows;
+      loadingBox.classList.add('hidden');
+      errorBox.classList.add('hidden');
+      successWrap.classList.remove('hidden');
+    }
+
+    if (!album || !sessionId || !/^cs_(live|test)_[A-Za-z0-9]{10,}$/.test(sessionId)) {
+      showError();
+      return;
+    }
+
+    fetch(VERIFY_URL + '?album=' + encodeURIComponent(album) + '&session_id=' + encodeURIComponent(sessionId))
+      .then(function (r) { return r.json().then(function (d) { return { status: r.status, data: d }; }); })
+      .then(function (res) {
+        if (res.status === 200 && res.data && res.data.ok) showSuccess(res.data);
+        else showError(res.data && res.data.message);
+      })
+      .catch(function () {
+        showError("We couldn't reach the verification service. Check your connection and refresh — or email dogsongstudio@gmail.com and we'll get your music to you.");
+      });
+  })();
+  </script>
+</body>
+</html>
