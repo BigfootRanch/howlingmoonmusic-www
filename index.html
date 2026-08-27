@@ -2343,7 +2343,49 @@ function addSongActionButtons() {
     actions.innerHTML = reactHtml
       + '<button class="sa-btn sa-play" title="Play in Radio">&#9654;</button>'
       + '<a href="songs/' + slug + '.html#buy" class="sa-act" title="Buy">$</a>'
-      + '<a href="https://open.spotify.com/artist/2oYIuTSjJZy1c4uOmscAJy" target="_blank" rel="noopener" class="sa-btn sa-stream" title="Stream on Spotify">&#9835;</a>';
+      + '<button type="button" class="sa-btn sa-stream" title="Stream on all platforms" onclick="hmStreamMenu(this);return false;">&#9835;</button>';
+
+
+  // Per-track streaming menu (CEO 2026-08-26: every catalog song offers ALL platforms)
+  window.hmStreamMenu = function (btn) {
+    var old = document.getElementById('hmStreamPop');
+    if (old) { old.remove(); if (old._for === btn) return; }
+    var P = [
+      ['Spotify', 'https://open.spotify.com/artist/2oYIuTSjJZy1c4uOmscAJy', '#1DB954'],
+      ['Apple Music', 'https://music.apple.com/us/artist/the-dogmother/1825492000', '#FA243C'],
+      ['Amazon Music', 'https://music.amazon.com/artists/B0DQP85XQ3/the-dogmother', '#25D1DA'],
+      ['YouTube', 'https://www.youtube.com/@TheDogMotherMusic', '#FF0000'],
+      ['TikTok', 'https://www.tiktok.com/@thedogmothermusic', '#69C9D0'],
+      ['Deezer', 'https://www.deezer.com/artist/334892801', '#A238FF'],
+      ['TIDAL', 'https://tidal.com/artist/63397909', '#7fd4ff'],
+      ['iHeartRadio', 'https://www.iheart.com/artist/the-dogmother-47386830', '#C6002B'],
+      ['\uD83C\uDFB6 All 22 Platforms', 'https://distrokid.com/hyperfollow/thedogmother', '#39ff14']
+    ];
+    var pop = document.createElement('div');
+    pop.id = 'hmStreamPop'; pop._for = btn;
+    pop.style.cssText = 'position:fixed;z-index:9999;background:#16121a;border:1px solid rgba(255,45,123,.45);border-radius:10px;padding:.45rem;box-shadow:0 10px 40px rgba(0,0,0,.65),0 0 18px rgba(255,45,123,.15);min-width:190px;';
+    P.forEach(function (o) {
+      var a = document.createElement('a');
+      a.href = o[1]; a.target = '_blank'; a.rel = 'noopener';
+      a.style.cssText = 'display:flex;align-items:center;gap:.5rem;padding:.42rem .6rem;color:#faf6f0;text-decoration:none;font-size:.82rem;border-radius:6px;';
+      a.onmouseenter = function(){ a.style.background = 'rgba(255,45,123,.14)'; };
+      a.onmouseleave = function(){ a.style.background = 'transparent'; };
+      var dot = document.createElement('span');
+      dot.style.cssText = 'display:inline-block;width:9px;height:9px;border-radius:50%;background:' + o[2] + ';box-shadow:0 0 7px ' + o[2] + ';flex-shrink:0;';
+      a.appendChild(dot); a.appendChild(document.createTextNode(o[0]));
+      pop.appendChild(a);
+    });
+    document.body.appendChild(pop);
+    var r = btn.getBoundingClientRect(), pw = 200, ph = pop.offsetHeight || 320;
+    var left = Math.min(Math.max(8, r.left - pw + r.width), window.innerWidth - pw - 8);
+    var top = (r.bottom + ph + 12 > window.innerHeight) ? Math.max(8, r.top - ph - 8) : r.bottom + 8;
+    pop.style.left = left + 'px'; pop.style.top = top + 'px';
+    setTimeout(function () {
+      document.addEventListener('click', function close(e) {
+        if (!pop.contains(e.target) && e.target !== btn) { pop.remove(); document.removeEventListener('click', close); }
+      });
+    }, 0);
+  };
 
     // ⛔ INVARIANT (CEO 8/22): "playable in the catalog" and "queueable in the radio"
     // must be ONE predicate. They disagreed (111 vs 101) and the catalog rendered off the
