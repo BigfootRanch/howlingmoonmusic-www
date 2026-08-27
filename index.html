@@ -2344,7 +2344,7 @@ function addSongActionButtons() {
       + '<button class="sa-btn sa-play" title="Play in Radio">&#9654;</button>'
       + '<a href="songs/' + slug + '.html#buy" class="sa-act" title="Buy">$</a>'
       + '<button type="button" class="sa-btn sa-stream" title="Stream on all platforms" onclick="hmStreamMenu(this);return false;">&#9835;</button>'
-      + '<button type="button" class="sa-btn sa-share" title="Share this song" onclick="hmShareTrack(this,\'' + slug + '\',\'' + title.replace(/'/g, "\\'") + '\');return false;">\uD83D\uDCE4</button>';
+      + '<button type="button" class="sa-btn sa-share" title="Share this song" onclick="hmShareTrack(this,\'' + slug + '\',\'' + ((song && song.name) || title).replace(/\s*Video\s*$/,'').replace(/'/g, "\\'") + '\');return false;">\uD83D\uDCE4</button>';
 
 
 
