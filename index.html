@@ -2343,8 +2343,65 @@ function addSongActionButtons() {
     actions.innerHTML = reactHtml
       + '<button class="sa-btn sa-play" title="Play in Radio">&#9654;</button>'
       + '<a href="songs/' + slug + '.html#buy" class="sa-act" title="Buy">$</a>'
-      + '<button type="button" class="sa-btn sa-stream" title="Stream on all platforms" onclick="hmStreamMenu(this);return false;">&#9835;</button>';
+      + '<button type="button" class="sa-btn sa-stream" title="Stream on all platforms" onclick="hmStreamMenu(this);return false;">&#9835;</button>'
+      + '<button type="button" class="sa-btn sa-share" title="Share this song" onclick="hmShareTrack(this,\'' + slug + '\',\'' + title.replace(/'/g, "\\'") + '\');return false;">\uD83D\uDCE4</button>';
 
+
+
+  // Per-track share (CEO 2026-08-26: every catalog song shares to social/text/messenger)
+  window.hmShareTrack = function (btn, slug, title) {
+    var url = 'https://www.howlingmoonmusic.com/songs/' + slug + '.html';
+    var text = title + ' \u2014 The Dogmother';
+    if (navigator.share) {
+      navigator.share({ title: text, text: text, url: url }).catch(function () {});
+      return;
+    }
+    var old = document.getElementById('hmSharePop');
+    if (old) { old.remove(); if (old._for === btn) return; }
+    var eu = encodeURIComponent(url), et = encodeURIComponent(text + ' ' + url);
+    var P = [
+      ['Copy Link', null, '#39ff14'],
+      ['Text Message', 'sms:?&body=' + et, '#34c759'],
+      ['WhatsApp', 'https://wa.me/?text=' + et, '#25D366'],
+      ['Facebook', 'https://www.facebook.com/sharer/sharer.php?u=' + eu, '#1877F2'],
+      ['Messenger', 'https://www.facebook.com/dialog/send?link=' + eu + '&redirect_uri=' + eu, '#A334FA'],
+      ['X / Twitter', 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + eu, '#e7e9ea'],
+      ['Email', 'mailto:?subject=' + encodeURIComponent(text) + '&body=' + et, '#ff2d7b']
+    ];
+    var pop = document.createElement('div');
+    pop.id = 'hmSharePop'; pop._for = btn;
+    pop.style.cssText = 'position:fixed;z-index:9999;background:#16121a;border:1px solid rgba(57,255,20,.45);border-radius:10px;padding:.45rem;box-shadow:0 10px 40px rgba(0,0,0,.65),0 0 18px rgba(57,255,20,.12);min-width:190px;';
+    P.forEach(function (o) {
+      var a = document.createElement('a');
+      a.style.cssText = 'display:flex;align-items:center;gap:.5rem;padding:.42rem .6rem;color:#faf6f0;text-decoration:none;font-size:.82rem;border-radius:6px;cursor:pointer;';
+      a.onmouseenter = function(){ a.style.background = 'rgba(57,255,20,.12)'; };
+      a.onmouseleave = function(){ a.style.background = 'transparent'; };
+      if (o[1]) { a.href = o[1]; a.target = '_blank'; a.rel = 'noopener'; }
+      else {
+        a.onclick = function (e) {
+          e.preventDefault();
+          (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(function () {
+            a.lastChild.textContent = 'Copied!';
+            setTimeout(function () { pop.remove(); }, 700);
+          }).catch(function () { window.prompt('Copy this link:', url); });
+        };
+      }
+      var dot = document.createElement('span');
+      dot.style.cssText = 'display:inline-block;width:9px;height:9px;border-radius:50%;background:' + o[2] + ';box-shadow:0 0 7px ' + o[2] + ';flex-shrink:0;';
+      a.appendChild(dot); a.appendChild(document.createTextNode(o[0]));
+      pop.appendChild(a);
+    });
+    document.body.appendChild(pop);
+    var r = btn.getBoundingClientRect(), pw = 200, ph = pop.offsetHeight || 300;
+    var left = Math.min(Math.max(8, r.left - pw + r.width), window.innerWidth - pw - 8);
+    var top = (r.bottom + ph + 12 > window.innerHeight) ? Math.max(8, r.top - ph - 8) : r.bottom + 8;
+    pop.style.left = left + 'px'; pop.style.top = top + 'px';
+    setTimeout(function () {
+      document.addEventListener('click', function close(e) {
+        if (!pop.contains(e.target) && e.target !== btn) { pop.remove(); document.removeEventListener('click', close); }
+      });
+    }, 0);
+  };
 
   // Per-track streaming menu (CEO 2026-08-26: every catalog song offers ALL platforms)
   window.hmStreamMenu = function (btn) {
