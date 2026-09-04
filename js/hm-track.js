@@ -17,7 +17,7 @@
   function trackPageVisit(){
     var pages = [];
     try { pages = JSON.parse(sessionStorage.getItem(PAGES_KEY) || '[]'); } catch(e){}
-    pages.push(location.pathname);
+    pages.push(location.pathname + location.search);
     sessionStorage.setItem(PAGES_KEY, JSON.stringify(pages));
     if(!sessionStorage.getItem(START_KEY)) sessionStorage.setItem(START_KEY, String(Date.now()));
   }
@@ -257,7 +257,7 @@
           language: nav.language || '',
           timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || '',
           referrer: document.referrer || '',
-          page_url: location.pathname,
+          page_url: location.pathname + location.search,
           page_title: document.title,
           session_id: getSessionId(),
           // Deep intel
@@ -316,7 +316,7 @@
       action: 'exit',
       fingerprint: sessionStorage.getItem('hm_fp') || '',
       session_id: getSessionId(),
-      page_url: location.pathname,
+      page_url: location.pathname + location.search,
       scroll_depth: maxScroll,
       time_on_page: Math.round((Date.now() - (parseInt(sessionStorage.getItem(START_KEY)) || Date.now())) / 1000)
     };
