@@ -184,6 +184,9 @@
         <div style="font-family:Georgia,serif;font-size:18px;font-weight:700;color:#fff">&#128251; PuppyFM Radio</div>
         <div style="font-size:11.5px;color:#c9b6e4;margin:2px 0 12px">The dog world is listening.</div>
         <button type="button" id="pfm-playall" onclick="pfmPlayAll()" style="background:linear-gradient(135deg,#ff2d7b,#b23bff);color:#fff;border:1px solid rgba(255,255,255,.4);box-shadow:0 0 12px rgba(225,90,205,.4);border-radius:50px;padding:9px 20px;font-size:13px;font-weight:800;cursor:pointer;margin-bottom:6px">&#9654; Play PuppyFM</button>
+        <button type="button" id="pfm-live-btn" onclick="pfmLiveToggle()" style="background:#0b0710;color:#ff5aa8;border:1.5px solid #ff2d7b;box-shadow:0 0 12px rgba(255,45,123,.35);border-radius:50px;padding:9px 20px;font-size:13px;font-weight:800;cursor:pointer;margin-bottom:6px;margin-left:8px">&#128308; PUPPYFM LIVE</button>
+        <div id="pfm-live-now" style="font-size:11px;color:#9d8fb8;margin:2px 0 6px"></div>
+        <audio id="pfm-live-audio" style="display:none"></audio>
         <span id="pfm-now" style="margin-left:10px;font-size:12px;color:#e9d5ff"></span>
         <div class="pfm-div" style="color:#2dd4bf"><span style="background:rgba(45,212,191,.45)"></span>&#127765; THE UNLEASHED ALBUM<span style="background:rgba(45,212,191,.45)"></span></div>
       <div style="display:flex;align-items:center;gap:10px;padding:10px 2px;border-bottom:1px solid rgba(178,59,255,.2)"><button type="button" class="pfm-play" data-src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/WILL%20YOU%20BE%20MY%20FRIEND%20%28UNLEASHED%20mix%29.wav" onclick="pfmToggle(this)" style="flex-shrink:0;width:38px;height:38px;border-radius:50%;border:1px solid #2dd4bf;background:#0b0710;color:#7ff5ea;font-size:13px;cursor:pointer">&#9654;</button><div style="flex:1;min-width:0"><div style="font-weight:700;font-size:14px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--font-b)">Will You Be My Friend</div><div style="font-size:11px;color:#9d8fb8">4:24</div></div><a href="https://www.howlingmoonmusic.com/buy-song.html?id=will-you-be-my-friend" target="_blank" rel="noopener" title="Own this song &mdash; $1.29" style="flex-shrink:0;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(45,212,191,.6);border-radius:50%;color:#2dd4bf;font-size:12.5px;font-weight:800;text-decoration:none">$</a><a href="/songs/will-you-be-my-friend.html" style="flex-shrink:0;background:linear-gradient(135deg,#ff2d7b,#b23bff);color:#fff;border-radius:9px;padding:8px 12px;font-weight:800;font-size:12px;text-decoration:none;box-shadow:0 0 8px rgba(225,90,205,.3)">Song Page</a></div>
@@ -254,6 +257,44 @@ function pfmToggle(btn){
 function pfmPlayAll(){ _pfmIdx = -1; pfmNext(); }
 function pfmNext(){ var all = _pfmAll(); _pfmIdx = (_pfmIdx + 1) % all.length; pfmToggle(all[_pfmIdx]); }
 document.getElementById("pfm-audio").addEventListener("ended", pfmNext);
+</script>
+<script>
+/* PuppyFM LIVE (2026-09-21) — the 24/7 station. Additive: the jukebox above is unchanged.
+   Starting the live stream pauses the jukebox and vice versa; neither ever autoplays. */
+var PFM_API = "https://admin-dashboard-production-7092.up.railway.app/api/puppyfm/now";
+var _pfmLiveUrl = "";
+function _pfmLivePaint(j){
+  var el = document.getElementById("pfm-live-now");
+  if (!el) return;
+  el.textContent = (j && j.title) ? ("\u{1F534} LIVE · " + String(j.title).toUpperCase() + " — " + (j.artist || "")) : "";
+}
+function _pfmLivePoll(){
+  fetch(PFM_API, {cache:"no-store"}).then(function(r){return r.json();}).then(function(j){
+    _pfmLiveUrl = j.stream_url || _pfmLiveUrl;
+    if (!document.getElementById("pfm-live-audio").paused) _pfmLivePaint(j);
+  }).catch(function(){});
+}
+function pfmLiveToggle(){
+  var live = document.getElementById("pfm-live-audio"), btn = document.getElementById("pfm-live-btn");
+  if (!live.paused) { live.pause(); btn.innerHTML = "&#128308; PUPPYFM LIVE"; _pfmLivePaint(null); return; }
+  document.getElementById("pfm-audio").pause();
+  document.querySelectorAll(".pfm-play,.pfm-ad-play").forEach(function(b){ b.innerHTML = "&#9654;"; });
+  var go = function(){
+    if (!_pfmLiveUrl) return;
+    live.src = _pfmLiveUrl + (_pfmLiveUrl.indexOf("?") < 0 ? "?t=" : "&t=") + Date.now();
+    live.play().then(function(){ btn.innerHTML = "&#9208; PAUSE LIVE"; _pfmLivePoll(); })
+               .catch(function(){ btn.innerHTML = "&#128308; PUPPYFM LIVE"; });
+  };
+  if (_pfmLiveUrl) go();
+  else fetch(PFM_API, {cache:"no-store"}).then(function(r){return r.json();})
+        .then(function(j){ _pfmLiveUrl = j.stream_url || ""; _pfmLivePaint(j); go(); }).catch(function(){});
+}
+document.getElementById("pfm-audio").addEventListener("play", function(){
+  var live = document.getElementById("pfm-live-audio");
+  if (!live.paused) { live.pause(); document.getElementById("pfm-live-btn").innerHTML = "&#128308; PUPPYFM LIVE"; _pfmLivePaint(null); }
+});
+setInterval(_pfmLivePoll, 5000);
+_pfmLivePoll();
 </script>
 
 <section class="cross-links">
