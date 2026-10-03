@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Buy This Song | Howling Moon Music</title>
+  <link rel="icon" href="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --bg: #0d0b0f; --bg2: #161318; --text: #faf6f0; --text-s: #b0a99e;
+      --gold: #d4ae48; --pink: #ff2d7b; --pink-l: #ff5a9e; --border: rgba(212,174,72,.15);
+      --font-d: 'Playfair Display', Georgia, serif; --font-b: 'Inter', -apple-system, sans-serif;
+    }
+    body {
+      font-family: var(--font-b); background: var(--bg); color: var(--text); min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      -webkit-font-smoothing: antialiased; padding: 2rem 1rem;
+    }
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { color: var(--pink); }
+    .box {
+      width: 100%; max-width: 460px; text-align: center; background: var(--bg2);
+      border: 1px solid var(--border); border-radius: 12px; padding: 2.25rem 1.5rem;
+    }
+    .box img { width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 1rem; display: block; filter: drop-shadow(0 0 20px rgba(255,45,123,.25)); }
+    .kicker { font-family: var(--font-d); font-style: italic; color: var(--pink-l); margin-bottom: .35rem; }
+    h1 { font-family: var(--font-d); font-size: 1.4rem; color: var(--gold); margin-bottom: .35rem; letter-spacing: .02em; }
+    .sub { font-size: .85rem; color: var(--text-s); margin-bottom: 1.25rem; }
+    .btn {
+      display: block; width: 100%; border: none; cursor: pointer; font-family: var(--font-b);
+      font-size: 1rem; font-weight: 700; color: #fff; background: var(--pink);
+      padding: .85rem 1rem; border-radius: 10px; box-shadow: 0 0 18px rgba(255,45,123,.3);
+    }
+    .btn:disabled { opacity: .5; cursor: wait; }
+    .alt { margin-top: 1rem; font-size: .8rem; color: var(--text-s); line-height: 1.6; }
+    .err { margin-top: .9rem; font-size: .82rem; color: var(--pink-l); }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <img src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png" alt="Howling Moon Music">
+    <p class="kicker">The DogMother</p>
+    <h1 id="songTitle">Your Song</h1>
+    <p class="sub">Song download &middot; $1.29 &middot; yours to keep</p>
+    <button type="button" class="btn" id="buyBtn" disabled>Opening secure checkout&hellip;</button>
+    <p class="err hidden" id="err"></p>
+    <p class="alt">Want more? <a id="bundleLink" href="/downloads/my-bundle.html?tier=3">Pick any 3 songs for $4.99</a></p>
+  </div>
+
+<script src="/js/music-catalog.js"></script>
+<script>
+(function(){
+  // Single-song entry point (2026-10-03): /buy-song.html?id=<song-slug>[&t=<title>][&src=puppyfm]
+  // Resolves the song against the public catalog, then opens an itemised Stripe Checkout (name = the song
+  // title, $1.29) via create-music-checkout. After payment Stripe returns to download.html?session_id=…
+  var CHECKOUT_URL = 'https://pxcxtnabyydhbfbholvh.supabase.co/functions/v1/create-music-checkout';
+  var ALLOWED = ['https://www.howlingmoonmusic.com', 'https://howlingmoonmusic.com', 'https://www.puppyreports.com'];
+  var params = new URLSearchParams(window.location.search);
+  var src = (params.get('src') || '').toLowerCase() === 'puppyfm' ? 'puppyfm' : 'hmm';
+  var catalog = window.HM_MUSIC_CATALOG || [];
+
+  function norm(t) { return String(t || '').toLowerCase().replace(/&/g, 'and').replace(/['’]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); }
+  function find() {
+    var id = (params.get('id') || '').trim(), t = norm(params.get('t'));
+    for (var i = 0; i < catalog.length; i++) if (catalog[i].id === id) return catalog[i];
+    if (t) for (var j = 0; j < catalog.length; j++) if (norm(catalog[j].t) === t) return catalog[j];
+    // station / album titles that differ from the catalog title of the same song
+    var ALIAS = { 'look into my eyes': 'look-in-my-eyes', 'trouble trouble': 'trouble-trouble-pup' };
+    var al = ALIAS[t] || ALIAS[norm(id.replace(/-/g, ' '))];
+    if (al) for (var a = 0; a < catalog.length; a++) if (catalog[a].id === al) return catalog[a];
+    var n = norm(id.replace(/-/g, ' '));
+    if (n) for (var k = 0; k < catalog.length; k++) if (norm(catalog[k].t) === n) return catalog[k];
+    return null;
+  }
+
+  var bundle = '/downloads/my-bundle.html?tier=3' + (src === 'puppyfm' ? '&src=puppyfm' : '');
+  var song = find();
+  if (!song) {
+    // not sold as a single (yet) — send them to the picker instead of a dead end
+    window.location.replace(bundle);
+    return;
+  }
+  bundle += '&pre=' + encodeURIComponent(song.id);
+  document.getElementById('bundleLink').href = bundle;
+  document.getElementById('songTitle').textContent = song.t;
+  document.title = song.t + ' — Buy This Song | Howling Moon Music';
+
+  var back = '';
+  try {
+    var r = document.referrer ? new URL(document.referrer) : null;
+    if (r && ALLOWED.indexOf(r.origin) >= 0) back = r.href;
+  } catch (e) {}
+  if (!back) back = 'https://www.howlingmoonmusic.com/songs/' + encodeURIComponent(song.id) + '.html';
+
+  var btn = document.getElementById('buyBtn');
+  var err = document.getElementById('err');
+  function go() {
+    btn.disabled = true;
+    btn.textContent = 'Opening secure checkout…';
+    err.classList.add('hidden');
+    fetch(CHECKOUT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ kind: 'song', song_ids: [song.id], source: src, return_url: back })
+    })
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d && d.ok && d.url) { window.location.href = d.url; return; }
+        throw new Error((d && d.message) || 'checkout failed');
+      })
+      .catch(function(e) {
+        err.textContent = (e && e.message && e.message !== 'Failed to fetch') ? e.message : "We couldn't open checkout. Check your connection and try again.";
+        err.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = 'Buy — $1.29';
+      });
+  }
+  btn.addEventListener('click', go);
+  go();
+})();
+</script>
+</body>
+</html>

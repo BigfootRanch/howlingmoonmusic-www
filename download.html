@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Your Album Download | Howling Moon Music</title>
+  <title>Your Music Download | Howling Moon Music</title>
   <link rel="icon" href="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -139,6 +139,28 @@
 
     .hidden { display: none !important; }
 
+    /* song / pick-N bundle purchases (2026-10-03) — legacy one-time chooser */
+    .choose-intro { text-align: center; font-size: .9rem; color: var(--text-s); line-height: 1.6; margin-bottom: 1.25rem; }
+    .choose-count { font-family: var(--font-d); font-size: 1.05rem; color: var(--text); }
+    .choose-count .num { color: var(--pink); font-weight: 700; }
+    .pick-row {
+      display: flex; align-items: center; gap: .75rem; padding: .6rem 0;
+      border-bottom: 1px solid rgba(255,255,255,.04); cursor: pointer; transition: opacity .2s;
+    }
+    .pick-row:last-child { border-bottom: none; }
+    .pick-row.locked { opacity: .35; pointer-events: none; }
+    .pick-row input { width: 18px; height: 18px; accent-color: var(--pink); flex-shrink: 0; cursor: pointer; }
+    .pick-row span { flex: 1; font-size: .9rem; color: var(--text); }
+    .pick-label { font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-s); padding: .9rem 0 .35rem; }
+    .choose-btn {
+      width: 100%; border: none; cursor: pointer; font-family: var(--font-b);
+      font-size: 1rem; font-weight: 700; color: #fff; background: var(--pink);
+      padding: .85rem 1rem; border-radius: 10px; margin-bottom: .5rem;
+    }
+    .choose-btn:disabled { opacity: .45; cursor: not-allowed; }
+    .choose-sticky { position: sticky; bottom: 0; background: var(--bg); padding: .75rem 0 .25rem; }
+    .choose-err { font-size: .8rem; color: var(--pink-l); text-align: center; margin: .25rem 0 .75rem; }
+
     @media (max-width: 480px) {
       .container { padding: 2rem 1rem 3rem; }
       .header h1 { font-size: 1.35rem; }
@@ -167,7 +189,7 @@
     <!-- error state -->
     <div class="state-box hidden" id="errorBox">
       <h2>We couldn't verify your purchase</h2>
-      <p id="errorMsg">If you just bought this album, give it a minute and refresh this page. Still stuck? Email us and we'll get your music to you — human to human.</p>
+      <p id="errorMsg">If you just bought your music, give it a minute and refresh this page. Still stuck? Email us and we'll get your music to you — human to human.</p>
       <p class="support"><a id="supportLink" href="mailto:dogsongstudio@gmail.com">dogsongstudio@gmail.com</a></p>
     </div>
 
@@ -190,6 +212,34 @@
       </div>
     </div>
 
+    <!-- song / pick-N bundle success state: ONLY the songs this Stripe session paid for -->
+    <div id="songsWrap" class="hidden">
+      <div class="track-list">
+        <div class="track-list-header">
+          <h2>Your Songs</h2>
+          <span class="count" id="songCount"></span>
+        </div>
+        <div id="songRows"></div>
+      </div>
+      <p class="zip-note" style="text-align:center;margin:-1rem 0 2rem;">Tap each Download button to save your song. Reload this page any time to download again.</p>
+    </div>
+
+    <!-- legacy pick-N payment: the buyer chooses their N songs once -->
+    <div id="chooseWrap" class="hidden">
+      <p class="choose-intro">Your payment is confirmed. Choose your songs below &mdash; <b>your pick is final</b>, and this page will keep your downloads for you.</p>
+      <div class="track-list">
+        <div class="track-list-header">
+          <div class="choose-count"><span class="num" id="chooseSelected">0</span> of <span class="num" id="chooseMax">3</span> selected</div>
+          <span class="count" id="chooseTotal"></span>
+        </div>
+        <div id="chooseRows"></div>
+      </div>
+      <div class="choose-sticky">
+        <button type="button" class="choose-btn" id="chooseBtn" disabled>Pick your songs</button>
+        <p class="choose-err hidden" id="chooseErr"></p>
+      </div>
+    </div>
+
     <div class="actions">
       <a href="/">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -200,8 +250,11 @@
     <p class="footer-note">Keep this page's link — your download keeps working if you come back later.<br>Questions? <a href="mailto:dogsongstudio@gmail.com">dogsongstudio@gmail.com</a> &middot; &copy; Howling Moon Music LLC</p>
   </div>
 
+  <script src="/js/music-catalog.js"></script>
   <script>
   (function () {
+    var MUSIC_VERIFY_URL = 'https://pxcxtnabyydhbfbholvh.supabase.co/functions/v1/verify-music-purchase';
+    var LOG_URL = 'https://pxcxtnabyydhbfbholvh.supabase.co/functions/v1/log-download';
     var VERIFY_URL = 'https://pxcxtnabyydhbfbholvh.supabase.co/functions/v1/verify-album-purchase';
     var params = new URLSearchParams(window.location.search);
     var album = params.get('album') || '';
@@ -257,8 +310,14 @@
       successWrap.classList.remove('hidden');
     }
 
-    if (!album || !sessionId || !/^cs_(live|test)_[A-Za-z0-9]{10,}$/.test(sessionId)) {
+    if (!sessionId || !/^cs_(live|test)_[A-Za-z0-9]{10,}$/.test(sessionId)) {
       showError();
+      return;
+    }
+
+    // ---- songs & pick-N bundles (no ?album=): verify-music-purchase returns ONLY what was paid for ----
+    if (!album) {
+      musicFlow();
       return;
     }
 
@@ -271,6 +330,129 @@
       .catch(function () {
         showError("We couldn't reach the verification service. Check your connection and refresh — or email dogsongstudio@gmail.com and we'll get your music to you.");
       });
+
+    function logDownload(songTitle) {
+      try {
+        var payload = JSON.stringify({ song_title: songTitle, payment_ref: sessionId, email: null, page: 'download-songs' });
+        if (navigator.sendBeacon) navigator.sendBeacon(LOG_URL, new Blob([payload], { type: 'text/plain' }));
+        else fetch(LOG_URL, { method: 'POST', body: payload, keepalive: true, headers: { 'Content-Type': 'text/plain' } });
+      } catch (e) { /* logging must never block a download */ }
+    }
+
+    function songHref(url, n, title) {
+      var m = /\.(mp3|wav|m4a)(?:$|\?)/i.exec(url);
+      var name = dlName(n, title).replace(/\.mp3$/, '.' + (m ? m[1].toLowerCase() : 'mp3'));
+      return url + (url.indexOf('?') === -1 ? '?' : '&') + 'download=' + encodeURIComponent(name);
+    }
+
+    function verifyMusic(choose) {
+      var body = { session_id: sessionId };
+      if (choose) body.choose = choose;
+      return fetch(MUSIC_VERIFY_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+        .then(function (r) { return r.json().then(function (d) { return { status: r.status, data: d }; }); });
+    }
+
+    function showSongs(d) {
+      var songs = d.songs || [];
+      document.title = 'Your Songs | Howling Moon Music';
+      document.getElementById('albumTitle').textContent = songs.length === 1 ? songs[0].title : 'Your ' + songs.length + ' Songs';
+      document.getElementById('albumSub').textContent = songs.length === 1 ? 'your song is ready' : songs.length + ' songs · your bundle is ready';
+      document.getElementById('songCount').textContent = songs.length + (songs.length === 1 ? ' song' : ' songs');
+      var rows = '';
+      songs.forEach(function (t, i) {
+        rows += '<div class="dl-row">' +
+          '<span class="dl-num">' + (i + 1) + '</span>' +
+          '<span class="dl-title">' + esc(t.title) + '</span>' +
+          '<a class="dl-btn" data-title="' + esc(t.title) + '" href="' + esc(songHref(t.url, i + 1, t.title)) + '" download title="Download ' + esc(t.title) + '">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
+          'Download</a></div>';
+      });
+      var host = document.getElementById('songRows');
+      host.innerHTML = rows;
+      host.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a.dl-btn');
+        if (a) logDownload(a.getAttribute('data-title'));
+      });
+      loadingBox.classList.add('hidden');
+      errorBox.classList.add('hidden');
+      document.getElementById('chooseWrap').classList.add('hidden');
+      document.getElementById('songsWrap').classList.remove('hidden');
+    }
+
+    function showChooser(tier) {
+      var catalog = window.HM_MUSIC_CATALOG || [];
+      if (!catalog.length) { showError(); return; }
+      var pack = (params.get('pack') || '').toLowerCase();
+      var picked = [];
+      document.title = 'Choose Your Songs | Howling Moon Music';
+      document.getElementById('albumTitle').textContent = 'Choose Your ' + tier + ' Songs';
+      document.getElementById('albumSub').textContent = 'Build Your Own Bundle · ' + tier + ' songs';
+      document.getElementById('chooseMax').textContent = tier;
+      document.getElementById('chooseTotal').textContent = catalog.length + ' songs';
+      var host = document.getElementById('chooseRows');
+      var btn = document.getElementById('chooseBtn');
+      var err = document.getElementById('chooseErr');
+      var html = '', labelled = false;
+      html += '<div class="pick-label" style="color:var(--pink-l);padding-top:.1rem">' + (pack === 'puppy' ? 'PuppySongs | PuppyFM' : '\uD83D\uDC3E PuppySongs | PuppyFM') + '</div>';
+      catalog.forEach(function (s) {
+        if (!s.p && !labelled) { html += '<div class="pick-label">Full Catalog</div>'; labelled = true; }
+        html += '<label class="pick-row"><input type="checkbox" value="' + esc(s.id) + '"><span>' + esc(s.t) + '</span></label>';
+      });
+      host.innerHTML = html;
+      function paint() {
+        document.getElementById('chooseSelected').textContent = picked.length;
+        var boxes = host.querySelectorAll('input');
+        for (var i = 0; i < boxes.length; i++) {
+          var row = boxes[i].parentNode;
+          if (!boxes[i].checked && picked.length >= tier) row.classList.add('locked'); else row.classList.remove('locked');
+        }
+        btn.disabled = picked.length !== tier;
+        btn.textContent = picked.length === tier ? 'Confirm my ' + tier + ' songs' : 'Pick ' + (tier - picked.length) + ' more';
+      }
+      host.addEventListener('change', function (e) {
+        var cb = e.target;
+        var i = picked.indexOf(cb.value);
+        if (cb.checked && i < 0) { if (picked.length < tier) picked.push(cb.value); else cb.checked = false; }
+        if (!cb.checked && i >= 0) picked.splice(i, 1);
+        paint();
+      });
+      btn.addEventListener('click', function () {
+        if (picked.length !== tier) return;
+        var names = picked.map(function (id) {
+          for (var i = 0; i < catalog.length; i++) if (catalog[i].id === id) return catalog[i].t;
+          return id;
+        });
+        if (!window.confirm('Your ' + tier + ' songs:\n\n' + names.join('\n') + '\n\nThis pick is final. Continue?')) return;
+        btn.disabled = true;
+        btn.textContent = 'Saving your pick\u2026';
+        err.classList.add('hidden');
+        verifyMusic(picked).then(function (res) {
+          if (res.status === 200 && res.data && res.data.ok && res.data.songs) { showSongs(res.data); return; }
+          err.textContent = (res.data && res.data.message) || 'Something went wrong — please try again.';
+          err.classList.remove('hidden');
+          paint();
+        }).catch(function () {
+          err.textContent = "We couldn't reach the server. Check your connection and try again.";
+          err.classList.remove('hidden');
+          paint();
+        });
+      });
+      paint();
+      loadingBox.classList.add('hidden');
+      errorBox.classList.add('hidden');
+      document.getElementById('chooseWrap').classList.remove('hidden');
+    }
+
+    function musicFlow() {
+      verifyMusic(null).then(function (res) {
+        var d = res.data;
+        if (res.status !== 200 || !d || !d.ok) { showError(d && d.message); return; }
+        if (d.needs_choice) showChooser(d.tier);
+        else showSongs(d);
+      }).catch(function () {
+        showError("We couldn't reach the verification service. Check your connection and refresh — or email dogsongstudio@gmail.com and we'll get your music to you.");
+      });
+    }
   })();
   </script>
 </body>

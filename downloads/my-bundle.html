@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Your Custom Bundle — Download | Howling Moon Music</title>
+  <title>Build Your Bundle — Pick Your Songs | Howling Moon Music</title>
   <link rel="icon" href="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -155,27 +155,6 @@
       color: var(--text);
     }
 
-    .song-row .dl-btn {
-      display: none;
-      align-items: center;
-      gap: 6px;
-      font-size: .75rem;
-      font-weight: 500;
-      color: var(--bg);
-      background: var(--gold);
-      padding: .3rem .7rem;
-      border-radius: 6px;
-      transition: all .25s;
-      white-space: nowrap;
-    }
-    .song-row .dl-btn:hover {
-      background: var(--pink);
-      color: #fff;
-    }
-    .song-row.selected .dl-btn {
-      display: inline-flex;
-    }
-
     .actions { text-align: center; }
     .actions a {
       display: inline-flex; align-items: center; gap: 6px;
@@ -194,15 +173,48 @@
       .container { padding: 2rem 1rem 3rem; }
       .header h1 { font-size: 1.35rem; }
     }
+
+    .song-row label { flex: 1; display: flex; align-items: center; gap: .75rem; cursor: pointer; }
+    .song-row a.song-page { font-size: .72rem; color: var(--text-m); white-space: nowrap; }
+    .song-row a.song-page:hover { color: var(--pink); }
+
+    .tier-pick { display: flex; gap: .5rem; justify-content: center; margin-top: .9rem; flex-wrap: wrap; }
+    .tier-pick a {
+      font-size: .78rem; font-weight: 600; color: var(--text-s);
+      border: 1px solid var(--border); border-radius: 20px; padding: .3rem .85rem;
+    }
+    .tier-pick a.on { color: var(--bg); background: var(--gold); border-color: var(--gold); }
+
+    .checkout-bar {
+      position: sticky; bottom: 0; z-index: 5;
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+      padding: 1rem 1.25rem; margin-bottom: 1.5rem;
+      box-shadow: 0 -8px 24px rgba(0,0,0,.45);
+    }
+    .checkout-picks { font-size: .82rem; color: var(--text-s); margin-bottom: .75rem; line-height: 1.5; }
+    .checkout-picks b { color: var(--text); font-weight: 600; }
+    .checkout-btn {
+      width: 100%; border: none; cursor: pointer;
+      font-family: var(--font-b); font-size: 1rem; font-weight: 700;
+      color: #fff; background: var(--pink);
+      padding: .85rem 1rem; border-radius: 10px;
+      box-shadow: 0 0 18px rgba(255,45,123,.3); transition: all .25s;
+    }
+    .checkout-btn:hover:not(:disabled) { background: var(--pink-l); }
+    .checkout-btn:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+    .checkout-note { font-size: .72rem; color: var(--text-m); text-align: center; margin-top: .6rem; }
+    .checkout-err { font-size: .8rem; color: var(--pink-l); text-align: center; margin-top: .6rem; }
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
       <img src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png" alt="Howling Moon Music">
-      <p class="thank-you">Thank you for supporting The DogMother &#x1F48B;</p>
-      <h1>Your Custom Bundle</h1>
+      <p class="thank-you">Your music, your way &#x1F48B;</p>
+      <h1>Build Your Bundle</h1>
       <p class="sub" id="tierSub"></p>
+      <div class="tier-pick" id="tierPick"></div>
     </div>
 
     <div class="counter-bar">
@@ -218,6 +230,13 @@
       <div id="songListBody"></div>
     </div>
 
+    <div class="checkout-bar" id="checkoutBar">
+      <div class="checkout-picks" id="checkoutPicks">Pick your songs above &mdash; you'll see every title on the secure Stripe checkout before you pay.</div>
+      <button type="button" class="checkout-btn" id="checkoutBtn" disabled>Checkout</button>
+      <p class="checkout-err hidden" id="checkoutErr"></p>
+      <p class="checkout-note">Secure Stripe checkout &middot; instant download page right after payment</p>
+    </div>
+
     <div class="actions">
       <a href="/music.html">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -228,166 +247,78 @@
     <p class="footer-note">Howling Moon Music &copy; 2026 &middot; All rights reserved</p>
   </div>
 
+<script src="/js/music-catalog.js"></script>
 <script>
 (function(){
-  var AUDIO_BASE = 'https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/';
-  var DL_ICON = '⬇';
-
-  var allSongs = [
-    {t:"Almost Called",p:"Album Collections/BEACH VIBES/NEW MEXICO SONGS/Untitled folder/SAD SONGS GRIEF TEARS/Almost called (1).mp3"},
-    {t:"Barefoot Beach Beauty",p:"Album Collections/BAREFOOT BEACH BEAUTY (2).mp3"},
-    {t:"Bigfoot Lives Here",p:"Bigfoot Lives Here _ Bigfoot Leonberger Ranch Anthem.mp3"},
-    {t:"Booty Boom Boom",p:"Album Collections/Booty Boom Boom (1).mp3"},
-    {t:"Breathe",p:"Album Collections/BEACH VIBES/Breathe.mp3"},
-    {t:"Christmas Puppy",p:"Puppy Christmas (1).mp3"},
-    {t:"Coconut Kiss",p:"Album Collections/COCONUT KISS (MASTER).mp3"},
-    {t:"Coffee Constellation",p:"Album Collections/coffee-constellation.mp3"},
-    {t:"Cotton Candy",p:"Album Collections/COTTON CANDY (1).mp3"},
-    {t:"Crack the Sky",p:"Crack the sky.wav"},
-    {t:"Crackhead Queen",p:"crackhead-queen.mp3"},
-    {t:"Daddy's Eyes",p:"Album Collections/BEACH VIBES/MUSIC ALBUM REDLIPSTICK & BUSTED KNUCKLES COLLECTION/DADDY'S EYES  (1).wav"},
-    {t:"Don't Cry At My Funeral",p:"Don_t cry  (1).wav"},
-    {t:"Down Under",p:"Album Collections/DOWN UNDER.mp3"},
-    {t:"Drown in the Bottle",p:"Album Collections/Drown in the bottle (1).mp3"},
-    {t:"Drown Me in Slobbery Kisses",p:"Album Collections/BEACH VIBES/Drown Me in Slobbery Kisses (1).mp3"},
-    {t:"Drowning In My Tears",p:"Album Collections/BEACH VIBES/NEW MEXICO SONGS/Untitled folder/SAD SONGS GRIEF TEARS/Drowning in my tears (Cover).mp3"},
-    {t:"Enchanted Green Haze",p:"Album Collections/BEACH VIBES/NEW MEXICO SONGS/Enchanted Green Haze.mp3"},
-    {t:"Endless Summer",p:"Album Collections/Endless Summer Heat (Cover).mp3"},
-    {t:"Favorite Mistake",p:"Album Collections/BEACH VIBES/MUSIC ALBUM VILLAIN 2025/Favorite Mistake .wav"},
-    {t:"Fields of Gold",p:"Album Collections/BEACH VIBES/MUSIC ALBUM RAINBOW 2025/Fields of Gold  .wav"},
-    {t:"Fire from Heaven",p:"Album Collections/Fire from Heaven.mp3"},
-    {t:"Fireflies & Fireworks",p:"Album Collections/BEACH VIBES/MUSIC ALBUM RAINBOW 2025/FIREFLYS & FIREWORKS (1).wav"},
-    {t:"Floating",p:"Album Collections/Floating (2).mp3"},
-    {t:"Gaslight & Glitter",p:"Album Collections/BEACH VIBES/GASLIGHT & GLITTER.mp3"},
-    {t:"Ghost Wanted Dead or Alive",p:"Album Collections/OUTLAW WESTERN ALBUM/Ghost Wanted Dead or Alive (1).mp3"},
-    {t:"Good To Me",p:"Album Collections/BEACH VIBES/MUSIC ALBUM VILLAIN 2025/GOOD TO ME.wav"},
-    {t:"Goodnight Baby",p:"Album Collections/BEACH VIBES/NEW MEXICO SONGS/goodnight-baby.mp3"},
-    {t:"Hazy Bubble",p:"Album Collections/BEACH VIBES/NEW MEXICO SONGS/Untitled folder/SAD SONGS GRIEF TEARS/Hazy bubble.mp3"},
-    {t:"Held You First",p:"Album Collections/Held you first (1).mp3"},
-    {t:"I Ain't Picking Up Your Shit No More",p:"I Ain't Picking Up Your Shhh..it!.mp3"},
-    {t:"I Didn't Die",p:"Album Collections/OUTLAW WESTERN ALBUM/I DIDN_T DIE (1).mp3"},
-    {t:"If Tears Could Call Heaven",p:"Album Collections/BEACH VIBES/NEW MEXICO SONGS/Untitled folder/SAD SONGS GRIEF TEARS/If tears could call heaven (Cover).mp3"},
-    {t:"Invisible Woman",p:"Album Collections/OUTLAW WESTERN ALBUM/Invisible woman (1).mp3"},
-    {t:"Keep Pushing Me",p:"Keep pushing me (1).wav"},
-    {t:"Kick Your Ass",p:"Album Collections/BEACH VIBES/Kick your ass (Remastered).wav"},
-    {t:"Las Cruces Nights",p:"Album Collections/BEACH VIBES/NEW MEXICO SONGS/Las Cruces Nights.mp3"},
-    {t:"Left My Heart In Santa Fe",p:"Album Collections/Left my heart in Santa Fe.mp3"},
-    {t:"Liar, Preacher Man",p:"Album Collections/LIAR, PREACHER MAN (1).mp3"},
-    {t:"Lightning Strikes",p:"Album Collections/LIGHTNING STRIKES MY HEART.mp3"},
-    {t:"Looking for My Swagger",p:"Album Collections/Looking for My Swagger (Edit) (1).mp3"},
-    {t:"Lost in Santa Fe",p:"Album Collections/Lost in Santa Fe.mp3"},
-    {t:"Love Me Complicated",p:"Album Collections/Love me complicated (1).mp3"},
-    {t:"Mangroves & Moonlight",p:"Album Collections/Mangroves & Moonlight.mp3"},
-    {t:"Mi Hogar",p:"Album Collections/BEACH VIBES/Mi Hogar, My Home.mp3"},
-    {t:"Never Let Go / Hand in Hand",p:"Album Collections/NEVER LET GO (master).mp3"},
-    {t:"Not Enough Bottles",p:"Album Collections/BEACH VIBES/NEW MEXICO SONGS/Untitled folder/SAD SONGS GRIEF TEARS/Not Enough Bottles.mp3"},
-    {t:"Obsessed",p:"Album Collections/BEACH VIBES/still-obsessed.mp3"},
-    {t:"One Night with the Devil",p:"Album Collections/OUTLAW WESTERN ALBUM/One night with the devil (1).mp3"},
-    {t:"Only Gift I Need",p:"Album Collections/BEACH VIBES/the-only-gift-i-need.mp3"},
-    {t:"Paper Soldier",p:"Album Collections/Paper Soldier (1).mp3"},
-    {t:"Port Lavaca Paradise",p:"Album Collections/PORT LAVACA.mp3"},
-    {t:"Puff Planet",p:"Album Collections/BEACH VIBES/MUSIC ALBUM RAINBOW 2025/PUFF  planet (1).wav"},
-    {t:"Puppy Kisses",p:"Album Collections/BEACH VIBES/Puppy Kisses.mp3"},
-    {t:"Pussy Juice",p:"Album Collections/BEACH VIBES/pussy-juice.mp3"},
-    {t:"Rainbow",p:"Album Collections/BEACH VIBES/rainbow.mp3"},
-    {t:"Ride or Die",p:"RIDE OR DIE.wav"},
-    {t:"Rock a Bye Baby",p:"audio/rock-a-bye-baby.mp3"},
-    {t:"Rodeo Cowboy",p:"Album Collections/OUTLAW WESTERN ALBUM/RODEO COWBOY (EDIT) (Edit) (1).mp3"},
-    {t:"Sand in Toes",p:"Album Collections/Sand in Toes (1).mp3"},
-    {t:"Silence Is Your Fangs",p:"Album Collections/SILENCE IS YOUR FANGS (1).mp3"},
-    {t:"Sleep",p:"Album Collections/Sleep (2).mp3"},
-    {t:"Slobbery Kiss",p:"Album Collections/PUPPY DOG SONGS/SLOBBERY KISS (1).mp3"},
-    {t:"Smoke Me",p:"Album Collections/OUTLAW WESTERN ALBUM/SMOKE ME (1).mp3"},
-    {t:"Spurs",p:"Album Collections/BEACH VIBES/NEW MEXICO SONGS/spurs (Edit) x spurs (Edit) (Mashup) (5).mp3"},
-    {t:"Stage 4 Liabetes",p:"Album Collections/BEACH VIBES/Liabetes (Remastered) (1).wav"},
-    {t:"Still The Asshole",p:"Album Collections/BEACH VIBES/still-the-asshole.mp3"},
-    {t:"Tangled",p:"Album Collections/TANGLED (MASTER).mp3"},
-    {t:"Tattoo In Albuquerque",p:"Album Collections/BEACH VIBES/NEW MEXICO SONGS/Tattoo.mp3"},
-    {t:"Tear Drops in My Coffee",p:"Album Collections/Tear drops in my coffee.mp3"},
-    {t:"This is Shame",p:"Album Collections/BEACH VIBES/MUSIC ALBUM REDLIPSTICK & BUSTED KNUCKLES COLLECTION/This is Shame (2).wav"},
-    {t:"Tongue & Groove",p:"Album Collections/BEACH VIBES/Tongue & Groove.mp3"},
-    {t:"Twinkle Twinkle Little Bitch (JT)",p:"Album Collections/twinkle.mp3"},
-    {t:"Uncontainable",p:"Album Collections/Uncontainable (1).mp3"},
-    {t:"Villain",p:"Album Collections/BEACH VIBES/villian-(add-vocal) vs1.mp3"},
-    {t:"When You Wake",p:"Album Collections/BEACH VIBES/when-you-wake.mp3"},
-    {t:"Woke Up Laughing",p:"Album Collections/Woke Up Laughing (1).mp3"},
-    {t:"World Melts Away",p:"Album Collections/WORLD MELTS AWAY.mp3"},
-    {t:"Zero Rips Left",p:"Album Collections/BEACH VIBES/zero-rips-left.mp3"}
-  ];
-
-  // PuppySongs — the 14-song puppy pack for buyers arriving from PuppyFM Radio (?pack=puppy).
-  // These live in the howls-music bucket, so each entry carries an absolute `u` url.
-  var PUPPY_BASE = 'https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/';
-  var PUPPY_SONGS = [
-    {t:"Will You Be My Friend",u:PUPPY_BASE+"WILL%20YOU%20BE%20MY%20FRIEND.wav"},
-    {t:"Trouble Trouble Pup",u:PUPPY_BASE+"Trouble%20Trouble%20Pup.wav"},
-    {t:"Uh Oh I Did It Again",u:PUPPY_BASE+"Zoomies%20In%20The%20House.wav"},
-    {t:"Spurs",u:PUPPY_BASE+"Spurs.mp3"},
-    {t:"Puppy Kisses",u:PUPPY_BASE+"Puppy%20Kisses.wav"},
-    {t:"Booty Boom Boom",u:PUPPY_BASE+"Booty%20Boom%20Boom.wav"},
-    {t:"Fleas",u:PUPPY_BASE+"FLEAS.wav"},
-    {t:"Hungry Eyes",u:PUPPY_BASE+"HUNGRY%20EYES%20(1).wav"},
-    {t:"I'm Begging You",u:PUPPY_BASE+"I'm%20Begging%20You.wav"},
-    {t:"Look in My Eyes",u:PUPPY_BASE+"Look%20in%20My%20Eyes.wav"},
-    {t:"My Bed Ain't Mine",u:PUPPY_BASE+"My%20Bed%20Aint%20Mine.wav"},
-    {t:"Drown Me in Slobbery Kisses",u:PUPPY_BASE+"Drown%20Me%20in%20Slobbery%20Kisses.wav"},
-    {t:"Puppy Christmas",u:PUPPY_BASE+"Puppy%20Christmas.wav"},
-    {t:"Slobbery Kiss",u:PUPPY_BASE+"SLOBBERY%20KISS%20.wav"}
-  ];
-
+  // PRE-purchase picker (2026-10-03). Buyers choose their songs FIRST; Stripe Checkout then lists every
+  // title they are paying for. This page never renders a download link — downloads are served only by
+  // download.html after the verify-music-purchase edge function confirms a paid Stripe session.
+  var CHECKOUT_URL = 'https://pxcxtnabyydhbfbholvh.supabase.co/functions/v1/create-music-checkout';
   var params = new URLSearchParams(window.location.search);
 
-  // Download tracking beacon — logs each download click to Supabase so
-  // purchases with delivered songs are visible to support/refund tooling.
-  var LOG_URL = 'https://pxcxtnabyydhbfbholvh.supabase.co/functions/v1/log-download';
-  function logDownload(songTitle) {
-    try {
-      var payload = JSON.stringify({
-        song_title: songTitle,
-        payment_ref: params.get('session_id') || params.get('client_reference_id') || params.get('ref') || null,
-        email: params.get('email') || null,
-        page: 'my-bundle'
-      });
-      if (navigator.sendBeacon) {
-        navigator.sendBeacon(LOG_URL, new Blob([payload], { type: 'text/plain' }));
-      } else {
-        fetch(LOG_URL, { method: 'POST', body: payload, keepalive: true, headers: { 'Content-Type': 'text/plain' } });
-      }
-    } catch (e) { /* logging must never block a download */ }
+  // LEGACY: the old fixed "Pick N" Stripe Payment Links (still on QR posters) redirect here AFTER payment
+  // with ?tier=N&session_id=cs_… — hand those buyers to the verified download page, which lets them
+  // choose their N songs once.
+  var sid = params.get('session_id') || '';
+  if (/^cs_(live|test)_[A-Za-z0-9]{10,}$/.test(sid)) {
+    var fwd = new URLSearchParams();
+    fwd.set('session_id', sid);
+    if (params.get('pack')) fwd.set('pack', params.get('pack'));
+    window.location.replace('/download.html?' + fwd.toString());
+    return;
   }
 
-  var tier = parseInt(params.get('tier')) || 3;
-  var prices = {3:'$4.99', 5:'$6.99', 10:'$9.99'};
-  var pack = (params.get('pack')||'').toLowerCase();
-  // Default catalog: the 14 PuppySongs pinned on top, then the rest of the catalog
-  // (minus the 6 puppy titles it already carried, so nothing lists twice).
-  var HOISTED = {"Booty Boom Boom":1, "Christmas Puppy":1, "Drown Me in Slobbery Kisses":1, "Puppy Kisses":1, "Slobbery Kiss":1, "Spurs":1};
-  var restSongs = allSongs.filter(function(s){ return !HOISTED[s.t]; });
-  var songs = pack==='puppy' ? PUPPY_SONGS : PUPPY_SONGS.concat(restSongs);
+  var PRICES = {3:'$4.99', 5:'$6.99', 10:'$9.99'};
+  var tier = parseInt(params.get('tier'), 10);
+  if (!PRICES[tier]) tier = 3;
+  var pack = (params.get('pack') || '').toLowerCase();
+  var src = (params.get('src') || '').toLowerCase() === 'puppyfm' || pack === 'puppy' ? 'puppyfm' : 'hmm';
+
+  var catalog = window.HM_MUSIC_CATALOG || [];
+  var songs = pack === 'puppy' ? catalog.filter(function(s){ return s.p; }) : catalog;
+  var byId = {};
+  catalog.forEach(function(s){ byId[s.id] = s; });
 
   if (pack === 'puppy') {
-    document.title = 'PuppySongs | PuppyFM — Download | Howling Moon Music';
+    document.title = 'PuppySongs | PuppyFM — Pick Your Songs | Howling Moon Music';
     document.querySelector('.header h1').textContent = 'PuppySongs | PuppyFM';
     var pfmNote = document.createElement('p');
     pfmNote.className = 'sub';
     pfmNote.style.color = 'var(--pink-l)';
     pfmNote.style.marginTop = '.4rem';
-    pfmNote.textContent = '🐾 As heard on PuppyFM Radio — pick your songs below';
+    pfmNote.textContent = '\uD83D\uDC3E As heard on PuppyFM Radio \u2014 pick your songs below';
     document.querySelector('.header').appendChild(pfmNote);
   }
 
-  document.getElementById('tierSub').textContent = tier + ' songs · ' + (prices[tier] || '$4.99');
+  document.getElementById('tierSub').textContent = 'Pick ' + tier + ' songs \u00b7 ' + PRICES[tier];
   document.getElementById('maxCount').textContent = tier;
   document.getElementById('totalSongs').textContent = songs.length + ' songs';
 
-  var selected = 0;
-  var body = document.getElementById('songListBody');
+  // tier switcher keeps the current picks (trimmed if the new tier is smaller)
+  var tierPick = document.getElementById('tierPick');
+  [3, 5, 10].forEach(function(n) {
+    var a = document.createElement('a');
+    var q = new URLSearchParams(window.location.search);
+    q.set('tier', n);
+    a.href = '?' + q.toString();
+    a.textContent = n + ' songs \u00b7 ' + PRICES[n];
+    if (n === tier) a.className = 'on';
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      var q2 = new URLSearchParams(window.location.search);
+      q2.set('tier', n);
+      if (picked.length) q2.set('pre', picked.slice(0, n).join(','));
+      window.location.search = q2.toString();
+    });
+    tierPick.appendChild(a);
+  });
 
-  function encPath(p) {
-    return AUDIO_BASE + p.split('/').map(function(seg){ return encodeURIComponent(seg); }).join('/');
-  }
+  var picked = [];
+  var body = document.getElementById('songListBody');
+  var boxes = {};
 
   function updateCounter() {
+    var selected = picked.length;
     document.getElementById('selectedCount').textContent = selected;
     var badge = document.getElementById('counterBadge');
     if (selected >= tier) {
@@ -400,12 +331,29 @@
     var rows = document.querySelectorAll('.song-row');
     for (var i = 0; i < rows.length; i++) {
       var cb = rows[i].querySelector('input');
-      if (!cb.checked && selected >= tier) {
-        rows[i].classList.add('locked');
-      } else {
-        rows[i].classList.remove('locked');
-      }
+      if (!cb.checked && selected >= tier) rows[i].classList.add('locked');
+      else rows[i].classList.remove('locked');
     }
+    var picks = document.getElementById('checkoutPicks');
+    var btn = document.getElementById('checkoutBtn');
+    if (selected) {
+      picks.textContent = '';
+      var b = document.createElement('b');
+      b.textContent = 'Your ' + tier + ' songs: ';
+      picks.appendChild(b);
+      picks.appendChild(document.createTextNode(picked.map(function(id){ return byId[id].t; }).join(' \u00b7 ')));
+    }
+    btn.disabled = selected !== tier;
+    btn.textContent = selected === tier ? 'Checkout \u2014 ' + PRICES[tier] : 'Pick ' + (tier - selected) + ' more song' + (tier - selected === 1 ? '' : 's');
+  }
+
+  function toggle(id, on) {
+    var i = picked.indexOf(id);
+    if (on && i < 0 && picked.length < tier) picked.push(id);
+    if (!on && i >= 0) picked.splice(i, 1);
+    boxes[id].checked = picked.indexOf(id) >= 0;
+    boxes[id].closest('.song-row').classList.toggle('selected', boxes[id].checked);
+    updateCounter();
   }
 
   function addLabel(text, cls) {
@@ -414,38 +362,76 @@
     el.textContent = text;
     body.appendChild(el);
   }
-  if (pack !== 'puppy') addLabel('🐾 PuppySongs | PuppyFM', 'puppy');
+  if (pack !== 'puppy') addLabel('\uD83D\uDC3E PuppySongs | PuppyFM', 'puppy');
 
+  var labelled = false;
   songs.forEach(function(song, i) {
-    if (pack !== 'puppy' && i === PUPPY_SONGS.length) addLabel('Full Catalog');
-    var url = song.u ? song.u : encPath(song.p);
+    if (pack !== 'puppy' && !song.p && !labelled) { addLabel('Full Catalog'); labelled = true; }
     var row = document.createElement('div');
     row.className = 'song-row';
 
+    var label = document.createElement('label');
     var cb = document.createElement('input');
     cb.type = 'checkbox';
     cb.id = 'cb' + i;
-    cb.addEventListener('change', function() {
-      if (this.checked) { selected++; row.classList.add('selected'); }
-      else { selected--; row.classList.remove('selected'); }
-      updateCounter();
-    });
+    cb.value = song.id;
+    cb.addEventListener('change', function() { toggle(song.id, this.checked); });
+    boxes[song.id] = cb;
 
     var title = document.createElement('span');
     title.className = 'song-title';
     title.textContent = song.t;
+    label.appendChild(cb);
+    label.appendChild(title);
 
-    var dl = document.createElement('a');
-    dl.href = url;
-    dl.setAttribute('download', '');
-    dl.className = 'dl-btn';
-    dl.textContent = DL_ICON + ' Download';
-    dl.addEventListener('click', function() { logDownload(song.t); });
+    var page = document.createElement('a');
+    page.className = 'song-page';
+    page.href = '/songs/' + encodeURIComponent(song.id) + '.html';
+    page.target = '_blank';
+    page.rel = 'noopener';
+    page.textContent = 'Listen';
 
-    row.appendChild(cb);
-    row.appendChild(title);
-    row.appendChild(dl);
+    row.appendChild(label);
+    row.appendChild(page);
     body.appendChild(row);
+  });
+
+  // ?pre=id1,id2 — preselect (from a song page's "Pick 3" button or the build-your-own cart)
+  (params.get('pre') || '').split(',').forEach(function(id) {
+    id = id.trim();
+    if (boxes[id]) toggle(id, true);
+  });
+
+  // If they back out of Stripe, bring them back to the same picks.
+  function returnUrl() {
+    var q = new URLSearchParams(window.location.search);
+    q.set('tier', tier);
+    q.set('pre', picked.join(','));
+    return window.location.origin + window.location.pathname + '?' + q.toString();
+  }
+
+  var btn = document.getElementById('checkoutBtn');
+  var err = document.getElementById('checkoutErr');
+  btn.addEventListener('click', function() {
+    if (picked.length !== tier) return;
+    btn.disabled = true;
+    btn.textContent = 'Opening secure checkout\u2026';
+    err.classList.add('hidden');
+    fetch(CHECKOUT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ kind: 'bundle', tier: tier, song_ids: picked, source: src, return_url: returnUrl() })
+    })
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d && d.ok && d.url) { window.location.href = d.url; return; }
+        throw new Error((d && d.message) || 'checkout failed');
+      })
+      .catch(function(e) {
+        err.textContent = (e && e.message && e.message !== 'Failed to fetch') ? e.message : "We couldn't open checkout. Check your connection and try again \u2014 or email dogsongstudio@gmail.com.";
+        err.classList.remove('hidden');
+        updateCounter();
+      });
   });
 
   updateCounter();

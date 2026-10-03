@@ -10,11 +10,29 @@
   var currentAudio = null;
   var currentCard = null;
 
+  // Cart → the pick-your-songs page (downloads/my-bundle.html) with these songs pre-ticked; that page
+  // opens an itemised Stripe Checkout listing every title (2026-10-03 — no more pay-first, pick-later).
+  var PICKER = '/downloads/my-bundle.html?tier=';
   var tiers = [
-    {min:3, price:'$4.99', per:'$1.66/song', url:'https://buy.stripe.com/eVqaEZehY3V76Nk7BEd7q0a'},
-    {min:5, price:'$6.99', per:'$1.40/song', url:'https://buy.stripe.com/6oU4gB4HofDP1t03lod7q0b'},
-    {min:10, price:'$9.99', per:'$1.00/song', url:'https://buy.stripe.com/3cI8wRb5Mbnz8VscVYd7q0c'}
+    {min:3, price:'$4.99', per:'$1.66/song', url:PICKER + '3'},
+    {min:5, price:'$6.99', per:'$1.40/song', url:PICKER + '5'},
+    {min:10, price:'$9.99', per:'$1.00/song', url:PICKER + '10'}
   ];
+
+  function catNorm(t) { return String(t || '').toLowerCase().replace(/&/g, 'and').replace(/['\u2019]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); }
+  var catByTitle = {};
+  (window.HM_MUSIC_CATALOG || []).forEach(function(s) { catByTitle[catNorm(s.t)] = s.id; });
+  // a few cart labels differ from the catalog titles
+  var CART_ALIAS = { 'twinkle': 'twinkle twinkle little bitch jt', 'never let go': 'never let go hand in hand', 'christmas puppy': 'puppy christmas' };
+  function cartIds() {
+    var out = [];
+    selected.forEach(function(t) {
+      var k = catNorm(t);
+      var id = catByTitle[k] || catByTitle[CART_ALIAS[k] || ''];
+      if (id && out.indexOf(id) < 0) out.push(id);
+    });
+    return out;
+  }
 
   function updateCart() {
     var bar = document.getElementById('cartBar');
@@ -38,17 +56,9 @@
     } else {
       tier.textContent = best.price + ' (' + best.per + ')';
       btn.textContent = 'Checkout \u2014 ' + best.price;
-      btn.href = best.url;
-      btn.onclick = function(e) {
-        if (e) e.preventDefault();
-        return hmOpenStripeCheckout(best.url, {
-          product_slug: 'build-your-own',
-          product_name: 'Build Your Own Bundle',
-          price_label: best.price,
-          purchase_source: 'build-your-own-cart',
-          selected_count: selected.length
-        });
-      };
+      var ids = cartIds();
+      btn.href = best.url + (ids.length ? '&pre=' + encodeURIComponent(ids.slice(0, best.min).join(',')) : '');
+      btn.onclick = null;
       btn.style.opacity = '1';
     }
   }
