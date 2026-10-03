@@ -7,7 +7,7 @@ var STRIPE_PRICES = {
   '420-pack': 'price_1TGmpwPY5LxVsiI5IeDnPLo2',
   'villain-album': 'price_1TGmq6PY5LxVsiI5OkJsGT1i',
   'rainbow-album': 'price_1TGmqHPY5LxVsiI5NcMGfh3R',
-  'genx-album': 'price_1TGmqSPY5LxVsiI5wbv7MFDp',
+  // 'genx-album' removed 2026-10-03 — CEO: GenX album is not offered for purchase
   'christmas-album': 'price_1TGmqdPY5LxVsiI5OdWO5dsi'
 };
 

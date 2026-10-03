@@ -2,6 +2,7 @@
 // (downloads/<slug>.html). Keyed by the Stripe PRODUCT id their Payment Links / client-side Checkout sell
 // (read back via GET /v1/payment_links on 2026-10-03). Titles + urls copied verbatim from what each page
 // served before it was gated (titles uppercased); url null = the page showed "Coming Soon" for that row.
+// CEO 2026-10-03: phantom rows COASTAL CANDY (beach-vibes) and THE RECKONING (burn-it-down) removed — no such songs.
 // Underscore folder: GitHub Pages / Jekyll never serves it.
 export interface CuratedSong { title: string; url: string | null }
 export interface CuratedProduct { slug: string; name: string; songs: CuratedSong[] }
@@ -21,13 +22,11 @@ export const MUSIC_CURATED: Record<string, CuratedProduct> = {
       { title: "BAREFOOT BEACH BEAUTY", url: "https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BAREFOOT%20BEACH%20BEAUTY%20(2).mp3" },
       { title: "COCONUT KISS", url: "https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/COCONUT%20KISS%20(MASTER).mp3" },
       { title: "SAND IN TOES", url: "https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/Sand%20in%20Toes%20(1).mp3" },
-      { title: "COASTAL CANDY", url: null },
     ],
   },
   "prod_UFHNMb55PGfs2G": {
     slug: "burn-it-down", name: "Burn It Down Bundle", // Burn It Down — Rage & Empowerment Bundle (4 Songs)
     songs: [
-      { title: "THE RECKONING", url: null },
       { title: "VILLAIN", url: "https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/villian-(add-vocal)%20vs1.mp3" },
       { title: "KEEP PUSHING ME", url: "https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Keep%20pushing%20me%20(1).wav" },
       { title: "STILL THE ASSHOLE", url: "https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/still-the-asshole.mp3" },

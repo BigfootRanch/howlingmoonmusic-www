@@ -15,7 +15,7 @@
   if (!gate) return;
   var cfg = {
     slug: gate.getAttribute('data-slug') || '',
-    buy: gate.getAttribute('data-buy') || '/music.html',
+    buy: gate.getAttribute('data-buy') || '',
     buyLabel: gate.getAttribute('data-buy-label') || 'Buy this bundle',
     numbered: gate.getAttribute('data-numbered') === '1'
   };
@@ -35,8 +35,8 @@
     hide('curatedLoading'); hide('curatedList'); hide('curatedExtras');
     if (msg) $('curatedErrorMsg').textContent = msg;
     var buy = $('curatedBuy');
-    buy.setAttribute('href', cfg.buy);
-    buy.textContent = cfg.buyLabel;
+    if (buy && cfg.buy) { buy.setAttribute('href', cfg.buy); buy.textContent = cfg.buyLabel; }
+    else if (buy) buy.parentNode.removeChild(buy); // not offered for sale (e.g. GenX): verify box + support only
     show('curatedError');
   }
 

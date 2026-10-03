@@ -205,3 +205,19 @@ test("classifySession: existing behaviour unchanged with curated map present", (
   assert.deepEqual(classifySession(li("__proto__")), { type: "none" });
   assert.deepEqual(classifySession({}), { type: "none" });
 });
+
+test("CEO 2026-10-03: phantom rows removed; GenX kept for past buyers", () => {
+  const bv = MUSIC_CURATED["prod_UFHOxsLEAm3s0F"], bid = MUSIC_CURATED["prod_UFHNMb55PGfs2G"];
+  assert.ok(!bv.songs.some((x) => x.title === "COASTAL CANDY") && bv.songs.length === 3);
+  assert.ok(!bid.songs.some((x) => x.title === "THE RECKONING") && bid.songs.length === 3);
+  assert.equal(MUSIC_CURATED["prod_UFHPeEAmu7oXVP"].slug, "genx-album");
+});
+
+test("catalog: the 3 PuppyFM songs are sellable singles + PuppySongs", () => {
+  for (const id of ["dogs-have-never", "brown-eyes-say", "those-big-brown-eyes"]) {
+    assert.ok(CATALOG_BY_ID[id], id);
+    assert.ok(PUPPY_SONG_IDS.includes(id), id);
+    const o = validateOrder({ kind: "song", song_ids: [id] });
+    assert.ok(o.ok && o.amount === 129);
+  }
+});

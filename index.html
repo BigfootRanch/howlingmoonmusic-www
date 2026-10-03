@@ -49,7 +49,7 @@
   }
   </script>
 <script>
-function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9nEqf','beach-vibes':'price_1TGmpFPY5LxVsiI51TqL0oZi','road-trip':'price_1TGmpQPY5LxVsiI5r6g6g3LP','healing':'price_1TGmpaPY5LxVsiI59hdVPCop','sleep-relax':'price_1TGmplPY5LxVsiI5dAOUr9Vb','420-pack':'price_1TGmpwPY5LxVsiI5IeDnPLo2','villain-album':'price_1TGmq6PY5LxVsiI5OkJsGT1i','rainbow-album':'price_1TGmqHPY5LxVsiI5NcMGfh3R','genx-album':'price_1TGmqSPY5LxVsiI5wbv7MFDp','christmas-album':'price_1TGmqdPY5LxVsiI5OdWO5dsi'};var priceId=prices[slug];if(!priceId){alert('Bundle not found: '+slug);return;}var s=document.createElement('script');s.src='https://js.stripe.com/v3/';s.onload=function(){Stripe('pk_live_51TGmT8PY5LxVsiI5diLmOi0Fq1x7yh2buFo2UZbhvD6mVv0LqOnpG7LJ8dxMaZyorCPav1YCWM1oKz5QlF4Uzp5X003y4isVcf').redirectToCheckout({lineItems:[{price:priceId,quantity:1}],mode:'payment',successUrl:'https://howlingmoonmusic.com/downloads/'+slug+'.html?session_id={CHECKOUT_SESSION_ID}',cancelUrl:'https://howlingmoonmusic.com/music.html'}).then(function(r){if(r.error)alert(r.error.message);});};document.head.appendChild(s);}
+function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9nEqf','beach-vibes':'price_1TGmpFPY5LxVsiI51TqL0oZi','road-trip':'price_1TGmpQPY5LxVsiI5r6g6g3LP','healing':'price_1TGmpaPY5LxVsiI59hdVPCop','sleep-relax':'price_1TGmplPY5LxVsiI5dAOUr9Vb','420-pack':'price_1TGmpwPY5LxVsiI5IeDnPLo2','villain-album':'price_1TGmq6PY5LxVsiI5OkJsGT1i','rainbow-album':'price_1TGmqHPY5LxVsiI5NcMGfh3R','christmas-album':'price_1TGmqdPY5LxVsiI5OdWO5dsi'};var priceId=prices[slug];if(!priceId){alert('Bundle not found: '+slug);return;}var s=document.createElement('script');s.src='https://js.stripe.com/v3/';s.onload=function(){Stripe('pk_live_51TGmT8PY5LxVsiI5diLmOi0Fq1x7yh2buFo2UZbhvD6mVv0LqOnpG7LJ8dxMaZyorCPav1YCWM1oKz5QlF4Uzp5X003y4isVcf').redirectToCheckout({lineItems:[{price:priceId,quantity:1}],mode:'payment',successUrl:'https://howlingmoonmusic.com/downloads/'+slug+'.html?session_id={CHECKOUT_SESSION_ID}',cancelUrl:'https://howlingmoonmusic.com/music.html'}).then(function(r){if(r.error)alert(r.error.message);});};document.head.appendChild(s);}
 </script>
 <script src="/js/buy-music.js" defer></script>
 <style>@media(max-width:900px){.hm-panel-cols{column-count:1!important;padding:1rem 1.1rem!important;}}</style>
@@ -1151,9 +1151,7 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
           <li><span class="song-num">6</span><a href="songs/drown-in-the-bottle.html" class="song-name">Drown In The Bottle</a></li>
         </ul>
 
-        <div style="margin-top:1rem;text-align:center;">
-          <button onclick="return hmOpenStripeCheckout('https://buy.stripe.com/14A9AV6Pw77j3B8bRUd7q08',{product_slug:'genx-album',product_name:'GenX Rage & Red Lipstick',purchase_source:'homepage'})" style="background:linear-gradient(135deg,#ff2d7b,#d4175f);color:#fff;border:none;padding:.7rem 1.5rem;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer;letter-spacing:.02em;">Buy This Entire Collection — $9.99 Digital Download</button>
-        </div>
+        <!-- CEO 2026-10-03: GenX album is not offered for purchase (no buy button). -->
       </div>
 
       <!-- 4. Rainbow Album -->

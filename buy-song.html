@@ -69,7 +69,7 @@
     for (var i = 0; i < catalog.length; i++) if (catalog[i].id === id) return catalog[i];
     if (t) for (var j = 0; j < catalog.length; j++) if (norm(catalog[j].t) === t) return catalog[j];
     // station / album titles that differ from the catalog title of the same song
-    var ALIAS = { 'look into my eyes': 'look-in-my-eyes', 'trouble trouble': 'trouble-trouble-pup' };
+    var ALIAS = { 'look into my eyes': 'look-in-my-eyes', 'trouble trouble': 'trouble-trouble-pup', 'me my dog spurs': 'spurs', 'me and my dog spurs': 'spurs' };
     var al = ALIAS[t] || ALIAS[norm(id.replace(/-/g, ' '))];
     if (al) for (var a = 0; a < catalog.length; a++) if (catalog[a].id === al) return catalog[a];
     var n = norm(id.replace(/-/g, ' '));

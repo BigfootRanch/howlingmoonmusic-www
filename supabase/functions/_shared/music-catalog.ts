@@ -23,6 +23,11 @@ export const MUSIC_CATALOG: CatalogSong[] = [
   { id: "drown-me-in-slobbery-kisses", title: "DROWN ME IN SLOBBERY KISSES", url: "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/Drown%20Me%20in%20Slobbery%20Kisses.wav" },
   { id: "christmas-puppy", title: "PUPPY CHRISTMAS", url: "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/Puppy%20Christmas.wav" },
   { id: "slobbery-kiss", title: "SLOBBERY KISS", url: "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/SLOBBERY%20KISS%20.wav" },
+  // 2026-10-03: three PuppyFM station songs that had no single/bundle entry — full-length tracks
+  // (BROWN EYES SAY = the GHOST WANTED DEAD OR ALIVE album master; the other two = the files the UNLEASHED album delivers).
+  { id: "dogs-have-never", title: "DOGS HAVE NEVER", url: "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/Dogs%20Have%20Never.mp3" },
+  { id: "brown-eyes-say", title: "BROWN EYES SAY", url: "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/v55/GHOST-WANTED-DEAD-OR-ALIVE/12-BROWN-EYES-SAY.mp3" },
+  { id: "those-big-brown-eyes", title: "THOSE BIG BROWN EYES", url: "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/Those%20Big%20Brown%20Eyes.mp3" },
   { id: "almost-called", title: "ALMOST CALLED", url: "https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/NEW%20MEXICO%20SONGS/Untitled%20folder/SAD%20SONGS%20GRIEF%20TEARS/Almost%20called%20(1).mp3" },
   { id: "barefoot-beach-beauty", title: "BAREFOOT BEACH BEAUTY", url: "https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BAREFOOT%20BEACH%20BEAUTY%20(2).mp3" },
   { id: "bigfoot-lives-here", title: "BIGFOOT LIVES HERE", url: "https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Bigfoot%20Lives%20Here%20_%20Bigfoot%20Leonberger%20Ranch%20Anthem.mp3" },
@@ -98,5 +103,5 @@ export const MUSIC_CATALOG: CatalogSong[] = [
   { id: "zero-rips-left", title: "ZERO RIPS LEFT", url: "https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/zero-rips-left.mp3" },
 ];
 
-// The 14 PuppySongs | PuppyFM — listed first in the picker under their own heading (and alone with ?pack=puppy).
-export const PUPPY_SONG_IDS: string[] = ["will-you-be-my-friend","trouble-trouble-pup","uh-oh-i-did-it-again","spurs","puppy-kisses","booty-boom-boom","fleas","hungry-eyes","im-begging-you","look-in-my-eyes","my-bed-aint-mine","drown-me-in-slobbery-kisses","christmas-puppy","slobbery-kiss"];
+// The PuppySongs | PuppyFM (14 + 3 added 2026-10-03) — listed first in the picker under their own heading (and alone with ?pack=puppy).
+export const PUPPY_SONG_IDS: string[] = ["will-you-be-my-friend","trouble-trouble-pup","uh-oh-i-did-it-again","spurs","puppy-kisses","booty-boom-boom","fleas","hungry-eyes","im-begging-you","look-in-my-eyes","my-bed-aint-mine","drown-me-in-slobbery-kisses","christmas-puppy","slobbery-kiss","dogs-have-never","brown-eyes-say","those-big-brown-eyes"];

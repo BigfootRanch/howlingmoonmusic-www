@@ -48,7 +48,7 @@ try {
     assert.doesNotMatch(html, AUDIO_RE, "audio url in DOM " + q);
     for (const t of texts) assert.doesNotMatch(t, AUDIO_RE, "audio url in served source " + q);
     const rows = await page.locator(".song-row").count();
-    assert.equal(rows, q.includes("puppy") ? 14 : 87);
+    assert.equal(rows, q.includes("puppy") ? 17 : 90);
     ok("my-bundle.html" + (q || "(no params)") + ": 0 a.dl-btn, 0 audio storage urls in DOM + served HTML/JS, " + rows + " pickable songs");
     await page.close();
   }
@@ -68,7 +68,7 @@ try {
     await boxes.nth(0).check(); await boxes.nth(20).check();
     assert.equal(await btn.isDisabled(), true, "disabled at 2/3");
     await boxes.nth(40).check();
-    assert.equal(await page.locator(".song-row.locked").count(), 84, "others locked at 3/3");
+    assert.equal(await page.locator(".song-row.locked").count(), 87, "others locked at 3/3");
     assert.match(await btn.textContent(), /Checkout — \$4\.99/);
     const picks = await page.locator("#checkoutPicks").textContent();
     await btn.click();
@@ -180,6 +180,17 @@ try {
     ok("buy-song.html resolves by title → POST {kind:song, song_ids:[my-bed-aint-mine], source:puppyfm}");
     await page.close();
 
+    for (const [q, want] of [["id=me-my-dog-spurs", "spurs"], ["id=trouble-trouble&t=TROUBLE%20TROUBLE", "trouble-trouble-pup"], ["id=those-big-brown-eyes", "those-big-brown-eyes"]]) {
+      const pp = await browser.newPage();
+      let got = null;
+      await pp.route("**/functions/v1/create-music-checkout", async (r) => { got = JSON.parse(r.request().postData()); await r.fulfill({ status: 200, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" }, body: JSON.stringify({ ok: true, url: base + "/index.html#s" }) }); });
+      await pp.goto(base + "/buy-song.html?" + q + "&src=puppyfm", { waitUntil: "domcontentloaded" });
+      await pp.waitForURL(/#s$/, { waitUntil: "commit" });
+      assert.deepEqual(got.song_ids, [want], q);
+      await pp.close();
+    }
+    ok("buy-song.html aliases: me-my-dog-spurs→spurs, TROUBLE TROUBLE→trouble-trouble-pup, those-big-brown-eyes sold singly");
+
     const p2 = await browser.newPage();
     await p2.goto(base + "/buy-song.html?id=not-a-real-song", { waitUntil: "domcontentloaded" });
     await p2.waitForURL(/my-bundle\.html\?tier=3/);
@@ -205,8 +216,12 @@ try {
     assert.doesNotMatch(await page.content(), CUR_RE, slug + " DOM");
     for (const t of texts) assert.doesNotMatch(t, CUR_RE, slug + " served source");
     assert.equal(verifyCalls, 0);
-    const buy = await page.locator("#curatedBuy").getAttribute("href");
-    assert.ok(slug === "outlaw-love" ? buy === "/music.html" : /^https:\/\/buy\.stripe\.com\//.test(buy), slug + " buy link " + buy);
+    if (slug === "genx-album") {
+      assert.equal(await page.locator("#curatedBuy").count(), 0, "GenX: no buy button (CEO: not offered for purchase)");
+    } else {
+      const buy = await page.locator("#curatedBuy").getAttribute("href");
+      assert.ok(slug === "outlaw-love" ? buy === "/music.html" : /^https:\/\/buy\.stripe\.com\//.test(buy), slug + " buy link " + buy);
+    }
     await page.close();
 
     // with a (mocked) verified session the page renders exactly the returned songs
@@ -219,7 +234,7 @@ try {
     assert.equal(await p2.locator("#curatedRows .dl-coming").count(), 1);
     await p2.close();
   }
-  ok("11 curated pages: no session → verify box + buy link, 0 download anchors, 0 audio/zip urls in DOM + served HTML/JS; verified session → only returned songs");
+  ok("11 curated pages: no session → verify box + buy link (GenX: none), 0 download anchors, 0 audio/zip urls in DOM + served HTML/JS; verified session → only returned songs");
 
   {
     const page = await browser.newPage();
