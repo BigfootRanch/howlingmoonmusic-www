@@ -96,6 +96,11 @@ var STRIPE_PRICES = {
     document.head.appendChild(script);
   }
 
+  function withSessionId(url) {
+    if (url.indexOf('{CHECKOUT_SESSION_ID}') !== -1) return url;
+    return url + (url.indexOf('?') === -1 ? '?' : '&') + 'session_id={CHECKOUT_SESSION_ID}';
+  }
+
   function startStripeCheckout(details) {
     var next = details || {};
     var priceId = next.price_id || '';
@@ -117,7 +122,8 @@ var STRIPE_PRICES = {
       stripe.redirectToCheckout({
         lineItems: [{ price: priceId, quantity: 1 }],
         mode: 'payment',
-        successUrl: next.success_url || (window.location.origin + '/downloads/' + next.slug + '.html'),
+        // every success URL carries the Checkout Session id so the download page can verify payment (2026-10-03)
+        successUrl: withSessionId(next.success_url || (window.location.origin + '/downloads/' + next.slug + '.html')),
         cancelUrl: next.cancel_url || (window.location.origin + '/music.html')
       }).then(function(result) {
         if (result.error) alert(result.error.message);
@@ -208,7 +214,7 @@ function buyBundle(slugOrPrice, slug) {
     product_slug: slug,
     product_name: slug ? slug.replace(/-/g, ' ') : '',
     purchase_source: 'music-archive',
-    success_url: 'https://howlingmoonmusic.com/downloads/' + slug + '.html',
+    success_url: 'https://howlingmoonmusic.com/downloads/' + slug + '.html?session_id={CHECKOUT_SESSION_ID}',
     cancel_url: 'https://howlingmoonmusic.com/music.html'
   });
 }

@@ -3,6 +3,7 @@
 // (_tests/music.test.ts, `node --test`), and the edge functions import it as-is.
 // Erasable TypeScript only (no enums / namespaces / parameter properties) so Node type-stripping runs it.
 import { MUSIC_CATALOG, type CatalogSong } from "./music-catalog.ts";
+import { MUSIC_CURATED, type CuratedProduct, type CuratedSong } from "./music-curated.ts";
 
 export const ARTIST = "The DogMother";
 export const SITE = "https://www.howlingmoonmusic.com";
@@ -171,10 +172,15 @@ export interface StripeSessionLite {
 export type Purchase =
   | { type: "songs"; kind: string; ids: string[] }
   | { type: "legacy"; tier: number }
+  | { type: "curated"; slug: string; name: string; products: string[]; songs: CuratedSong[] }
   | { type: "none" };
 
 /** Classify a PAID session: new itemised order, legacy pick-N link, or not a song purchase. */
-export function classifySession(s: StripeSessionLite, catalog = CATALOG_BY_ID): Purchase {
+export function classifySession(
+  s: StripeSessionLite,
+  catalog = CATALOG_BY_ID,
+  curated: Record<string, CuratedProduct> = MUSIC_CURATED,
+): Purchase {
   const m = s.metadata || {};
   if (m.hm_order === ORDER_MARKER && (m.kind === "song" || m.kind === "bundle")) {
     const ids = decodeSongIds(m).filter((id) => has(catalog, id));
@@ -188,7 +194,30 @@ export function classifySession(s: StripeSessionLite, catalog = CATALOG_BY_ID): 
     const n = pid && has(LEGACY_BUNDLE_PRODUCTS, pid) ? LEGACY_BUNDLE_PRODUCTS[pid] : undefined;
     if (n) tier += n * Math.max(1, Number(it.quantity) || 1);
   }
-  return tier ? { type: "legacy", tier } : { type: "none" };
+  if (tier) return { type: "legacy", tier };
+  return curatedPurchase(s, curated);
+}
+
+/** Curated bundle / legacy album pages (downloads/<slug>.html): product id → that page's exact song list. */
+export function curatedPurchase(
+  s: StripeSessionLite,
+  curated: Record<string, CuratedProduct> = MUSIC_CURATED,
+): Purchase {
+  const hits: string[] = [];
+  for (const it of s.line_items?.data ?? []) {
+    const p = it.price?.product;
+    const pid = typeof p === "string" ? p : p?.id;
+    if (pid && has(curated, pid) && !hits.includes(pid)) hits.push(pid);
+  }
+  if (!hits.length) return { type: "none" };
+  const first = curated[hits[0]];
+  return {
+    type: "curated",
+    slug: first.slug,
+    name: hits.length === 1 ? first.name : hits.map((h) => curated[h].name).join(" + "),
+    products: hits,
+    songs: hits.flatMap((h) => curated[h].songs.map((x) => ({ title: x.title, url: x.url }))),
+  };
 }
 
 /** Validate a legacy buyer's one-time choice. */

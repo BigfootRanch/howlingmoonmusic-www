@@ -175,7 +175,7 @@
     <div class="header">
       <img class="logo" src="https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/branding/howling-moon-logo.png" alt="Howling Moon Music">
       <p class="thank-you" id="thankYou">Thank you for supporting The DogMother 💋</p>
-      <h1 id="albumTitle">Your Album</h1>
+      <h1 id="albumTitle">Your Music</h1>
       <p class="sub" id="albumSub"></p>
     </div>
 
@@ -355,7 +355,7 @@
     function showSongs(d) {
       var songs = d.songs || [];
       document.title = 'Your Songs | Howling Moon Music';
-      document.getElementById('albumTitle').textContent = songs.length === 1 ? songs[0].title : 'Your ' + songs.length + ' Songs';
+      document.getElementById('albumTitle').textContent = d.kind === 'curated' && d.name ? d.name : (songs.length === 1 ? songs[0].title : 'Your ' + songs.length + ' Songs');
       document.getElementById('albumSub').textContent = songs.length === 1 ? 'your song is ready' : songs.length + ' songs · your bundle is ready';
       document.getElementById('songCount').textContent = songs.length + (songs.length === 1 ? ' song' : ' songs');
       var rows = '';
@@ -363,9 +363,9 @@
         rows += '<div class="dl-row">' +
           '<span class="dl-num">' + (i + 1) + '</span>' +
           '<span class="dl-title">' + esc(t.title) + '</span>' +
-          '<a class="dl-btn" data-title="' + esc(t.title) + '" href="' + esc(songHref(t.url, i + 1, t.title)) + '" download title="Download ' + esc(t.title) + '">' +
+          (t.url ? '<a class="dl-btn" data-title="' + esc(t.title) + '" href="' + esc(songHref(t.url, i + 1, t.title)) + '" download title="Download ' + esc(t.title) + '">' +
           '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
-          'Download</a></div>';
+          'Download</a>' : '<span class="dl-num" style="min-width:auto">Coming Soon</span>') + '</div>';
       });
       var host = document.getElementById('songRows');
       host.innerHTML = rows;

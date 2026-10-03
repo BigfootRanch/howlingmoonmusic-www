@@ -141,7 +141,8 @@ test("classifySession: legacy pick-N links by product id", () => {
   assert.deepEqual(classifySession(li("prod_UFRjXdopdLCcWd", 2)), { type: "legacy", tier: 6 });
   // albums / curated bundles are not song purchases
   assert.deepEqual(classifySession(li("prod_V3bnciBZf9DE6V")), { type: "none" });
-  assert.deepEqual(classifySession(li("prod_UFHOYpElPrseJR")), { type: "none" });
+  // curated bundles are their own type now (see curated tests below)
+  assert.equal(classifySession(li("prod_UFHOYpElPrseJR")).type, "curated");
 });
 
 test("validateChoice enforces exactly N distinct catalog songs", () => {
@@ -150,4 +151,57 @@ test("validateChoice enforces exactly N distinct catalog songs", () => {
   assert.equal((validateChoice([ids[0], ids[0], ids[1]], 3) as { error: string }).error, "duplicate_songs");
   assert.equal((validateChoice([ids[0], ids[1], "nope"], 3) as { error: string }).error, "unknown_song");
   assert.equal((validateChoice("x", 3) as { error: string }).error, "bad_song_ids");
+});
+
+// ---------------- curated bundle / legacy album pages (2026-10-03) ----------------
+import { MUSIC_CURATED } from "../supabase/functions/_shared/music-curated.ts";
+
+const CURATED_SLUGS = ["420-pack", "beach-vibes", "burn-it-down", "christmas-album", "genx-album", "healing",
+  "outlaw-love", "rainbow-album", "road-trip", "sleep-relax", "villain-album"];
+
+test("curated map: 11 pages, ALL CAPS titles, https storage urls or null", () => {
+  const slugs = Object.values(MUSIC_CURATED).map((c) => c.slug).sort();
+  assert.deepEqual(slugs, [...CURATED_SLUGS].sort());
+  assert.ok(MUSIC_CURATED["prod_UFRjDvEwwfZ7KR"], "inactive outlaw-love product kept");
+  for (const c of Object.values(MUSIC_CURATED)) {
+    assert.ok(c.songs.length > 0, c.slug);
+    for (const s of c.songs) {
+      assert.equal(s.title, s.title.toUpperCase());
+      if (s.url !== null) assert.match(s.url, /^https:\/\/[a-z]+\.supabase\.co\/storage\/v1\/object\/public\//);
+      assert.doesNotMatch(String(s.url) + s.title, BANNED);
+    }
+  }
+  // no curated product collides with the legacy pick-N products
+  for (const pid of Object.keys(MUSIC_CURATED)) assert.ok(!["prod_UFRjXdopdLCcWd", "prod_UFRj2oaSjPWnZv", "prod_UFRjd7iLxa4r2s"].includes(pid));
+});
+
+test("classifySession: curated product → exactly that page's songs", () => {
+  const s = { payment_status: "paid", line_items: { data: [{ quantity: 1, price: { product: "prod_UFHOhA0uTygDW2" } }] } };
+  const p = classifySession(s);
+  assert.equal(p.type, "curated");
+  if (p.type !== "curated") return;
+  assert.equal(p.slug, "sleep-relax");
+  assert.deepEqual(p.songs, MUSIC_CURATED["prod_UFHOhA0uTygDW2"].songs);
+  assert.deepEqual(p.products, ["prod_UFHOhA0uTygDW2"]);
+  // expanded product object form
+  const p2 = classifySession({ line_items: { data: [{ price: { product: { id: "prod_UFRjDvEwwfZ7KR" } } }] } });
+  assert.ok(p2.type === "curated" && p2.slug === "outlaw-love" && p2.songs.length === 7);
+});
+
+test("classifySession: curated keeps 'Coming Soon' rows as url null", () => {
+  const p = classifySession({ line_items: { data: [{ price: { product: "prod_UFHPr7tbY29X6d" } }] } });
+  assert.ok(p.type === "curated");
+  if (p.type !== "curated") return;
+  assert.equal(p.songs.length, 8);
+  assert.ok(p.songs.some((x) => x.url === null));
+});
+
+test("classifySession: existing behaviour unchanged with curated map present", () => {
+  const li = (product: string) => ({ line_items: { data: [{ quantity: 1, price: { product } }] } });
+  assert.deepEqual(classifySession(li("prod_UFRjXdopdLCcWd")), { type: "legacy", tier: 3 });
+  assert.deepEqual(classifySession(li("prod_V3bnciBZf9DE6V")), { type: "none" }); // album → still none
+  const meta = { metadata: { hm_order: ORDER_MARKER, kind: "song", tier: "1", song_ids: ids[0] }, ...li("prod_UFHOhA0uTygDW2") };
+  assert.deepEqual(classifySession(meta), { type: "songs", kind: "song", ids: [ids[0]] }); // itemised wins
+  assert.deepEqual(classifySession(li("__proto__")), { type: "none" });
+  assert.deepEqual(classifySession({}), { type: "none" });
 });

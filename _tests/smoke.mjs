@@ -72,7 +72,7 @@ try {
     assert.match(await btn.textContent(), /Checkout — \$4\.99/);
     const picks = await page.locator("#checkoutPicks").textContent();
     await btn.click();
-    await page.waitForURL(/stripe-mock/);
+    await page.waitForURL(/stripe-mock/, { waitUntil: "commit" });
     assert.equal(posted.kind, "bundle"); assert.equal(posted.tier, 3); assert.equal(posted.source, "puppyfm");
     assert.equal(posted.song_ids.length, 3);
     assert.match(posted.return_url, /my-bundle\.html\?.*pre=/);
@@ -175,7 +175,7 @@ try {
       await r.fulfill({ status: 200, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" }, body: JSON.stringify({ ok: true, url: base + "/index.html#stripe-song" }) });
     });
     await page.goto(base + "/buy-song.html?id=x&t=" + encodeURIComponent("My Bed Ain't Mine") + "&src=puppyfm", { waitUntil: "domcontentloaded" });
-    await page.waitForURL(/stripe-song/);
+    await page.waitForURL(/stripe-song/, { waitUntil: "commit" });
     assert.deepEqual(posted.song_ids, ["my-bed-aint-mine"]); assert.equal(posted.kind, "song"); assert.equal(posted.source, "puppyfm");
     ok("buy-song.html resolves by title → POST {kind:song, song_ids:[my-bed-aint-mine], source:puppyfm}");
     await page.close();
@@ -185,6 +185,52 @@ try {
     await p2.waitForURL(/my-bundle\.html\?tier=3/);
     ok("buy-song.html unknown song → falls back to pick-3 picker");
     await p2.close();
+  }
+
+  // ---------- 9. the 11 curated pages: no urls / no downloads without a session; render only after verify ----------
+  const CURATED = ["420-pack", "beach-vibes", "burn-it-down", "christmas-album", "genx-album", "healing",
+    "outlaw-love", "rainbow-album", "road-trip", "sleep-relax", "villain-album"];
+  const CUR_RE = /supabase\.co\/storage\/v1\/object\/public\/(audio|howls-music)\/|\.wav\b|\.mp3\b|\.zip\b/i;
+  for (const slug of CURATED) {
+    const page = await browser.newPage();
+    const texts = [];
+    page.on("response", async (r) => { if (r.url().startsWith(base)) texts.push(await r.text().catch(() => "")); });
+    await page.route("**/storage/v1/object/public/branding/**", (r) => r.fulfill({ status: 200, body: "" }));
+    await page.route("https://fonts.googleapis.com/**", (r) => r.fulfill({ status: 200, body: "" }));
+    let verifyCalls = 0;
+    await page.route("**/functions/v1/verify-music-purchase", (r) => { verifyCalls++; r.fulfill({ status: 403, body: "{}" }); });
+    await page.goto(base + "/downloads/" + slug + ".html", { waitUntil: "networkidle" });
+    await page.locator("#curatedError:not(.cur-hidden)").waitFor();
+    assert.equal(await page.locator("a[download], a.dl-btn").count(), 0, slug + " download anchors");
+    assert.doesNotMatch(await page.content(), CUR_RE, slug + " DOM");
+    for (const t of texts) assert.doesNotMatch(t, CUR_RE, slug + " served source");
+    assert.equal(verifyCalls, 0);
+    const buy = await page.locator("#curatedBuy").getAttribute("href");
+    assert.ok(slug === "outlaw-love" ? buy === "/music.html" : /^https:\/\/buy\.stripe\.com\//.test(buy), slug + " buy link " + buy);
+    await page.close();
+
+    // with a (mocked) verified session the page renders exactly the returned songs
+    const p2 = await browser.newPage();
+    await p2.route("**/functions/v1/verify-music-purchase", (r) => r.fulfill({ status: 200, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" },
+      body: JSON.stringify({ ok: true, kind: "curated", slug, name: "X", songs: [{ title: "SONG A", url: "https://x.supabase.co/storage/v1/object/public/audio/a.mp3" }, { title: "SONG B", url: null }] }) }));
+    await p2.goto(base + "/downloads/" + slug + ".html?session_id=" + SID, { waitUntil: "domcontentloaded" });
+    await p2.locator("#curatedList:not(.cur-hidden)").waitFor();
+    assert.equal(await p2.locator("#curatedRows a.dl-btn").count(), 1);
+    assert.equal(await p2.locator("#curatedRows .dl-coming").count(), 1);
+    await p2.close();
+  }
+  ok("11 curated pages: no session → verify box + buy link, 0 download anchors, 0 audio/zip urls in DOM + served HTML/JS; verified session → only returned songs");
+
+  {
+    const page = await browser.newPage();
+    await page.route("**/functions/v1/verify-music-purchase", (r) => r.fulfill({ status: 200, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" },
+      body: JSON.stringify({ ok: true, kind: "curated", slug: "sleep-relax", name: "Sleep & Relax Bundle", songs: [{ title: "BREATHE", url: "https://x.supabase.co/storage/v1/object/public/audio/b.mp3" }, { title: "LATER", url: null }] }) }));
+    await page.goto(base + "/download.html?session_id=" + SID, { waitUntil: "domcontentloaded" });
+    await page.locator("#songsWrap:not(.hidden)").waitFor();
+    assert.equal(await page.locator("#albumTitle").textContent(), "Sleep & Relax Bundle");
+    assert.equal(await page.locator("#songRows a.dl-btn").count(), 1);
+    ok("download.html renders kind=curated (name as title, Coming Soon rows without links)");
+    await page.close();
   }
 } finally {
   await browser.close();

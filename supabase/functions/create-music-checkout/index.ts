@@ -5,7 +5,8 @@
 // download.html?session_id=…, where verify-music-purchase returns ONLY the purchased songs.
 // Stripe key: Supabase Vault via rpc hm_get_stripe_key (service_role only) — same pattern as
 // verify-album-purchase. verify_jwt is OFF (public endpoint for the static sites); deploy with the
-// ../_shared/music.ts + ../_shared/music-catalog.ts files included.
+// ../_shared/music.ts + ../_shared/music-catalog.ts + ../_shared/music-curated.ts files included
+// (music.ts imports all three).
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import { ALLOWED_ORIGINS, checkoutForm, safeReturnUrl, validateOrder } from "../_shared/music.ts";
 

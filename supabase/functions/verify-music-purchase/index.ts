@@ -4,9 +4,11 @@
 //   • itemised orders from create-music-checkout → song ids from session metadata (hm_order=hm-music-v1)
 //   • LEGACY pick-N Payment Links (old QR posters; product → N) → the buyer chooses N songs ONCE
 //     (POST {session_id, choose:[ids]}), recorded in public.music_purchase_choices; afterwards only those.
+//   • curated bundles / legacy albums (downloads/<slug>.html; product → fixed list in _shared/music-curated.ts)
+//     → kind "curated" with exactly that page's songs (added 2026-10-03; nothing is recorded).
 // Albums keep using verify-album-purchase (untouched). Stripe key: Vault rpc hm_get_stripe_key (service role).
 // verify_jwt is OFF (public endpoint for the static site); the gate is the paid-session check + origin allowlist.
-// Deploy with ../_shared/music.ts + ../_shared/music-catalog.ts included.
+// Deploy with ../_shared/music.ts + ../_shared/music-catalog.ts + ../_shared/music-curated.ts included.
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import {
   ALLOWED_ORIGINS, classifySession, SESSION_ID_RE, songsFor, validateChoice,
@@ -80,6 +82,11 @@ Deno.serve(async (req: Request) => {
 
     const p = classifySession(session);
     if (p.type === "none") return refuse(origin, 403, "not_a_song_purchase");
+
+    if (p.type === "curated") {
+      // curated bundle / legacy album page: exactly that product's song list (url null = "Coming Soon")
+      return json(origin, 200, { ok: true, kind: "curated", slug: p.slug, name: p.name, songs: p.songs });
+    }
 
     if (p.type === "songs") {
       return json(origin, 200, { ok: true, kind: p.kind, songs: songsFor(p.ids) });
