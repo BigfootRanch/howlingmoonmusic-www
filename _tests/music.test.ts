@@ -189,11 +189,19 @@ test("classifySession: curated product → exactly that page's songs", () => {
 });
 
 test("classifySession: curated keeps 'Coming Soon' rows as url null", () => {
+  const p = classifySession({ line_items: { data: [{ price: { product: "prod_UFHOWyAg3tZ1ap" } }] } }); // Villain: 2 not yet recorded
+  assert.ok(p.type === "curated");
+  if (p.type !== "curated") return;
+  assert.equal(p.songs.length, 7);
+  assert.ok(p.songs.some((x) => x.url === null));
+});
+
+test("classifySession: Christmas album delivers all 8 masters (10/3), no Coming Soon", () => {
   const p = classifySession({ line_items: { data: [{ price: { product: "prod_UFHPr7tbY29X6d" } }] } });
   assert.ok(p.type === "curated");
   if (p.type !== "curated") return;
   assert.equal(p.songs.length, 8);
-  assert.ok(p.songs.some((x) => x.url === null));
+  assert.ok(p.songs.every((x) => typeof x.url === "string" && x.url.includes("/DOGMOTHER-CHRISTMAS-2025/")));
 });
 
 test("classifySession: existing behaviour unchanged with curated map present", () => {

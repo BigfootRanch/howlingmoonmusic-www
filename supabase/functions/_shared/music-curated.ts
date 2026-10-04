@@ -33,16 +33,16 @@ export const MUSIC_CURATED: Record<string, CuratedProduct> = {
     ],
   },
   "prod_UFHPr7tbY29X6d": {
-    slug: "christmas-album", name: "Christmas Album", // DogMother Christmas 2025 Album (8 Songs)
+    slug: "christmas-album", name: "Christmas Album", // DogMother Christmas 2025 Album (8 Songs) — 10/3: all 8 scrubbed+stamped masters, album order
     songs: [
-      { title: "CHRISTMAS PUPPY", url: "https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Puppy%20Christmas%20(1).mp3" },
-      { title: "CHRISTMAS ON THE BEACH", url: null },
-      { title: "LUMP OF COAL", url: null },
-      { title: "LUMINARIAS", url: null },
-      { title: "SLOBBERY KISS", url: "https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/PUPPY%20DOG%20SONGS/SLOBBERY%20KISS%20(1).mp3" },
-      { title: "NAME ABOVE ALL NAMES", url: null },
-      { title: "ONLY GIFT I NEED", url: "https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/the-only-gift-i-need.mp3" },
-      { title: "SMOKY MOUNTAIN SNOW", url: null },
+      { title: "LUMP OF COAL", url: "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/v55/DOGMOTHER-CHRISTMAS-2025/01-LUMP-OF-COAL.mp3" },
+      { title: "CHRISTMAS ON THE BEACH", url: "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/v55/DOGMOTHER-CHRISTMAS-2025/02-CHRISTMAS-ON-THE-BEACH.mp3" },
+      { title: "CHRISTMAS PUPPY", url: "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/v55/DOGMOTHER-CHRISTMAS-2025/03-CHRISTMAS-PUPPY.mp3" },
+      { title: "LUMINARIAS", url: "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/v55/DOGMOTHER-CHRISTMAS-2025/04-LUMINARIAS.mp3" },
+      { title: "THE ONLY GIFT I NEED", url: "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/v55/DOGMOTHER-CHRISTMAS-2025/05-THE-ONLY-GIFT-I-NEED.mp3" },
+      { title: "SMOKY MOUNTAIN SNOW", url: "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/v55/DOGMOTHER-CHRISTMAS-2025/06-SMOKY-MOUNTAIN-SNOW.mp3" },
+      { title: "SLOBBERY KISS", url: "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/v55/DOGMOTHER-CHRISTMAS-2025/07-SLOBBERY-KISS.mp3" },
+      { title: "NAME ABOVE ALL NAMES", url: "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/v55/DOGMOTHER-CHRISTMAS-2025/08-NAME-ABOVE-ALL-NAMES.mp3" },
     ],
   },
   "prod_UFHPeEAmu7oXVP": {
