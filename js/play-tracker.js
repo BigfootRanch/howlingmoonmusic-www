@@ -19,10 +19,9 @@
   var songTitle = titleEl ? titleEl.textContent.trim() : slug;
 
   // Get existing fingerprint from visitor tracking if available
-  var fingerprint = null;
-  try {
-    fingerprint = localStorage.getItem('hm_fp') || null;
-  } catch (e) { /* ignore */ }
+  var fingerprint = null, deviceId = null;
+  try { fingerprint = sessionStorage.getItem('hm_fp') || null; } catch (e) {}
+  try { deviceId = localStorage.getItem('hm_did') || null; } catch (e) {}
 
   // State for this play session
   var playRecordId = null;
@@ -75,6 +74,7 @@
       referrer: document.referrer || null,
       user_agent: navigator.userAgent || null,
       fingerprint: fingerprint,
+      device_id: (function(){ try { return localStorage.getItem('hm_did') || deviceId; } catch(e){ return deviceId; } })(),
       completed: false,
       duration_listened: 0
     })
