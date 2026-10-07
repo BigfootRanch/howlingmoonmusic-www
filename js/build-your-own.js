@@ -88,7 +88,8 @@
     if (currentCard === card) { currentCard = null; return; }
     currentCard = card;
     card.classList.add('playing');
-    var audio = new Audio(SB + encodeURIComponent(audioFile));
+    // PRIV-01b: entries with a public 128k preview carry its full URL; the rest still resolve against SB (audio bucket)
+    var audio = new Audio(/^https:\/\//.test(audioFile) ? audioFile : SB + encodeURIComponent(audioFile));
     audio.volume = 0.8;
     audio.play().catch(function() { card.classList.remove('playing'); });
     audio.onended = function() { card.classList.remove('playing'); currentCard = null; currentAudio = null; };
@@ -97,13 +98,13 @@
 
   // Song catalog with audio file mappings
   var songs = [
-    {t:"Almost Called",a:"almost-called.wav"},{t:"Barefoot Beach Beauty",a:"barefoot-beach-beauty.mp3"},
+    {t:"Almost Called",a:"almost-called.wav"},{t:"Barefoot Beach Beauty",a:"https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/previews/audio/barefoot-beach-beauty.mp3"},
     {t:"Bigfoot Lives Here",a:"bigfoot-lives-here.mp3"},{t:"Booty Boom Boom",a:"booty-boom-boom.mp3"},
-    {t:"Breathe",a:"breathe.mp3"},{t:"Choke On The Wine",a:"choke-on-the-wine.wav"},
+    {t:"Breathe",a:"https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/previews/audio/breathe.mp3"},{t:"Choke On The Wine",a:"choke-on-the-wine.wav"},
     {t:"Christmas Puppy",a:"christmas-puppy.mp3"},{t:"Christmas on the Beach",a:"christmas-on-the-beach.wav"},
-    {t:"Coconut Kiss",a:"coconut-kiss.mp3"},{t:"Coffee Constellation",a:"coffee-constellation.mp3"},
+    {t:"Coconut Kiss",a:"https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/previews/audio/coconut-kiss.mp3"},{t:"Coffee Constellation",a:"coffee-constellation.mp3"},
     {t:"Cotton Candy",a:"cotton-candy.mp3"},{t:"Crack the Sky",a:"crack-the-sky.wav"},
-    {t:"Crackhead Queen",a:"crackhead-queen.mp3"},{t:"Daddy's Eyes",a:"daddys-eyes.wav"},
+    {t:"Crackhead Queen",a:"https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/previews/audio/crackhead-queen.mp3"},{t:"Daddy's Eyes",a:"daddys-eyes.wav"},
     {t:"Don't Be a Mr. Magoo",a:"Dont-be-a-Mr-McGoo-Remix.wav"},{t:"Don't Cry At My Funeral",a:"dont-cry-at-my-funeral.wav"},
     {t:"Down Under",a:"down-under.mp3"},{t:"Drown Me in Slobbery Kisses",a:"drown-me-in-slobbery-kisses.mp3"},
     {t:"Drown in the Bottle",a:"drown-in-the-bottle.mp3"},{t:"Drowning In My Tears",a:"drowning-in-my-tears.mp3"},
@@ -124,20 +125,20 @@
     {t:"Lost in Santa Fe",a:"lost-in-santa-fe.mp3"},{t:"Love Me Complicated",a:"love-me-complicated.mp3"},
     {t:"Luminarias",a:"luminarias.wav"},{t:"Luminaries",a:"Luminaries (Remastered).wav"},
     {t:"Lump of Coal",a:"lump-of-coal.wav"},{t:"Mangroves & Moonlight",a:"mangroves-and-moonlight.mp3"},
-    {t:"Mi Hogar",a:"mi-hogar.mp3"},{t:"My Bed Ain't Mine",a:"my-bed-aint-mine.mp3"},
+    {t:"Mi Hogar",a:"https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/previews/audio/mi-hogar.mp3"},{t:"My Bed Ain't Mine",a:"https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/previews/audio/my-bed-aint-mine.mp3"},
     {t:"Name Above All Names",a:"name-above-all-names.wav"},{t:"Never Let Go",a:"never-let-go.mp3"},
     {t:"Not Enough Bottles",a:"not-enough-bottles.mp3"},{t:"Obsessed",a:"obsessed.wav"},
     {t:"One Night with the Devil",a:"one-night-with-the-devil.mp3"},{t:"Only Gift I Need",a:"only-gift-i-need.mp3"},
     {t:"Paper Soldier",a:"paper-soldier.mp3"},{t:"Port Lavaca Paradise",a:"port-lavaca-paradise.mp3"},
     {t:"Puff Planet",a:"puff-planet.wav"},{t:"Puppy Kisses",a:"puppy-kisses.mp3"},
     {t:"Pussy Juice",a:"pussy-juice.mp3"},{t:"Rainbow",a:"rainbow.mp3"},
-    {t:"Ride or Die",a:"ride-or-die.wav"},{t:"Rock a Bye Baby",a:"rock-a-bye-baby.mp3"},
+    {t:"Ride or Die",a:"ride-or-die.wav"},{t:"Rock a Bye Baby",a:"https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/previews/audio/rock-a-bye-baby.mp3"},
     {t:"Rodeo Cowboy",a:"rodeo-cowboy.mp3"},{t:"Sand in Toes",a:"sand-in-toes.mp3"},
     {t:"Silence Is Your Fangs",a:"silence-is-your-fangs.mp3"},{t:"Sleep",a:"sleep.mp3"},
     {t:"Slobbery Kiss",a:"slobbery-kiss.mp3"},{t:"Smoke Me",a:"smoke-me.mp3"},
     {t:"Smoky Mountain Snow",a:"smoky-mountain-snow.wav"},{t:"Spurs",a:"spurs.mp3"},
     {t:"Stage 4 Liabetes",a:"stage-4-liabetes.wav"},{t:"Still The Asshole",a:"still-the-asshole.mp3"},
-    {t:"Tangled",a:"tangled.mp3"},{t:"Tattoo In Albuquerque",a:"tattoo-in-albuquerque.mp3"},
+    {t:"Tangled",a:"tangled.mp3"},{t:"Tattoo In Albuquerque",a:"https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/previews/audio/tattoo-in-albuquerque.mp3"},
     {t:"Tear Drops in My Coffee",a:"tear-drops-in-my-coffee.mp3"},{t:"The Reckoning",a:"the-reckoning.wav"},
     {t:"This is Shame",a:"this-is-shame.wav"},{t:"Tongue & Groove",a:"tongue-and-groove.mp3"},
     {t:"Twinkle",a:"twinkle.mp3"},{t:"Uncontainable",a:"uncontainable.mp3"},

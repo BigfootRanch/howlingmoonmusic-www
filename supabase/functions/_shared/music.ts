@@ -236,3 +236,101 @@ export function songsFor(ids: string[], catalog = CATALOG_BY_ID) {
 }
 
 export const SESSION_ID_RE = /^cs_(live|test)_[A-Za-z0-9]{10,}$/;
+
+// ---------------- PRIV-01b (2026-10-07): paid masters live in the PRIVATE pxcx bucket `music-masters` ----------------
+// The catalog / curated lists keep their historical public URLs as stable keys; at download time each one is mapped
+// to its copy in `music-masters` and handed out as a short-lived signed URL (never the public URL):
+//   vwedc  .../object/public/howls-music/<path>  → music-masters/<path>          (same relative path)
+//   pxcx   .../object/public/audio/<path>        → music-masters/audio/<path>
+export const MASTERS_BUCKET = "music-masters";
+// CEO 2026-10-07: 24 h so a slow / large WAV download never breaks. The buyer's download PAGE link
+// (download.html?session_id=… / downloads/<slug>.html?session_id=…) never expires: every visit re-verifies
+// the paid session and mints FRESH signed urls.
+export const SIGNED_URL_TTL_SECONDS = 24 * 60 * 60;
+const MASTER_SOURCES: { prefix: string; dest: string }[] = [
+  { prefix: "https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/", dest: "" },
+  { prefix: "https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/", dest: "audio/" },
+];
+
+/** Stored public URL → object path inside `music-masters` (url-decoded), or null if it isn't a known master URL. */
+export function masterPathFor(url: string | null | undefined): string | null {
+  if (typeof url !== "string") return null;
+  for (const src of MASTER_SOURCES) {
+    if (!url.startsWith(src.prefix)) continue;
+    let rest: string;
+    try {
+      rest = decodeURIComponent(url.slice(src.prefix.length).split(/[?#]/)[0]);
+    } catch (_e) {
+      return null;
+    }
+    if (!rest || rest.startsWith("/") || rest.split("/").some((seg) => seg === ".." || seg === ".")) return null;
+    return src.dest + rest;
+  }
+  return null;
+}
+
+/** "<TITLE>.<ext>" — the filename the buyer's browser saves (ext taken from the master object). */
+export function downloadNameFor(title: string, masterPath: string): string {
+  const m = /\.([A-Za-z0-9]{2,5})$/.exec(masterPath);
+  const ext = m ? m[1].toLowerCase() : "mp3";
+  const base = String(title || "song")
+    .replace(/[\/\\:*?"<>|\u0000-\u001f]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 120) || "song";
+  return base + "." + ext;
+}
+
+// ---------------- PRIV-01b fallback: verify against public.stripe_purchases when Stripe can't be read ----------------
+// Rows are written ONLY by the signature-verified stripe-webhook on checkout.session.completed, so a row for the
+// exact session id is proof of a completed purchase. Used only when the Stripe API call fails (404 / 401 / 5xx /
+// network) — never to override Stripe saying a session is unpaid.
+// Product NAME → product id, for historical rows that only stored "Name xQty; …" (product_description).
+// "Build Your Own Bundle (3 Songs)" and "Sleep & Relax Bundle (3 Songs)" are confirmed by real rows (2026-10-07);
+// the other names come from the Payment Link read-back comments in music-curated.ts.
+export const PRODUCT_NAME_TO_ID: Record<string, string> = {
+  "Build Your Own Bundle (3 Songs)": "prod_UFRjXdopdLCcWd",
+  "Build Your Own Bundle (5 Songs)": "prod_UFRj2oaSjPWnZv",
+  "Build Your Own Bundle (10 Songs)": "prod_UFRjd7iLxa4r2s",
+  "420 Pack Bundle (3 Songs)": "prod_UFHOYpElPrseJR",
+  "Beach Vibes Bundle (4 Songs)": "prod_UFHOxsLEAm3s0F",
+  "Burn It Down — Rage & Empowerment Bundle (4 Songs)": "prod_UFHNMb55PGfs2G",
+  "DogMother Christmas 2025 Album (8 Songs)": "prod_UFHPr7tbY29X6d",
+  "GenX Rage & Red Lipstick Album (6 Songs)": "prod_UFHPeEAmu7oXVP",
+  "Healing After Hell Bundle (4 Songs)": "prod_UFHOsv5g6L4n96",
+  "Outlaw Love: Wanted Dead or Alive (7 Songs)": "prod_UFRjDvEwwfZ7KR",
+  "Rainbow Album (9 Songs)": "prod_UFHPWEsKTxGpcK",
+  "Road Trip & Travel Bundle (5 Songs)": "prod_UFHO8ErfUlstjf",
+  "Sleep & Relax Bundle (3 Songs)": "prod_UFHOhA0uTygDW2",
+  "Villain Album (7 Songs)": "prod_UFHOWyAg3tZ1ap",
+};
+
+export interface PurchaseRow {
+  checkout_session?: string | null;
+  amount_cents?: number | null;
+  product_description?: string | null;
+  // added by migration 20261007120000_stripe_purchases_downloads.sql (optional until it is applied)
+  line_product_ids?: string[] | null;
+  session_metadata?: Record<string, string> | null;
+  payment_status?: string | null;
+}
+
+/** Rebuild the minimal paid-session shape classifySession() needs from a webhook-recorded purchase row. */
+export function sessionFromPurchaseRow(row: PurchaseRow | null | undefined): StripeSessionLite | null {
+  if (!row || !(Number(row.amount_cents) > 0)) return null;
+  if (row.payment_status && row.payment_status !== "paid") return null; // async payment not settled
+  const data: { quantity: number; price: { product: string } }[] = [];
+  if (Array.isArray(row.line_product_ids) && row.line_product_ids.length) {
+    for (const pid of row.line_product_ids) if (typeof pid === "string" && pid) data.push({ quantity: 1, price: { product: pid } });
+  } else if (typeof row.product_description === "string") {
+    for (const part of row.product_description.split("; ")) {
+      const m = /^(.*) x(\d+)$/.exec(part.trim());
+      const name = m ? m[1] : part.trim();
+      const pid = has(PRODUCT_NAME_TO_ID, name) ? PRODUCT_NAME_TO_ID[name] : undefined;
+      if (pid) data.push({ quantity: m ? Math.max(1, Number(m[2]) || 1) : 1, price: { product: pid } });
+    }
+  }
+  const meta = row.session_metadata && typeof row.session_metadata === "object" ? row.session_metadata : null;
+  if (!data.length && !meta) return null;
+  return { payment_status: "paid", metadata: meta, line_items: { data } };
+}

@@ -5,7 +5,7 @@ import { readFileSync } from "node:fs";
 import {
   BUNDLE_PRICE_CENTS, CATALOG_BY_ID, checkoutForm, classifySession, decodeSongIds, DEFAULT_CANCEL_URL,
   encodeSongIds, lineItemFor, ORDER_MARKER, safeReturnUrl, SONG_PRICE_CENTS, songsFor, SUCCESS_URL,
-  validateChoice, validateOrder,
+  validateChoice, validateOrder, masterPathFor, downloadNameFor, sessionFromPurchaseRow, SIGNED_URL_TTL_SECONDS,
 } from "../supabase/functions/_shared/music.ts";
 import { MUSIC_CATALOG, PUPPY_SONG_IDS } from "../supabase/functions/_shared/music-catalog.ts";
 
@@ -228,4 +228,60 @@ test("catalog: the 3 PuppyFM songs are sellable singles + PuppySongs", () => {
     const o = validateOrder({ kind: "song", song_ids: [id] });
     assert.ok(o.ok && o.amount === 129);
   }
+});
+
+// PRIV-01b: every sellable url must map to a music-masters path (98/98 verified present in the bucket 2026-10-07)
+test("PRIV-01b: every catalog + curated url maps to a music-masters path", () => {
+  const urls = [
+    ...MUSIC_CATALOG.map((s) => s.url),
+    ...Object.values(MUSIC_CURATED).flatMap((c) => c.songs.map((s) => s.url)).filter((u): u is string => u !== null),
+  ];
+  assert.ok(urls.length > 100);
+  for (const u of urls) {
+    const p = masterPathFor(u);
+    assert.ok(p, u);
+    assert.doesNotMatch(p!, /%[0-9A-F]{2}/i, "decoded: " + u);
+    if (u.includes("/object/public/audio/")) assert.ok(p!.startsWith("audio/"), u);
+    else assert.ok(!p!.startsWith("audio/"), u);
+  }
+});
+
+test("PRIV-01b: masterPathFor mapping + rejects", () => {
+  assert.equal(masterPathFor("https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/I'm%20Begging%20You.wav"), "I'm Begging You.wav");
+  assert.equal(masterPathFor("https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/v55/COCONUT-KISSES/01-WOKE-UP-LAUGHING.mp3"), "v55/COCONUT-KISSES/01-WOKE-UP-LAUGHING.mp3");
+  assert.equal(masterPathFor("https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/rainbow.mp3"), "audio/Album Collections/BEACH VIBES/rainbow.mp3");
+  assert.equal(masterPathFor("https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/Album%20Collections/BEACH%20VIBES/GASLIGHT%20%26%20GLITTER.mp3"), "audio/Album Collections/BEACH VIBES/GASLIGHT & GLITTER.mp3");
+  assert.equal(masterPathFor(null), null);
+  assert.equal(masterPathFor("https://evil.example.com/storage/v1/object/public/audio/x.mp3"), null);
+  assert.equal(masterPathFor("https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/album-zips/x.zip"), null);
+  assert.equal(masterPathFor("https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/%2E%2E/x.mp3"), null);
+  assert.equal(masterPathFor("https://pxcxtnabyydhbfbholvh.supabase.co/storage/v1/object/public/audio/%E0%A4%A"), null);
+});
+
+test("PRIV-01b: downloadNameFor = <TITLE>.<ext>, filesystem-safe", () => {
+  assert.equal(downloadNameFor("PUPPY KISSES", "Puppy Kisses.wav"), "PUPPY KISSES.wav");
+  assert.equal(downloadNameFor("I'M BEGGING YOU", "I'm Begging You.wav"), "I'M BEGGING YOU.wav");
+  assert.equal(downloadNameFor("ME & MY DOG / SPURS", "Spurs.mp3"), "ME & MY DOG SPURS.mp3");
+  assert.equal(downloadNameFor("", "x.MP3"), "song.mp3");
+});
+
+test("PRIV-01b: 24 h signed-url TTL", () => assert.equal(SIGNED_URL_TTL_SECONDS, 86400));
+
+test("PRIV-01b fallback: stripe_purchases row → classifiable paid session", () => {
+  // the two real historical row shapes (2026-03-31 curated, 2026-07-02 legacy pick-3)
+  const curated = classifySession(sessionFromPurchaseRow({ amount_cents: 499, product_description: "Sleep & Relax Bundle (3 Songs) x1" })!);
+  assert.equal(curated.type, "curated");
+  assert.equal(curated.type === "curated" && curated.slug, "sleep-relax");
+  const legacy = classifySession(sessionFromPurchaseRow({ amount_cents: 499, product_description: "Build Your Own Bundle (3 Songs) x1" })!);
+  assert.deepEqual(legacy, { type: "legacy", tier: 3 });
+  // new rows: product ids + metadata straight from the webhook
+  const songs = classifySession(sessionFromPurchaseRow({
+    amount_cents: 129, line_product_ids: ["prod_x"], session_metadata: { hm_order: ORDER_MARKER, kind: "song", song_ids: "puppy-kisses" },
+  })!);
+  assert.deepEqual(songs, { type: "songs", kind: "song", ids: ["puppy-kisses"] });
+  // refusals
+  assert.equal(sessionFromPurchaseRow(null), null);
+  assert.equal(sessionFromPurchaseRow({ amount_cents: 0, product_description: "Sleep & Relax Bundle (3 Songs) x1" }), null);
+  assert.equal(sessionFromPurchaseRow({ amount_cents: 499, product_description: "Something Else x1" }), null);
+  assert.equal(sessionFromPurchaseRow({ amount_cents: 499, payment_status: "unpaid", line_product_ids: ["prod_UFHOhA0uTygDW2"] }), null);
 });

@@ -9,9 +9,15 @@
 // Albums keep using verify-album-purchase (untouched). Stripe key: Vault rpc hm_get_stripe_key (service role).
 // verify_jwt is OFF (public endpoint for the static site); the gate is the paid-session check + origin allowlist.
 // Deploy with ../_shared/music.ts + ../_shared/music-catalog.ts + ../_shared/music-curated.ts included.
+// PRIV-01b (2026-10-07): every returned song url is a 24-hour SIGNED url into the PRIVATE pxcx bucket
+// `music-masters` (+ `filename` "<TITLE>.<ext>"), never the old public storage url. Signing fails CLOSED:
+// if any song can't be signed the whole response is refused. url:null ("Coming Soon") rows stay null.
+// Signed urls are never logged. The download PAGE link never expires: each visit re-verifies and re-signs.
+// If Stripe can't be read, falls back to the webhook-recorded public.stripe_purchases row (see loadPaidSession).
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import {
-  ALLOWED_ORIGINS, classifySession, SESSION_ID_RE, songsFor, validateChoice,
+  ALLOWED_ORIGINS, classifySession, type PurchaseRow, sessionFromPurchaseRow, type StripeSessionLite, downloadNameFor, masterPathFor, MASTERS_BUCKET, SESSION_ID_RE,
+  SIGNED_URL_TTL_SECONDS, songsFor, validateChoice,
 } from "../_shared/music.ts";
 
 const SUPPORT = "dogsongstudio@gmail.com";
@@ -52,6 +58,47 @@ async function readChoice(sessionId: string): Promise<string[] | null> {
   return data ? (data.song_ids as string[]) : null;
 }
 
+/**
+ * The paid session, from Stripe; or — only if Stripe can't be read (404 / 401 / 5xx / network) — rebuilt from the
+ * webhook-recorded public.stripe_purchases row, so old purchases keep unlocking forever.
+ * Returns "not_paid" when Stripe itself says the session is unpaid (never overridden), null when nothing verifies.
+ */
+async function loadPaidSession(sessionId: string): Promise<StripeSessionLite | "not_paid" | null> {
+  try {
+    const key = await getStripeKey();
+    const sRes = await fetch(
+      "https://api.stripe.com/v1/checkout/sessions/" + encodeURIComponent(sessionId) + "?expand[]=line_items",
+      { headers: { Authorization: "Bearer " + key } },
+    );
+    if (sRes.ok) {
+      const s = await sRes.json();
+      return s.payment_status === "paid" ? s as StripeSessionLite : "not_paid";
+    }
+    console.warn("verify-music-purchase: stripe read failed, status", sRes.status, "- trying stripe_purchases");
+  } catch (e) {
+    console.warn("verify-music-purchase: stripe read error -", (e as Error)?.message, "- trying stripe_purchases");
+  }
+  const { data, error } = await admin.from("stripe_purchases").select("*")
+    .eq("checkout_session", sessionId).order("created_at", { ascending: false }).limit(1).maybeSingle();
+  if (error) throw new Error("purchase row read failed: " + error.message);
+  return sessionFromPurchaseRow(data as PurchaseRow | null);
+}
+
+/** Replace each stored public url with a short-lived signed url from the private masters bucket. */
+async function signSongs<T extends { title: string; url: string | null }>(songs: T[]): Promise<T[]> {
+  return await Promise.all(songs.map(async (s) => {
+    if (s.url === null) return s; // "Coming Soon" row: nothing to sign
+    const path = masterPathFor(s.url);
+    if (!path) throw new Error("no master mapping for song: " + s.title);
+    // No `download` option here on purpose: download.html / js/curated-download.js already append
+    // "&download=<NN TITLE.ext>" to every song url, and a second download= param on /object/sign/ urls is
+    // not safe. The clean "<TITLE>.<ext>" name is returned as `filename` for clients that want it.
+    const { data, error } = await admin.storage.from(MASTERS_BUCKET).createSignedUrl(path, SIGNED_URL_TTL_SECONDS);
+    if (error || !data?.signedUrl) throw new Error("sign failed for song: " + s.title + " (" + (error?.message ?? "empty") + ")");
+    return { ...s, url: data.signedUrl, filename: downloadNameFor(s.title, path) };
+  }));
+}
+
 Deno.serve(async (req: Request) => {
   const origin = req.headers.get("origin");
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(origin) });
@@ -71,30 +118,25 @@ Deno.serve(async (req: Request) => {
   if (!SESSION_ID_RE.test(sessionId)) return refuse(origin, 400);
 
   try {
-    const key = await getStripeKey();
-    const sRes = await fetch(
-      "https://api.stripe.com/v1/checkout/sessions/" + encodeURIComponent(sessionId) + "?expand[]=line_items",
-      { headers: { Authorization: "Bearer " + key } },
-    );
-    if (!sRes.ok) return refuse(origin, 403);
-    const session = await sRes.json();
-    if (session.payment_status !== "paid") return refuse(origin, 403, "not_paid");
+    const session = await loadPaidSession(sessionId);
+    if (session === "not_paid") return refuse(origin, 403, "not_paid");
+    if (!session) return refuse(origin, 403);
 
     const p = classifySession(session);
     if (p.type === "none") return refuse(origin, 403, "not_a_song_purchase");
 
     if (p.type === "curated") {
       // curated bundle / legacy album page: exactly that product's song list (url null = "Coming Soon")
-      return json(origin, 200, { ok: true, kind: "curated", slug: p.slug, name: p.name, songs: p.songs });
+      return json(origin, 200, { ok: true, kind: "curated", slug: p.slug, name: p.name, songs: await signSongs(p.songs) });
     }
 
     if (p.type === "songs") {
-      return json(origin, 200, { ok: true, kind: p.kind, songs: songsFor(p.ids) });
+      return json(origin, 200, { ok: true, kind: p.kind, songs: await signSongs(songsFor(p.ids)) });
     }
 
     // LEGACY pick-N: return the recorded choice, or record it once, or ask for it.
     const existing = await readChoice(sessionId);
-    if (existing) return json(origin, 200, { ok: true, kind: "bundle", legacy: true, tier: p.tier, songs: songsFor(existing) });
+    if (existing) return json(origin, 200, { ok: true, kind: "bundle", legacy: true, tier: p.tier, songs: await signSongs(songsFor(existing)) });
 
     if (choose === undefined) return json(origin, 200, { ok: true, kind: "bundle", legacy: true, needs_choice: true, tier: p.tier });
 
@@ -107,7 +149,7 @@ Deno.serve(async (req: Request) => {
     if (insErr) throw new Error("choice write failed: " + insErr.message);
     const stored = await readChoice(sessionId);
     if (!stored) throw new Error("choice missing after write");
-    return json(origin, 200, { ok: true, kind: "bundle", legacy: true, tier: p.tier, songs: songsFor(stored) });
+    return json(origin, 200, { ok: true, kind: "bundle", legacy: true, tier: p.tier, songs: await signSongs(songsFor(stored)) });
   } catch (e) {
     console.error("verify-music-purchase error", (e as Error)?.message);
     return refuse(origin, 403);
