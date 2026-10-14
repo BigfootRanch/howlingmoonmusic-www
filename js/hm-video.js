@@ -73,6 +73,7 @@
   document.addEventListener('visibilitychange', function(){ if(document.visibilityState==='hidden') flushAll('hidden'); });
   window.addEventListener('pagehide', function(){ flushAll('page_closed'); });
 
+  window.__hmVidState = function(){ return watches.map(function(w){ var pos=null; try{pos=w.p.getCurrentTime();}catch(e){} return { id:w.id, secs:w.secs, pos:pos, playing:w.playing, closed:w.closed, sent:w.sent, seq:w.seq, pauses:w.pauses }; }); };
   window.onYouTubeIframeAPIReady = (function(prev){ return function(){ if(typeof prev==='function'){try{prev();}catch(e){}} attach(); }; })(window.onYouTubeIframeAPIReady);
   if(window.YT && window.YT.Player){ attach(); }
   else if(!document.querySelector('script[src*="youtube.com/iframe_api"]')){
