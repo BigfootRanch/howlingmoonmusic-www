@@ -289,7 +289,7 @@ window.__mxCfg = window.__mxCfg || {
     P.play = function(){ try { bindDetached(this); } catch(e){} return orig.apply(this, arguments); };
   } catch(e){}
   setInterval(function(){ list.forEach(function(s){ if (s.playing && !s.closed) { tick(s); emit(s, 'heartbeat'); } }); }, HB_MS);
-  function flushAll(reason){
+  function flushAll(reason, keepOpen){
     var items = [];
     list.forEach(function(s){
       if (s.closed) return;
@@ -298,11 +298,14 @@ window.__mxCfg = window.__mxCfg || {
       s.sentStart = true;
       if (!s.playing) return; // a paused listen was already recorded as paused
       items.push(payload(s, reason));
-      if (reason === 'page_closed') { s.closed = true; s.playing = false; }
+      if (reason === 'page_closed' && !keepOpen) { s.closed = true; s.playing = false; }
     });
     post(items, true);
   }
   document.addEventListener('visibilitychange', function(){ if (document.visibilityState === 'hidden') flushAll('hidden'); });
+  // beforeunload runs before every page's pagehide beacons, so our final state goes out before the
+  // browser's shared keepalive/beacon quota is used up by other scripts; pagehide covers the rest.
+  window.addEventListener('beforeunload', function(){ flushAll('page_closed', true); }); // not closed yet: a mailto/download click fires this without leaving
   window.addEventListener('pagehide', function(){ flushAll('page_closed'); });
   window.__mxState = function(){ return list.map(function(s){ return { id: s.id, title: s.m.title, secs: s.secs, playing: s.playing, closed: s.closed }; }); };
 })(window.__mxCfg);
