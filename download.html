@@ -393,7 +393,7 @@
       var btn = document.getElementById('chooseBtn');
       var err = document.getElementById('chooseErr');
       var html = '', labelled = false;
-      html += '<div class="pick-label" style="color:var(--pink-l);padding-top:.1rem">' + (pack === 'puppy' ? 'PuppySongs | PuppyFM' : '\uD83D\uDC3E PuppySongs | PuppyFM') + '</div>';
+      html += '<div class="pick-label" style="color:var(--pink-l);padding-top:.1rem">' + (pack === 'puppy' ? 'PuppySongs | Howls Radio' : '\uD83D\uDC3E PuppySongs | Howls Radio') + '</div>';
       catalog.forEach(function (s) {
         if (!s.p && !labelled) { html += '<div class="pick-label">Full Catalog</div>'; labelled = true; }
         html += '<label class="pick-row"><input type="checkbox" value="' + esc(s.id) + '"><span>' + esc(s.t) + '</span></label>';

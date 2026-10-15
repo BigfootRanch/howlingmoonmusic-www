@@ -39,8 +39,8 @@
   });
 })();
 
-/* PuppyReports crosslinks (CEO 2026-07-02) — DOG SONG pages only: "As heard on PuppyFM Radio |
-   PuppyHowls" + Search-for-a-Puppy + PuppyHowls|PuppyFM buttons, inserted above the viral footer.
+/* PuppyReports crosslinks (CEO 2026-07-02) — DOG SONG pages only: "As heard on Howls Radio |
+   PuppyHowls" + Search-for-a-Puppy + PuppyHowls|Howls Radio buttons, inserted above the viral footer.
    Non-dog songs are untouched (slug allowlist). */
 (function(){
   var DOG_SLUGS = ['puppy-kisses','booty-boom-boom','spurs','drown-me-in-slobbery-kisses','my-bed-aint-mine','bigfoot-lives-here','slobbery-kiss','christmas-puppy','trouble-trouble-pup','will-you-be-my-friend','zoomies-in-the-house','uh-oh-i-did-it-again','fleas','hungry-eyes','im-begging-you','look-in-my-eyes'];
@@ -48,10 +48,10 @@
   if (DOG_SLUGS.indexOf(slug) < 0) return;
   var box = document.createElement('div');
   box.style.cssText = 'max-width:1100px;margin:2.5rem auto 0;padding:1.5rem;text-align:center;border:1px solid rgba(253,203,110,.3);border-radius:12px;background:rgba(253,203,110,.06);font-family:Inter,-apple-system,sans-serif';
-  box.innerHTML = '<p style="color:#c4b8a8;font-size:.95rem;margin:0 0 1rem">&#128251; As heard on <strong style="color:#fdcb6e">PuppyFM Radio</strong> | PuppyHowls &mdash; finally, social media for dogs</p>'
+  box.innerHTML = '<p style="color:#c4b8a8;font-size:.95rem;margin:0 0 1rem">&#128251; As heard on <strong style="color:#fdcb6e">Howls Radio</strong> | PuppyHowls &mdash; finally, social media for dogs</p>'
     + '<div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">'
     + '<a href="https://www.puppyreports.com/search" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.45rem;background:linear-gradient(135deg,#fdcb6e,#f39c12);color:#0d0b0f;padding:.5rem 1.4rem;border-radius:20px;font-size:.85rem;font-weight:700;text-decoration:none"><img src="https://www.puppyreports.com/assets/branding/2026/puppyreports-shield-glossy.jpg" alt="PuppyReports" style="height:20px;width:20px;border-radius:5px;display:inline-block">Search for a Puppy on PuppyReports</a>'
-    + '<a href="https://www.puppyreports.com/howls" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.45rem;border:1px solid #fdcb6e;color:#fdcb6e;padding:.5rem 1.4rem;border-radius:20px;font-size:.85rem;font-weight:600;text-decoration:none"><img src="https://www.puppyreports.com/assets/branding/2026/puppyhowls-mark.jpg" alt="PuppyHowls" style="height:20px;width:20px;border-radius:5px;display:inline-block">PuppyHowls | PuppyFM Radio</a>'
+    + '<a href="https://www.puppyreports.com/howls" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.45rem;border:1px solid #fdcb6e;color:#fdcb6e;padding:.5rem 1.4rem;border-radius:20px;font-size:.85rem;font-weight:600;text-decoration:none"><img src="https://www.puppyreports.com/assets/branding/2026/puppyhowls-mark.jpg" alt="PuppyHowls" style="height:20px;width:20px;border-radius:5px;display:inline-block">PuppyHowls | Howls Radio</a>'
     + '</div>';
   // CEO 2026-07-02: every dog song page shows BOTH nav chips: "back to All Music" + a PuppySongs button.
   var back = document.querySelector('.back-link');

@@ -280,13 +280,13 @@
   catalog.forEach(function(s){ byId[s.id] = s; });
 
   if (pack === 'puppy') {
-    document.title = 'PuppySongs | PuppyFM — Pick Your Songs | Howling Moon Music';
-    document.querySelector('.header h1').textContent = 'PuppySongs | PuppyFM';
+    document.title = 'PuppySongs | Howls Radio — Pick Your Songs | Howling Moon Music';
+    document.querySelector('.header h1').textContent = 'PuppySongs | Howls Radio';
     var pfmNote = document.createElement('p');
     pfmNote.className = 'sub';
     pfmNote.style.color = 'var(--pink-l)';
     pfmNote.style.marginTop = '.4rem';
-    pfmNote.textContent = '\uD83D\uDC3E As heard on PuppyFM Radio \u2014 pick your songs below';
+    pfmNote.textContent = '\uD83D\uDC3E As heard on Howls Radio \u2014 pick your songs below';
     document.querySelector('.header').appendChild(pfmNote);
   }
 
@@ -362,7 +362,7 @@
     el.textContent = text;
     body.appendChild(el);
   }
-  if (pack !== 'puppy') addLabel('\uD83D\uDC3E PuppySongs | PuppyFM', 'puppy');
+  if (pack !== 'puppy') addLabel('\uD83D\uDC3E PuppySongs | Howls Radio', 'puppy');
 
   var labelled = false;
   songs.forEach(function(song, i) {

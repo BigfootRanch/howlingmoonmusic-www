@@ -401,7 +401,7 @@ function buyBundle(slug){var prices={'burn-it-down':'price_1TGmoNPY5LxVsiI5gvW9n
             <a href="https://distrokid.com/hyperfollow/thedogmother/unleashed" target="_blank" rel="noopener" title="Streaming everywhere Aug 14" class="unl-str">&#x1F3B5;</a>
           </div>
       </div>
-      <div class="unl-foot"><a href="/moods/dog-songs.html">&#128251; Hear it on PuppyFM Radio</a></div>
+      <div class="unl-foot"><a href="/moods/dog-songs.html">&#128251; Hear it on Howls Radio</a></div>
       <audio id="unlAudio" preload="none"></audio>
     </div>
   </div>
@@ -2685,11 +2685,11 @@ loadSiteData();
         var hide=function(){ bar.querySelectorAll('.album-chip').forEach(function(ch){ if(/GENX RAGE/i.test(ch.textContent||'')) ch.style.display='none'; }); };
         hide(); new MutationObserver(hide).observe(bar,{childList:true,subtree:true});
       })();
-      /* CEO 8/13: PuppyFM = its own PILL on the main radio (dog-songs queue) ... */
+      /* CEO 8/13: Howls Radio = its own PILL on the main radio (dog-songs queue) ... */
       var DOG_MOOD='e90379e9-d58b-4d70-b8ae-a733f13db8cc';
       var modeBar=document.querySelector('.radio-mode-bar');
       if(modeBar){
-        var pfm=document.createElement('button'); pfm.className='radio-mode'; pfm.dataset.mode='puppyfm'; pfm.textContent='PuppyFM';
+        var pfm=document.createElement('button'); pfm.className='radio-mode'; pfm.dataset.mode='puppyfm'; pfm.textContent='Howls Radio';
         pfm.addEventListener('click',function(){
           try{
             document.getElementById('radioMoodBar').style.display='none';
@@ -2698,7 +2698,7 @@ loadSiteData();
             radioIndex=0;
             document.querySelectorAll('.radio-mode').forEach(function(b){b.classList.remove('active');});
             pfm.classList.add('active');
-            if(!radioPlaying && rebuilt && getCurrentSong()){ renderRadioTrack(getCurrentSong(),{label:'PuppyFM · Ready to Play'}); primeCurrentTrack(); }
+            if(!radioPlaying && rebuilt && getCurrentSong()){ renderRadioTrack(getCurrentSong(),{label:'Howls Radio · Ready to Play'}); primeCurrentTrack(); }
             else if(radioPlaying){ playCurrentTrack(); }
           }catch(e){ console.warn('puppyfm pill', e); }
         });
@@ -2727,8 +2727,8 @@ loadSiteData();
       var grid=document.querySelector('#music .album-grid');
       if(grid){
         var pc=document.createElement('div'); pc.className='album-card';
-        pc.innerHTML='<img src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/puppyfm-radio-cover.jpg" alt="PuppyFM Radio" style="width:100%;border-radius:8px;margin-bottom:1rem;" loading="lazy"><div class="album-genre">Dog Songs &amp; Unconditional Love</div><h3>PuppyFM Radio</h3><span class="album-badge" style="background:rgba(255,45,123,.12);color:#e91e63">🐶 STATION</span><p style="color:var(--ts,#b9aaa0);font-size:.85rem;margin:.5rem 0 1rem;line-height:1.5;">Every dog song in one place — brought to you by Howling Moon Music.</p><div style="display:flex;gap:.8rem;margin-top:1rem;"><a href="/moods/dog-songs.html" style="flex:1;text-align:center;background:#ff2d7b;color:#fff;border:none;padding:.7rem 1rem;border-radius:8px;font-size:.9rem;text-decoration:none;font-weight:700;">&#9654; Open PuppyFM Radio</a></div>';
-        /* CEO 8/13: Build Your Own Album rides at the END, just before PuppyFM Radio */
+        pc.innerHTML='<img src="https://vwedcmdtsvktbirlgvdb.supabase.co/storage/v1/object/public/howls-music/puppyfm-radio-cover.jpg" alt="Howls Radio" style="width:100%;border-radius:8px;margin-bottom:1rem;" loading="lazy"><div class="album-genre">Dog Songs &amp; Unconditional Love</div><h3>Howls Radio</h3><span class="album-badge" style="background:rgba(255,45,123,.12);color:#e91e63">🐶 STATION</span><p style="color:var(--ts,#b9aaa0);font-size:.85rem;margin:.5rem 0 1rem;line-height:1.5;">Every dog song in one place — brought to you by Howling Moon Music.</p><div style="display:flex;gap:.8rem;margin-top:1rem;"><a href="/moods/dog-songs.html" style="flex:1;text-align:center;background:#ff2d7b;color:#fff;border:none;padding:.7rem 1rem;border-radius:8px;font-size:.9rem;text-decoration:none;font-weight:700;">&#9654; Open Howls Radio</a></div>';
+        /* CEO 8/13: Build Your Own Album rides at the END, just before Howls Radio */
         var byo=[...document.querySelectorAll('#music .album-card')].find(function(c){ var h=c.querySelector('h3'); return h&&/Build Your Own Album/i.test(h.textContent); });
         if(byo) grid.appendChild(byo);
         grid.appendChild(pc);
